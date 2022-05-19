@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/themes/textstyles.dart';
+
+import '../../themes/colors.dart';
+
+class CustomFillButton extends StatelessWidget {
+  final String title;
+  final Color? backgroundColor;
+  final bool isLoading;
+  final Function()? onTap;
+
+  const CustomFillButton({
+    Key? key,
+    required this.title,
+    this.backgroundColor,
+    this.onTap,
+    this.isLoading = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 48.0,
+      child: TextButton(
+        onPressed: onTap,
+        child: isLoading
+            ? ProgressWidget(
+                color: Theme.of(context).colorScheme.onSecondary,
+              )
+            : Text(
+                title,
+                style: CustomText.semiBold(
+                  fontSize: fontMd,
+                  color: Theme.of(context).colorScheme.onSecondary,
+                ),
+              ),
+        style: TextButton.styleFrom(
+          backgroundColor:
+              backgroundColor ?? Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+    );
+  }
+}
+
+class ProgressWidget extends SizedBox {
+  ProgressWidget({
+    Key? key,
+    double size = 18.0,
+    double strokeWidth = 2.0,
+    Color color = kPrimaryColor,
+  }) : super(
+          key: key,
+          width: size,
+          height: size,
+          child: CircularProgressIndicator(
+            strokeWidth: strokeWidth,
+            valueColor: AlwaysStoppedAnimation<Color>(color),
+          ),
+        );
+}
+
+class CustomOutlineButton extends StatelessWidget {
+  final String title;
+  final Color? borderColor;
+  final bool isLoading;
+  final Function()? onTap;
+
+  const CustomOutlineButton({
+    Key? key,
+    required this.title,
+    this.borderColor,
+    this.isLoading = false,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 48.0,
+      child: OutlinedButton(
+        onPressed: onTap,
+        child: isLoading
+            ? ProgressWidget(
+                color: Theme.of(context).colorScheme.secondary,
+              )
+            : Text(
+                title,
+                style: CustomText.semiBold(
+                  fontSize: fontMd,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(
+            width: 2.0,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
+      ),
+    );
+  }
+}

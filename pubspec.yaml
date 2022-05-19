@@ -1,0 +1,126 @@
+name: mefood
+description: Lao Delivery System
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+  line_icons: any
+  http: any
+  flutter_vibrate: any
+  cached_network_image: any
+  local_auth: any
+  permission_handler: any
+  share: any
+  flutter_svg: any
+  shared_preferences: any
+  qr_flutter: ^4.0.0
+  provider: any
+  # qr_code_scanner: any
+  google_sign_in: any
+  sign_in_with_apple: any
+  jwt_decode: any
+  encrypt: any
+  loading_animation_widget: any
+  avatar_glow: any
+  animated_text_kit: any
+
+  google_maps_flutter: any
+  location: any
+  connectivity_plus: any
+
+  freezed_annotation: any
+  json_annotation: ^4.4.0
+  logger: 1.1.0
+
+  socket_io_client: any
+  flutter_simple_dependency_injection: any
+  flutter_local_notifications: any
+
+  intl: any
+  flutter_localizations:
+      sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+  flutter_flavorizr: any
+  json_serializable: any  
+  freezed: any
+  build_runner: any
+
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "mefood"
+    ios:
+
+  flavors:
+    delivery:
+      app:
+        name: "MeDelivery"
+
+      android:
+        applicationId: "laodev.mefood.delivery"
+
+      ios:
+        bundleId: "laodev.mefood.delivery"
+
+    customer:
+      app:
+        name: "MeCustomer"
+
+      android:
+        applicationId: "laodev.mefood.customer"
+      ios:
+        bundleId: "laodev.mefood.customer"
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/icons/menu/
+    - assets/icons/category/
+    - assets/jsons/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito_extra_light.ttf
+          weight: 200
+        - asset: assets/fonts/nunito_light.ttf
+          weight: 300
+        - asset: assets/fonts/nunito_regular.ttf
+          weight: 400
+        - asset: assets/fonts/nunito_medium.ttf
+          weight: 500
+        - asset: assets/fonts/nunito_semi_bold.ttf
+          weight: 600
+        - asset: assets/fonts/nunito_bold.ttf
+          weight: 700
+        - asset: assets/fonts/nunito_extra_bold.ttf
+          weight: 800
+        - asset: assets/fonts/nunito_black.ttf
+          weight: 900
+          
+    - family: Horizon
+      fonts:
+        - asset: assets/fonts/horizon.otf
+
+flutter_intl:
+    main_locale: en_US
+    enabled: true
