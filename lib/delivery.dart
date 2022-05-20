@@ -6,9 +6,9 @@ import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
-import 'model/user_model.dart';
 import 'provider/delivery/order_provider.dart';
 import 'provider/delivery/status_provider.dart';
+import 'provider/delivery/user_provider.dart';
 import 'provider/flavor_provider.dart';
 import 'provider/injector_provider.dart';
 import 'screen/splash_screen.dart';
@@ -47,7 +47,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => UserModel()),
+        ChangeNotifierProvider(create: (context) => DeliveryUserProvider()),
         ChangeNotifierProvider(create: (context) => statusProvider),
         ChangeNotifierProvider(create: (context) => OrderProvider()),
       ],

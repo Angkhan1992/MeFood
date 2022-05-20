@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mefood/provider/json_provider.dart';
-import 'package:mefood/service/api_service.dart';
 
 import '../../../themes/dimens.dart';
 import '../../../themes/textstyles.dart';
@@ -203,15 +201,7 @@ class _MainScreenState extends State<MainScreen> {
         return DriverCalendar(
           onTapBack: () {},
           onTapForward: () {},
-          onTapCalendar: () async {
-            var categories = await JsonProvider.readCategoryFromJson();
-            for (var category in categories) {
-              await APIService.of().post(
-                APIService.kUrlCategory,
-                category.toJson(),
-              );
-            }
-          },
+          onTapCalendar: () async {},
         );
       case 3:
         return DriverSupport(

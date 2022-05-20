@@ -4,7 +4,7 @@ import 'package:mefood/model/product_model.dart';
 part 'order_model.freezed.dart';
 part 'order_model.g.dart';
 
-@freezed
+@unfreezed
 class OrderModel with _$OrderModel {
   @JsonSerializable(fieldRename: FieldRename.snake)
   factory OrderModel({

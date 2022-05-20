@@ -45,7 +45,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => UserModel()),
+        // ChangeNotifierProvider(create: (context) => UserModel()),
         ChangeNotifierProvider(create: (context) => CategoryProvider()),
       ],
       child: const MyApp(),

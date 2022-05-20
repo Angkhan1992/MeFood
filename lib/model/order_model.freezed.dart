@@ -21,9 +21,13 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OrderModel {
   String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
+  set regdate(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
+  set other(String? value) => throw _privateConstructorUsedError;
   List<ProductModel>? get models => throw _privateConstructorUsedError;
+  set models(List<ProductModel>? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -118,7 +122,7 @@ class __$$_OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
       models: models == freezed
-          ? _value._models
+          ? _value.models
           : models // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>?,
     ));
@@ -129,52 +133,24 @@ class __$$_OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$_OrderModel implements _OrderModel {
-  _$_OrderModel(
-      {this.id, this.regdate, this.other, final List<ProductModel>? models})
-      : _models = models;
+  _$_OrderModel({this.id, this.regdate, this.other, this.models});
 
   factory _$_OrderModel.fromJson(Map<String, dynamic> json) =>
       _$$_OrderModelFromJson(json);
 
   @override
-  final String? id;
+  String? id;
   @override
-  final String? regdate;
+  String? regdate;
   @override
-  final String? other;
-  final List<ProductModel>? _models;
+  String? other;
   @override
-  List<ProductModel>? get models {
-    final value = _models;
-    if (value == null) return null;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  List<ProductModel>? models;
 
   @override
   String toString() {
     return 'OrderModel(id: $id, regdate: $regdate, other: $other, models: $models)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_OrderModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.regdate, regdate) &&
-            const DeepCollectionEquality().equals(other.other, this.other) &&
-            const DeepCollectionEquality().equals(other._models, _models));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(regdate),
-      const DeepCollectionEquality().hash(other),
-      const DeepCollectionEquality().hash(_models));
 
   @JsonKey(ignore: true)
   @override
@@ -189,10 +165,10 @@ class _$_OrderModel implements _OrderModel {
 
 abstract class _OrderModel implements OrderModel {
   factory _OrderModel(
-      {final String? id,
-      final String? regdate,
-      final String? other,
-      final List<ProductModel>? models}) = _$_OrderModel;
+      {String? id,
+      String? regdate,
+      String? other,
+      List<ProductModel>? models}) = _$_OrderModel;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
       _$_OrderModel.fromJson;

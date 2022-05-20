@@ -180,10 +180,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           height: offsetXLg,
                         ),
-                        CustomOutlineButton(
-                          title: 'Login By Tour'.toUpperCase(),
-                          onTap: () {},
-                        ),
+                        if (!F.isDelivery)
+                          CustomOutlineButton(
+                            title: 'Login By Tour'.toUpperCase(),
+                            onTap: () {},
+                          ),
                         const Spacer(),
                         Row(
                           children: [
