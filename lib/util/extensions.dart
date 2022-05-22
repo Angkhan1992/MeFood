@@ -41,11 +41,13 @@ extension EString on String {
   Widget wText(
     TextStyle style, {
     int lines = 1,
+    bool centerLine = false,
   }) {
     return Text(
       this,
       style: style,
       maxLines: lines,
+      textAlign: centerLine ? TextAlign.center : TextAlign.left,
     );
   }
 }

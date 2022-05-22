@@ -33,10 +33,12 @@ dependencies:
   loading_animation_widget: any
   avatar_glow: any
   animated_text_kit: any
+  image_picker: any
 
   google_maps_flutter: any
   location: any
   connectivity_plus: any
+  geocoding: any
 
   freezed_annotation: any
   json_annotation: ^4.4.0

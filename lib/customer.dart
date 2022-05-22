@@ -8,7 +8,6 @@ import 'package:mefood/provider/category_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
-import 'model/user_model.dart';
 import 'provider/flavor_provider.dart';
 import 'provider/injector_provider.dart';
 import 'screen/splash_screen.dart';

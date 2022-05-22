@@ -18,4 +18,9 @@ class DeliveryUserProvider extends ChangeNotifier {
     user.car = carModel;
     notifyListeners();
   }
+
+  void setUserId(int id) {
+    user.id = id;
+    notifyListeners();
+  }
 }

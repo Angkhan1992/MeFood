@@ -4,9 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:mefood/util/logger.dart';
 
 const kDomain = 'http://192.168.0.253:52526';
+const kUrlAvatar = '$kDomain/assets/avatar/';
 
 class APIService {
   static final kUrlCategory = '$kDomain/category';
+  static final kUrlAuth = '$kDomain/auth';
 
   APIService();
 
@@ -84,5 +86,17 @@ class APIService {
         'result': response.statusCode,
       };
     }
+  }
+
+  Future<dynamic> uploadAvatar({
+    required String filePath,
+  }) async {
+    var url = Uri.parse('$kDomain/uploadAvatar');
+    var request = http.MultipartRequest("POST", url);
+    request.files.add(await http.MultipartFile.fromPath('file', filePath));
+    var response = await request.send();
+    var responseData = await response.stream.toBytes();
+    var responseString = String.fromCharCodes(responseData);
+    return json.decode(responseString);
   }
 }

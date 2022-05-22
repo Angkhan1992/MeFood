@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 import '../themes/colors.dart';
 import '../themes/dimens.dart';
 import '../themes/textstyles.dart';
+import '../widget/common/appbar.dart';
 
 class DialogProvider {
   final BuildContext context;
@@ -229,10 +230,27 @@ class DialogProvider {
           topLeft: Radius.circular(offsetBase),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       builder: (_) => Container(
-        padding: const EdgeInsets.all(offsetBase),
-        child: child,
+        padding: const EdgeInsets.symmetric(
+          horizontal: offsetBase,
+          vertical: offsetXSm,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            NorchWidget(
+              color: Theme.of(context).hintColor,
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            child,
+            const SizedBox(
+              height: 16.0,
+            ),
+          ],
+        ),
       ),
     );
   }

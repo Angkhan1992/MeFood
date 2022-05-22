@@ -139,3 +139,16 @@ class CustomAppbar extends AppBar {
           actions: actions,
         );
 }
+
+class NorchWidget extends Container {
+  NorchWidget({
+    required Color color,
+  }) : super(
+          width: 80.0,
+          height: 4.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: color,
+          ),
+        );
+}

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/screen/delivery/auth/page/address_page.dart';
-import 'package:mefood/screen/delivery/auth/page/car_page.dart';
-import 'package:mefood/screen/delivery/auth/page/user_page.dart';
-import 'package:mefood/util/extensions.dart';
-import '../../../provider/delivery/user_provider.dart';
+import 'package:mefood/provider/navigator_provider.dart';
+import 'package:mefood/screen/delivery/auth/page/password_page.dart';
+import 'package:mefood/screen/delivery/auth/success_register_screen.dart';
+import 'package:mefood/util/logger.dart';
 import 'package:provider/provider.dart';
+
+import '../../../provider/delivery/user_provider.dart';
+import '../../../util/extensions.dart';
+import 'page/address_page.dart';
+import 'page/car_page.dart';
+import 'page/user_page.dart';
+import 'page/verify_page.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -28,18 +34,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     var screens = [
       AddProfilePage(
-        onNext: (user) {
+        onNext: (user, id) {
           if (_provider != null) {
             _provider!.setUser(user);
+            _provider!.setUserId(id);
             _pageIndex.value = 1;
+            logger.d(user);
           }
         },
       ),
       AddAddressPage(
-        onNext: () => _pageIndex.value = 2,
+        onPrevious: () => _pageIndex.value = 0,
+        onNext: (address) {
+          _provider!.setAddress(address);
+          _pageIndex.value = 2;
+          logger.d(address);
+        },
       ),
       AddCarPage(
-        onNext: () => _pageIndex.value = 3,
+        onPrevious: () => _pageIndex.value = 1,
+        onNext: (car) {
+          _provider!.setCar(car);
+          _pageIndex.value = 3;
+          logger.d(car);
+        },
+      ),
+      DeliveryVerifyPage(
+        onPrevious: () => _pageIndex.value = 2,
+        onNext: () => _pageIndex.value = 4,
+      ),
+      PasswordPage(
+        onDone: () => NavigatorProvider.of(context).push(
+          screen: SuccessRegisterScreen(),
+          replace: true,
+        ),
       ),
     ];
     return Consumer<DeliveryUserProvider>(
@@ -113,14 +141,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Row(
         children: [
           _badgeWidget(0, value),
-          _lineWidget(),
-          _badgeWidget(1, value),
-          _lineWidget(),
-          _badgeWidget(2, value),
-          _lineWidget(),
-          _badgeWidget(3, value),
-          _lineWidget(),
-          _badgeWidget(4, value),
+          for (var i = 1; i < 5; i++) ...{
+            _lineWidget(),
+            _badgeWidget(i, value),
+          },
         ],
       ),
     );
