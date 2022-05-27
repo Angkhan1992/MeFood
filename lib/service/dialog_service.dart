@@ -9,13 +9,13 @@ import '../themes/dimens.dart';
 import '../themes/textstyles.dart';
 import '../widget/common/appbar.dart';
 
-class DialogProvider {
+class DialogService {
   final BuildContext context;
 
-  DialogProvider(this.context);
+  DialogService(this.context);
 
-  factory DialogProvider.of(BuildContext context) {
-    return DialogProvider(context);
+  factory DialogService.of(BuildContext context) {
+    return DialogService(context);
   }
 
   Future<dynamic> bubbleDialog({
@@ -198,13 +198,18 @@ class DialogProvider {
                         child: Text(
                           title,
                           style: CustomText.bold(
-                              fontSize: fontMd, color: Colors.white),
+                            fontSize: fontMd,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                       const SizedBox(height: offsetSm),
                       Text(
                         content,
-                        style: CustomText.medium(color: Colors.white),
+                        style: CustomText.medium(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
                       ),
                     ],
                   ),

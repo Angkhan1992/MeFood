@@ -36,6 +36,10 @@ mixin _$UserModel {
   String? get avatar => throw _privateConstructorUsedError;
   @JsonKey(name: 'usr_avatar')
   set avatar(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'usr_idcard')
+  String? get idcard => throw _privateConstructorUsedError;
+  @JsonKey(name: 'usr_idcard')
+  set idcard(String? value) => throw _privateConstructorUsedError;
   @JsonKey(name: 'usr_email')
   String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'usr_email')
@@ -90,6 +94,7 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: 'usr_first_name') String? first,
       @JsonKey(name: 'usr_last_name') String? last,
       @JsonKey(name: 'usr_avatar') String? avatar,
+      @JsonKey(name: 'usr_idcard') String? idcard,
       @JsonKey(name: 'usr_email') String? email,
       @JsonKey(name: 'usr_phone') String? phone,
       @JsonKey(name: 'usr_gender') String? gender,
@@ -116,6 +121,7 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? first = freezed,
     Object? last = freezed,
     Object? avatar = freezed,
+    Object? idcard = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? gender = freezed,
@@ -143,6 +149,10 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      idcard: idcard == freezed
+          ? _value.idcard
+          : idcard // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -199,6 +209,7 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       @JsonKey(name: 'usr_first_name') String? first,
       @JsonKey(name: 'usr_last_name') String? last,
       @JsonKey(name: 'usr_avatar') String? avatar,
+      @JsonKey(name: 'usr_idcard') String? idcard,
       @JsonKey(name: 'usr_email') String? email,
       @JsonKey(name: 'usr_phone') String? phone,
       @JsonKey(name: 'usr_gender') String? gender,
@@ -227,6 +238,7 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
     Object? first = freezed,
     Object? last = freezed,
     Object? avatar = freezed,
+    Object? idcard = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? gender = freezed,
@@ -254,6 +266,10 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      idcard: idcard == freezed
+          ? _value.idcard
+          : idcard // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -308,6 +324,7 @@ class _$_UserModel implements _UserModel {
       @JsonKey(name: 'usr_first_name') this.first,
       @JsonKey(name: 'usr_last_name') this.last,
       @JsonKey(name: 'usr_avatar') this.avatar,
+      @JsonKey(name: 'usr_idcard') this.idcard,
       @JsonKey(name: 'usr_email') this.email,
       @JsonKey(name: 'usr_phone') this.phone,
       @JsonKey(name: 'usr_gender') this.gender,
@@ -334,6 +351,9 @@ class _$_UserModel implements _UserModel {
   @override
   @JsonKey(name: 'usr_avatar')
   String? avatar;
+  @override
+  @JsonKey(name: 'usr_idcard')
+  String? idcard;
   @override
   @JsonKey(name: 'usr_email')
   String? email;
@@ -366,7 +386,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, first: $first, last: $last, avatar: $avatar, email: $email, phone: $phone, gender: $gender, dob: $dob, type: $type, regdate: $regdate, updated: $updated, isEnabled: $isEnabled, isDeleted: $isDeleted, other: $other)';
+    return 'UserModel(id: $id, first: $first, last: $last, avatar: $avatar, idcard: $idcard, email: $email, phone: $phone, gender: $gender, dob: $dob, type: $type, regdate: $regdate, updated: $updated, isEnabled: $isEnabled, isDeleted: $isDeleted, other: $other)';
   }
 
   @JsonKey(ignore: true)
@@ -386,6 +406,7 @@ abstract class _UserModel implements UserModel {
       @JsonKey(name: 'usr_first_name') String? first,
       @JsonKey(name: 'usr_last_name') String? last,
       @JsonKey(name: 'usr_avatar') String? avatar,
+      @JsonKey(name: 'usr_idcard') String? idcard,
       @JsonKey(name: 'usr_email') String? email,
       @JsonKey(name: 'usr_phone') String? phone,
       @JsonKey(name: 'usr_gender') String? gender,
@@ -412,6 +433,9 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: 'usr_avatar')
   String? get avatar => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'usr_idcard')
+  String? get idcard => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'usr_email')
   String? get email => throw _privateConstructorUsedError;

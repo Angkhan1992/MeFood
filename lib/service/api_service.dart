@@ -4,7 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:mefood/util/logger.dart';
 
 const kDomain = 'http://192.168.0.253:52526';
+
 const kUrlAvatar = '$kDomain/assets/avatar/';
+const kUrlIDCard = '$kDomain/assets/idcard/';
+const kUrlDriver = '$kDomain/assets/drivercard/';
+const kUrlPlate = '$kDomain/assets/plate/';
+const kUrlCar = '$kDomain/assets/car/';
 
 class APIService {
   static final kUrlCategory = '$kDomain/category';
@@ -88,10 +93,11 @@ class APIService {
     }
   }
 
-  Future<dynamic> uploadAvatar({
+  Future<dynamic> upload({
+    required String path,
     required String filePath,
   }) async {
-    var url = Uri.parse('$kDomain/uploadAvatar');
+    var url = Uri.parse('$kDomain/$path');
     var request = http.MultipartRequest("POST", url);
     request.files.add(await http.MultipartFile.fromPath('file', filePath));
     var response = await request.send();

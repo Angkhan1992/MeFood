@@ -6,7 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../themes/dimens.dart';
 import '../../../themes/textstyles.dart';
-import '../../../util/extensions.dart';
+import '../../../extensions/e_string.dart';
 import '../../../widget/common/appbar.dart';
 import '../../../widget/delivery/toolbar.dart';
 import '../../../widget/page/network_error.dart';

@@ -1,4 +1,4 @@
-import 'package:mefood/model/user_model.dart';
+import 'package:mefood/model/model.dart';
 
 extension EUserModel on UserModel {
   bool get isFullData {

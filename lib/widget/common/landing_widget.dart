@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../themes/dimens.dart';
-import '../../themes/textstyles.dart';
-import '../../util/extensions.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/themes/theme.dart';
 
 class LandingWidget extends StatelessWidget {
   final String title;

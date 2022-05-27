@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/model/category_model.dart';
+import 'package:mefood/model/model.dart';
 
 class CategoryProvider extends ChangeNotifier {
   List<CategoryModel> categories = [];

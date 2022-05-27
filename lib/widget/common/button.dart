@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/themes/dimens.dart';
-import 'package:mefood/themes/textstyles.dart';
-
-import '../../themes/colors.dart';
+import 'package:mefood/themes/theme.dart';
 
 class CustomFillButton extends StatelessWidget {
   final String title;

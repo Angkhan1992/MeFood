@@ -9,11 +9,11 @@ import 'package:line_icons/line_icons.dart';
 import 'package:mefood/provider/delivery/user_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../extensions/e_export.dart';
-import '../../../../model/m_export.dart';
-import '../../../../provider/dialog_provider.dart';
+import '../../../../extensions/extensions.dart';
+import '../../../../model/model.dart';
+import '../../../../service/dialog_service.dart';
 import '../../../../service/api_service.dart';
-import '../../../../util/extensions.dart';
+import '../../../../extensions/e_string.dart';
 import '../../../../util/logger.dart';
 import '../../../../widget/common/button.dart';
 import '../../../../widget/common/textfield.dart';
@@ -236,20 +236,38 @@ class _AddProfilePageState extends State<AddProfilePage> {
       _formKey.currentState!.save();
       if (!_user.isFullData) return;
 
+      isUploadAvatar = true;
+      setState(() {});
       var resp = await APIService().post(
         APIService.kUrlAuth + '/registerUser',
         _user.toJson(),
       );
 
-      _user.id = resp!['result']['user_id'] as int;
+      if (resp != null) {
+        if (resp['ret'] == 10000) {
+          _user.id = resp['result']['user_id'] as int;
+          widget.onNext!(_user, resp['result']['delivery_id']);
+        } else {
+          DialogService.of(context).showSnackBar(
+            resp['msg'],
+            type: SnackBarType.error,
+          );
+        }
+      } else {
+        DialogService.of(context).showSnackBar(
+          'content',
+          type: SnackBarType.error,
+        );
+      }
 
-      widget.onNext!(_user, resp['result']['delivery_id']);
+      isUploadAvatar = false;
+      setState(() {});
     }
   }
 
   void _onPickerAvatar() {
     _formKey.currentState!.save();
-    DialogProvider.of(context).showBottomSheet(
+    DialogService.of(context).showBottomSheet(
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -263,7 +281,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             height: 24.0,
           ),
           InkWell(
-            onTap: () => _imagePicker(context, ImageSource.gallery),
+            onTap: () => _imagePicker(ImageSource.gallery),
             child: 'From Gallery'.wText(
               TextStyle(
                 fontSize: 18.0,
@@ -275,7 +293,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             height: 16.0,
           ),
           InkWell(
-            onTap: () => _imagePicker(context, ImageSource.camera),
+            onTap: () => _imagePicker(ImageSource.camera),
             child: 'From Camera'.wText(
               TextStyle(
                 fontSize: 18.0,
@@ -290,7 +308,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
 
   void _onGenderDialog() {
     _formKey.currentState!.save();
-    DialogProvider.of(context).showBottomSheet(
+    DialogService.of(context).showBottomSheet(
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -353,7 +371,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
     }
   }
 
-  void _imagePicker(BuildContext context, ImageSource source) async {
+  void _imagePicker(ImageSource source) async {
     Navigator.of(context).pop();
 
     final XFile? pickedFile = await _picker.pickImage(
@@ -363,13 +381,16 @@ class _AddProfilePageState extends State<AddProfilePage> {
       var filePath = pickedFile.path;
       isUploadAvatar = true;
       setState(() {});
-      var resp = await APIService.of().uploadAvatar(filePath: filePath);
+      var resp = await APIService.of().upload(
+        path: 'uploadAvatar',
+        filePath: filePath,
+      );
       if (resp['ret'] == 10000) {
         var avatarUrl = '$kUrlAvatar${resp['result']}';
         logger.d(avatarUrl);
         _user.avatar = avatarUrl;
       } else {
-        DialogProvider.of(context).showSnackBar(
+        DialogService.of(context).showSnackBar(
           'Upload image failed',
           type: SnackBarType.error,
         );

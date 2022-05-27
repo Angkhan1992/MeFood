@@ -2,16 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:mefood/service/json_service.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../extensions/e_export.dart';
-import '../../../../model/m_export.dart';
+import '../../../../extensions/extensions.dart';
+import '../../../../model/model.dart';
 import '../../../../provider/delivery/status_provider.dart';
 import '../../../../provider/delivery/user_provider.dart';
-import '../../../../provider/dialog_provider.dart';
-import '../../../../provider/json_provider.dart';
+import '../../../../service/dialog_service.dart';
+
+import '../../../../service/api_service.dart';
 import '../../../../themes/dimens.dart';
-import '../../../../util/extensions.dart';
+import '../../../../extensions/e_string.dart';
 import '../../../../util/logger.dart';
 import '../../../../widget/common/button.dart';
 import '../../../../widget/common/textfield.dart';
@@ -32,6 +34,8 @@ class AddAddressPage extends StatefulWidget {
 class _AddAddressPageState extends State<AddAddressPage> {
   AddressModel _address = AddressModel();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool isUploadAddress = false;
 
   @override
   void initState() {
@@ -171,6 +175,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             CustomFillButton(
               title: 'Next'.toUpperCase(),
               onTap: () => onTapNext(),
+              isLoading: isUploadAddress,
             ),
             const SizedBox(
               height: 40.0,
@@ -184,21 +189,52 @@ class _AddAddressPageState extends State<AddAddressPage> {
   void onTapNext() async {
     _formKey.currentState!.save();
     if (widget.onNext != null) {
-      if (_address.isFullData == null) {
-        widget.onNext!(_address);
-      } else {
-        DialogProvider.of(context).showSnackBar(
+      if (_address.isFullData != null) {
+        DialogService.of(context).showSnackBar(
           _address.isFullData!,
           type: SnackBarType.error,
         );
+      } else {
+        var provider =
+            Provider.of<DeliveryUserProvider>(context, listen: false);
+
+        setState(() {
+          isUploadAddress = true;
+        });
+        var resp = await APIService().post(
+          APIService.kUrlAuth + '/registerAddress',
+          {
+            'address': _address.registerParam,
+            'delivery': provider.user.id,
+          },
+        );
+        if (resp != null) {
+          if (resp['ret'] == 10000) {
+            _address.id = resp['result'] as int;
+            widget.onNext!(_address);
+          } else {
+            DialogService.of(context).showSnackBar(
+              resp['msg'],
+              type: SnackBarType.error,
+            );
+          }
+        } else {
+          DialogService.of(context).showSnackBar(
+            'Server Error!',
+            type: SnackBarType.error,
+          );
+        }
+        setState(() {
+          isUploadAddress = false;
+        });
       }
     }
   }
 
   void onCountryDialog() async {
     _formKey.currentState!.save();
-    var countries = await JsonProvider.readCountryFromJson();
-    DialogProvider.of(context).showBottomSheet(
+    var countries = await JsonService.readCountryFromJson();
+    DialogService.of(context).showBottomSheet(
       Expanded(
         child: SingleChildScrollView(
           child: Column(

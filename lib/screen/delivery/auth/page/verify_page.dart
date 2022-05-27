@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mefood/util/extensions.dart';
 
-import '../../../../provider/dialog_provider.dart';
-import '../../../../widget/common/button.dart';
-import '../../../../widget/common/textfield.dart';
+import '../../../../service/dialog_service.dart';
+import '../../../../service/api_service.dart';
+import '../../../../extensions/e_string.dart';
+import '../../../../widget/common/common.dart';
 
 class DeliveryVerifyPage extends StatefulWidget {
   final Function()? onPrevious;
@@ -24,10 +24,11 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
   final ImagePicker _picker = ImagePicker();
 
   var _idcard = '';
-  var _licensePlate = '';
-  var _images = [];
+  var _license = '';
+  var _plate = '';
 
-  var _type = VerifyImageType.id_card;
+  final _images = ['', '', '', ''];
+  var _imageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -65,42 +66,35 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           const SizedBox(
             height: 16.0,
           ),
-          'Add Idcard or Passport'.wText(
-            TextStyle(
-              fontSize: 14.0,
-            ),
-          ),
-          const SizedBox(
-            height: 4.0,
-          ),
-          Container(
+          ImageUploadWidget(
             height: 200.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
+            header: 'Add Idcard or Passport',
+            placeImageSize: 75.0,
+            placeFontSize: 18.0,
+            link: _idcard,
+            onPicker: () => _onPickerAvatar(type: VerifyImageType.id_card),
           ),
           const SizedBox(
             height: 16.0,
           ),
-          'Car Licenese Plate'.wText(
-            TextStyle(
-              fontSize: 14.0,
-            ),
+          ImageUploadWidget(
+            height: 120.0,
+            header: 'Car Plate',
+            placeImageSize: 60.0,
+            placeFontSize: 16.0,
+            link: _plate,
+            onPicker: () => _onPickerAvatar(type: VerifyImageType.plate),
           ),
           const SizedBox(
-            height: 4.0,
+            height: 16.0,
           ),
-          Container(
-            height: 120.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
+          ImageUploadWidget(
+            height: 200.0,
+            header: 'Car Licenese',
+            placeImageSize: 75.0,
+            placeFontSize: 18.0,
+            link: _license,
+            onPicker: () => _onPickerAvatar(type: VerifyImageType.license),
           ),
           const SizedBox(
             height: 16.0,
@@ -116,58 +110,34 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           Row(
             children: [
               Expanded(
-                child: Container(
+                child: ImageUploadWidget(
                   height: 100.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
+                  placeImageSize: 40.0,
+                  placeFontSize: 10.0,
+                  link: _images[0],
+                  onPicker: () {
+                    _imageIndex = 0;
+                    _onPickerAvatar(type: VerifyImageType.car);
+                  },
                 ),
               ),
-              const SizedBox(
-                width: 8.0,
-              ),
-              Expanded(
-                child: Container(
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+              for (var i = 1; i < 4; i++) ...{
+                const SizedBox(
+                  width: 8.0,
+                ),
+                Expanded(
+                  child: ImageUploadWidget(
+                    height: 100.0,
+                    placeImageSize: 40.0,
+                    placeFontSize: 10.0,
+                    link: _images[i],
+                    onPicker: () {
+                      _imageIndex = i;
+                      _onPickerAvatar(type: VerifyImageType.car);
+                    },
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 8.0,
-              ),
-              Expanded(
-                child: Container(
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 8.0,
-              ),
-              Expanded(
-                child: Container(
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ),
-              ),
+              },
             ],
           ),
           const SizedBox(
@@ -182,7 +152,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           ),
           CustomFillButton(
             title: 'Next'.toUpperCase(),
-            onTap: widget.onNext,
+            onTap: onNext,
           ),
           const SizedBox(
             height: 40.0,
@@ -195,7 +165,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
   void _onPickerAvatar({
     required VerifyImageType type,
   }) {
-    DialogProvider.of(context).showBottomSheet(
+    DialogService.of(context).showBottomSheet(
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -254,27 +224,67 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
     );
     if (pickedFile != null) {
       var filePath = pickedFile.path;
-      // isUploadAvatar = true;
-      // setState(() {});
-      // var resp = await APIService.of().uploadAvatar(filePath: filePath);
-      // if (resp['ret'] == 10000) {
-      //   var avatarUrl = '$kUrlAvatar${resp['result']}';
-      //   logger.d(avatarUrl);
-      //   _user.avatar = avatarUrl;
-      // } else {
-      //   DialogProvider.of(context).showSnackBar(
-      //     'Upload image failed',
-      //     type: SnackBarType.error,
-      //   );
-      // }
-      // isUploadAvatar = false;
-      setState(() {});
+
+      var path = '';
+      switch (type) {
+        case VerifyImageType.id_card:
+          path = 'upload/idcard';
+          break;
+        case VerifyImageType.license:
+          path = 'upload/driver';
+          break;
+        case VerifyImageType.plate:
+          path = 'upload/plate';
+          break;
+        case VerifyImageType.car:
+          path = 'upload/car';
+          break;
+      }
+      var resp = await APIService.of().upload(
+        path: path,
+        filePath: filePath,
+      );
+
+      if (resp['ret'] == 10000) {
+        setImageUrl(resp['result'], type);
+      } else {
+        DialogService.of(context).showSnackBar(
+          'Upload image failed',
+          type: SnackBarType.error,
+        );
+      }
     }
+  }
+
+  void setImageUrl(
+    String url,
+    VerifyImageType type,
+  ) {
+    switch (type) {
+      case VerifyImageType.id_card:
+        _idcard = kUrlIDCard + url;
+        break;
+      case VerifyImageType.license:
+        _license = kUrlDriver + url;
+        break;
+      case VerifyImageType.plate:
+        _plate = kUrlPlate + url;
+        break;
+      case VerifyImageType.car:
+        _images[_imageIndex] = kUrlCar + url;
+        break;
+    }
+    setState(() {});
+  }
+
+  void onNext() async {
+    widget.onNext!();
   }
 }
 
 enum VerifyImageType {
   id_card,
   license,
+  plate,
   car,
 }

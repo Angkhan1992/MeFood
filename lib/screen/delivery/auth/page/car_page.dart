@@ -1,14 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/e_export.dart';
-import 'package:mefood/provider/dialog_provider.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/service/dialog_service.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../model/m_export.dart';
+import '../../../../model/model.dart';
 import '../../../../provider/delivery/user_provider.dart';
+import '../../../../service/api_service.dart';
 import '../../../../themes/dimens.dart';
-import '../../../../util/extensions.dart';
+import '../../../../extensions/e_string.dart';
 import '../../../../widget/common/button.dart';
 import '../../../../widget/common/textfield.dart';
 
@@ -28,6 +29,8 @@ class AddCarPage extends StatefulWidget {
 class _AddCarPageState extends State<AddCarPage> {
   CarModel _car = CarModel();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  var isUploadCar = false;
 
   @override
   void initState() {
@@ -163,6 +166,7 @@ class _AddCarPageState extends State<AddCarPage> {
             CustomFillButton(
               title: 'Next'.toUpperCase(),
               onTap: () => onTapNext(),
+              isLoading: isUploadCar,
             ),
             const SizedBox(
               height: 40.0,
@@ -177,20 +181,51 @@ class _AddCarPageState extends State<AddCarPage> {
     _formKey.currentState!.save();
     if (widget.onNext != null) {
       if (_car.isFullData != null) {
-        DialogProvider.of(context).showSnackBar(
+        DialogService.of(context).showSnackBar(
           _car.isFullData!,
           type: SnackBarType.error,
         );
         return;
       }
-      widget.onNext!(_car);
+
+      var provider = Provider.of<DeliveryUserProvider>(context, listen: false);
+      setState(() {
+        isUploadCar = true;
+      });
+      var resp = await APIService().post(
+        APIService.kUrlAuth + '/registerCar',
+        {
+          'car': _car.registerParam,
+          'delivery': provider.user.id,
+        },
+      );
+      if (resp != null) {
+        if (resp['ret'] == 10000) {
+          var id = resp['result'];
+          _car.id = id;
+          widget.onNext!(_car);
+        } else {
+          DialogService.of(context).showSnackBar(
+            resp['msg'],
+            type: SnackBarType.error,
+          );
+        }
+      } else {
+        DialogService.of(context).showSnackBar(
+          'Server Error!',
+          type: SnackBarType.error,
+        );
+      }
+      setState(() {
+        isUploadCar = false;
+      });
     }
   }
 
   void onDeliveryTypeDialog() {
     var types = ['Car', 'Motocycle', 'Walker'];
     _formKey.currentState!.save();
-    DialogProvider.of(context).showBottomSheet(
+    DialogService.of(context).showBottomSheet(
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [

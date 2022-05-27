@@ -4,17 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:mefood/provider/category_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:mefood/util/constants.dart';
+
 import 'generated/l10n.dart';
-import 'provider/flavor_provider.dart';
-import 'provider/injector_provider.dart';
 import 'screen/splash_screen.dart';
-import 'themes/colors.dart';
-import 'themes/dimens.dart';
-import 'themes/textstyles.dart';
-import 'util/constants.dart';
 
 Injector? injector;
 
@@ -35,7 +33,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  InjectProvider().initialise(Injector());
+  InjectService().initialise(Injector());
   injector = Injector();
   await AppInitializer().initialise(injector!);
 

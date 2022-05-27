@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 import 'package:geocoding/geocoding.dart';
-import 'package:mefood/model/address_model.dart';
+import 'package:mefood/model/model.dart';
 
 extension EAddressModel on AddressModel {
   String? get isFullData {
@@ -19,5 +21,14 @@ extension EAddressModel on AddressModel {
     postal = place.postalCode ?? '';
     province = place.administrativeArea ?? '';
     city = place.locality ?? '';
+  }
+
+  String get registerParam {
+    var result = <String, String>{};
+    for (var key in toJson().keys) {
+      var value = toJson()[key];
+      result[key] = value == null ? '' : value.toString();
+    }
+    return jsonEncode(result);
   }
 }

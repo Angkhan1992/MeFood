@@ -1,4 +1,6 @@
-import 'package:mefood/model/car_model.dart';
+import 'dart:convert';
+
+import 'package:mefood/model/model.dart';
 
 extension ECarModel on CarModel {
   String? get isFullData {
@@ -12,5 +14,14 @@ extension ECarModel on CarModel {
     if (weight == null || weight!.isEmpty) return 'Delivery Weight Empty';
 
     return null;
+  }
+
+  String get registerParam {
+    var result = <String, String>{};
+    for (var key in toJson().keys) {
+      var value = toJson()[key];
+      result[key] = value == null ? '' : value.toString();
+    }
+    return jsonEncode(result);
   }
 }

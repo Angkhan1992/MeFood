@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mefood/model/category_model.dart';
-import 'package:mefood/model/product_model.dart';
-import 'package:mefood/util/extensions.dart';
-
-import '../../themes/dimens.dart';
-import '../../themes/textstyles.dart';
-import '../common/mark.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:mefood/widget/common/common.dart';
 
 Widget homeCell(
   BuildContext context, {

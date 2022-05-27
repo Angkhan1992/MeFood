@@ -13,12 +13,16 @@ class CarModel with _$CarModel {
     String? color,
     String? since,
     String? type,
-    String? fuel,
     String? distance,
     String? speed,
     String? weight,
     String? regdate,
-    String? other,
+    String? license,
+    String? plate,
+    @JsonKey(name: 'front_image') String? front,
+    @JsonKey(name: 'back_image') String? back,
+    @JsonKey(name: 'left_image') String? left,
+    @JsonKey(name: 'right_image') String? right,
   }) = _CarModel;
 
   factory CarModel.fromJson(Map<String, dynamic> json) =>

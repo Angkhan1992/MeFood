@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/model/m_export.dart';
+import 'package:mefood/model/model.dart';
 
 class DeliveryUserProvider extends ChangeNotifier {
   DriverModel user = DriverModel();

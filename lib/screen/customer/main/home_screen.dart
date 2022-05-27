@@ -6,10 +6,10 @@ import 'package:line_icons/line_icons.dart';
 import 'package:mefood/model/product_model.dart';
 import 'package:mefood/model/restaurant_model.dart';
 import 'package:mefood/provider/category_provider.dart';
-import 'package:mefood/provider/json_provider.dart';
-import 'package:mefood/provider/navigator_provider.dart';
 import 'package:mefood/screen/customer/home/all_category_screen.dart';
 import 'package:mefood/screen/customer/home/category_screen.dart';
+import 'package:mefood/service/json_service.dart';
+import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/widget/common/appbar.dart';
 import 'package:mefood/widget/main/home_widget.dart';
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _initProvider() async {
     _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
-    var categories = await JsonProvider.readCategoryFromJson();
+    var categories = await JsonService.readCategoryFromJson();
     _categoryProvider!.instanceOfCategories(categories);
   }
 
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           title: 'Categories',
                           extend: 'View All',
-                          onExtend: () => NavigatorProvider.of(context).push(
+                          onExtend: () => NavigatorService.of(context).push(
                             screen: AllCategoryScreen(
                               categories: _categoryProvider!.categories,
                             ),
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   homeCell(
                     context,
                     model: model,
-                    onTap: () => NavigatorProvider.of(context).push(
+                    onTap: () => NavigatorService.of(context).push(
                       screen: CategoryScreen(
                         category: model,
                       ),

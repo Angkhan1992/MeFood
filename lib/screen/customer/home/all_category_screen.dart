@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mefood/service/navigator_service.dart';
 
 import '../../../model/category_model.dart';
-import '../../../provider/navigator_provider.dart';
 import '../../../themes/dimens.dart';
 import '../../../widget/common/appbar.dart';
 import '../../../widget/main/fake_widget.dart';
@@ -43,7 +43,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
           return listCell(
             context,
             model: category,
-            onTap: () => NavigatorProvider.of(context).push(
+            onTap: () => NavigatorService.of(context).push(
               screen: CategoryScreen(
                 category: category,
               ),

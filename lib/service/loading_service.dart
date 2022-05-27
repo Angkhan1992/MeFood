@@ -3,13 +3,13 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 bool isShowing = false;
 
-class LoadingProvider {
+class LoadingService {
   final BuildContext? context;
 
-  LoadingProvider(this.context);
+  LoadingService(this.context);
 
-  factory LoadingProvider.of(context) {
-    return LoadingProvider(context);
+  factory LoadingService.of(context) {
+    return LoadingService(context);
   }
 
   bool hide() {

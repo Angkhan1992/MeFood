@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/util/extensions.dart';
-
-import '../../themes/dimens.dart';
-import '../../themes/textstyles.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/themes/theme.dart';
 
 class CategoryWidget extends StatelessWidget {
   final String title;

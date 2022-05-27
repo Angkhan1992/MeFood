@@ -32,8 +32,6 @@ mixin _$CarModel {
   set since(String? value) => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   set type(String? value) => throw _privateConstructorUsedError;
-  String? get fuel => throw _privateConstructorUsedError;
-  set fuel(String? value) => throw _privateConstructorUsedError;
   String? get distance => throw _privateConstructorUsedError;
   set distance(String? value) => throw _privateConstructorUsedError;
   String? get speed => throw _privateConstructorUsedError;
@@ -42,8 +40,26 @@ mixin _$CarModel {
   set weight(String? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
   set regdate(String? value) => throw _privateConstructorUsedError;
-  String? get other => throw _privateConstructorUsedError;
-  set other(String? value) => throw _privateConstructorUsedError;
+  String? get license => throw _privateConstructorUsedError;
+  set license(String? value) => throw _privateConstructorUsedError;
+  String? get plate => throw _privateConstructorUsedError;
+  set plate(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'front_image')
+  String? get front => throw _privateConstructorUsedError;
+  @JsonKey(name: 'front_image')
+  set front(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'back_image')
+  String? get back => throw _privateConstructorUsedError;
+  @JsonKey(name: 'back_image')
+  set back(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'left_image')
+  String? get left => throw _privateConstructorUsedError;
+  @JsonKey(name: 'left_image')
+  set left(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'right_image')
+  String? get right => throw _privateConstructorUsedError;
+  @JsonKey(name: 'right_image')
+  set right(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,12 +78,16 @@ abstract class $CarModelCopyWith<$Res> {
       String? color,
       String? since,
       String? type,
-      String? fuel,
       String? distance,
       String? speed,
       String? weight,
       String? regdate,
-      String? other});
+      String? license,
+      String? plate,
+      @JsonKey(name: 'front_image') String? front,
+      @JsonKey(name: 'back_image') String? back,
+      @JsonKey(name: 'left_image') String? left,
+      @JsonKey(name: 'right_image') String? right});
 }
 
 /// @nodoc
@@ -86,12 +106,16 @@ class _$CarModelCopyWithImpl<$Res> implements $CarModelCopyWith<$Res> {
     Object? color = freezed,
     Object? since = freezed,
     Object? type = freezed,
-    Object? fuel = freezed,
     Object? distance = freezed,
     Object? speed = freezed,
     Object? weight = freezed,
     Object? regdate = freezed,
-    Object? other = freezed,
+    Object? license = freezed,
+    Object? plate = freezed,
+    Object? front = freezed,
+    Object? back = freezed,
+    Object? left = freezed,
+    Object? right = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -118,10 +142,6 @@ class _$CarModelCopyWithImpl<$Res> implements $CarModelCopyWith<$Res> {
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      fuel: fuel == freezed
-          ? _value.fuel
-          : fuel // ignore: cast_nullable_to_non_nullable
-              as String?,
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
@@ -138,9 +158,29 @@ class _$CarModelCopyWithImpl<$Res> implements $CarModelCopyWith<$Res> {
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      other: other == freezed
-          ? _value.other
-          : other // ignore: cast_nullable_to_non_nullable
+      license: license == freezed
+          ? _value.license
+          : license // ignore: cast_nullable_to_non_nullable
+              as String?,
+      plate: plate == freezed
+          ? _value.plate
+          : plate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      front: front == freezed
+          ? _value.front
+          : front // ignore: cast_nullable_to_non_nullable
+              as String?,
+      back: back == freezed
+          ? _value.back
+          : back // ignore: cast_nullable_to_non_nullable
+              as String?,
+      left: left == freezed
+          ? _value.left
+          : left // ignore: cast_nullable_to_non_nullable
+              as String?,
+      right: right == freezed
+          ? _value.right
+          : right // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -159,12 +199,16 @@ abstract class _$$_CarModelCopyWith<$Res> implements $CarModelCopyWith<$Res> {
       String? color,
       String? since,
       String? type,
-      String? fuel,
       String? distance,
       String? speed,
       String? weight,
       String? regdate,
-      String? other});
+      String? license,
+      String? plate,
+      @JsonKey(name: 'front_image') String? front,
+      @JsonKey(name: 'back_image') String? back,
+      @JsonKey(name: 'left_image') String? left,
+      @JsonKey(name: 'right_image') String? right});
 }
 
 /// @nodoc
@@ -185,12 +229,16 @@ class __$$_CarModelCopyWithImpl<$Res> extends _$CarModelCopyWithImpl<$Res>
     Object? color = freezed,
     Object? since = freezed,
     Object? type = freezed,
-    Object? fuel = freezed,
     Object? distance = freezed,
     Object? speed = freezed,
     Object? weight = freezed,
     Object? regdate = freezed,
-    Object? other = freezed,
+    Object? license = freezed,
+    Object? plate = freezed,
+    Object? front = freezed,
+    Object? back = freezed,
+    Object? left = freezed,
+    Object? right = freezed,
   }) {
     return _then(_$_CarModel(
       id: id == freezed
@@ -217,10 +265,6 @@ class __$$_CarModelCopyWithImpl<$Res> extends _$CarModelCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      fuel: fuel == freezed
-          ? _value.fuel
-          : fuel // ignore: cast_nullable_to_non_nullable
-              as String?,
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
@@ -237,9 +281,29 @@ class __$$_CarModelCopyWithImpl<$Res> extends _$CarModelCopyWithImpl<$Res>
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      other: other == freezed
-          ? _value.other
-          : other // ignore: cast_nullable_to_non_nullable
+      license: license == freezed
+          ? _value.license
+          : license // ignore: cast_nullable_to_non_nullable
+              as String?,
+      plate: plate == freezed
+          ? _value.plate
+          : plate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      front: front == freezed
+          ? _value.front
+          : front // ignore: cast_nullable_to_non_nullable
+              as String?,
+      back: back == freezed
+          ? _value.back
+          : back // ignore: cast_nullable_to_non_nullable
+              as String?,
+      left: left == freezed
+          ? _value.left
+          : left // ignore: cast_nullable_to_non_nullable
+              as String?,
+      right: right == freezed
+          ? _value.right
+          : right // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -256,12 +320,16 @@ class _$_CarModel implements _CarModel {
       this.color,
       this.since,
       this.type,
-      this.fuel,
       this.distance,
       this.speed,
       this.weight,
       this.regdate,
-      this.other});
+      this.license,
+      this.plate,
+      @JsonKey(name: 'front_image') this.front,
+      @JsonKey(name: 'back_image') this.back,
+      @JsonKey(name: 'left_image') this.left,
+      @JsonKey(name: 'right_image') this.right});
 
   factory _$_CarModel.fromJson(Map<String, dynamic> json) =>
       _$$_CarModelFromJson(json);
@@ -279,8 +347,6 @@ class _$_CarModel implements _CarModel {
   @override
   String? type;
   @override
-  String? fuel;
-  @override
   String? distance;
   @override
   String? speed;
@@ -289,11 +355,25 @@ class _$_CarModel implements _CarModel {
   @override
   String? regdate;
   @override
-  String? other;
+  String? license;
+  @override
+  String? plate;
+  @override
+  @JsonKey(name: 'front_image')
+  String? front;
+  @override
+  @JsonKey(name: 'back_image')
+  String? back;
+  @override
+  @JsonKey(name: 'left_image')
+  String? left;
+  @override
+  @JsonKey(name: 'right_image')
+  String? right;
 
   @override
   String toString() {
-    return 'CarModel(id: $id, name: $name, number: $number, color: $color, since: $since, type: $type, fuel: $fuel, distance: $distance, speed: $speed, weight: $weight, regdate: $regdate, other: $other)';
+    return 'CarModel(id: $id, name: $name, number: $number, color: $color, since: $since, type: $type, distance: $distance, speed: $speed, weight: $weight, regdate: $regdate, license: $license, plate: $plate, front: $front, back: $back, left: $left, right: $right)';
   }
 
   @JsonKey(ignore: true)
@@ -315,12 +395,16 @@ abstract class _CarModel implements CarModel {
       String? color,
       String? since,
       String? type,
-      String? fuel,
       String? distance,
       String? speed,
       String? weight,
       String? regdate,
-      String? other}) = _$_CarModel;
+      String? license,
+      String? plate,
+      @JsonKey(name: 'front_image') String? front,
+      @JsonKey(name: 'back_image') String? back,
+      @JsonKey(name: 'left_image') String? left,
+      @JsonKey(name: 'right_image') String? right}) = _$_CarModel;
 
   factory _CarModel.fromJson(Map<String, dynamic> json) = _$_CarModel.fromJson;
 
@@ -337,8 +421,6 @@ abstract class _CarModel implements CarModel {
   @override
   String? get type => throw _privateConstructorUsedError;
   @override
-  String? get fuel => throw _privateConstructorUsedError;
-  @override
   String? get distance => throw _privateConstructorUsedError;
   @override
   String? get speed => throw _privateConstructorUsedError;
@@ -347,7 +429,21 @@ abstract class _CarModel implements CarModel {
   @override
   String? get regdate => throw _privateConstructorUsedError;
   @override
-  String? get other => throw _privateConstructorUsedError;
+  String? get license => throw _privateConstructorUsedError;
+  @override
+  String? get plate => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'front_image')
+  String? get front => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'back_image')
+  String? get back => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'left_image')
+  String? get left => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'right_image')
+  String? get right => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_CarModelCopyWith<_$_CarModel> get copyWith =>

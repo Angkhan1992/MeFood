@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/provider/navigator_provider.dart';
 import 'package:mefood/screen/customer/main/main_screen.dart' as cs;
 import 'package:mefood/screen/delivery/main/main_screen.dart' as dl;
-import 'package:mefood/widget/common/landing_widget.dart';
-
-import '../provider/flavor_provider.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/widget/common/common.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
@@ -38,7 +36,7 @@ class _LandingScreenState extends State<LandingScreen> {
             title: _titles[index],
             desc: _descs[index],
             selected: index,
-            onTap: () => NavigatorProvider.of(context).push(
+            onTap: () => NavigatorService.of(context).push(
               screen:
                   F.isDelivery ? const dl.MainScreen() : const cs.MainScreen(),
               replace: true,

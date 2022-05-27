@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
 
-import '../../../util/extensions.dart';
+import '../../../extensions/e_string.dart';
 import '../../../themes/dimens.dart';
 import '../../../widget/common/button.dart';
 import '../../../widget/common/textfield.dart';

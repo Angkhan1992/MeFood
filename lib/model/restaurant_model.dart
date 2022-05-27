@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/util/extensions.dart';
+import 'package:mefood/extensions/e_string.dart';
 
 import '../themes/dimens.dart';
 import '../themes/textstyles.dart';

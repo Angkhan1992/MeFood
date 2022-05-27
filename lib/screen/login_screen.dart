@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:mefood/widget/common/common.dart';
 
-import '../provider/dialog_provider.dart';
-import '../provider/flavor_provider.dart';
-import '../provider/navigator_provider.dart';
-import '../themes/dimens.dart';
-import '../themes/textstyles.dart';
-import '../util/extensions.dart';
-import '../widget/common/button.dart';
-import '../widget/common/textfield.dart';
 import 'customer/auth/register_screen.dart' as cs;
 import 'delivery/auth/register_screen.dart' as dl;
 import 'landing_screen.dart';
@@ -221,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _googleLogin() async {
     if (_event!.value != LoginEvent.none) {
-      DialogProvider.of(context).kShowProcessingDialog();
+      DialogService.of(context).kShowProcessingDialog();
       return;
     }
     _event!.value = LoginEvent.google;
@@ -231,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _appleLogin() async {
     if (_event!.value != LoginEvent.none) {
-      DialogProvider.of(context).kShowProcessingDialog();
+      DialogService.of(context).kShowProcessingDialog();
       return;
     }
     _event!.value = LoginEvent.apple;
@@ -241,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _facebookLogin() async {
     if (_event!.value != LoginEvent.none) {
-      DialogProvider.of(context).kShowProcessingDialog();
+      DialogService.of(context).kShowProcessingDialog();
       return;
     }
     _event!.value = LoginEvent.facebook;
@@ -251,7 +247,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() async {
     if (_event!.value != LoginEvent.none) {
-      DialogProvider.of(context).kShowProcessingDialog();
+      DialogService.of(context).kShowProcessingDialog();
       return;
     }
 
@@ -264,15 +260,15 @@ class _LoginScreenState extends State<LoginScreen> {
     await Future.delayed(const Duration(seconds: 3));
     _event!.value = LoginEvent.none;
 
-    NavigatorProvider.of(context).push(screen: const LandingScreen());
+    NavigatorService.of(context).push(screen: const LandingScreen());
   }
 
   void _gotoRegister() {
     if (_event!.value != LoginEvent.none) {
-      DialogProvider.of(context).kShowProcessingDialog();
+      DialogService.of(context).kShowProcessingDialog();
       return;
     }
-    NavigatorProvider.of(context).push(
+    NavigatorService.of(context).push(
       screen:
           F.isDelivery ? const dl.RegisterScreen() : const cs.RegisterScreen(),
     );
