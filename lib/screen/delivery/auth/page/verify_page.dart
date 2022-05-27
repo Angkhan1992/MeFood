@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../service/dialog_service.dart';
-import '../../../../service/api_service.dart';
-import '../../../../extensions/e_string.dart';
-import '../../../../widget/common/common.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/widget/common/common.dart';
 
 class DeliveryVerifyPage extends StatefulWidget {
   final Function()? onPrevious;

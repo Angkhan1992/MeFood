@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/extensions/e_string.dart';
-
-import '../../../../widget/common/button.dart';
-import '../../../../widget/common/textfield.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/widget/common/common.dart';
 
 class PasswordPage extends StatelessWidget {
   final Function()? onDone;

@@ -6,17 +6,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/provider/delivery/user_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../extensions/extensions.dart';
-import '../../../../model/model.dart';
-import '../../../../service/dialog_service.dart';
-import '../../../../service/api_service.dart';
-import '../../../../extensions/e_string.dart';
-import '../../../../util/logger.dart';
-import '../../../../widget/common/button.dart';
-import '../../../../widget/common/textfield.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/util/logger.dart';
+import 'package:mefood/widget/common/common.dart';
 
 class AddProfilePage extends StatefulWidget {
   final Function(UserModel, int)? onNext;

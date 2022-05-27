@@ -3,13 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/delivery/delivery.dart';
+import 'package:mefood/widget/page/network_error.dart';
 
-import '../../../themes/dimens.dart';
-import '../../../themes/textstyles.dart';
-import '../../../extensions/e_string.dart';
-import '../../../widget/common/appbar.dart';
-import '../../../widget/delivery/toolbar.dart';
-import '../../../widget/page/network_error.dart';
 import 'chat_page.dart';
 import 'history_page.dart';
 import 'order_page.dart';

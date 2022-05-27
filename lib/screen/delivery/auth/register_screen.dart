@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/screen/delivery/auth/page/password_page.dart';
-import 'package:mefood/screen/delivery/auth/success_register_screen.dart';
-import 'package:mefood/util/logger.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/delivery/user_provider.dart';
-import '../../../service/navigator_service.dart';
-import '../../../extensions/e_string.dart';
-import 'page/address_page.dart';
-import 'page/car_page.dart';
-import 'page/user_page.dart';
-import 'page/verify_page.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/screen/delivery/auth/page/page.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/util/logger.dart';
+
+import 'success_register_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

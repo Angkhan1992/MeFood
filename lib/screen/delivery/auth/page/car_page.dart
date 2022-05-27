@@ -2,16 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/service/dialog_service.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:mefood/widget/common/common.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../model/model.dart';
-import '../../../../provider/delivery/user_provider.dart';
-import '../../../../service/api_service.dart';
-import '../../../../themes/dimens.dart';
-import '../../../../extensions/e_string.dart';
-import '../../../../widget/common/button.dart';
-import '../../../../widget/common/textfield.dart';
 
 class AddCarPage extends StatefulWidget {
   final Function()? onPrevious;

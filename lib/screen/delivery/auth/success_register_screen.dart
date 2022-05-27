@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/e_string.dart';
-
-import '../../../widget/common/button.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/widget/common/common.dart';
 
 class SuccessRegisterScreen extends StatefulWidget {
   const SuccessRegisterScreen({Key? key}) : super(key: key);
