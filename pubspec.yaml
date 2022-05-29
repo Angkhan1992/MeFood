@@ -22,7 +22,7 @@ dependencies:
   permission_handler: any
   share: any
   flutter_svg: any
-  shared_preferences: any
+  shared_preferences: ^2.0.15
   qr_flutter: ^4.0.0
   provider: any
   # qr_code_scanner: any
@@ -34,6 +34,7 @@ dependencies:
   avatar_glow: any
   animated_text_kit: any
   image_picker: any
+  crypto: any
 
   google_maps_flutter: any
   location: any

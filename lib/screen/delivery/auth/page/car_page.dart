@@ -103,9 +103,9 @@ class _AddCarPageState extends State<AddCarPage> {
             CustomTextField(
               prefix: const Icon(Icons.signal_cellular_0_bar),
               hintText: 'Car Since (ex: 2022)',
-              controller: TextEditingController(text: _car.since),
-              keyboardType: TextInputType.text,
-              onSaved: (since) => _car.since = since,
+              controller: TextEditingController(text: _car.since.toString()),
+              keyboardType: TextInputType.number,
+              onSaved: (since) => _car.since = int.parse(since!),
             ),
             const SizedBox(
               height: 16.0,
@@ -124,30 +124,30 @@ class _AddCarPageState extends State<AddCarPage> {
             ),
             CustomTextField(
               prefix: const Icon(Icons.social_distance),
-              controller: TextEditingController(text: _car.distance),
+              controller: TextEditingController(text: _car.distance.toString()),
               hintText: 'Distance (ex: max distance Km)',
               keyboardType: TextInputType.number,
-              onSaved: (distance) => _car.distance = distance,
+              onSaved: (distance) => _car.distance = int.parse(distance!),
             ),
             const SizedBox(
               height: 16.0,
             ),
             CustomTextField(
               prefix: const Icon(Icons.speed_outlined),
-              controller: TextEditingController(text: _car.speed),
+              controller: TextEditingController(text: _car.speed.toString()),
               hintText: 'Speed (ex: Km/h)',
               keyboardType: TextInputType.number,
-              onSaved: (speed) => _car.speed = speed,
+              onSaved: (speed) => _car.speed = int.parse(speed!),
             ),
             const SizedBox(
               height: 16.0,
             ),
             CustomTextField(
               prefix: const Icon(Icons.line_weight),
-              controller: TextEditingController(text: _car.weight),
+              controller: TextEditingController(text: _car.weight.toString()),
               hintText: 'Weight (ex: max Delivery Kg)',
               keyboardType: TextInputType.number,
-              onSaved: (weight) => _car.weight = weight,
+              onSaved: (weight) => _car.weight = int.parse(weight!),
             ),
             const SizedBox(
               height: 40.0,

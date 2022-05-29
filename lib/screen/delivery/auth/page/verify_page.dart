@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mefood/provider/provider.dart';
 
 import 'package:mefood/service/service.dart';
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/widget/common/common.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryVerifyPage extends StatefulWidget {
   final Function()? onPrevious;
@@ -28,6 +30,9 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
 
   final _images = ['', '', '', ''];
   var _imageIndex = 0;
+  var _isUpload = false;
+
+  final _codeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +63,9 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           ),
           CustomTextField(
             prefix: const Icon(Icons.code),
+            controller: _codeController,
             hintText: 'Email Verification Code',
             keyboardType: TextInputType.number,
-            // onSaved: (email) => _user.email = email,
           ),
           const SizedBox(
             height: 16.0,
@@ -152,6 +157,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           CustomFillButton(
             title: 'Next'.toUpperCase(),
             onTap: onNext,
+            isLoading: _isUpload,
           ),
           const SizedBox(
             height: 40.0,
@@ -277,7 +283,86 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
   }
 
   void onNext() async {
-    widget.onNext!();
+    if (_idcard.isEmpty) {
+      DialogService.of(context).showSnackBar(
+        'Empty IDCard Image.',
+        type: SnackBarType.error,
+      );
+      return;
+    }
+    if (_plate.isEmpty) {
+      DialogService.of(context).showSnackBar(
+        'Empty Car Plate Image.',
+        type: SnackBarType.error,
+      );
+      return;
+    }
+    if (_license.isEmpty) {
+      DialogService.of(context).showSnackBar(
+        'Empty Car License Image.',
+        type: SnackBarType.error,
+      );
+      return;
+    }
+    var faces = ['Front', 'Back', 'Left', 'Right'];
+    for (var image in _images) {
+      if (image.isEmpty) {
+        DialogService.of(context).showSnackBar(
+          'Empty ${faces[_images.indexOf(image)]} Car Image.',
+          type: SnackBarType.error,
+        );
+        return;
+      }
+    }
+
+    var code = _codeController.text;
+    if (code.isEmpty) {
+      DialogService.of(context).showSnackBar(
+        'Empty Verification Code.',
+        type: SnackBarType.error,
+      );
+      return;
+    }
+
+    _isUpload = true;
+    setState(() {});
+
+    var provider = Provider.of<DeliveryUserProvider>(context, listen: false);
+    var params = {
+      'code': code,
+      'idcard': _idcard,
+      'plate': _plate,
+      'license': _license,
+      'front': _images[0],
+      'back': _images[1],
+      'left': _images[2],
+      'right': _images[3],
+      'id': provider.user.id,
+    };
+    var resp = await APIService().post(
+      APIService.kUrlAuth + '/regDeliveryVerify',
+      params,
+    );
+
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        provider.setVerifyInfor(params);
+        widget.onNext!();
+      } else {
+        DialogService.of(context).showSnackBar(
+          resp['msg'],
+          type: SnackBarType.error,
+        );
+      }
+    } else {
+      DialogService.of(context).showSnackBar(
+        'Failed Server Error',
+        type: SnackBarType.error,
+      );
+    }
+
+    _isUpload = false;
+    setState(() {});
   }
 }
 

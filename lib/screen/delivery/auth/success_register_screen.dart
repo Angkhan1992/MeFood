@@ -38,7 +38,7 @@ class _SuccessRegisterScreenState extends State<SuccessRegisterScreen> {
               'You registered by Delivery User'.wText(
                 TextStyle(
                   fontSize: 18.0,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(

@@ -28,16 +28,16 @@ mixin _$CarModel {
   set number(String? value) => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
   set color(String? value) => throw _privateConstructorUsedError;
-  String? get since => throw _privateConstructorUsedError;
-  set since(String? value) => throw _privateConstructorUsedError;
+  int? get since => throw _privateConstructorUsedError;
+  set since(int? value) => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   set type(String? value) => throw _privateConstructorUsedError;
-  String? get distance => throw _privateConstructorUsedError;
-  set distance(String? value) => throw _privateConstructorUsedError;
-  String? get speed => throw _privateConstructorUsedError;
-  set speed(String? value) => throw _privateConstructorUsedError;
-  String? get weight => throw _privateConstructorUsedError;
-  set weight(String? value) => throw _privateConstructorUsedError;
+  int? get distance => throw _privateConstructorUsedError;
+  set distance(int? value) => throw _privateConstructorUsedError;
+  int? get speed => throw _privateConstructorUsedError;
+  set speed(int? value) => throw _privateConstructorUsedError;
+  int? get weight => throw _privateConstructorUsedError;
+  set weight(int? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
   set regdate(String? value) => throw _privateConstructorUsedError;
   String? get license => throw _privateConstructorUsedError;
@@ -76,11 +76,11 @@ abstract class $CarModelCopyWith<$Res> {
       String? name,
       String? number,
       String? color,
-      String? since,
+      int? since,
       String? type,
-      String? distance,
-      String? speed,
-      String? weight,
+      int? distance,
+      int? speed,
+      int? weight,
       String? regdate,
       String? license,
       String? plate,
@@ -137,7 +137,7 @@ class _$CarModelCopyWithImpl<$Res> implements $CarModelCopyWith<$Res> {
       since: since == freezed
           ? _value.since
           : since // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -145,15 +145,15 @@ class _$CarModelCopyWithImpl<$Res> implements $CarModelCopyWith<$Res> {
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       speed: speed == freezed
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       weight: weight == freezed
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       regdate: regdate == freezed
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
@@ -197,11 +197,11 @@ abstract class _$$_CarModelCopyWith<$Res> implements $CarModelCopyWith<$Res> {
       String? name,
       String? number,
       String? color,
-      String? since,
+      int? since,
       String? type,
-      String? distance,
-      String? speed,
-      String? weight,
+      int? distance,
+      int? speed,
+      int? weight,
       String? regdate,
       String? license,
       String? plate,
@@ -260,7 +260,7 @@ class __$$_CarModelCopyWithImpl<$Res> extends _$CarModelCopyWithImpl<$Res>
       since: since == freezed
           ? _value.since
           : since // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -268,15 +268,15 @@ class __$$_CarModelCopyWithImpl<$Res> extends _$CarModelCopyWithImpl<$Res>
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       speed: speed == freezed
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       weight: weight == freezed
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       regdate: regdate == freezed
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
@@ -343,15 +343,15 @@ class _$_CarModel implements _CarModel {
   @override
   String? color;
   @override
-  String? since;
+  int? since;
   @override
   String? type;
   @override
-  String? distance;
+  int? distance;
   @override
-  String? speed;
+  int? speed;
   @override
-  String? weight;
+  int? weight;
   @override
   String? regdate;
   @override
@@ -393,11 +393,11 @@ abstract class _CarModel implements CarModel {
       String? name,
       String? number,
       String? color,
-      String? since,
+      int? since,
       String? type,
-      String? distance,
-      String? speed,
-      String? weight,
+      int? distance,
+      int? speed,
+      int? weight,
       String? regdate,
       String? license,
       String? plate,
@@ -417,15 +417,15 @@ abstract class _CarModel implements CarModel {
   @override
   String? get color => throw _privateConstructorUsedError;
   @override
-  String? get since => throw _privateConstructorUsedError;
+  int? get since => throw _privateConstructorUsedError;
   @override
   String? get type => throw _privateConstructorUsedError;
   @override
-  String? get distance => throw _privateConstructorUsedError;
+  int? get distance => throw _privateConstructorUsedError;
   @override
-  String? get speed => throw _privateConstructorUsedError;
+  int? get speed => throw _privateConstructorUsedError;
   @override
-  String? get weight => throw _privateConstructorUsedError;
+  int? get weight => throw _privateConstructorUsedError;
   @override
   String? get regdate => throw _privateConstructorUsedError;
   @override

@@ -7,11 +7,11 @@ extension ECarModel on CarModel {
     if (name == null || name!.isEmpty) return 'Name Data Empty';
     if (number == null || number!.isEmpty) return 'License Number Empty';
     if (color == null || color!.isEmpty) return 'Car Color Empty';
-    if (since == null || since!.isEmpty) return 'Car Since Empty';
+    if (since == null) return 'Car Since Empty';
     if (type == null || type!.isEmpty) return 'Delivery Type Empty';
-    if (distance == null || distance!.isEmpty) return 'Delivery Distance Empty';
-    if (speed == null || speed!.isEmpty) return 'Delivery Speed Empty';
-    if (weight == null || weight!.isEmpty) return 'Delivery Weight Empty';
+    if (distance == null) return 'Delivery Distance Empty';
+    if (speed == null) return 'Delivery Speed Empty';
+    if (weight == null) return 'Delivery Weight Empty';
 
     return null;
   }

@@ -101,3 +101,37 @@ class CustomOutlineButton extends StatelessWidget {
     );
   }
 }
+
+class LoginSocialButton extends StatelessWidget {
+  final bool isLoading;
+  final Icon icon;
+  final Function()? onTap;
+
+  const LoginSocialButton({
+    Key? key,
+    required this.icon,
+    this.onTap,
+    this.isLoading = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onTap,
+      child: Container(
+        width: 44.0,
+        height: 44.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        alignment: Alignment.center,
+        child: isLoading
+            ? ProgressWidget(
+                color: Theme.of(context).colorScheme.onSecondary,
+              )
+            : icon,
+      ),
+    );
+  }
+}

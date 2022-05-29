@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mefood/util/app_config.dart';
 
 extension EString on String {
   static const String emailRegx =
@@ -11,11 +15,28 @@ extension EString on String {
           ? 'Not Match Email'
           : null;
 
-  String? get validatePassword => trim().isEmpty
-      ? 'Empty Password Field'
-      : trim().length < 8
-          ? 'Password should be more then 8 charecters'
-          : null;
+  List<bool> get validatePasswords {
+    if (isEmpty) return [false, false, false, false, false];
+    return [
+      RegExp(passUpperPattern).hasMatch(trim()),
+      RegExp(passLowerPattern).hasMatch(trim()),
+      RegExp(passNumberPattern).hasMatch(trim()),
+      RegExp(passSpecialPattern).hasMatch(trim()),
+      RegExp(passLengthPattern).hasMatch(trim()),
+    ];
+  }
+
+  String get generateMD5 => md5.convert(utf8.encode(this)).toString();
+
+  bool get validatePassword {
+    var valids = validatePasswords;
+    for (var valid in valids) {
+      if (!valid) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   Widget get wTitle {
     return Text(

@@ -252,7 +252,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
         }
       } else {
         DialogService.of(context).showSnackBar(
-          'content',
+          'Failed Server Error',
           type: SnackBarType.error,
         );
       }
@@ -379,7 +379,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
       isUploadAvatar = true;
       setState(() {});
       var resp = await APIService.of().upload(
-        path: 'uploadAvatar',
+        path: 'upload/avatar',
         filePath: filePath,
       );
       if (resp['ret'] == 10000) {

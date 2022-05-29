@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/screen/delivery/auth/pending_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';
+import 'package:provider/provider.dart';
 
 import 'customer/auth/register_screen.dart' as cs;
 import 'delivery/auth/register_screen.dart' as dl;
@@ -23,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _email;
   String? _password;
 
+  var _passVisible = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _socialIcons = [
@@ -89,9 +94,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           prefix: const Icon(LineIcons.key),
                           hintText: 'Password',
-                          obscureText: true,
+                          obscureText: _passVisible,
                           textInputAction: TextInputAction.done,
-                          suffix: const Icon(LineIcons.eye),
+                          suffix: InkWell(
+                            onTap: () => setState(() {
+                              _passVisible = !_passVisible;
+                            }),
+                            child: Icon(
+                              _passVisible
+                                  ? Icons.remove_red_eye
+                                  : Icons.remove_red_eye_outlined,
+                            ),
+                          ),
                           onSaved: (pass) {
                             _password = pass;
                           },
@@ -111,65 +125,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            InkWell(
+                            LoginSocialButton(
+                              icon: Icon(_socialIcons[0]),
+                              isLoading: _event!.value == LoginEvent.google,
                               onTap: () => _googleLogin(),
-                              child: Container(
-                                width: 44.0,
-                                height: 44.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                                alignment: Alignment.center,
-                                child: _event!.value == LoginEvent.google
-                                    ? ProgressWidget(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      )
-                                    : Icon(_socialIcons[0]),
-                              ),
                             ),
-                            InkWell(
+                            LoginSocialButton(
+                              icon: Icon(_socialIcons[1]),
+                              isLoading: _event!.value == LoginEvent.apple,
                               onTap: () => _appleLogin(),
-                              child: Container(
-                                width: 44.0,
-                                height: 44.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                                alignment: Alignment.center,
-                                child: _event!.value == LoginEvent.apple
-                                    ? ProgressWidget(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      )
-                                    : Icon(_socialIcons[1]),
-                              ),
                             ),
-                            InkWell(
+                            LoginSocialButton(
+                              icon: Icon(_socialIcons[2]),
+                              isLoading: _event!.value == LoginEvent.facebook,
                               onTap: () => _facebookLogin(),
-                              child: Container(
-                                width: 44.0,
-                                height: 44.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                                alignment: Alignment.center,
-                                child: _event!.value == LoginEvent.facebook
-                                    ? ProgressWidget(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
-                                      )
-                                    : Icon(_socialIcons[2]),
-                              ),
                             ),
                           ],
                         ),
@@ -251,16 +220,58 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
     _formKey.currentState!.save();
+    // if (_email!.validateEmail != null) {
+    //   DialogService.of(context).showSnackBar(
+    //     _email!.validateEmail!,
+    //     type: SnackBarType.error,
+    //   );
+    //   return;
+    // }
+    // if (!_password!.validatePassword) {
+    //   DialogService.of(context).showSnackBar(
+    //     'Invalid Password Format',
+    //     type: SnackBarType.error,
+    //   );
+    //   return;
+    // }
 
-    _event!.value = LoginEvent.login;
-    await Future.delayed(const Duration(seconds: 3));
-    _event!.value = LoginEvent.none;
+    if (F.isDelivery) {
+      _event!.value = LoginEvent.login;
+      var resp = await APIService().post(
+        APIService.kUrlAuth + '/loginDelivery',
+        {
+          'email': _email,
+          'password': _password!.generateMD5,
+        },
+      );
+      _event!.value = LoginEvent.none;
 
-    NavigatorService.of(context).push(screen: const LandingScreen());
+      if (resp != null) {
+        if (resp['ret'] == 10000) {
+          var provider = Provider.of<DeliveryUserProvider>(
+            context,
+            listen: false,
+          );
+          provider.setDeliveryUser(DriverModel.fromJson(resp['result']));
+          if (provider.isEnabled()) {
+            NavigatorService.of(context).push(screen: const LandingScreen());
+          } else {
+            NavigatorService.of(context).push(screen: const PendingScreen());
+          }
+        } else {
+          DialogService.of(context).showSnackBar(
+            resp['msg'],
+            type: SnackBarType.error,
+          );
+        }
+      } else {
+        DialogService.of(context).showSnackBar(
+          'Failed Server Error',
+          type: SnackBarType.error,
+        );
+      }
+    } else {}
   }
 
   void _gotoRegister() {
