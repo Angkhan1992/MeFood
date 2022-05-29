@@ -15,8 +15,11 @@ import 'package:mefood/widget/common/common.dart';
 class AddAddressPage extends StatefulWidget {
   final Function()? onPrevious;
   final Function(AddressModel)? onNext;
+  final bool isLogin;
+
   AddAddressPage({
     Key? key,
+    this.isLogin = false,
     this.onPrevious,
     this.onNext,
   }) : super(key: key);
@@ -54,7 +57,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             const SizedBox(
               height: 16.0,
             ),
-            'Add Address'.wText(
+            'User Address'.wText(
               TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.w700,
@@ -159,18 +162,27 @@ class _AddAddressPageState extends State<AddAddressPage> {
             const SizedBox(
               height: 40.0,
             ),
-            CustomOutlineButton(
-              title: 'Previous'.toUpperCase(),
-              onTap: widget.onPrevious,
-            ),
-            const SizedBox(
-              height: 16.0,
-            ),
-            CustomFillButton(
-              title: 'Next'.toUpperCase(),
-              onTap: () => onTapNext(),
-              isLoading: isUploadAddress,
-            ),
+            widget.isLogin
+                ? CustomFillButton(
+                    title: 'Update Address'.toUpperCase(),
+                    onTap: widget.onPrevious,
+                  )
+                : Column(
+                    children: [
+                      CustomOutlineButton(
+                        title: 'Previous'.toUpperCase(),
+                        onTap: widget.onPrevious,
+                      ),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      CustomFillButton(
+                        title: 'Next'.toUpperCase(),
+                        onTap: () => onTapNext(),
+                        isLoading: isUploadAddress,
+                      ),
+                    ],
+                  ),
             const SizedBox(
               height: 40.0,
             ),

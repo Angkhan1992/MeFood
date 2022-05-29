@@ -82,6 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         CustomTextField(
                           prefix: const Icon(LineIcons.user),
+                          controller: TextEditingController(
+                              text: 'bgold1118@gmail.com'),
                           hintText: 'Email or User ID',
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (email) {
@@ -94,6 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           prefix: const Icon(LineIcons.key),
                           hintText: 'Password',
+                          controller:
+                              TextEditingController(text: 'Black123456@'),
                           obscureText: _passVisible,
                           textInputAction: TextInputAction.done,
                           suffix: InkWell(

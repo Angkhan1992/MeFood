@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/util/logger.dart';
 
 import '../../../extensions/e_string.dart';
 import '../../../themes/dimens.dart';
@@ -154,5 +155,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _register() async {}
+  void _register() async {
+    var resp = {
+      'first': _firstName,
+      'last': _lastName,
+      'email': _email,
+      'phone': _phone,
+      'pass': _password,
+      'repass': _repass,
+    };
+    logger.d(resp);
+  }
 }

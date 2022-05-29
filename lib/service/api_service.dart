@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
 
 const kDomain = 'http://192.168.0.253:52526';
@@ -12,13 +14,16 @@ const kUrlPlate = '$kDomain/assets/plate/';
 const kUrlCar = '$kDomain/assets/car/';
 
 class APIService {
+  final BuildContext? context;
+
   static final kUrlCategory = '$kDomain/category';
   static final kUrlAuth = '$kDomain/auth';
+  static final kUrlSupport = '$kDomain/support';
 
-  APIService();
+  APIService({this.context});
 
-  factory APIService.of() {
-    return APIService();
+  factory APIService.of({BuildContext? context}) {
+    return APIService(context: context);
   }
 
   Future<Map<String, dynamic>?> post(
@@ -32,10 +37,16 @@ class APIService {
       body[key] = param[key].toString();
     }
 
+    if (context != null) {
+      DialogService.of(context!).showProgressLoading();
+    }
     final response = await http.post(
       url,
       body: body,
     );
+    if (context != null) {
+      Navigator.of(context!).pop();
+    }
     if (response.statusCode == 201 || response.statusCode == 200) {
       try {
         var json = jsonDecode(response.body);

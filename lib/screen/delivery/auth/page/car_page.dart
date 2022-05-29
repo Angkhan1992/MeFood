@@ -12,8 +12,11 @@ import 'package:provider/provider.dart';
 class AddCarPage extends StatefulWidget {
   final Function()? onPrevious;
   final Function(CarModel)? onNext;
+  final bool isLogin;
+
   AddCarPage({
     Key? key,
+    this.isLogin = false,
     this.onPrevious,
     this.onNext,
   }) : super(key: key);
@@ -50,7 +53,7 @@ class _AddCarPageState extends State<AddCarPage> {
             const SizedBox(
               height: 16.0,
             ),
-            'Add Car'.wText(
+            'Car Information'.wText(
               TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.w700,
@@ -152,18 +155,28 @@ class _AddCarPageState extends State<AddCarPage> {
             const SizedBox(
               height: 40.0,
             ),
-            CustomOutlineButton(
-              title: 'Previous'.toUpperCase(),
-              onTap: widget.onPrevious,
-            ),
-            const SizedBox(
-              height: 16.0,
-            ),
-            CustomFillButton(
-              title: 'Next'.toUpperCase(),
-              onTap: () => onTapNext(),
-              isLoading: isUploadCar,
-            ),
+            widget.isLogin
+                ? CustomFillButton(
+                    title: 'Update Car'.toUpperCase(),
+                    onTap: () => onTapNext(),
+                    isLoading: isUploadCar,
+                  )
+                : Column(
+                    children: [
+                      CustomOutlineButton(
+                        title: 'Previous'.toUpperCase(),
+                        onTap: widget.onPrevious,
+                      ),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      CustomFillButton(
+                        title: 'Next'.toUpperCase(),
+                        onTap: () => onTapNext(),
+                        isLoading: isUploadCar,
+                      ),
+                    ],
+                  ),
             const SizedBox(
               height: 40.0,
             ),

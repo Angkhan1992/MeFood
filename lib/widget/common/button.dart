@@ -82,19 +82,19 @@ class CustomOutlineButton extends StatelessWidget {
         onPressed: onTap,
         child: isLoading
             ? ProgressWidget(
-                color: Theme.of(context).colorScheme.secondary,
+                color: borderColor ?? Theme.of(context).colorScheme.secondary,
               )
             : Text(
                 title,
                 style: CustomText.semiBold(
                   fontSize: fontMd,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: borderColor ?? Theme.of(context).colorScheme.secondary,
                 ),
               ),
         style: OutlinedButton.styleFrom(
           side: BorderSide(
             width: 2.0,
-            color: Theme.of(context).colorScheme.secondary,
+            color: borderColor ?? Theme.of(context).colorScheme.secondary,
           ),
         ),
       ),

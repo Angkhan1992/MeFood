@@ -2,7 +2,10 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gif_view/gif_view.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mefood/util/logger.dart';
 
 import '../themes/colors.dart';
 import '../themes/dimens.dart';
@@ -198,7 +201,7 @@ class DialogService {
                         child: Text(
                           title,
                           style: CustomText.bold(
-                            fontSize: fontMd,
+                            fontSize: fontXMd,
                             color: Colors.white,
                           ),
                         ),
@@ -264,6 +267,43 @@ class DialogService {
     showSnackBar(
       'Processing now ...',
       type: SnackBarType.waring,
+    );
+  }
+
+  Future<void> showSuccessGif() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30.0),
+          child: GifView.asset(
+            'assets/gifs/success.gif',
+            width: 150.0,
+            height: 150.0,
+            fit: BoxFit.cover,
+            onStart: () => logger.d('Start gif'),
+            onFinish: () => Navigator.of(context).pop(),
+            frameRate: 24,
+            repeat: ImageRepeat.noRepeat,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> showProgressLoading() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: Center(
+          child: LoadingAnimationWidget.fourRotatingDots(
+            color: Theme.of(context).colorScheme.secondary,
+            size: 48.0,
+          ),
+        ),
+      ),
     );
   }
 }

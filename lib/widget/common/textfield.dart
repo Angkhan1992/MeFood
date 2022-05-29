@@ -108,3 +108,58 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
+
+class CustomTextMemo extends StatelessWidget {
+  final String? hintText;
+  final TextEditingController? controller;
+  final Function(String?)? onSaved;
+  final Function(String)? onSubmitted;
+  final int lines;
+  final double height;
+
+  const CustomTextMemo({
+    Key? key,
+    this.hintText,
+    this.controller,
+    this.onSaved,
+    this.onSubmitted,
+    this.lines = 7,
+    this.height = 200.0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(offsetBase),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(offsetSm),
+        border: Border.all(
+          width: 1.0,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: TextInputType.multiline,
+        textInputAction: TextInputAction.newline,
+        cursorColor: Theme.of(context).colorScheme.secondary,
+        style: CustomText.medium(fontSize: fontMd),
+        maxLines: lines,
+        minLines: lines,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: CustomText.regular(fontSize: fontMd),
+          contentPadding: EdgeInsets.zero,
+          border: InputBorder.none,
+          errorBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
+          focusedErrorBorder: InputBorder.none,
+        ),
+        onSaved: onSaved,
+        onFieldSubmitted: onSubmitted,
+      ),
+    );
+  }
+}

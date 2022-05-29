@@ -16,9 +16,11 @@ import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/common/common.dart';
 
 class AddProfilePage extends StatefulWidget {
+  final bool isLogin;
   final Function(UserModel, int)? onNext;
   AddProfilePage({
     Key? key,
+    this.isLogin = false,
     this.onNext,
   }) : super(key: key);
 
@@ -30,8 +32,6 @@ class _AddProfilePageState extends State<AddProfilePage> {
   UserModel _user = UserModel();
   final ImagePicker _picker = ImagePicker();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  bool isUploadAvatar = false;
 
   @override
   void initState() {
@@ -214,11 +214,15 @@ class _AddProfilePageState extends State<AddProfilePage> {
             const SizedBox(
               height: 40.0,
             ),
-            CustomFillButton(
-              title: 'Next'.toUpperCase(),
-              onTap: () => onTapNext(),
-              isLoading: isUploadAvatar,
-            ),
+            widget.isLogin
+                ? CustomFillButton(
+                    title: 'Update Profile'.toUpperCase(),
+                    onTap: () => onTapRegister(),
+                  )
+                : CustomFillButton(
+                    title: 'Next'.toUpperCase(),
+                    onTap: () => onTapRegister(),
+                  ),
             const SizedBox(
               height: 40.0,
             ),
@@ -228,14 +232,12 @@ class _AddProfilePageState extends State<AddProfilePage> {
     );
   }
 
-  void onTapNext() async {
+  void onTapRegister() async {
     if (widget.onNext != null) {
       _formKey.currentState!.save();
       if (!_user.isFullData) return;
 
-      isUploadAvatar = true;
-      setState(() {});
-      var resp = await APIService().post(
+      var resp = await APIService.of(context: context).post(
         APIService.kUrlAuth + '/registerUser',
         _user.toJson(),
       );
@@ -256,9 +258,32 @@ class _AddProfilePageState extends State<AddProfilePage> {
           type: SnackBarType.error,
         );
       }
+    }
+  }
 
-      isUploadAvatar = false;
-      setState(() {});
+  void onTapSubmit() async {
+    if (widget.onNext != null) {
+      _formKey.currentState!.save();
+      if (!_user.isFullData) return;
+      var resp = await APIService.of(context: context).post(
+        '${APIService.kUrlAuth}/updateUser',
+        _user.toJson(),
+      );
+      if (resp != null) {
+        if (resp['ret'] == 10000) {
+          widget.onNext!(_user, _user.id!);
+        } else {
+          DialogService.of(context).showSnackBar(
+            resp['msg'],
+            type: SnackBarType.error,
+          );
+        }
+      } else {
+        DialogService.of(context).showSnackBar(
+          'Failed Server Error',
+          type: SnackBarType.error,
+        );
+      }
     }
   }
 
@@ -376,8 +401,6 @@ class _AddProfilePageState extends State<AddProfilePage> {
     );
     if (pickedFile != null) {
       var filePath = pickedFile.path;
-      isUploadAvatar = true;
-      setState(() {});
       var resp = await APIService.of().upload(
         path: 'upload/avatar',
         filePath: filePath,
@@ -392,8 +415,6 @@ class _AddProfilePageState extends State<AddProfilePage> {
           type: SnackBarType.error,
         );
       }
-      isUploadAvatar = false;
-      setState(() {});
     }
   }
 }
