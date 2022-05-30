@@ -217,11 +217,11 @@ class _AddProfilePageState extends State<AddProfilePage> {
             widget.isLogin
                 ? CustomFillButton(
                     title: 'Update Profile'.toUpperCase(),
-                    onTap: () => onTapRegister(),
+                    onTap: onTapSubmit,
                   )
                 : CustomFillButton(
                     title: 'Next'.toUpperCase(),
-                    onTap: () => onTapRegister(),
+                    onTap: onTapRegister,
                   ),
             const SizedBox(
               height: 40.0,
@@ -236,7 +236,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
     if (widget.onNext != null) {
       _formKey.currentState!.save();
       if (!_user.isFullData) return;
-
+      FocusScope.of(context).unfocus();
       var resp = await APIService.of(context: context).post(
         APIService.kUrlAuth + '/registerUser',
         _user.toJson(),
@@ -265,6 +265,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
     if (widget.onNext != null) {
       _formKey.currentState!.save();
       if (!_user.isFullData) return;
+      FocusScope.of(context).unfocus();
       var resp = await APIService.of(context: context).post(
         '${APIService.kUrlAuth}/updateUser',
         _user.toJson(),

@@ -165,7 +165,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             widget.isLogin
                 ? CustomFillButton(
                     title: 'Update Address'.toUpperCase(),
-                    onTap: widget.onPrevious,
+                    onTap: onTapSubmit,
                   )
                 : Column(
                     children: [
@@ -178,7 +178,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       ),
                       CustomFillButton(
                         title: 'Next'.toUpperCase(),
-                        onTap: () => onTapNext(),
+                        onTap: onTapNext,
                         isLoading: isUploadAddress,
                       ),
                     ],
@@ -201,6 +201,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
           type: SnackBarType.error,
         );
       } else {
+        FocusScope.of(context).unfocus();
         var provider =
             Provider.of<DeliveryUserProvider>(context, listen: false);
 
@@ -234,6 +235,30 @@ class _AddAddressPageState extends State<AddAddressPage> {
           isUploadAddress = false;
         });
       }
+    }
+  }
+
+  void onTapSubmit() async {
+    FocusScope.of(context).unfocus();
+    _formKey.currentState!.save();
+    if (_address.isFullData != null) {
+      DialogService.of(context).showSnackBar(
+        'Please fill fields',
+        type: SnackBarType.error,
+      );
+      return;
+    }
+    var resp = await APIService.of(context: context).post(
+      '${APIService.kUrlAuth}/updateAddress',
+      _address.toJson(),
+    );
+    if (resp!['ret'] == 10000) {
+      widget.onNext!(_address);
+    } else {
+      DialogService.of(context).showSnackBar(
+        'Server Error!',
+        type: SnackBarType.error,
+      );
     }
   }
 

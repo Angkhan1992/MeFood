@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:mefood/util/logger.dart';
 
 import '../themes/colors.dart';
 import '../themes/dimens.dart';
@@ -282,7 +281,6 @@ class DialogService {
             width: 150.0,
             height: 150.0,
             fit: BoxFit.cover,
-            onStart: () => logger.d('Start gif'),
             onFinish: () => Navigator.of(context).pop(),
             frameRate: 24,
             repeat: ImageRepeat.noRepeat,

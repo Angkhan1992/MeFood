@@ -71,4 +71,13 @@ extension EString on String {
       textAlign: centerLine ? TextAlign.center : TextAlign.left,
     );
   }
+
+  Color? get convert2Color {
+    try {
+      int value = int.parse(this, radix: 16);
+      return Color(value);
+    } catch (e) {
+      return null;
+    }
+  }
 }

@@ -22,17 +22,9 @@ class UpdateScreen extends StatefulWidget {
 }
 
 class _UpdateScreenState extends State<UpdateScreen> {
-  DeliveryUserProvider? provider;
-
   @override
   void initState() {
     super.initState();
-    Timer.run(() {
-      provider = Provider.of<DeliveryUserProvider>(
-        context,
-        listen: false,
-      );
-    });
   }
 
   @override
@@ -42,50 +34,58 @@ class _UpdateScreenState extends State<UpdateScreen> {
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: offsetBase,
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Theme.of(context).colorScheme.secondary,
+      body: Consumer<DeliveryUserProvider>(
+        builder: (context, value, child) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: offsetBase,
             ),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(offsetBase),
-              child: [
-                AddProfilePage(
-                  isLogin: true,
-                  onNext: (user, id) {
-                    provider!.setUser(user);
-                    onUpdateSuccess();
-                  },
-                ),
-                AddAddressPage(
-                  isLogin: true,
-                  onNext: (address) {
-                    provider!.setAddress(address);
-                    onUpdateSuccess();
-                  },
-                ),
-                AddCarPage(
-                  isLogin: true,
-                  onNext: (car) {
-                    provider!.setCar(car);
-                    onUpdateSuccess();
-                  },
-                ),
-                SecuritPage(),
-                AuthSupportPage(),
-              ][widget.index],
+            IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(offsetBase),
+                child: [
+                  AddProfilePage(
+                    isLogin: true,
+                    onNext: (user, id) {
+                      value.setUser(user);
+                      onUpdateSuccess();
+                    },
+                  ),
+                  AddAddressPage(
+                    isLogin: true,
+                    onNext: (address) {
+                      value.setAddress(address);
+                      onUpdateSuccess();
+                    },
+                  ),
+                  AddCarPage(
+                    isLogin: true,
+                    onNext: (car) {
+                      value.setCar(car);
+                      onUpdateSuccess();
+                    },
+                  ),
+                  SecuritPage(
+                    onNext: (p0, p1) {
+                      value.setCar(p1);
+                      value.setUser(p0);
+                      onUpdateSuccess();
+                    },
+                  ),
+                  AuthSupportPage(),
+                ][widget.index],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

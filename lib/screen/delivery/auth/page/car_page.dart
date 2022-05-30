@@ -96,9 +96,18 @@ class _AddCarPageState extends State<AddCarPage> {
             CustomTextField(
               prefix: const Icon(Icons.color_lens_outlined),
               controller: TextEditingController(text: _car.color),
-              hintText: 'Car Color (ex: Red)',
+              hintText: 'Car Color (ex: 0xff0000)',
               keyboardType: TextInputType.text,
-              onSaved: (color) => _car.color = color,
+              readOnly: true,
+              onTap: () async {
+                var updateColor = await ColorPickerService.of(
+                  context,
+                  picker: _car.color!.convert2Color,
+                ).picker();
+                if (updateColor != null) {
+                  _car.color = updateColor.convett2String;
+                }
+              },
             ),
             const SizedBox(
               height: 16.0,
@@ -158,7 +167,7 @@ class _AddCarPageState extends State<AddCarPage> {
             widget.isLogin
                 ? CustomFillButton(
                     title: 'Update Car'.toUpperCase(),
-                    onTap: () => onTapNext(),
+                    onTap: onTapSubmit,
                     isLoading: isUploadCar,
                   )
                 : Column(
@@ -172,7 +181,7 @@ class _AddCarPageState extends State<AddCarPage> {
                       ),
                       CustomFillButton(
                         title: 'Next'.toUpperCase(),
-                        onTap: () => onTapNext(),
+                        onTap: onTapNext,
                         isLoading: isUploadCar,
                       ),
                     ],
@@ -186,6 +195,34 @@ class _AddCarPageState extends State<AddCarPage> {
     );
   }
 
+  void onTapSubmit() async {
+    FocusScope.of(context).unfocus();
+    if (widget.onNext != null) {
+      _formKey.currentState!.save();
+      if (_car.isFullData != null) {
+        DialogService.of(context).showSnackBar(
+          _car.isFullData!,
+          type: SnackBarType.error,
+        );
+        return;
+      }
+      FocusScope.of(context).unfocus();
+
+      var resp = await APIService.of(context: context).post(
+        '${APIService.kUrlAuth}/updateCar',
+        _car.toJson(),
+      );
+      if (resp!['ret'] == 10000) {
+        widget.onNext!(_car);
+      } else {
+        DialogService.of(context).showSnackBar(
+          'Server Error!',
+          type: SnackBarType.error,
+        );
+      }
+    }
+  }
+
   void onTapNext() async {
     _formKey.currentState!.save();
     if (widget.onNext != null) {
@@ -196,6 +233,7 @@ class _AddCarPageState extends State<AddCarPage> {
         );
         return;
       }
+      FocusScope.of(context).unfocus();
 
       var provider = Provider.of<DeliveryUserProvider>(context, listen: false);
       setState(() {

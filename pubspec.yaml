@@ -35,7 +35,10 @@ dependencies:
   animated_text_kit: any
   image_picker: any
   crypto: any
+
   gif_view: ^0.0.1
+  widget_mask: any
+  flutter_colorpicker: ^1.0.3
 
   google_maps_flutter: any
   location: any

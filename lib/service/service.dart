@@ -6,3 +6,5 @@ export 'json_service.dart';
 export 'loading_service.dart';
 export 'navigator_service.dart';
 export 'socket_service.dart';
+export 'image_picker_service.dart';
+export 'color_picker_service.dart';
