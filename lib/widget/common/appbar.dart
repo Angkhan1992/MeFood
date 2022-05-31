@@ -150,3 +150,33 @@ class NorchWidget extends Container {
           ),
         );
 }
+
+class TextActionButton extends StatelessWidget {
+  final String title;
+  final Function()? onTap;
+
+  const TextActionButton({
+    Key? key,
+    required this.title,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Center(
+          child: title.wText(
+            TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

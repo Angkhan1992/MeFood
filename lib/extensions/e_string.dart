@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mefood/extensions/e_date.dart';
 import 'package:mefood/util/app_config.dart';
 
 extension EString on String {
@@ -78,6 +79,30 @@ extension EString on String {
       return Color(value);
     } catch (e) {
       return null;
+    }
+  }
+
+  DateTime get dateFromServer => DateTime.parse(this);
+
+  DateTime get localDate => DateTime.parse(this).toLocal();
+
+  String get visiableDate {
+    var currentDate = DateTime.now();
+    var diffDay = currentDate.difference(localDate).inDays;
+    switch (diffDay) {
+      case 0:
+        return localDate.visiableTime;
+      case 1:
+        return 'Yesterday';
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 6:
+      case 7:
+        return localDate.visiableWeek;
+      default:
+        return localDate.visiableDate;
     }
   }
 }

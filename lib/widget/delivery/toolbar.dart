@@ -111,31 +111,3 @@ class DriverCalendar extends StatelessWidget {
     );
   }
 }
-
-class DriverSupport extends StatelessWidget {
-  final Function()? onTapSupport;
-
-  DriverSupport({
-    Key? key,
-    this.onTapSupport,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      alignment: Alignment.center,
-      child: InkWell(
-        onTap: onTapSupport,
-        child: Text(
-          'Support',
-          style: TextStyle(
-            fontSize: 14.0,
-            fontWeight: FontWeight.w400,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-        ),
-      ),
-    );
-  }
-}

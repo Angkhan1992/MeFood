@@ -12,4 +12,6 @@ extension EUserModel on UserModel {
 
     return true;
   }
+
+  String get fullName => '$last $first';
 }

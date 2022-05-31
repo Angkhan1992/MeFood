@@ -5,13 +5,16 @@ import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/auth/pending_screen.dart';
+import 'package:mefood/service/pref_service.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';
 import 'package:provider/provider.dart';
 
-import 'customer/auth/register_screen.dart' as cs;
-import 'delivery/auth/register_screen.dart' as dl;
+import 'customer/auth/register_screen.dart' as cs_reg;
+import 'delivery/auth/register_screen.dart' as dl_reg;
+import 'package:mefood/screen/customer/main/main_screen.dart' as cs_log;
+import 'package:mefood/screen/delivery/main/main_screen.dart' as dl_log;
 import 'landing_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -241,25 +244,31 @@ class _LoginScreenState extends State<LoginScreen> {
     // }
 
     if (F.isDelivery) {
-      _event!.value = LoginEvent.login;
-      var resp = await APIService().post(
+      var resp = await APIService(context: context).post(
         APIService.kUrlAuth + '/loginDelivery',
         {
           'email': _email,
           'password': _password!.generateMD5,
         },
       );
-      _event!.value = LoginEvent.none;
 
       if (resp != null) {
         if (resp['ret'] == 10000) {
-          var provider = Provider.of<DeliveryUserProvider>(
+          var provider = Provider.of<DeliveryProvider>(
             context,
             listen: false,
           );
           provider.setDeliveryUser(DriverModel.fromJson(resp['result']));
           if (provider.isEnabled()) {
-            NavigatorService.of(context).push(screen: const LandingScreen());
+            var isLanding = await PrefService.of().isLanding();
+            if (isLanding) {
+              NavigatorService.of(context).push(
+                screen: const dl_log.MainScreen(),
+                replace: true,
+              );
+            } else {
+              NavigatorService.of(context).push(screen: const LandingScreen());
+            }
           } else {
             NavigatorService.of(context).push(screen: const PendingScreen());
           }
@@ -284,8 +293,9 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     NavigatorService.of(context).push(
-      screen:
-          F.isDelivery ? const dl.RegisterScreen() : const cs.RegisterScreen(),
+      screen: F.isDelivery
+          ? const dl_reg.RegisterScreen()
+          : const cs_reg.RegisterScreen(),
     );
   }
 }

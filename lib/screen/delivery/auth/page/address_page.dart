@@ -38,10 +38,9 @@ class _AddAddressPageState extends State<AddAddressPage> {
   void initState() {
     super.initState();
     Timer.run(() {
-      _address = Provider.of<DeliveryUserProvider>(context, listen: false)
-              .user
-              .address ??
-          AddressModel();
+      _address =
+          Provider.of<DriverProvider>(context, listen: false).user.address ??
+              AddressModel();
       setState(() {});
     });
   }
@@ -202,8 +201,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
         );
       } else {
         FocusScope.of(context).unfocus();
-        var provider =
-            Provider.of<DeliveryUserProvider>(context, listen: false);
+        var provider = Provider.of<DriverProvider>(context, listen: false);
 
         setState(() {
           isUploadAddress = true;
@@ -305,7 +303,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
   }
 
   void onGetCurrentAddress() async {
-    var status = Provider.of<StatusProvider>(context, listen: false);
+    var status = Provider.of<DeliveryProvider>(context, listen: false);
     var addresses = await placemarkFromCoordinates(
       status.getCurrentLcoation()!.latitude!,
       status.getCurrentLcoation()!.longitude!,

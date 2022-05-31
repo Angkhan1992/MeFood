@@ -8,3 +8,4 @@ export 'navigator_service.dart';
 export 'socket_service.dart';
 export 'image_picker_service.dart';
 export 'color_picker_service.dart';
+export 'pref_service.dart';

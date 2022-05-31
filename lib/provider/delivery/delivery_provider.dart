@@ -1,8 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/model/address_model.dart';
+import 'package:mefood/model/car_model.dart';
+import 'package:mefood/model/driver_model.dart';
+import 'package:mefood/model/user_model.dart';
 
-class StatusProvider extends ChangeNotifier {
+class DeliveryProvider extends ChangeNotifier {
+  UserModel? user;
+  CarModel? car;
+  AddressModel? address;
+  String? member;
+
+  void setUser(UserModel userModel) {
+    user = userModel;
+    notifyListeners();
+  }
+
+  void setAddress(AddressModel addressModel) {
+    address = addressModel;
+    notifyListeners();
+  }
+
+  void setCar(CarModel carModel) {
+    car = carModel;
+    notifyListeners();
+  }
+
+  void setMember(String membership) {
+    member = membership;
+    notifyListeners();
+  }
+
+  void setDeliveryUser(DriverModel driver) {
+    user = driver.user;
+    address = driver.address;
+    car = driver.car;
+    member = driver.member;
+    notifyListeners();
+  }
+
+  bool isEnabled() {
+    return user == null ? false : (user!.isEnabled! == 1);
+  }
+
+  bool isExpired() {
+    return member!.localDate.expired;
+  }
+
   LocationData? _currentLocation;
   Location? _location;
 

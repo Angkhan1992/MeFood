@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/model/model.dart';
 
-class DeliveryUserProvider extends ChangeNotifier {
+class DriverProvider extends ChangeNotifier {
   DriverModel user = DriverModel();
 
   void setUser(UserModel userModel) {

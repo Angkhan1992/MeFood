@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:mefood/provider/mail_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/provider/provider.dart';
@@ -37,15 +38,19 @@ void main() async {
   await AppInitializer().initialise(injector!);
 
   F.appFlavor = Flavor.delivery;
-  var statusProvider = StatusProvider();
-  await statusProvider.initProvider();
+  var deliveryProvider = DeliveryProvider();
+  await deliveryProvider.initProvider();
+
+  var mailProvider = MailProvider();
+  await mailProvider.initMails();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => DeliveryUserProvider()),
-        ChangeNotifierProvider(create: (context) => statusProvider),
+        ChangeNotifierProvider(create: (context) => DriverProvider()),
+        ChangeNotifierProvider(create: (context) => deliveryProvider),
         ChangeNotifierProvider(create: (context) => OrderProvider()),
+        ChangeNotifierProvider(create: (context) => mailProvider),
       ],
       child: const MyApp(),
     ),

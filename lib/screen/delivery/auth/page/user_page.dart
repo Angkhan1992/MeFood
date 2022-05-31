@@ -38,9 +38,8 @@ class _AddProfilePageState extends State<AddProfilePage> {
     super.initState();
 
     Timer.run(() {
-      _user =
-          Provider.of<DeliveryUserProvider>(context, listen: false).user.user ??
-              UserModel();
+      _user = Provider.of<DriverProvider>(context, listen: false).user.user ??
+          UserModel();
       setState(() {});
     });
   }

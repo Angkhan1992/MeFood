@@ -34,13 +34,13 @@ class _SecuritPageState extends State<SecuritPage> {
   String? frontImage;
   String? backImage;
 
-  DeliveryUserProvider? provider;
+  DriverProvider? provider;
 
   @override
   void initState() {
     super.initState();
     Timer.run(() {
-      provider = Provider.of<DeliveryUserProvider>(context, listen: false);
+      provider = Provider.of<DriverProvider>(context, listen: false);
 
       var car = provider!.user.car!;
       carColor = car.color!.convert2Color;

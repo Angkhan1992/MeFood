@@ -327,7 +327,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
     _isUpload = true;
     setState(() {});
 
-    var provider = Provider.of<DeliveryUserProvider>(context, listen: false);
+    var provider = Provider.of<DriverProvider>(context, listen: false);
     var params = {
       'code': code,
       'idcard': _idcard,

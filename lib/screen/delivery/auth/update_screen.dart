@@ -34,7 +34,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Consumer<DeliveryUserProvider>(
+      body: Consumer<DriverProvider>(
         builder: (context, value, child) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

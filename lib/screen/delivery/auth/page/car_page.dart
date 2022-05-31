@@ -35,9 +35,8 @@ class _AddCarPageState extends State<AddCarPage> {
   void initState() {
     super.initState();
     Timer.run(() {
-      _car =
-          Provider.of<DeliveryUserProvider>(context, listen: false).user.car ??
-              CarModel();
+      _car = Provider.of<DriverProvider>(context, listen: false).user.car ??
+          CarModel();
       setState(() {});
     });
   }
@@ -235,7 +234,7 @@ class _AddCarPageState extends State<AddCarPage> {
       }
       FocusScope.of(context).unfocus();
 
-      var provider = Provider.of<DeliveryUserProvider>(context, listen: false);
+      var provider = Provider.of<DriverProvider>(context, listen: false);
       setState(() {
         isUploadCar = true;
       });

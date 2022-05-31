@@ -20,7 +20,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _pageIndex = ValueNotifier(0);
-  DeliveryUserProvider? _provider;
+  DriverProvider? _provider;
 
   @override
   void initState() {
@@ -67,9 +67,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     ];
-    return Consumer<DeliveryUserProvider>(
+    return Consumer<DriverProvider>(
       builder: (context, value, child) {
-        _provider = Provider.of<DeliveryUserProvider>(context, listen: false);
+        _provider = Provider.of<DriverProvider>(context, listen: false);
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 0,

@@ -133,7 +133,7 @@ class _PasswordPageState extends State<PasswordPage> {
     if (pass != repass) {
       return;
     }
-    var provider = Provider.of<DeliveryUserProvider>(context, listen: false);
+    var provider = Provider.of<DriverProvider>(context, listen: false);
 
     isUpload = true;
     setState(() {});
