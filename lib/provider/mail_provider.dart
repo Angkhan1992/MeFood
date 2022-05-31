@@ -109,10 +109,27 @@ class MailProvider extends ChangeNotifier {
     return selectedItems.length;
   }
 
+  Future<void> updateMailByIndex(
+    int index, {
+    required String status,
+  }) async {
+    var mail = mails![index];
+    await mail.updateMail(status);
+    if (status == 'READ') {
+      mail.model.status = status;
+    } else {
+      mails!.remove(mail);
+    }
+    await PrefService.of()
+        .saveMailHistory((mails!).map((e) => e.model).toList());
+    notifyListeners();
+  }
+
   Future<String?> onAsRead() async {
-    var noFailed = true;
     isEditing = false;
     notifyListeners();
+
+    var noFailed = true;
     for (var item in mails!) {
       if (item.isSelected) {
         var resp = await item.updateMail('READ');
@@ -134,16 +151,25 @@ class MailProvider extends ChangeNotifier {
   }
 
   Future<String?> onDelete() async {
+    isEditing = false;
+    notifyListeners();
+
     var noFailed = true;
+    List<ExtMail> deleteItems = [];
     for (var item in mails!) {
       if (item.isSelected) {
         var resp = await item.updateMail('DELETE');
         if (resp != null) {
           noFailed = false;
-          mails!.add(item);
+        } else {
+          deleteItems.add(item);
         }
       }
     }
+    for (var delete in deleteItems) {
+      mails!.remove(delete);
+    }
+
     await PrefService.of()
         .saveMailHistory((mails!).map((e) => e.model).toList());
     setEditing(false);
@@ -152,5 +178,15 @@ class MailProvider extends ChangeNotifier {
     } else {
       return 'Failed some process';
     }
+  }
+
+  int getUnreadCount() {
+    var unreadList = [];
+    for (var mail in mails!) {
+      if (mail.model.status == 'UNREAD') {
+        unreadList.add(mail);
+      }
+    }
+    return unreadList.length;
   }
 }

@@ -5,7 +5,6 @@ import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/auth/pending_screen.dart';
-import 'package:mefood/service/pref_service.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';

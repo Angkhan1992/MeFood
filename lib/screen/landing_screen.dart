@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/screen/customer/main/main_screen.dart' as cs;
 import 'package:mefood/screen/delivery/main/main_screen.dart' as dl;
-import 'package:mefood/service/pref_service.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';

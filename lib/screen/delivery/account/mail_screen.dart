@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/provider/mail_provider.dart';
 import 'package:mefood/provider/provider.dart';
+import 'package:mefood/screen/delivery/account/mail_detail.dart';
 import 'package:mefood/service/dialog_service.dart';
+import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/common/common.dart';
 import 'package:mefood/widget/delivery/account.dart';
@@ -77,7 +79,7 @@ class _MailScreenState extends State<MailScreen> {
                 : null,
             actions: [
               TextActionButton(
-                title: provider.isEditing ? 'Cancel' : 'Edit',
+                title: provider.isEditing ? 'CANCEL' : 'EDIT',
                 onTap: () => provider.setEditing(!provider.isEditing),
               ),
             ],
@@ -112,116 +114,159 @@ class _MailScreenState extends State<MailScreen> {
                           itemBuilder: (context, i) {
                             var mail = provider.getMails()[i];
                             var email = mail.model;
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 16.0),
-                              child: InkWell(
-                                onTap: () {
-                                  if (provider.isEditing) {
-                                    provider.toggleItemAtIndex(i);
-                                  } else {
-                                    // Go to mail deetail
-                                  }
-                                },
-                                child: Row(
-                                  children: [
-                                    if (provider.isEditing)
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: Center(
-                                          child: Icon(
-                                            mail.isSelected
-                                                ? Icons.check_circle
-                                                : Icons.circle_outlined,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                        ),
+                            return Slidable(
+                              key: const ValueKey(0),
+                              enabled: !provider.isEditing,
+                              endActionPane: ActionPane(
+                                motion: ScrollMotion(),
+                                children: [
+                                  if (mail.model.status == 'UNREAD')
+                                    SlidableAction(
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      foregroundColor: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      icon: Icons.check_outlined,
+                                      label: 'READ',
+                                      onPressed: (context) =>
+                                          provider.updateMailByIndex(
+                                        i,
+                                        status: 'READ',
                                       ),
-                                    Column(
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.symmetric(
-                                            horizontal: 8.0,
-                                            vertical: 6.0,
-                                          ),
-                                          width: 12.0,
-                                          height: 12.0,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(6.0),
-                                            color: email.status == 'UNREAD'
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary
-                                                : Colors.transparent,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 60.0,
-                                        ),
-                                      ],
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                  SlidableAction(
+                                    onPressed: (context) =>
+                                        provider.updateMailByIndex(
+                                      i,
+                                      status: 'DELETE',
+                                    ),
+                                    backgroundColor: Colors.red,
+                                    foregroundColor: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    icon: Icons.delete_forever,
+                                    label: 'DELETE',
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 16.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    if (provider.isEditing) {
+                                      provider.toggleItemAtIndex(i);
+                                    } else {
+                                      NavigatorService.of(context).push(
+                                          screen: MailDetail(
+                                        mail: mail,
+                                        unread: provider.getUnreadCount(),
+                                        index: i,
+                                      ));
+                                    }
+                                  },
+                                  child: Row(
+                                    children: [
+                                      if (provider.isEditing)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Center(
+                                            child: Icon(
+                                              mail.isSelected
+                                                  ? Icons.check_circle
+                                                  : Icons.circle_outlined,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                            ),
+                                          ),
+                                        ),
+                                      Column(
                                         children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: email.title!.wText(
-                                                  TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 8.0,
-                                              ),
-                                              email.regdate!.visiableDate.wText(
-                                                TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                              provider.isEditing
-                                                  ? SizedBox(
-                                                      height: 24.0,
-                                                    )
-                                                  : Icon(
-                                                      Icons.arrow_right,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .secondary,
-                                                    ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 4.0,
-                                          ),
-                                          email.subtitle!.wText(
-                                            TextStyle(
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w500,
+                                          Container(
+                                            margin: const EdgeInsets.symmetric(
+                                              horizontal: 8.0,
+                                              vertical: 6.0,
+                                            ),
+                                            width: 12.0,
+                                            height: 12.0,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(6.0),
+                                              color: email.status == 'UNREAD'
+                                                  ? Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary
+                                                  : Colors.transparent,
                                             ),
                                           ),
                                           const SizedBox(
-                                            height: 4.0,
-                                          ),
-                                          email.content!.wText(
-                                            TextStyle(
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w200,
-                                            ),
-                                            lines: 2,
+                                            height: 60.0,
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: email.title!.wText(
+                                                    TextStyle(
+                                                      fontSize: 15.0,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 8.0,
+                                                ),
+                                                email.regdate!.visiableDate
+                                                    .wText(
+                                                  TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                                provider.isEditing
+                                                    ? SizedBox(
+                                                        height: 24.0,
+                                                      )
+                                                    : Icon(
+                                                        Icons.arrow_right,
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .secondary,
+                                                      ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 4.0,
+                                            ),
+                                            email.subtitle!.wText(
+                                              TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 4.0,
+                                            ),
+                                            email.content!.wText(
+                                              TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w200,
+                                              ),
+                                              lines: 2,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
