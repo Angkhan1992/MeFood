@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/service/service.dart';
 
 extension EUserModel on UserModel {
   bool get isFullData {
@@ -14,4 +16,20 @@ extension EUserModel on UserModel {
   }
 
   String get fullName => '$last $first';
+
+  Future<String?> update(BuildContext? context) async {
+    var resp = await APIService.of(context: context).post(
+      '${APIService.kUrlAuth}/updateUser',
+      toJson(),
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return 'Failed Server Error';
+    }
+  }
 }

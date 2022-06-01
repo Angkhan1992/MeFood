@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -110,23 +109,13 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                             Align(
                               alignment: Alignment.topRight,
-                              child: InkWell(
+                              child: DrawMailIcon(
                                 onTap: () {
                                   Navigator.of(context).pop();
                                   NavigatorService.of(context).push(
                                     screen: MailScreen(),
                                   );
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 40.0,
-                                    right: 16.0,
-                                  ),
-                                  child: Badge(
-                                    badgeColor: Colors.red,
-                                    child: Icon(Icons.email_outlined),
-                                  ),
-                                ),
                               ),
                             ),
                           ],
@@ -142,7 +131,9 @@ class _MainScreenState extends State<MainScreen> {
                           onTap: () {
                             Navigator.of(context).pop();
                             NavigatorService.of(context).push(
-                              screen: AccountScreen(),
+                              screen: AccountScreen(
+                                provider: provider,
+                              ),
                             );
                           },
                         ),

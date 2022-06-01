@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/service/service.dart';
 
 extension EAddressModel on AddressModel {
   String? get isFullData {
@@ -30,5 +32,20 @@ extension EAddressModel on AddressModel {
       result[key] = value == null ? '' : value.toString();
     }
     return jsonEncode(result);
+  }
+
+  Future<String?> update(BuildContext? context) async {
+    if (isFullData != null) {
+      return 'Please fill fields';
+    }
+    var resp = await APIService.of(context: context).post(
+      '${APIService.kUrlAuth}/updateAddress',
+      toJson(),
+    );
+    if (resp!['ret'] == 10000) {
+      return null;
+    } else {
+      return 'Server Error!';
+    }
   }
 }

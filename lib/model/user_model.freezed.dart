@@ -64,10 +64,6 @@ mixin _$UserModel {
   String? get regdate => throw _privateConstructorUsedError;
   @JsonKey(name: 'reg_date')
   set regdate(String? value) => throw _privateConstructorUsedError;
-  @JsonKey(name: 'update_date')
-  String? get updated => throw _privateConstructorUsedError;
-  @JsonKey(name: 'update_date')
-  set updated(String? value) => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_enable')
   int? get isEnabled => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_enable')
@@ -101,7 +97,6 @@ abstract class $UserModelCopyWith<$Res> {
       @JsonKey(name: 'usr_dob') String? dob,
       @JsonKey(name: 'usr_type') String? type,
       @JsonKey(name: 'reg_date') String? regdate,
-      @JsonKey(name: 'update_date') String? updated,
       @JsonKey(name: 'is_enable') int? isEnabled,
       @JsonKey(name: 'is_deleted') int? isDeleted,
       String? other});
@@ -128,7 +123,6 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
     Object? dob = freezed,
     Object? type = freezed,
     Object? regdate = freezed,
-    Object? updated = freezed,
     Object? isEnabled = freezed,
     Object? isDeleted = freezed,
     Object? other = freezed,
@@ -178,10 +172,6 @@ class _$UserModelCopyWithImpl<$Res> implements $UserModelCopyWith<$Res> {
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      updated: updated == freezed
-          ? _value.updated
-          : updated // ignore: cast_nullable_to_non_nullable
-              as String?,
       isEnabled: isEnabled == freezed
           ? _value.isEnabled
           : isEnabled // ignore: cast_nullable_to_non_nullable
@@ -216,7 +206,6 @@ abstract class _$$_UserModelCopyWith<$Res> implements $UserModelCopyWith<$Res> {
       @JsonKey(name: 'usr_dob') String? dob,
       @JsonKey(name: 'usr_type') String? type,
       @JsonKey(name: 'reg_date') String? regdate,
-      @JsonKey(name: 'update_date') String? updated,
       @JsonKey(name: 'is_enable') int? isEnabled,
       @JsonKey(name: 'is_deleted') int? isDeleted,
       String? other});
@@ -245,7 +234,6 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
     Object? dob = freezed,
     Object? type = freezed,
     Object? regdate = freezed,
-    Object? updated = freezed,
     Object? isEnabled = freezed,
     Object? isDeleted = freezed,
     Object? other = freezed,
@@ -295,10 +283,6 @@ class __$$_UserModelCopyWithImpl<$Res> extends _$UserModelCopyWithImpl<$Res>
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      updated: updated == freezed
-          ? _value.updated
-          : updated // ignore: cast_nullable_to_non_nullable
-              as String?,
       isEnabled: isEnabled == freezed
           ? _value.isEnabled
           : isEnabled // ignore: cast_nullable_to_non_nullable
@@ -331,7 +315,6 @@ class _$_UserModel implements _UserModel {
       @JsonKey(name: 'usr_dob') this.dob,
       @JsonKey(name: 'usr_type') this.type,
       @JsonKey(name: 'reg_date') this.regdate,
-      @JsonKey(name: 'update_date') this.updated,
       @JsonKey(name: 'is_enable') this.isEnabled,
       @JsonKey(name: 'is_deleted') this.isDeleted,
       this.other});
@@ -373,9 +356,6 @@ class _$_UserModel implements _UserModel {
   @JsonKey(name: 'reg_date')
   String? regdate;
   @override
-  @JsonKey(name: 'update_date')
-  String? updated;
-  @override
   @JsonKey(name: 'is_enable')
   int? isEnabled;
   @override
@@ -386,7 +366,7 @@ class _$_UserModel implements _UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, first: $first, last: $last, avatar: $avatar, idcard: $idcard, email: $email, phone: $phone, gender: $gender, dob: $dob, type: $type, regdate: $regdate, updated: $updated, isEnabled: $isEnabled, isDeleted: $isDeleted, other: $other)';
+    return 'UserModel(id: $id, first: $first, last: $last, avatar: $avatar, idcard: $idcard, email: $email, phone: $phone, gender: $gender, dob: $dob, type: $type, regdate: $regdate, isEnabled: $isEnabled, isDeleted: $isDeleted, other: $other)';
   }
 
   @JsonKey(ignore: true)
@@ -413,7 +393,6 @@ abstract class _UserModel implements UserModel {
       @JsonKey(name: 'usr_dob') String? dob,
       @JsonKey(name: 'usr_type') String? type,
       @JsonKey(name: 'reg_date') String? regdate,
-      @JsonKey(name: 'update_date') String? updated,
       @JsonKey(name: 'is_enable') int? isEnabled,
       @JsonKey(name: 'is_deleted') int? isDeleted,
       String? other}) = _$_UserModel;
@@ -454,9 +433,6 @@ abstract class _UserModel implements UserModel {
   @override
   @JsonKey(name: 'reg_date')
   String? get regdate => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: 'update_date')
-  String? get updated => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'is_enable')
   int? get isEnabled => throw _privateConstructorUsedError;

@@ -1,10 +1,18 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:gif_view/gif_view.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:location/location.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/util/app_config.dart';
+import 'package:mefood/widget/common/button.dart';
+import 'package:mefood/widget/common/textfield.dart';
 
 import '../themes/colors.dart';
 import '../themes/dimens.dart';
@@ -300,6 +308,439 @@ class DialogService {
             color: Theme.of(context).colorScheme.secondary,
             size: 48.0,
           ),
+        ),
+      ),
+    );
+  }
+
+  Future<String?> oneValueField({
+    String? title,
+    String? hintText,
+    required Widget prefix,
+    TextInputType keyboardType = TextInputType.text,
+    TextInputAction textInputAction = TextInputAction.done,
+    String? initValue,
+    String cancalText = 'Cancel',
+    String okText = 'Done',
+  }) async {
+    var controller = TextEditingController(text: initValue);
+
+    return showDialog<String?>(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (title != null) ...{
+                      title.wText(TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      )),
+                      const SizedBox(
+                        height: 24.0,
+                      ),
+                    },
+                    CustomTextField(
+                      prefix: prefix,
+                      hintText: hintText,
+                      controller: controller,
+                      keyboardType: keyboardType,
+                      textInputAction: textInputAction,
+                    ),
+                    const SizedBox(
+                      height: 24.0,
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        Expanded(
+                          child: CustomOutlineButton(
+                            title: cancalText,
+                            onTap: () => Navigator.of(context).pop(),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        Expanded(
+                          child: CustomFillButton(
+                            title: okText,
+                            onTap: () => Navigator.of(context).pop(
+                              controller.text,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<List<String>?> twoValueField({
+    String? title,
+    List<String>? hintText,
+    required Widget prefix,
+    TextInputType keyboardType = TextInputType.text,
+    List<String>? initValue,
+    String cancalText = 'Cancel',
+    String okText = 'Done',
+  }) async {
+    var controller1 = TextEditingController(text: initValue![0]);
+    var controller2 = TextEditingController(text: initValue[1]);
+    return showDialog<List<String>?>(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (title != null) ...{
+                      title.wText(TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      )),
+                      const SizedBox(
+                        height: 24.0,
+                      ),
+                    },
+                    CustomTextField(
+                      prefix: prefix,
+                      hintText: hintText![0],
+                      controller: controller1,
+                      keyboardType: keyboardType,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    CustomTextField(
+                      prefix: prefix,
+                      hintText: hintText[1],
+                      controller: controller2,
+                      keyboardType: keyboardType,
+                      textInputAction: TextInputAction.done,
+                    ),
+                    const SizedBox(
+                      height: 24.0,
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        Expanded(
+                          child: CustomOutlineButton(
+                            title: cancalText,
+                            onTap: () => Navigator.of(context).pop(),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        Expanded(
+                          child: CustomFillButton(
+                            title: okText,
+                            onTap: () => Navigator.of(context).pop([
+                              controller1.text,
+                              controller2.text,
+                            ]),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<LatLng?> locationPicker({
+    String? title,
+    List<double>? initPosition,
+    String cancalText = 'Cancel',
+    String okText = 'Done',
+  }) async {
+    final _controller = Completer();
+    return showDialog<LatLng?>(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (title != null) ...{
+                      title.wText(TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      )),
+                      const SizedBox(
+                        height: 24.0,
+                      ),
+                    },
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: Stack(
+                        children: [
+                          GoogleMap(
+                            mapType: MapType.hybrid,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(
+                                initPosition![0],
+                                initPosition[1],
+                              ),
+                              zoom: CAMERA_ZOOM,
+                            ),
+                            onMapCreated: (GoogleMapController controller) {
+                              _controller.complete(controller);
+                            },
+                          ),
+                          Center(
+                            child: Icon(
+                              Icons.my_location_outlined,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondary
+                                  .withOpacity(0.75),
+                              size: 32.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24.0,
+                    ),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        Expanded(
+                          child: CustomOutlineButton(
+                            title: cancalText,
+                            onTap: () => Navigator.of(context).pop(),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        Expanded(
+                          child: CustomFillButton(
+                            title: okText,
+                            onTap: () async {
+                              final GoogleMapController controller =
+                                  await _controller.future;
+                              LatLngBounds visibleRegion =
+                                  await controller.getVisibleRegion();
+                              LatLng latlng = LatLng(
+                                (visibleRegion.northeast.latitude +
+                                        visibleRegion.southwest.latitude) /
+                                    2,
+                                (visibleRegion.northeast.longitude +
+                                        visibleRegion.southwest.longitude) /
+                                    2,
+                              );
+                              Navigator.of(context).pop(latlng);
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<String?> bottomChoose({
+    String? title,
+    String? initValue,
+    required List<String> values,
+  }) {
+    return showModalBottomSheet<String?>(
+      context: context,
+      isScrollControlled: false,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(offsetBase),
+          topLeft: Radius.circular(offsetBase),
+        ),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      builder: (_) => Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: offsetBase,
+          vertical: offsetXSm,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            NorchWidget(
+              color: Theme.of(context).hintColor,
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            if (title != null) ...{
+              title.wText(
+                TextStyle(
+                  fontSize: 14.0,
+                  color: Theme.of(context).hintColor,
+                ),
+              ),
+              const SizedBox(
+                height: 4.0,
+              ),
+            },
+            for (var value in values) ...{
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: InkWell(
+                  onTap: () => Navigator.of(context).pop(value),
+                  child: value.wText(TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                  )),
+                ),
+              ),
+            },
+            const SizedBox(
+              height: 16.0,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<String?> countryPicker() async {
+    var countries = await JsonService.readCountryFromJson();
+
+    return showModalBottomSheet<String?>(
+      context: context,
+      isScrollControlled: false,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(offsetBase),
+          topLeft: Radius.circular(offsetBase),
+        ),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      builder: (_) => Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: offsetBase,
+          vertical: offsetXSm,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            NorchWidget(
+              color: Theme.of(context).hintColor,
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    'Choose Country'.wText(
+                      TextStyle(
+                        fontSize: 14.0,
+                        color: Theme.of(context).hintColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    for (var country in countries) ...{
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(country.name),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: offsetSm),
+                          child: '${country.name} (${country.code})'.wText(
+                            TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    },
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+          ],
         ),
       ),
     );

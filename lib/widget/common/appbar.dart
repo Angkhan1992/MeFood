@@ -1,6 +1,9 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/provider/provider.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:provider/provider.dart';
 
 class CustomHeaderView extends StatelessWidget {
   final String title;
@@ -176,6 +179,35 @@ class TextActionButton extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DrawMailIcon extends StatelessWidget {
+  final Function()? onTap;
+
+  const DrawMailIcon({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<MailProvider>(context, listen: false);
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 40.0,
+          right: 16.0,
+        ),
+        child: provider.getUnreadCount() > 0
+            ? Badge(
+                badgeColor: Colors.red,
+                child: Icon(Icons.email_outlined),
+              )
+            : Icon(Icons.email_outlined),
       ),
     );
   }

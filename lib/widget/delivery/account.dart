@@ -132,3 +132,45 @@ class MainMenuButton extends StatelessWidget {
     );
   }
 }
+
+Widget accountItemWidget(
+  BuildContext context, {
+  required String title,
+  required Widget leading,
+  Function()? onTap,
+}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(
+      vertical: 12.0,
+      horizontal: 8.0,
+    ),
+    child: InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          leading,
+          const SizedBox(
+            width: 16.0,
+          ),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 16.0,
+          ),
+          if (onTap != null)
+            Icon(
+              Icons.edit,
+              size: 18.0,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+        ],
+      ),
+    ),
+  );
+}

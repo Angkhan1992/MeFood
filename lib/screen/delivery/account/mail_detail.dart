@@ -66,28 +66,28 @@ class _MailDetailState extends State<MailDetail> {
               Text(
                 widget.mail.model.title!,
                 style: TextStyle(
-                  fontSize: 22.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(
+                height: 2.0,
+              ),
+              Text(
+                widget.mail.model.subtitle!,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
               const SizedBox(
                 height: 24.0,
               ),
               Text(
-                widget.mail.model.subtitle!,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              Text(
                 widget.mail.model.content!,
                 style: TextStyle(
                   fontSize: 16.0,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],

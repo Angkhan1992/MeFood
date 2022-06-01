@@ -220,24 +220,29 @@ class CarImageWidget extends StatelessWidget {
 class AvatarImageWidget extends StatelessWidget {
   final String? avatar;
   final double size;
+  final Color? borderColor;
+
   const AvatarImageWidget({
     Key? key,
     this.avatar,
     this.size = 60.0,
+    this.borderColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var primary = borderColor ?? Theme.of(context).primaryColor;
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(30.0),
+      borderRadius: BorderRadius.circular(size / 2),
       child: Container(
         width: size,
         height: size,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Theme.of(context).primaryColor,
+            color: primary,
           ),
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(size / 2),
         ),
         child: CachedNetworkImage(
           imageUrl: avatar ?? 'http',
@@ -247,13 +252,15 @@ class AvatarImageWidget extends StatelessWidget {
               height: size / 3 * 2,
               child: CircularProgressIndicator(
                 strokeWidth: 2.0,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
           ),
           errorWidget: (context, url, error) => Center(
             child: Icon(
               LineIcons.user,
-              size: 44.0,
+              size: size / 3 * 2,
+              color: primary,
             ),
           ),
         ),

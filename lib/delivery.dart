@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:mefood/provider/mail_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/provider/provider.dart';

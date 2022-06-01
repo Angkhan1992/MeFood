@@ -17,6 +17,7 @@ class CustomFillButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var opacity = onTap == null ? 0.5 : 1.0;
     return SizedBox(
       width: double.infinity,
       height: 48.0,
@@ -24,18 +25,24 @@ class CustomFillButton extends StatelessWidget {
         onPressed: onTap,
         child: isLoading
             ? ProgressWidget(
-                color: Theme.of(context).colorScheme.onSecondary,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSecondary
+                    .withOpacity(opacity),
               )
             : Text(
                 title,
                 style: CustomText.semiBold(
                   fontSize: fontMd,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSecondary
+                      .withOpacity(opacity),
                 ),
               ),
         style: TextButton.styleFrom(
-          backgroundColor:
-              backgroundColor ?? Theme.of(context).colorScheme.secondary,
+          backgroundColor: backgroundColor ??
+              Theme.of(context).colorScheme.secondary.withOpacity(opacity),
         ),
       ),
     );
@@ -75,6 +82,7 @@ class CustomOutlineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var opacity = onTap == null ? 0.5 : 1.0;
     return SizedBox(
       width: double.infinity,
       height: 48.0,
@@ -82,19 +90,28 @@ class CustomOutlineButton extends StatelessWidget {
         onPressed: onTap,
         child: isLoading
             ? ProgressWidget(
-                color: borderColor ?? Theme.of(context).colorScheme.secondary,
+                color: borderColor ??
+                    Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(opacity),
               )
             : Text(
                 title,
                 style: CustomText.semiBold(
                   fontSize: fontMd,
-                  color: borderColor ?? Theme.of(context).colorScheme.secondary,
+                  color: borderColor ??
+                      Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(opacity),
                 ),
               ),
         style: OutlinedButton.styleFrom(
           side: BorderSide(
             width: 2.0,
-            color: borderColor ?? Theme.of(context).colorScheme.secondary,
+            color: borderColor ??
+                Theme.of(context).colorScheme.secondary.withOpacity(opacity),
           ),
         ),
       ),

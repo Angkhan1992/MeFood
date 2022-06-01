@@ -18,7 +18,6 @@ class UserModel with _$UserModel {
     @JsonKey(name: 'usr_dob') String? dob,
     @JsonKey(name: 'usr_type') String? type,
     @JsonKey(name: 'reg_date') String? regdate,
-    @JsonKey(name: 'update_date') String? updated,
     @JsonKey(name: 'is_enable') int? isEnabled,
     @JsonKey(name: 'is_deleted') int? isDeleted,
     String? other,

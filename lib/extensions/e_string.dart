@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mefood/extensions/e_date.dart';
 import 'package:mefood/util/app_config.dart';
 
@@ -105,4 +106,10 @@ extension EString on String {
         return localDate.visiableDate;
     }
   }
+
+  String get regdateValue =>
+      DateFormat('MM/dd/yyyy').format(DateTime.parse(this));
+
+  String get dobValue =>
+      DateFormat('MM/dd/yyyy').format(DateFormat('yyyy/MM/dd').parse(this));
 }

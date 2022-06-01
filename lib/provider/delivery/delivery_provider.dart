@@ -45,6 +45,12 @@ class DeliveryProvider extends ChangeNotifier {
     return user == null ? false : (user!.isEnabled! == 1);
   }
 
+  bool isProMember() {
+    if (user == null || user!.isEnabled! != 1) return false;
+    var memberDate = member!.localDate;
+    return !memberDate.expired;
+  }
+
   bool isExpired() {
     return member!.localDate.expired;
   }
