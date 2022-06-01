@@ -163,16 +163,18 @@ class _MainScreenState extends State<MainScreen> {
                             Navigator.of(context).pop();
                           },
                         ),
-                        ListTile(
-                          leading: SvgPicture.asset(
-                            'assets/icons/menu/ic_chart.svg',
-                            color: Theme.of(context).secondaryHeaderColor,
-                            width: 18.0,
-                            height: 18.0,
+                        if (!provider.isExpired())
+                          ListTile(
+                            leading: SvgPicture.asset(
+                              'assets/icons/menu/ic_chart.svg',
+                              color: Theme.of(context).secondaryHeaderColor,
+                              width: 18.0,
+                              height: 18.0,
+                            ),
+                            title: Text('My Earn'.toUpperCase()),
+                            trailing: ListItemTag(tag: 'NEW'),
+                            onTap: () {},
                           ),
-                          title: Text('My Earn'.toUpperCase()),
-                          onTap: () {},
-                        ),
                         Divider(),
                         ListTile(
                           leading: SvgPicture.asset(

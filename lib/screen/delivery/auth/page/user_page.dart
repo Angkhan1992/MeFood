@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +29,6 @@ class AddProfilePage extends StatefulWidget {
 
 class _AddProfilePageState extends State<AddProfilePage> {
   UserModel _user = UserModel();
-  final ImagePicker _picker = ImagePicker();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -109,7 +107,27 @@ class _AddProfilePageState extends State<AddProfilePage> {
                       height: 4.0,
                     ),
                     InkWell(
-                      onTap: _onPickerAvatar,
+                      onTap: () async {
+                        var result =
+                            await ImagePickerService.of(context).picker();
+                        if (result != null) {
+                          var resp =
+                              await APIService.of(context: context).upload(
+                            path: 'upload/avatar',
+                            filePath: result,
+                          );
+                          if (resp['ret'] == 10000) {
+                            var avatarUrl = '$kUrlAvatar${resp['result']}';
+                            logger.d(avatarUrl);
+                            _user.avatar = avatarUrl;
+                          } else {
+                            DialogService.of(context).showSnackBar(
+                              'Upload image failed',
+                              type: SnackBarType.error,
+                            );
+                          }
+                        }
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
@@ -196,7 +214,16 @@ class _AddProfilePageState extends State<AddProfilePage> {
               ),
               hintText: 'Male / Female',
               readOnly: true,
-              onTap: _onGenderDialog,
+              onTap: () async {
+                var result = await DialogService.of(context).bottomChoose(
+                  title: 'Choose Gender',
+                  values: ['MALE', 'FEMALE'],
+                );
+                if (result != null) {
+                  _user.gender = result;
+                  setState(() {});
+                }
+              },
             ),
             const SizedBox(
               height: 16.0,
@@ -204,11 +231,25 @@ class _AddProfilePageState extends State<AddProfilePage> {
             CustomTextField(
               prefix: const Icon(LineIcons.calendar),
               controller: TextEditingController(
-                text: _user.dob ?? '',
+                text: _user.dob == null ? '' : _user.dob!.dobValue,
               ),
               hintText: 'Date of Birth',
               readOnly: true,
-              onTap: _onCalendarDialog,
+              onTap: () async {
+                _formKey.currentState!.save();
+                var dateFormatter = DateFormat('yyyy/MM/dd');
+                var initDate = dateFormatter.parse(_user.dob ?? '1990/01/01');
+                var chooseDate = await showDatePicker(
+                  context: context,
+                  initialDate: initDate,
+                  firstDate: dateFormatter.parse('1900/01/01'),
+                  lastDate: dateFormatter.parse('2010/12/31'),
+                );
+                if (chooseDate != null) {
+                  _user.dob = dateFormatter.format(chooseDate);
+                  setState(() {});
+                }
+              },
             ),
             const SizedBox(
               height: 40.0,
@@ -216,11 +257,40 @@ class _AddProfilePageState extends State<AddProfilePage> {
             widget.isLogin
                 ? CustomFillButton(
                     title: 'Update Profile'.toUpperCase(),
-                    onTap: onTapSubmit,
+                    onTap: () async {
+                      _formKey.currentState!.save();
+                      FocusScope.of(context).unfocus();
+
+                      var resp = await _user.update(context);
+                      if (resp == null) {
+                        if (widget.onNext != null) {
+                          widget.onNext!(_user, _user.id!);
+                        }
+                      } else {
+                        DialogService.of(context).showSnackBar(
+                          resp,
+                          type: SnackBarType.error,
+                        );
+                      }
+                    },
                   )
                 : CustomFillButton(
                     title: 'Next'.toUpperCase(),
-                    onTap: onTapRegister,
+                    onTap: () async {
+                      _formKey.currentState!.save();
+                      FocusScope.of(context).unfocus();
+                      var resp = await _user.add(context);
+                      if (resp == null) {
+                        if (widget.onNext != null) {
+                          widget.onNext!(_user, _user.id!);
+                        }
+                      } else {
+                        DialogService.of(context).showSnackBar(
+                          resp,
+                          type: SnackBarType.error,
+                        );
+                      }
+                    },
                   ),
             const SizedBox(
               height: 40.0,
@@ -229,192 +299,5 @@ class _AddProfilePageState extends State<AddProfilePage> {
         ),
       ),
     );
-  }
-
-  void onTapRegister() async {
-    if (widget.onNext != null) {
-      _formKey.currentState!.save();
-      if (!_user.isFullData) return;
-      FocusScope.of(context).unfocus();
-      var resp = await APIService.of(context: context).post(
-        APIService.kUrlAuth + '/registerUser',
-        _user.toJson(),
-      );
-
-      if (resp != null) {
-        if (resp['ret'] == 10000) {
-          _user.id = resp['result']['user_id'] as int;
-          widget.onNext!(_user, resp['result']['delivery_id']);
-        } else {
-          DialogService.of(context).showSnackBar(
-            resp['msg'],
-            type: SnackBarType.error,
-          );
-        }
-      } else {
-        DialogService.of(context).showSnackBar(
-          'Failed Server Error',
-          type: SnackBarType.error,
-        );
-      }
-    }
-  }
-
-  void onTapSubmit() async {
-    if (widget.onNext != null) {
-      _formKey.currentState!.save();
-      if (!_user.isFullData) return;
-      FocusScope.of(context).unfocus();
-      var resp = await APIService.of(context: context).post(
-        '${APIService.kUrlAuth}/updateUser',
-        _user.toJson(),
-      );
-      if (resp != null) {
-        if (resp['ret'] == 10000) {
-          widget.onNext!(_user, _user.id!);
-        } else {
-          DialogService.of(context).showSnackBar(
-            resp['msg'],
-            type: SnackBarType.error,
-          );
-        }
-      } else {
-        DialogService.of(context).showSnackBar(
-          'Failed Server Error',
-          type: SnackBarType.error,
-        );
-      }
-    }
-  }
-
-  void _onPickerAvatar() {
-    _formKey.currentState!.save();
-    DialogService.of(context).showBottomSheet(
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          'Choose Method'.wText(
-            TextStyle(
-              fontSize: 14.0,
-              color: Theme.of(context).hintColor,
-            ),
-          ),
-          const SizedBox(
-            height: 24.0,
-          ),
-          InkWell(
-            onTap: () => _imagePicker(ImageSource.gallery),
-            child: 'From Gallery'.wText(
-              TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-          InkWell(
-            onTap: () => _imagePicker(ImageSource.camera),
-            child: 'From Camera'.wText(
-              TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onGenderDialog() {
-    _formKey.currentState!.save();
-    DialogService.of(context).showBottomSheet(
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          'Choose Gender'.wText(
-            TextStyle(
-              fontSize: 14.0,
-              color: Theme.of(context).hintColor,
-            ),
-          ),
-          const SizedBox(
-            height: 24.0,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-              _user.gender = 'Male';
-              setState(() {});
-            },
-            child: 'Male'.wText(
-              TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context).pop();
-              _user.gender = 'Female';
-              setState(() {});
-            },
-            child: 'Female'.wText(
-              TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onCalendarDialog() async {
-    _formKey.currentState!.save();
-    var dateFormatter = DateFormat('yyyy/MM/dd');
-    var initDate = dateFormatter.parse(_user.dob ?? '1990/01/01');
-    var chooseDate = await showDatePicker(
-      context: context,
-      initialDate: initDate,
-      firstDate: dateFormatter.parse('1900/01/01'),
-      lastDate: dateFormatter.parse('2010/12/31'),
-    );
-    if (chooseDate != null) {
-      _user.dob = dateFormatter.format(chooseDate);
-      setState(() {});
-    }
-  }
-
-  void _imagePicker(ImageSource source) async {
-    Navigator.of(context).pop();
-
-    final XFile? pickedFile = await _picker.pickImage(
-      source: source,
-    );
-    if (pickedFile != null) {
-      var filePath = pickedFile.path;
-      var resp = await APIService.of().upload(
-        path: 'upload/avatar',
-        filePath: filePath,
-      );
-      if (resp['ret'] == 10000) {
-        var avatarUrl = '$kUrlAvatar${resp['result']}';
-        logger.d(avatarUrl);
-        _user.avatar = avatarUrl;
-      } else {
-        DialogService.of(context).showSnackBar(
-          'Upload image failed',
-          type: SnackBarType.error,
-        );
-      }
-    }
   }
 }

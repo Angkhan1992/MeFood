@@ -9,7 +9,6 @@ import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
-import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';
 
 class AddAddressPage extends StatefulWidget {
@@ -155,7 +154,12 @@ class _AddAddressPageState extends State<AddAddressPage> {
               hintText: 'Country',
               keyboardType: TextInputType.text,
               readOnly: true,
-              onTap: onCountryDialog,
+              onTap: () async {
+                var result = await DialogService.of(context).countryPicker();
+                setState(() {
+                  _address.country = result;
+                });
+              },
               onSaved: (country) => _address.country = country,
             ),
             const SizedBox(
@@ -164,7 +168,19 @@ class _AddAddressPageState extends State<AddAddressPage> {
             widget.isLogin
                 ? CustomFillButton(
                     title: 'Update Address'.toUpperCase(),
-                    onTap: onTapSubmit,
+                    onTap: () async {
+                      var resp = await _address.update(context);
+                      if (resp == null) {
+                        if (widget.onNext != null) {
+                          widget.onNext!(_address);
+                        }
+                      } else {
+                        DialogService.of(context).showSnackBar(
+                          resp,
+                          type: SnackBarType.error,
+                        );
+                      }
+                    },
                   )
                 : Column(
                     children: [
@@ -177,7 +193,21 @@ class _AddAddressPageState extends State<AddAddressPage> {
                       ),
                       CustomFillButton(
                         title: 'Next'.toUpperCase(),
-                        onTap: onTapNext,
+                        onTap: () async {
+                          FocusScope.of(context).unfocus();
+                          _formKey.currentState!.save();
+                          var resp = await _address.add(context);
+                          if (resp == null) {
+                            if (widget.onNext != null) {
+                              widget.onNext!(_address);
+                            }
+                          } else {
+                            DialogService.of(context).showSnackBar(
+                              resp,
+                              type: SnackBarType.error,
+                            );
+                          }
+                        },
                         isLoading: isUploadAddress,
                       ),
                     ],
@@ -186,117 +216,6 @@ class _AddAddressPageState extends State<AddAddressPage> {
               height: 40.0,
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  void onTapNext() async {
-    _formKey.currentState!.save();
-    if (widget.onNext != null) {
-      if (_address.isFullData != null) {
-        DialogService.of(context).showSnackBar(
-          _address.isFullData!,
-          type: SnackBarType.error,
-        );
-      } else {
-        FocusScope.of(context).unfocus();
-        var provider = Provider.of<DriverProvider>(context, listen: false);
-
-        setState(() {
-          isUploadAddress = true;
-        });
-        var resp = await APIService().post(
-          APIService.kUrlAuth + '/registerAddress',
-          {
-            'address': _address.registerParam,
-            'delivery': provider.user.id,
-          },
-        );
-        if (resp != null) {
-          if (resp['ret'] == 10000) {
-            _address.id = resp['result'] as int;
-            widget.onNext!(_address);
-          } else {
-            DialogService.of(context).showSnackBar(
-              resp['msg'],
-              type: SnackBarType.error,
-            );
-          }
-        } else {
-          DialogService.of(context).showSnackBar(
-            'Server Error!',
-            type: SnackBarType.error,
-          );
-        }
-        setState(() {
-          isUploadAddress = false;
-        });
-      }
-    }
-  }
-
-  void onTapSubmit() async {
-    FocusScope.of(context).unfocus();
-    _formKey.currentState!.save();
-    if (_address.isFullData != null) {
-      DialogService.of(context).showSnackBar(
-        'Please fill fields',
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    var resp = await APIService.of(context: context).post(
-      '${APIService.kUrlAuth}/updateAddress',
-      _address.toJson(),
-    );
-    if (resp!['ret'] == 10000) {
-      widget.onNext!(_address);
-    } else {
-      DialogService.of(context).showSnackBar(
-        'Server Error!',
-        type: SnackBarType.error,
-      );
-    }
-  }
-
-  void onCountryDialog() async {
-    _formKey.currentState!.save();
-    var countries = await JsonService.readCountryFromJson();
-    DialogService.of(context).showBottomSheet(
-      Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              'Choose Country'.wText(
-                TextStyle(
-                  fontSize: 14.0,
-                  color: Theme.of(context).hintColor,
-                ),
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              for (var country in countries) ...{
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    _address.country = country.name;
-                    setState(() {});
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: offsetSm),
-                    child: '${country.name} (${country.code})'.wText(
-                      TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              },
-            ],
-          ),
         ),
       ),
     );

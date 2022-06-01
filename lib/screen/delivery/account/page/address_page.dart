@@ -254,6 +254,9 @@ class _AddressPageState extends State<AddressPage> {
                     if (result == null) {
                       if (widget.updateAddress != null) {
                         widget.updateAddress!(address!);
+                        DialogService.of(context).showSnackBar(
+                          'Success updated address data',
+                        );
                       }
                     } else {
                       DialogService.of(context).showSnackBar(

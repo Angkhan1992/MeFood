@@ -104,6 +104,8 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
   }
 
   void onSubmit() async {
+    FocusScope.of(context).unfocus();
+
     var content = _contentController.text;
     if (content.isEmpty) {
       DialogService.of(context).showSnackBar(
@@ -112,7 +114,7 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
       );
       return;
     }
-    FocusScope.of(context).unfocus();
+
     var resp = await APIService.of(context: context).post(
       '${APIService.kUrlSupport}/pendingDelivery',
       {

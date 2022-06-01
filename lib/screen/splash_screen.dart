@@ -42,11 +42,6 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             AnimatedTextKit(
               animatedTexts: [
-                ColorizeAnimatedText(
-                  'MeFood',
-                  textStyle: colorizeTextStyle,
-                  colors: colorizeColors,
-                ),
                 F.isDelivery
                     ? ColorizeAnimatedText(
                         'DELIVERY MAN',

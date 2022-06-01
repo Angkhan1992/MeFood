@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 
@@ -18,6 +19,9 @@ extension EUserModel on UserModel {
   String get fullName => '$last $first';
 
   Future<String?> update(BuildContext? context) async {
+    if (!isFullData) {
+      return 'Please fill full data';
+    }
     var resp = await APIService.of(context: context).post(
       '${APIService.kUrlAuth}/updateUser',
       toJson(),
@@ -30,6 +34,51 @@ extension EUserModel on UserModel {
       }
     } else {
       return 'Failed Server Error';
+    }
+  }
+
+  Future<String?> add(BuildContext? context) async {
+    if (!isFullData) return 'Please fill full data';
+
+    var resp = await APIService.of(context: context).post(
+      APIService.kUrlAuth + '/registerUser',
+      toJson(),
+    );
+
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        id = resp['result']['user_id'] as int;
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return 'Server Error';
+    }
+  }
+
+  Future<String?> updatePassword(
+    BuildContext? context, {
+    required String pass,
+  }) async {
+    // if (!pass.validatePassword) return 'Invalid password';
+    var resp = await APIService(context: context).post(
+      APIService.kUrlAuth + '/regDeliveryPassword',
+      {
+        'usr_id': id,
+        'password': pass.generateMD5,
+      },
+    );
+
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        id = resp['result']['user_id'] as int;
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return 'Server Error';
     }
   }
 }

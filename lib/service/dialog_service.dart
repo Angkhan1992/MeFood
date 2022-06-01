@@ -7,7 +7,6 @@ import 'package:gif_view/gif_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:location/location.dart';
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/app_config.dart';

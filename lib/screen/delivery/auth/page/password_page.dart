@@ -125,43 +125,26 @@ class _PasswordPageState extends State<PasswordPage> {
   }
 
   void onDone() async {
+    FocusScope.of(context).unfocus();
+
     var pass = _passwordController.text;
     var repass = _repassController.text;
-    // if (!pass.validatePassword) {
-    //   return;
-    // }
     if (pass != repass) {
       return;
     }
+
     var provider = Provider.of<DriverProvider>(context, listen: false);
-
-    isUpload = true;
-    setState(() {});
-    var resp = await APIService().post(
-      APIService.kUrlAuth + '/regDeliveryPassword',
-      {
-        'usr_id': provider.user.user!.id,
-        'password': pass.generateMD5,
-      },
-    );
-
-    if (resp != null) {
-      if (resp['ret'] == 10000) {
+    var user = provider.user.user!;
+    var resp = await user.updatePassword(context, pass: pass);
+    if (resp == null) {
+      if (widget.onDone != null) {
         widget.onDone!();
-      } else {
-        DialogService.of(context).showSnackBar(
-          resp['msg'],
-          type: SnackBarType.error,
-        );
       }
     } else {
       DialogService.of(context).showSnackBar(
-        'Failed Server Error',
+        resp,
         type: SnackBarType.error,
       );
     }
-
-    isUpload = false;
-    setState(() {});
   }
 }

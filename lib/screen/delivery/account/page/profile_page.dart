@@ -192,6 +192,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     }
                     if (widget.updateUser != null) {
                       widget.updateUser!(user!);
+                      DialogService.of(context).showSnackBar(
+                        'Success updated user data',
+                      );
                     }
                   }
                 : null,

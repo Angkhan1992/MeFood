@@ -5,7 +5,6 @@ import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
-import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';
 import 'package:provider/provider.dart';
 
@@ -127,7 +126,16 @@ class _AddCarPageState extends State<AddCarPage> {
               hintText: 'Car Type (ex: Car, Moto, Walker)',
               keyboardType: TextInputType.text,
               readOnly: true,
-              onTap: onDeliveryTypeDialog,
+              onTap: () async {
+                var result = await DialogService.of(context).bottomChoose(
+                  values: ['Car', 'Motocycle', 'Walker'],
+                );
+                if (result != null) {
+                  setState(() {
+                    _car.type = result;
+                  });
+                }
+              },
               onSaved: (type) => _car.type = type,
             ),
             const SizedBox(
@@ -166,7 +174,22 @@ class _AddCarPageState extends State<AddCarPage> {
             widget.isLogin
                 ? CustomFillButton(
                     title: 'Update Car'.toUpperCase(),
-                    onTap: onTapSubmit,
+                    onTap: () async {
+                      FocusScope.of(context).unfocus();
+                      _formKey.currentState!.save();
+
+                      var resp = await _car.update(context);
+                      if (resp == null) {
+                        if (widget.onNext != null) {
+                          widget.onNext!(_car);
+                        }
+                      } else {
+                        DialogService.of(context).showSnackBar(
+                          'content',
+                          type: SnackBarType.error,
+                        );
+                      }
+                    },
                     isLoading: isUploadCar,
                   )
                 : Column(
@@ -180,7 +203,22 @@ class _AddCarPageState extends State<AddCarPage> {
                       ),
                       CustomFillButton(
                         title: 'Next'.toUpperCase(),
-                        onTap: onTapNext,
+                        onTap: () async {
+                          FocusScope.of(context).unfocus();
+                          _formKey.currentState!.save();
+
+                          var resp = await _car.add(context);
+                          if (resp == null) {
+                            if (widget.onNext != null) {
+                              widget.onNext!(_car);
+                            }
+                          } else {
+                            DialogService.of(context).showSnackBar(
+                              'content',
+                              type: SnackBarType.error,
+                            );
+                          }
+                        },
                         isLoading: isUploadCar,
                       ),
                     ],
@@ -190,119 +228,6 @@ class _AddCarPageState extends State<AddCarPage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void onTapSubmit() async {
-    FocusScope.of(context).unfocus();
-    if (widget.onNext != null) {
-      _formKey.currentState!.save();
-      if (_car.isFullData != null) {
-        DialogService.of(context).showSnackBar(
-          _car.isFullData!,
-          type: SnackBarType.error,
-        );
-        return;
-      }
-      FocusScope.of(context).unfocus();
-
-      var resp = await APIService.of(context: context).post(
-        '${APIService.kUrlAuth}/updateCar',
-        _car.toJson(),
-      );
-      if (resp!['ret'] == 10000) {
-        widget.onNext!(_car);
-      } else {
-        DialogService.of(context).showSnackBar(
-          'Server Error!',
-          type: SnackBarType.error,
-        );
-      }
-    }
-  }
-
-  void onTapNext() async {
-    _formKey.currentState!.save();
-    if (widget.onNext != null) {
-      if (_car.isFullData != null) {
-        DialogService.of(context).showSnackBar(
-          _car.isFullData!,
-          type: SnackBarType.error,
-        );
-        return;
-      }
-      FocusScope.of(context).unfocus();
-
-      var provider = Provider.of<DriverProvider>(context, listen: false);
-      setState(() {
-        isUploadCar = true;
-      });
-      var resp = await APIService().post(
-        APIService.kUrlAuth + '/registerCar',
-        {
-          'car': _car.registerParam,
-          'delivery': provider.user.id,
-        },
-      );
-      if (resp != null) {
-        if (resp['ret'] == 10000) {
-          var id = resp['result'];
-          _car.id = id;
-          widget.onNext!(_car);
-        } else {
-          DialogService.of(context).showSnackBar(
-            resp['msg'],
-            type: SnackBarType.error,
-          );
-        }
-      } else {
-        DialogService.of(context).showSnackBar(
-          'Server Error!',
-          type: SnackBarType.error,
-        );
-      }
-      setState(() {
-        isUploadCar = false;
-      });
-    }
-  }
-
-  void onDeliveryTypeDialog() {
-    var types = ['Car', 'Motocycle', 'Walker'];
-    _formKey.currentState!.save();
-    DialogService.of(context).showBottomSheet(
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          'Delivery Type'.wText(
-            TextStyle(
-              fontSize: 14.0,
-              color: Theme.of(context).hintColor,
-            ),
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-          for (var type in types) ...{
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pop();
-                _car.type = type;
-                setState(() {});
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: offsetSm),
-                child: type.wText(
-                  TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          },
-        ],
       ),
     );
   }
