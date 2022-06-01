@@ -24,12 +24,8 @@ mixin _$CenterModel {
   set id(int? value) => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   set name(String? value) => throw _privateConstructorUsedError;
-  String? get lat => throw _privateConstructorUsedError;
-  set lat(String? value) => throw _privateConstructorUsedError;
-  String? get lon => throw _privateConstructorUsedError;
-  set lon(String? value) => throw _privateConstructorUsedError;
-  int? get adr_id => throw _privateConstructorUsedError;
-  set adr_id(int? value) => throw _privateConstructorUsedError;
+  AddressModel? get address => throw _privateConstructorUsedError;
+  set address(AddressModel? value) => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   set email(String? value) => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -55,14 +51,14 @@ abstract class $CenterModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? name,
-      String? lat,
-      String? lon,
-      int? adr_id,
+      AddressModel? address,
       String? email,
       String? phone,
       String? opentime,
       String? regdate,
       String? other});
+
+  $AddressModelCopyWith<$Res>? get address;
 }
 
 /// @nodoc
@@ -77,9 +73,7 @@ class _$CenterModelCopyWithImpl<$Res> implements $CenterModelCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? lat = freezed,
-    Object? lon = freezed,
-    Object? adr_id = freezed,
+    Object? address = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? opentime = freezed,
@@ -95,18 +89,10 @@ class _$CenterModelCopyWithImpl<$Res> implements $CenterModelCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      lat: lat == freezed
-          ? _value.lat
-          : lat // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lon: lon == freezed
-          ? _value.lon
-          : lon // ignore: cast_nullable_to_non_nullable
-              as String?,
-      adr_id: adr_id == freezed
-          ? _value.adr_id
-          : adr_id // ignore: cast_nullable_to_non_nullable
-              as int?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -129,6 +115,17 @@ class _$CenterModelCopyWithImpl<$Res> implements $CenterModelCopyWith<$Res> {
               as String?,
     ));
   }
+
+  @override
+  $AddressModelCopyWith<$Res>? get address {
+    if (_value.address == null) {
+      return null;
+    }
+
+    return $AddressModelCopyWith<$Res>(_value.address!, (value) {
+      return _then(_value.copyWith(address: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -141,14 +138,15 @@ abstract class _$$_CenterModelCopyWith<$Res>
   $Res call(
       {int? id,
       String? name,
-      String? lat,
-      String? lon,
-      int? adr_id,
+      AddressModel? address,
       String? email,
       String? phone,
       String? opentime,
       String? regdate,
       String? other});
+
+  @override
+  $AddressModelCopyWith<$Res>? get address;
 }
 
 /// @nodoc
@@ -165,9 +163,7 @@ class __$$_CenterModelCopyWithImpl<$Res> extends _$CenterModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? lat = freezed,
-    Object? lon = freezed,
-    Object? adr_id = freezed,
+    Object? address = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? opentime = freezed,
@@ -183,18 +179,10 @@ class __$$_CenterModelCopyWithImpl<$Res> extends _$CenterModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      lat: lat == freezed
-          ? _value.lat
-          : lat // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lon: lon == freezed
-          ? _value.lon
-          : lon // ignore: cast_nullable_to_non_nullable
-              as String?,
-      adr_id: adr_id == freezed
-          ? _value.adr_id
-          : adr_id // ignore: cast_nullable_to_non_nullable
-              as int?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
       email: email == freezed
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -225,9 +213,7 @@ class _$_CenterModel implements _CenterModel {
   _$_CenterModel(
       {this.id,
       this.name,
-      this.lat,
-      this.lon,
-      this.adr_id,
+      this.address,
       this.email,
       this.phone,
       this.opentime,
@@ -242,11 +228,7 @@ class _$_CenterModel implements _CenterModel {
   @override
   String? name;
   @override
-  String? lat;
-  @override
-  String? lon;
-  @override
-  int? adr_id;
+  AddressModel? address;
   @override
   String? email;
   @override
@@ -260,7 +242,7 @@ class _$_CenterModel implements _CenterModel {
 
   @override
   String toString() {
-    return 'CenterModel(id: $id, name: $name, lat: $lat, lon: $lon, adr_id: $adr_id, email: $email, phone: $phone, opentime: $opentime, regdate: $regdate, other: $other)';
+    return 'CenterModel(id: $id, name: $name, address: $address, email: $email, phone: $phone, opentime: $opentime, regdate: $regdate, other: $other)';
   }
 
   @JsonKey(ignore: true)
@@ -278,9 +260,7 @@ abstract class _CenterModel implements CenterModel {
   factory _CenterModel(
       {int? id,
       String? name,
-      String? lat,
-      String? lon,
-      int? adr_id,
+      AddressModel? address,
       String? email,
       String? phone,
       String? opentime,
@@ -295,11 +275,7 @@ abstract class _CenterModel implements CenterModel {
   @override
   String? get name => throw _privateConstructorUsedError;
   @override
-  String? get lat => throw _privateConstructorUsedError;
-  @override
-  String? get lon => throw _privateConstructorUsedError;
-  @override
-  int? get adr_id => throw _privateConstructorUsedError;
+  AddressModel? get address => throw _privateConstructorUsedError;
   @override
   String? get email => throw _privateConstructorUsedError;
   @override

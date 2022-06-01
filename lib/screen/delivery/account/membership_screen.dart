@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/provider/provider.dart';
+import 'package:mefood/screen/delivery/account/manual_membership.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/widget/delivery/account.dart';
 import 'package:provider/provider.dart';
@@ -72,40 +73,32 @@ class _MembershipScreenState extends State<MembershipScreen> {
                   'Analysis Earn: Enabled',
                 ],
                 isSelected: isProMember,
-                upgrade: showPaymentDialog,
+                upgrade: () async {
+                  var values = ['In App Purchase', 'Contact to Support'];
+                  var result = await DialogService.of(context).bottomChoose(
+                    values: values,
+                  );
+                  if (result != null) {
+                    for (var i = 0; i < values.length; i++) {
+                      if (result == values[i]) {
+                        if (i == 0) {
+                          // [Future] iap for membership
+                        }
+                        if (i == 1) {
+                          NavigatorService.of(context).push(
+                            screen: ManualMembership(),
+                          );
+                          return;
+                        }
+                      }
+                    }
+                  }
+                },
               ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  void showPaymentDialog() {
-    DialogService.of(context).showBottomSheet(Column(
-      children: [
-        'Premium Member'.wText(TextStyle(
-          fontSize: 14.0,
-          color: Theme.of(context).hintColor,
-        )),
-        const SizedBox(
-          height: 16.0,
-        ),
-        'In App Purchase'.wText(TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w500,
-        )),
-        const SizedBox(
-          height: 16.0,
-        ),
-        'Contact to Support'.wText(TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.w500,
-        )),
-        const SizedBox(
-          height: 8.0,
-        ),
-      ],
-    ));
   }
 }

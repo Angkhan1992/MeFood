@@ -10,9 +10,9 @@ _$_CenterModel _$$_CenterModelFromJson(Map<String, dynamic> json) =>
     _$_CenterModel(
       id: json['id'] as int?,
       name: json['name'] as String?,
-      lat: json['lat'] as String?,
-      lon: json['lon'] as String?,
-      adr_id: json['adr_id'] as int?,
+      address: json['address'] == null
+          ? null
+          : AddressModel.fromJson(json['address'] as Map<String, dynamic>),
       email: json['email'] as String?,
       phone: json['phone'] as String?,
       opentime: json['opentime'] as String?,
@@ -24,9 +24,7 @@ Map<String, dynamic> _$$_CenterModelToJson(_$_CenterModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'lat': instance.lat,
-      'lon': instance.lon,
-      'adr_id': instance.adr_id,
+      'address': instance.address,
       'email': instance.email,
       'phone': instance.phone,
       'opentime': instance.opentime,
