@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class NavigatorProvider {
+class NavigatorService {
   final BuildContext? context;
 
-  NavigatorProvider(this.context);
+  NavigatorService(this.context);
 
-  factory NavigatorProvider.of(BuildContext? context) {
-    return NavigatorProvider(context);
+  factory NavigatorService.of(BuildContext? context) {
+    return NavigatorService(context);
   }
 
   void push({

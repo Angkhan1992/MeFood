@@ -21,12 +21,19 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ProductModel {
   String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
   String? get rest_id => throw _privateConstructorUsedError;
+  set rest_id(String? value) => throw _privateConstructorUsedError;
   String? get cooking_time => throw _privateConstructorUsedError;
+  set cooking_time(String? value) => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  set title(String? value) => throw _privateConstructorUsedError;
   String? get desc => throw _privateConstructorUsedError;
+  set desc(String? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
+  set regdate(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
+  set other(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -188,51 +195,24 @@ class _$_ProductModel implements _ProductModel {
       _$$_ProductModelFromJson(json);
 
   @override
-  final String? id;
+  String? id;
   @override
-  final String? rest_id;
+  String? rest_id;
   @override
-  final String? cooking_time;
+  String? cooking_time;
   @override
-  final String? title;
+  String? title;
   @override
-  final String? desc;
+  String? desc;
   @override
-  final String? regdate;
+  String? regdate;
   @override
-  final String? other;
+  String? other;
 
   @override
   String toString() {
     return 'ProductModel(id: $id, rest_id: $rest_id, cooking_time: $cooking_time, title: $title, desc: $desc, regdate: $regdate, other: $other)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_ProductModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.rest_id, rest_id) &&
-            const DeepCollectionEquality()
-                .equals(other.cooking_time, cooking_time) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.desc, desc) &&
-            const DeepCollectionEquality().equals(other.regdate, regdate) &&
-            const DeepCollectionEquality().equals(other.other, this.other));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(rest_id),
-      const DeepCollectionEquality().hash(cooking_time),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(desc),
-      const DeepCollectionEquality().hash(regdate),
-      const DeepCollectionEquality().hash(other));
 
   @JsonKey(ignore: true)
   @override
@@ -247,13 +227,13 @@ class _$_ProductModel implements _ProductModel {
 
 abstract class _ProductModel implements ProductModel {
   factory _ProductModel(
-      {final String? id,
-      final String? rest_id,
-      final String? cooking_time,
-      final String? title,
-      final String? desc,
-      final String? regdate,
-      final String? other}) = _$_ProductModel;
+      {String? id,
+      String? rest_id,
+      String? cooking_time,
+      String? title,
+      String? desc,
+      String? regdate,
+      String? other}) = _$_ProductModel;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;

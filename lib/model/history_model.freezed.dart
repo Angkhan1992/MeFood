@@ -21,9 +21,13 @@ HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HistoryModel {
   String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
   double? get distance => throw _privateConstructorUsedError;
+  set distance(double? value) => throw _privateConstructorUsedError;
   double? get price => throw _privateConstructorUsedError;
+  set price(double? value) => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
+  set date(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -134,38 +138,18 @@ class _$_HistoryModel implements _HistoryModel {
       _$$_HistoryModelFromJson(json);
 
   @override
-  final String? id;
+  String? id;
   @override
-  final double? distance;
+  double? distance;
   @override
-  final double? price;
+  double? price;
   @override
-  final String? date;
+  String? date;
 
   @override
   String toString() {
     return 'HistoryModel(id: $id, distance: $distance, price: $price, date: $date)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_HistoryModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.distance, distance) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
-            const DeepCollectionEquality().equals(other.date, date));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(distance),
-      const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(date));
 
   @JsonKey(ignore: true)
   @override
@@ -180,10 +164,10 @@ class _$_HistoryModel implements _HistoryModel {
 
 abstract class _HistoryModel implements HistoryModel {
   factory _HistoryModel(
-      {final String? id,
-      final double? distance,
-      final double? price,
-      final String? date}) = _$_HistoryModel;
+      {String? id,
+      double? distance,
+      double? price,
+      String? date}) = _$_HistoryModel;
 
   factory _HistoryModel.fromJson(Map<String, dynamic> json) =
       _$_HistoryModel.fromJson;

@@ -5,17 +5,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:mefood/util/constants.dart';
+
 import 'generated/l10n.dart';
-import 'model/user_model.dart';
-import 'provider/delivery/order_provider.dart';
-import 'provider/delivery/status_provider.dart';
-import 'provider/flavor_provider.dart';
-import 'provider/injector_provider.dart';
 import 'screen/splash_screen.dart';
-import 'themes/colors.dart';
-import 'themes/dimens.dart';
-import 'themes/textstyles.dart';
-import 'util/constants.dart';
 
 Injector? injector;
 
@@ -36,20 +32,24 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  InjectProvider().initialise(Injector());
+  InjectService().initialise(Injector());
   injector = Injector();
   await AppInitializer().initialise(injector!);
 
   F.appFlavor = Flavor.delivery;
-  var statusProvider = StatusProvider();
-  await statusProvider.initProvider();
+  var deliveryProvider = DeliveryProvider();
+  await deliveryProvider.initProvider();
+
+  var mailProvider = MailProvider();
+  await mailProvider.initMails();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => UserModel()),
-        ChangeNotifierProvider(create: (context) => statusProvider),
+        ChangeNotifierProvider(create: (context) => DriverProvider()),
+        ChangeNotifierProvider(create: (context) => deliveryProvider),
         ChangeNotifierProvider(create: (context) => OrderProvider()),
+        ChangeNotifierProvider(create: (context) => mailProvider),
       ],
       child: const MyApp(),
     ),

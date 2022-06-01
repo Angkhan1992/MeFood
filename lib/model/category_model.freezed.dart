@@ -21,11 +21,17 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CategoryModel {
   int? get id => throw _privateConstructorUsedError;
+  set id(int? value) => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  set name(String? value) => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  set description(String? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
+  set regdate(String? value) => throw _privateConstructorUsedError;
   String? get icon => throw _privateConstructorUsedError;
+  set icon(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
+  set other(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -175,47 +181,22 @@ class _$_CategoryModel implements _CategoryModel {
       _$$_CategoryModelFromJson(json);
 
   @override
-  final int? id;
+  int? id;
   @override
-  final String? name;
+  String? name;
   @override
-  final String? description;
+  String? description;
   @override
-  final String? regdate;
+  String? regdate;
   @override
-  final String? icon;
+  String? icon;
   @override
-  final String? other;
+  String? other;
 
   @override
   String toString() {
     return 'CategoryModel(id: $id, name: $name, description: $description, regdate: $regdate, icon: $icon, other: $other)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_CategoryModel &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.regdate, regdate) &&
-            const DeepCollectionEquality().equals(other.icon, icon) &&
-            const DeepCollectionEquality().equals(other.other, this.other));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(regdate),
-      const DeepCollectionEquality().hash(icon),
-      const DeepCollectionEquality().hash(other));
 
   @JsonKey(ignore: true)
   @override
@@ -230,12 +211,12 @@ class _$_CategoryModel implements _CategoryModel {
 
 abstract class _CategoryModel implements CategoryModel {
   factory _CategoryModel(
-      {final int? id,
-      final String? name,
-      final String? description,
-      final String? regdate,
-      final String? icon,
-      final String? other}) = _$_CategoryModel;
+      {int? id,
+      String? name,
+      String? description,
+      String? regdate,
+      String? icon,
+      String? other}) = _$_CategoryModel;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryModel.fromJson;

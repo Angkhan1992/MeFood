@@ -1,8 +1,8 @@
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-SocketProvider? socketService;
+SocketService? socketService;
 
-class SocketProvider {
+class SocketService {
   io.Socket? _socket;
   // UserModel? _owner;
 

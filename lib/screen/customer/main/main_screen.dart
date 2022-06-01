@@ -4,7 +4,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:mefood/screen/customer/main/offer_screen.dart';
 import 'package:mefood/screen/customer/main/order_screen.dart';
 import 'package:mefood/themes/textstyles.dart';
-import 'package:mefood/util/extensions.dart';
+import 'package:mefood/extensions/e_string.dart';
 
 import '../../../themes/dimens.dart';
 import '../../../widget/common/appbar.dart';

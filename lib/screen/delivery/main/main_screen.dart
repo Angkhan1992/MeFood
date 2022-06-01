@@ -3,19 +3,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mefood/provider/json_provider.dart';
-import 'package:mefood/service/api_service.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
-import '../../../themes/dimens.dart';
-import '../../../themes/textstyles.dart';
-import '../../../util/extensions.dart';
-import '../../../widget/common/appbar.dart';
-import '../../../widget/delivery/toolbar.dart';
-import '../../../widget/page/network_error.dart';
-import 'chat_page.dart';
-import 'history_page.dart';
-import 'order_page.dart';
-import 'status_page.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/provider/delivery/delivery_provider.dart';
+import 'package:mefood/screen/delivery/account/account_screen.dart';
+import 'package:mefood/screen/delivery/account/mail_screen.dart';
+import 'package:mefood/screen/delivery/account/membership_screen.dart';
+import 'package:mefood/screen/delivery/main/chat_page.dart';
+import 'package:mefood/screen/delivery/main/history_page.dart';
+import 'package:mefood/screen/delivery/main/order_page.dart';
+import 'package:mefood/screen/delivery/main/status_page.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/delivery/delivery.dart';
+import 'package:mefood/widget/page/network_error.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -44,14 +48,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var screens = [
-      const StatusPage(),
-      const OrderPage(),
-      HistoryPage(
-        initDate: DateTime.now(),
-      ),
-      const ChatPage(),
-    ];
     return WillPopScope(
       onWillPop: () async => false,
       child: StreamBuilder<ConnectivityResult>(
@@ -63,125 +59,186 @@ class _MainScreenState extends State<MainScreen> {
           }
           return ValueListenableBuilder(
             valueListenable: _event,
-            builder: (context, value, child) => Scaffold(
-              appBar: AppBar(
-                title: Text(_titles[_event.value]),
-                actions: [
-                  _actionWidget(),
-                ],
-              ),
-              drawer: Drawer(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
+            builder: (context, value, child) => Consumer<DeliveryProvider>(
+              builder: (context, provider, child) {
+                var screens = [
+                  StatusPage(provider: provider),
+                  const OrderPage(),
+                  HistoryPage(
+                    initDate: DateTime.now(),
+                  ),
+                  const ChatPage(),
+                ];
+                return Scaffold(
+                  appBar: AppBar(
+                    title: Text(_titles[_event.value]),
+                    actions: [
+                      _actionWidget(),
+                    ],
+                  ),
+                  drawer: Drawer(
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        Stack(
                           children: [
-                            Icon(
-                              Icons.account_circle,
-                              size: 60.0,
+                            DrawerHeader(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    AvatarImageWidget(
+                                      avatar: provider.user!.avatar,
+                                    ),
+                                    const SizedBox(
+                                      height: 16.0,
+                                    ),
+                                    Text(
+                                      provider.user!.fullName,
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Text(
-                              'Black Gold',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                color: Theme.of(context).primaryColor,
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: DrawMailIcon(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                  NavigatorService.of(context).push(
+                                    screen: MailScreen(),
+                                  );
+                                },
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        'assets/icons/menu/ic_profile.svg',
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      title: Text('My Profile'.toUpperCase()),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        'assets/icons/menu/ic_chart.svg',
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      title: Text('My Earn'.toUpperCase()),
-                      onTap: () {},
-                    ),
-                    Divider(),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        'assets/icons/menu/ic_email.svg',
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      title: Text('Report'.toUpperCase()),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        'assets/icons/ic_book.svg',
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      title: Text('Privacy & Policy'.toUpperCase()),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        'assets/icons/menu/ic_mobile.svg',
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      title: Text('Contact Us'.toUpperCase()),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        'assets/icons/menu/ic_setting.svg',
-                        color: Theme.of(context).secondaryHeaderColor,
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      title: Text('Settings'.toUpperCase()),
-                      onTap: () {},
-                    ),
-                    Divider(),
-                    ListTile(
-                      leading: SvgPicture.asset(
-                        'assets/icons/menu/ic_sign.svg',
-                        color: Colors.red,
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      title: Text(
-                        'Logout'.toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.red,
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            'assets/icons/menu/ic_profile.svg',
+                            color: Theme.of(context).secondaryHeaderColor,
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          title: Text('My Profile'.toUpperCase()),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            NavigatorService.of(context).push(
+                              screen: AccountScreen(
+                                provider: provider,
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                      onTap: () {},
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            'assets/icons/ic_coin.svg',
+                            color: Theme.of(context).secondaryHeaderColor,
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          title: Text('Membership'.toUpperCase()),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            NavigatorService.of(context).push(
+                              screen: MembershipScreen(),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            LineIcons.userFriends,
+                            size: 18.0,
+                            color: Theme.of(context).secondaryHeaderColor,
+                          ),
+                          title: Text('Follows'.toUpperCase()),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        if (!provider.isExpired())
+                          ListTile(
+                            leading: SvgPicture.asset(
+                              'assets/icons/menu/ic_chart.svg',
+                              color: Theme.of(context).secondaryHeaderColor,
+                              width: 18.0,
+                              height: 18.0,
+                            ),
+                            title: Text('My Earn'.toUpperCase()),
+                            trailing: ListItemTag(tag: 'NEW'),
+                            onTap: () {},
+                          ),
+                        Divider(),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            'assets/icons/menu/ic_email.svg',
+                            color: Theme.of(context).secondaryHeaderColor,
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          title: Text('Report'.toUpperCase()),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            'assets/icons/ic_book.svg',
+                            color: Theme.of(context).secondaryHeaderColor,
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          title: Text('Privacy & Policy'.toUpperCase()),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            'assets/icons/menu/ic_mobile.svg',
+                            color: Theme.of(context).secondaryHeaderColor,
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          title: Text('Contact Us'.toUpperCase()),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            'assets/icons/menu/ic_setting.svg',
+                            color: Theme.of(context).secondaryHeaderColor,
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          title: Text('Settings'.toUpperCase()),
+                          onTap: () {},
+                        ),
+                        Divider(),
+                        ListTile(
+                          leading: SvgPicture.asset(
+                            'assets/icons/menu/ic_sign.svg',
+                            color: Colors.red,
+                            width: 18.0,
+                            height: 18.0,
+                          ),
+                          title: Text(
+                            'Logout'.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
+                          onTap: () {},
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              bottomNavigationBar: _buildBottomNavigationBar(),
-              body: screens[_event.value],
+                  ),
+                  bottomNavigationBar: _buildBottomNavigationBar(),
+                  body: screens[_event.value],
+                );
+              },
             ),
           );
         },
@@ -203,20 +260,10 @@ class _MainScreenState extends State<MainScreen> {
         return DriverCalendar(
           onTapBack: () {},
           onTapForward: () {},
-          onTapCalendar: () async {
-            var categories = await JsonProvider.readCategoryFromJson();
-            for (var category in categories) {
-              await APIService.of().post(
-                APIService.kUrlCategory,
-                category.toJson(),
-              );
-            }
-          },
+          onTapCalendar: () async {},
         );
       case 3:
-        return DriverSupport(
-          onTapSupport: () {},
-        );
+        return TextActionButton(title: 'Support');
     }
     return Container();
   }

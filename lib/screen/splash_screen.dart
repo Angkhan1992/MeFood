@@ -1,11 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mefood/provider/flavor_provider.dart';
-import 'package:mefood/provider/navigator_provider.dart';
-import 'package:mefood/screen/login_screen.dart';
-import 'package:mefood/themes/dimens.dart';
-import 'package:mefood/themes/textstyles.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/theme.dart';
+
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -43,11 +42,6 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             AnimatedTextKit(
               animatedTexts: [
-                ColorizeAnimatedText(
-                  'MeFood',
-                  textStyle: colorizeTextStyle,
-                  colors: colorizeColors,
-                ),
                 F.isDelivery
                     ? ColorizeAnimatedText(
                         'DELIVERY MAN',
@@ -67,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 if (kDebugMode) {
                   print('[Animation] onFinished event');
                 }
-                NavigatorProvider.of(context).push(screen: const LoginScreen());
+                NavigatorService.of(context).push(screen: const LoginScreen());
               },
             ),
           ],

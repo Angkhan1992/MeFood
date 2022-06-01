@@ -1,10 +1,10 @@
 import 'package:flutter_simple_dependency_injection/injector.dart';
 
-import 'socket_provider.dart';
+import 'socket_service.dart';
 
-class InjectProvider {
+class InjectService {
   Injector initialise(Injector injector) {
-    injector.map<SocketProvider>((i) => SocketProvider(), isSingleton: true);
+    injector.map<SocketService>((i) => SocketService(), isSingleton: true);
     return injector;
   }
 }

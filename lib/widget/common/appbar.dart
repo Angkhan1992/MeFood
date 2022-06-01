@@ -1,8 +1,9 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:mefood/util/extensions.dart';
-
-import '../../themes/dimens.dart';
-import '../../themes/textstyles.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/themes/theme.dart';
+import 'package:provider/provider.dart';
 
 class CustomHeaderView extends StatelessWidget {
   final String title;
@@ -138,4 +139,76 @@ class CustomAppbar extends AppBar {
           ),
           actions: actions,
         );
+}
+
+class NorchWidget extends Container {
+  NorchWidget({
+    required Color color,
+  }) : super(
+          width: 80.0,
+          height: 4.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: color,
+          ),
+        );
+}
+
+class TextActionButton extends StatelessWidget {
+  final String title;
+  final Function()? onTap;
+
+  const TextActionButton({
+    Key? key,
+    required this.title,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0),
+      child: InkWell(
+        onTap: onTap,
+        child: Center(
+          child: title.wText(
+            TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DrawMailIcon extends StatelessWidget {
+  final Function()? onTap;
+
+  const DrawMailIcon({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<MailProvider>(context, listen: false);
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 40.0,
+          right: 16.0,
+        ),
+        child: provider.getUnreadCount() > 0
+            ? Badge(
+                badgeColor: Colors.red,
+                child: Icon(Icons.email_outlined),
+              )
+            : Icon(Icons.email_outlined),
+      ),
+    );
+  }
 }

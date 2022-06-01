@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/themes/dimens.dart';
-import 'package:mefood/themes/textstyles.dart';
-
-import '../../themes/colors.dart';
+import 'package:mefood/themes/theme.dart';
 
 class CustomFillButton extends StatelessWidget {
   final String title;
@@ -20,6 +17,7 @@ class CustomFillButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var opacity = onTap == null ? 0.5 : 1.0;
     return SizedBox(
       width: double.infinity,
       height: 48.0,
@@ -27,18 +25,24 @@ class CustomFillButton extends StatelessWidget {
         onPressed: onTap,
         child: isLoading
             ? ProgressWidget(
-                color: Theme.of(context).colorScheme.onSecondary,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSecondary
+                    .withOpacity(opacity),
               )
             : Text(
                 title,
                 style: CustomText.semiBold(
                   fontSize: fontMd,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSecondary
+                      .withOpacity(opacity),
                 ),
               ),
         style: TextButton.styleFrom(
-          backgroundColor:
-              backgroundColor ?? Theme.of(context).colorScheme.secondary,
+          backgroundColor: backgroundColor ??
+              Theme.of(context).colorScheme.secondary.withOpacity(opacity),
         ),
       ),
     );
@@ -78,6 +82,7 @@ class CustomOutlineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var opacity = onTap == null ? 0.5 : 1.0;
     return SizedBox(
       width: double.infinity,
       height: 48.0,
@@ -85,21 +90,64 @@ class CustomOutlineButton extends StatelessWidget {
         onPressed: onTap,
         child: isLoading
             ? ProgressWidget(
-                color: Theme.of(context).colorScheme.secondary,
+                color: borderColor ??
+                    Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(opacity),
               )
             : Text(
                 title,
                 style: CustomText.semiBold(
                   fontSize: fontMd,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: borderColor ??
+                      Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(opacity),
                 ),
               ),
         style: OutlinedButton.styleFrom(
           side: BorderSide(
             width: 2.0,
-            color: Theme.of(context).colorScheme.secondary,
+            color: borderColor ??
+                Theme.of(context).colorScheme.secondary.withOpacity(opacity),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LoginSocialButton extends StatelessWidget {
+  final bool isLoading;
+  final Icon icon;
+  final Function()? onTap;
+
+  const LoginSocialButton({
+    Key? key,
+    required this.icon,
+    this.onTap,
+    this.isLoading = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => onTap,
+      child: Container(
+        width: 44.0,
+        height: 44.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        alignment: Alignment.center,
+        child: isLoading
+            ? ProgressWidget(
+                color: Theme.of(context).colorScheme.onSecondary,
+              )
+            : icon,
       ),
     );
   }

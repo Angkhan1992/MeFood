@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-
-import '../../themes/dimens.dart';
-import '../../themes/textstyles.dart';
-import '../../util/extensions.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/themes/theme.dart';
 
 class LandingWidget extends StatelessWidget {
   final String title;
   final String desc;
   final int selected;
-  final Function()? onTap;
 
   const LandingWidget({
     Key? key,
     required this.title,
     required this.desc,
     this.selected = 0,
-    this.onTap,
   }) : super(key: key);
 
   @override
@@ -38,50 +34,10 @@ class LandingWidget extends StatelessWidget {
                 CustomText.regular(
                   fontSize: fontMd,
                 ),
+                lines: 2,
               ),
               const SizedBox(
                 height: offsetLg,
-              ),
-              Row(
-                children: [
-                  InkWell(
-                    onTap: onTap,
-                    child: Container(
-                      width: 90.0,
-                      height: 36.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      alignment: Alignment.center,
-                      child: '>>>'.wText(CustomText.semiBold(
-                        fontSize: fontMd,
-                        color: Theme.of(context).colorScheme.onSecondary,
-                      )),
-                    ),
-                  ),
-                  const Spacer(),
-                  for (var i = 0; i < 3; i++) ...{
-                    Container(
-                      width: 12.0,
-                      height: 12.0,
-                      decoration: BoxDecoration(
-                        color: i == selected
-                            ? Theme.of(context).colorScheme.secondary
-                            : Colors.transparent,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: i == selected
-                              ? Colors.transparent
-                              : Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: offsetSm,
-                    ),
-                  }
-                ],
               ),
             ],
           ),

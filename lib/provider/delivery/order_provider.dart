@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:mefood/model/order_model.dart';
+import 'package:mefood/model/model.dart';
 
 class OrderProvider extends ChangeNotifier {
   OrderModel? _acceptedOrder;

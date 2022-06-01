@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mefood/themes/textstyles.dart';
-import 'package:mefood/util/extensions.dart';
-
-import '../../themes/dimens.dart';
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/themes/theme.dart';
 
 class HotMark extends StatelessWidget {
   final double size;
