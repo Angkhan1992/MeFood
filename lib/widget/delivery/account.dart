@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/widget/common/button.dart';
 
 class MemberShipWidget extends StatelessWidget {
@@ -59,7 +60,7 @@ class MemberShipWidget extends StatelessWidget {
                         width: 120.0,
                         height: 36.0,
                         child: CustomFillButton(
-                          title: 'Upgrade Now',
+                          title: S.current.upgrade_now,
                           onTap: upgrade,
                         ),
                       ),

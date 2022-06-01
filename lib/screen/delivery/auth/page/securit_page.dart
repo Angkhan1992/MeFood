@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/car_model.dart';
 import 'package:mefood/model/user_model.dart';
 import 'package:mefood/provider/provider.dart';
@@ -9,7 +12,6 @@ import 'package:mefood/screen/delivery/auth/page/page.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/common/common.dart';
-import 'package:provider/provider.dart';
 
 class SecuritPage extends StatefulWidget {
   final Function(UserModel, CarModel)? onNext;
@@ -68,7 +70,7 @@ class _SecuritPageState extends State<SecuritPage> {
           const SizedBox(
             height: 16.0,
           ),
-          'Driver Identify'.wText(
+          S.current.driver_identify.wText(
             TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w700,
@@ -77,8 +79,7 @@ class _SecuritPageState extends State<SecuritPage> {
           const SizedBox(
             height: 4.0,
           ),
-          'You can update some identify information and will reivew in 48 hrs.'
-              .wText(
+          S.current.dsc_verify.wText(
             TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w400,
@@ -91,7 +92,7 @@ class _SecuritPageState extends State<SecuritPage> {
             children: [
               Column(
                 children: [
-                  'ID Card or Passport'.wText(TextStyle(
+                  S.current.idcard_passport.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -123,7 +124,7 @@ class _SecuritPageState extends State<SecuritPage> {
               const SizedBox(height: 24.0),
               Column(
                 children: [
-                  'Car License'.wText(TextStyle(
+                  S.current.car_license.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -155,7 +156,7 @@ class _SecuritPageState extends State<SecuritPage> {
               const SizedBox(height: 24.0),
               Column(
                 children: [
-                  'Car Plate'.wText(TextStyle(
+                  S.current.car_plate.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -187,7 +188,7 @@ class _SecuritPageState extends State<SecuritPage> {
               const SizedBox(height: 24.0),
               Column(
                 children: [
-                  'Car Images'.wText(TextStyle(
+                  S.current.car_images.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -299,7 +300,7 @@ class _SecuritPageState extends State<SecuritPage> {
               ),
               const SizedBox(height: 40.0),
               CustomFillButton(
-                title: 'Update Securit'.toUpperCase(),
+                title: S.current.upt_securit.toUpperCase(),
                 onTap: submit,
               ),
               const SizedBox(height: 24.0),
@@ -338,7 +339,7 @@ class _SecuritPageState extends State<SecuritPage> {
       return resp['result'];
     } else {
       DialogService.of(context).showSnackBar(
-        'Upload image failed',
+        S.current.upload_image_failed,
         type: SnackBarType.error,
       );
     }
@@ -348,56 +349,56 @@ class _SecuritPageState extends State<SecuritPage> {
   Future<void> submit() async {
     if (carColor == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (idCard == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (license == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (plate == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (leftImage == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (rightImage == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (frontImage == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (backImage == null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
@@ -432,7 +433,7 @@ class _SecuritPageState extends State<SecuritPage> {
       widget.onNext!(user, car);
     } else {
       DialogService.of(context).showSnackBar(
-        'Server Error!',
+        S.current.sever_error,
         type: SnackBarType.error,
       );
     }

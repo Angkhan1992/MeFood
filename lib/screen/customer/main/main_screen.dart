@@ -1,15 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+
+import 'package:mefood/extensions/e_string.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/screen/customer/main/home_screen.dart';
 import 'package:mefood/screen/customer/main/offer_screen.dart';
 import 'package:mefood/screen/customer/main/order_screen.dart';
+import 'package:mefood/screen/customer/main/setting_screen.dart';
+import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/themes/textstyles.dart';
-import 'package:mefood/extensions/e_string.dart';
-
-import '../../../themes/dimens.dart';
-import '../../../widget/common/appbar.dart';
-import 'home_screen.dart';
-import 'setting_screen.dart';
+import 'package:mefood/widget/common/appbar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -45,10 +46,10 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   Widget _buildBottomNavigationBar() {
     var bottomBarTitles = [
-      'Home',
-      'Order',
-      'Offer',
-      'Profile',
+      S.current.home,
+      S.current.orders,
+      S.current.offers,
+      S.current.profile,
     ];
     var bottomItemImages = [
       LineIcons.home,

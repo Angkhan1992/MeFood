@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mefood/extensions/e_date.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/util/app_config.dart';
 
 extension EString on String {
@@ -12,9 +13,9 @@ extension EString on String {
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
   String? get validateEmail => (trim().isEmpty)
-      ? 'Empty Email Field'
+      ? '${S.current.empty} ${S.current.email_address}'
       : (!RegExp(emailRegx).hasMatch(trim()))
-          ? 'Not Match Email'
+          ? S.current.no_match_email
           : null;
 
   List<bool> get validatePasswords {
@@ -94,7 +95,7 @@ extension EString on String {
       case 0:
         return localDate.visiableTime;
       case 1:
-        return 'Yesterday';
+        return S.current.yesterday;
       case 2:
       case 3:
       case 4:

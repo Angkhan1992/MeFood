@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/widget/common/common.dart';
 
 class SuccessRegisterScreen extends StatefulWidget {
@@ -31,11 +32,11 @@ class _SuccessRegisterScreenState extends State<SuccessRegisterScreen> {
               const SizedBox(
                 height: 32,
               ),
-              'Success'.wTitle,
+              S.current.success.wTitle,
               const SizedBox(
                 height: 32,
               ),
-              'You registered by Delivery User'.wText(
+              S.current.register_to_delivery.wText(
                 TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w700,
@@ -44,8 +45,7 @@ class _SuccessRegisterScreenState extends State<SuccessRegisterScreen> {
               const SizedBox(
                 height: 16,
               ),
-              'We will review your information and will be approve or reply using email in 48 hs. After approved, you can use MeFood service.\nThanks, KYGABYTE IT LTD.'
-                  .wText(
+              S.current.review_48_desc.wText(
                 TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
@@ -57,7 +57,7 @@ class _SuccessRegisterScreenState extends State<SuccessRegisterScreen> {
                 height: 40.0,
               ),
               CustomFillButton(
-                title: 'Confirm'.toUpperCase(),
+                title: S.current.confirm.toUpperCase(),
                 onTap: () => Navigator.of(context).pop(),
               ),
             ],

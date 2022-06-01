@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
@@ -8,14 +9,28 @@ import 'package:provider/provider.dart';
 
 extension ECarModel on CarModel {
   String? get isFullData {
-    if (name == null || name!.isEmpty) return 'Name Data Empty';
-    if (number == null || number!.isEmpty) return 'License Number Empty';
-    if (color == null || color!.isEmpty) return 'Car Color Empty';
-    if (since == null) return 'Car Since Empty';
-    if (type == null || type!.isEmpty) return 'Delivery Type Empty';
-    if (distance == null) return 'Delivery Distance Empty';
-    if (speed == null) return 'Delivery Speed Empty';
-    if (weight == null) return 'Delivery Weight Empty';
+    if (name == null || name!.isEmpty) {
+      return '${S.current.empty} ${S.current.name}';
+    }
+    if (number == null || number!.isEmpty) {
+      return '${S.current.empty} ${S.current.car_license}';
+    }
+    if (color == null || color!.isEmpty) {
+      return '${S.current.empty} ${S.current.hint_car_color}';
+    }
+    if (since == null) return '${S.current.empty} ${S.current.hint_car_since}';
+    if (type == null || type!.isEmpty) {
+      return '${S.current.empty} ${S.current.delivery_type}';
+    }
+    if (distance == null) {
+      return '${S.current.empty} ${S.current.hint_delivery_distance}';
+    }
+    if (speed == null) {
+      return '${S.current.empty} ${S.current.hint_delivery_speed}';
+    }
+    if (weight == null) {
+      return '${S.current.empty} ${S.current.hint_delivery_weight}';
+    }
 
     return null;
   }
@@ -70,7 +85,7 @@ extension ECarModel on CarModel {
         return resp['msg'];
       }
     } else {
-      return 'Server Error!';
+      return S.current.sever_error;
     }
   }
 }

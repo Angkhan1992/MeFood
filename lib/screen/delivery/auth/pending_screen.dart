@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/screen/delivery/auth/update_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -53,8 +54,7 @@ class _PendingScreenState extends State<PendingScreen> {
             const SizedBox(
               height: offsetBase,
             ),
-            'Your account is pending yet. We will reply in 48 hrs. Thanks for your understanding. '
-                .wText(
+            S.current.pending_48_desc.wText(
               TextStyle(
                 fontSize: 16.0,
               ),
@@ -91,7 +91,10 @@ class _PendingScreenState extends State<PendingScreen> {
             ),
             CustomOutlineButton(
               borderColor: Colors.red,
-              title: 'Remove Account',
+              title: S.current.remove_account,
+              onTap: () {
+                // [Future] add new
+              },
             ),
           ],
         ),

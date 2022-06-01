@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mefood/generated/l10n.dart';
 
 class PermissionErrorPage extends StatelessWidget {
   final PermissionType type;
@@ -15,13 +16,11 @@ class PermissionErrorPage extends StatelessWidget {
     var desc = '';
     if (type == PermissionType.location) {
       imagePath = 'assets/icons/ic_distance.svg';
-      desc =
-          'The location permission was not granted. Please set that on mobile setting and try again.';
+      desc = S.current.err_location;
     }
     if (type == PermissionType.unsupported) {
       imagePath = 'assets/icons/ic_distance.svg';
-      desc =
-          'You can\'t user MeFood on your devicce, The location service was not supported on your device. Sorry, Please try that again on other devices(Google Map Supported).';
+      desc = S.current.err_location_desc;
     }
     return Scaffold(
       body: Center(

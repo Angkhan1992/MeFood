@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/user_model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/account/page/address_page.dart';
@@ -37,8 +38,8 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account'.toUpperCase()),
-        actions: [TextActionButton(title: 'Verify'.toUpperCase())],
+        title: Text(S.current.my_profile.toUpperCase()),
+        actions: [TextActionButton(title: S.current.verify.toUpperCase())],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -84,7 +85,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             setState(() {});
                           } else {
                             DialogService.of(context).showSnackBar(
-                              'Upload image failed',
+                              S.current.upload_image_failed,
                               type: SnackBarType.error,
                             );
                           }
@@ -128,8 +129,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 InkWell(
                   onTap: () async {
                     var values = await DialogService.of(context).twoValueField(
-                      title: 'Change Name',
-                      hintText: ['First Name', 'Last Name'],
+                      title: S.current.change_name,
+                      hintText: [S.current.first_name, S.current.last_name],
                       initValue: [user!.first!, user!.last!],
                       prefix: Icon(Icons.account_circle_outlined),
                     );
@@ -209,7 +210,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           alignment: Alignment.center,
                           child: Text(
-                            'Profile'.toUpperCase(),
+                            S.current.my_profile.toUpperCase(),
                             style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w500,
@@ -237,7 +238,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           alignment: Alignment.center,
                           child: Text(
-                            'Address'.toUpperCase(),
+                            S.current.address.toUpperCase(),
                             style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w500,
@@ -264,7 +265,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           alignment: Alignment.center,
                           child: Text(
-                            'Delivery'.toUpperCase(),
+                            S.current.delivery.toUpperCase(),
                             style: TextStyle(
                               fontSize: 15.0,
                               fontWeight: FontWeight.w500,

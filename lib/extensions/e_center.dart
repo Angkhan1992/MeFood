@@ -17,7 +17,7 @@ extension ECenterModel on CenterModel {
               .map((e) => CenterModel.fromJson(e))
               .toList();
         } catch (e) {
-          logger.d(e);
+          logger.e(e);
         }
       }
     }

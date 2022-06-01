@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/auth/pending_screen.dart';
@@ -78,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           height: 60.0,
                         ),
-                        'Log in'.wTitle,
+                        S.current.login.wTitle,
                         const SizedBox(
                           height: offsetLg,
                         ),
@@ -86,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           prefix: const Icon(LineIcons.user),
                           controller: TextEditingController(
                               text: 'bgold1118@gmail.com'),
-                          hintText: 'Email or User ID',
+                          hintText: S.current.email_user_id,
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (email) {
                             _email = email;
@@ -97,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         CustomTextField(
                           prefix: const Icon(LineIcons.key),
-                          hintText: 'Password',
+                          hintText: S.current.password,
                           controller:
                               TextEditingController(text: 'Black123456@'),
                           obscureText: _passVisible,
@@ -121,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: offsetMd,
                         ),
                         CustomFillButton(
-                          title: 'Log in'.toUpperCase(),
+                          title: S.current.login.toUpperCase(),
                           onTap: () => _login(),
                           isLoading: _event!.value == LoginEvent.login,
                         ),
@@ -153,14 +154,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         if (!F.isDelivery)
                           CustomOutlineButton(
-                            title: 'Login By Tour'.toUpperCase(),
+                            title: S.current.login_by_tour.toUpperCase(),
                             onTap: () {},
                           ),
                         const Spacer(),
                         Row(
                           children: [
                             const Spacer(),
-                            'If you have not account yet?'.wText(
+                            S.current.no_have_account_yet.wText(
                               CustomText.regular(fontSize: fontBase),
                             ),
                             const SizedBox(
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             InkWell(
                               onTap: () => _gotoRegister(),
-                              child: 'Register'.wText(
+                              child: S.current.register.wText(
                                 CustomText.regular(fontSize: fontBase),
                               ),
                             ),
@@ -279,11 +280,13 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       } else {
         DialogService.of(context).showSnackBar(
-          'Failed Server Error',
+          S.current.sever_error,
           type: SnackBarType.error,
         );
       }
-    } else {}
+    } else {
+      // [Future] customer login
+    }
   }
 
   void _gotoRegister() {

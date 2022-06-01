@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +56,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             const SizedBox(
               height: 16.0,
             ),
-            'User Address'.wText(
+            S.current.usr_address.wText(
               TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.w700,
@@ -64,8 +65,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             const SizedBox(
               height: 4.0,
             ),
-            'You can add your home address information on the current page.'
-                .wText(
+            S.current.reg_adr_detail.wText(
               TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
@@ -86,7 +86,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                   const SizedBox(
                     width: 16.0,
                   ),
-                  'From the Current Location'.wText(
+                  S.current.from_current_location.wText(
                     TextStyle(
                       fontSize: 16.0,
                       color: Theme.of(context).colorScheme.secondary,
@@ -101,7 +101,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             CustomTextField(
               prefix: const Icon(Icons.location_on_outlined),
               controller: TextEditingController(text: _address.address1 ?? ''),
-              hintText: 'Address1',
+              hintText: S.current.address1,
               keyboardType: TextInputType.streetAddress,
               onSaved: (address) => _address.address1 = address,
             ),
@@ -111,7 +111,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             CustomTextField(
               prefix: const Icon(Icons.location_on_outlined),
               controller: TextEditingController(text: _address.address2 ?? ''),
-              hintText: 'Address2 (Optional)',
+              hintText: S.current.address2_optional,
               keyboardType: TextInputType.streetAddress,
               onSaved: (address) => _address.address2 = address,
             ),
@@ -121,7 +121,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             CustomTextField(
               prefix: const Icon(Icons.location_city_outlined),
               controller: TextEditingController(text: _address.city ?? ''),
-              hintText: 'City',
+              hintText: S.current.city,
               keyboardType: TextInputType.text,
               onSaved: (city) => _address.city = city,
             ),
@@ -131,7 +131,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             CustomTextField(
               prefix: const Icon(Icons.location_city_outlined),
               controller: TextEditingController(text: _address.city ?? ''),
-              hintText: 'Province',
+              hintText: S.current.province,
               keyboardType: TextInputType.text,
               onSaved: (province) => _address.province = province,
             ),
@@ -141,7 +141,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             CustomTextField(
               prefix: const Icon(Icons.code),
               controller: TextEditingController(text: _address.postal ?? ''),
-              hintText: 'Postal Code',
+              hintText: S.current.postal_code,
               keyboardType: TextInputType.number,
               onSaved: (postal) => _address.postal = postal,
             ),
@@ -150,8 +150,9 @@ class _AddAddressPageState extends State<AddAddressPage> {
             ),
             CustomTextField(
               prefix: const Icon(Icons.language_outlined),
-              controller: TextEditingController(text: _address.country ?? ''),
-              hintText: 'Country',
+              controller: TextEditingController(
+                  text: _address.country ?? S.current.laos),
+              hintText: S.current.country,
               keyboardType: TextInputType.text,
               readOnly: true,
               onTap: () async {
@@ -167,7 +168,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
             ),
             widget.isLogin
                 ? CustomFillButton(
-                    title: 'Update Address'.toUpperCase(),
+                    title: S.current.update_address.toUpperCase(),
                     onTap: () async {
                       var resp = await _address.update(context);
                       if (resp == null) {
@@ -185,14 +186,14 @@ class _AddAddressPageState extends State<AddAddressPage> {
                 : Column(
                     children: [
                       CustomOutlineButton(
-                        title: 'Previous'.toUpperCase(),
+                        title: S.current.previous.toUpperCase(),
                         onTap: widget.onPrevious,
                       ),
                       const SizedBox(
                         height: 16.0,
                       ),
                       CustomFillButton(
-                        title: 'Next'.toUpperCase(),
+                        title: S.current.next.toUpperCase(),
                         onTap: () async {
                           FocusScope.of(context).unfocus();
                           _formKey.currentState!.save();

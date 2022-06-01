@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extensions/extensions.dart';
@@ -31,10 +32,10 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final _event = ValueNotifier(0);
   final _titles = [
-    'STATUS MAP',
-    'ORDERS',
-    'HISTORY',
-    'CHAT',
+    S.current.status_map.toUpperCase(),
+    S.current.orders.toUpperCase(),
+    S.current.history.toUpperCase(),
+    S.current.chat.toUpperCase(),
   ];
 
   @override
@@ -127,7 +128,7 @@ class _MainScreenState extends State<MainScreen> {
                             width: 18.0,
                             height: 18.0,
                           ),
-                          title: Text('My Profile'.toUpperCase()),
+                          title: Text(S.current.my_profile.toUpperCase()),
                           onTap: () {
                             Navigator.of(context).pop();
                             NavigatorService.of(context).push(
@@ -144,7 +145,7 @@ class _MainScreenState extends State<MainScreen> {
                             width: 18.0,
                             height: 18.0,
                           ),
-                          title: Text('Membership'.toUpperCase()),
+                          title: Text(S.current.membership.toUpperCase()),
                           onTap: () {
                             Navigator.of(context).pop();
                             NavigatorService.of(context).push(
@@ -158,9 +159,10 @@ class _MainScreenState extends State<MainScreen> {
                             size: 18.0,
                             color: Theme.of(context).secondaryHeaderColor,
                           ),
-                          title: Text('Follows'.toUpperCase()),
+                          title: Text(S.current.follows.toUpperCase()),
                           onTap: () {
                             Navigator.of(context).pop();
+                            // [Future] new feature
                           },
                         ),
                         if (!provider.isExpired())
@@ -171,9 +173,12 @@ class _MainScreenState extends State<MainScreen> {
                               width: 18.0,
                               height: 18.0,
                             ),
-                            title: Text('My Earn'.toUpperCase()),
+                            title: Text(S.current.my_earn.toUpperCase()),
                             trailing: ListItemTag(tag: 'NEW'),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              // [Future] new feature
+                            },
                           ),
                         Divider(),
                         ListTile(
@@ -183,7 +188,7 @@ class _MainScreenState extends State<MainScreen> {
                             width: 18.0,
                             height: 18.0,
                           ),
-                          title: Text('Report'.toUpperCase()),
+                          title: Text(S.current.report.toUpperCase()),
                           onTap: () {},
                         ),
                         ListTile(
@@ -193,7 +198,7 @@ class _MainScreenState extends State<MainScreen> {
                             width: 18.0,
                             height: 18.0,
                           ),
-                          title: Text('Privacy & Policy'.toUpperCase()),
+                          title: Text(S.current.privacy_policy.toUpperCase()),
                           onTap: () {},
                         ),
                         ListTile(
@@ -203,7 +208,7 @@ class _MainScreenState extends State<MainScreen> {
                             width: 18.0,
                             height: 18.0,
                           ),
-                          title: Text('Contact Us'.toUpperCase()),
+                          title: Text(S.current.contact_us.toUpperCase()),
                           onTap: () {},
                         ),
                         ListTile(
@@ -213,7 +218,7 @@ class _MainScreenState extends State<MainScreen> {
                             width: 18.0,
                             height: 18.0,
                           ),
-                          title: Text('Settings'.toUpperCase()),
+                          title: Text(S.current.settings.toUpperCase()),
                           onTap: () {},
                         ),
                         Divider(),
@@ -225,7 +230,7 @@ class _MainScreenState extends State<MainScreen> {
                             height: 18.0,
                           ),
                           title: Text(
-                            'Logout'.toUpperCase(),
+                            S.current.logout.toUpperCase(),
                             style: TextStyle(
                               color: Colors.red,
                             ),
@@ -269,12 +274,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Widget _buildBottomNavigationBar() {
-    var bottomBarTitles = [
-      'Status',
-      'Order',
-      'History',
-      'Chat',
-    ];
     var bottomItemImages = [
       'assets/icons/menu/ic_monitor.svg',
       'assets/icons/menu/ic_order.svg',
@@ -298,7 +297,7 @@ class _MainScreenState extends State<MainScreen> {
               width: offsetXMd,
               height: offsetXMd,
             ),
-            label: bottomBarTitles[i].wText(
+            label: _titles[i].wText(
               CustomText.semiBold(
                 fontSize: fontXSm,
                 color: _event.value == i

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/e_string.dart';
+import 'package:mefood/generated/l10n.dart';
 
 import '../../../themes/dimens.dart';
 
@@ -24,8 +25,8 @@ class _OrderScreenState extends State<OrderScreen> {
               left: offsetXMd,
             ),
             alignment: Alignment.centerLeft,
-            child:
-                'Order'.colorTitle(Theme.of(context).colorScheme.onSecondary),
+            child: S.current.orders
+                .colorTitle(Theme.of(context).colorScheme.onSecondary),
           ),
           Expanded(
             child: Container(

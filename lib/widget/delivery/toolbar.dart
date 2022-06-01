@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mefood/generated/l10n.dart';
 
 class DriverStatus extends StatelessWidget {
   final Function()? onTap;
@@ -22,7 +23,7 @@ class DriverStatus extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Ready for Ride',
+                S.current.ready_ride,
                 style: TextStyle(
                   color: Theme.of(context).secondaryHeaderColor,
                   fontWeight: FontWeight.w300,
@@ -32,7 +33,7 @@ class DriverStatus extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'SOON',
+                    S.current.soon.toUpperCase(),
                     style: TextStyle(
                       color: Theme.of(context).secondaryHeaderColor,
                       fontWeight: FontWeight.w600,

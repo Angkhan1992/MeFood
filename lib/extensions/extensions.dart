@@ -5,3 +5,4 @@ export 'e_string.dart';
 export 'e_color.dart';
 export 'e_date.dart';
 export 'e_mail.dart';
+export 'e_center.dart';

@@ -8,9 +8,11 @@ import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/util/app_config.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/common/common.dart';
 
@@ -53,7 +55,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             const SizedBox(
               height: 16.0,
             ),
-            'User Profile'.wText(
+            S.current.my_profile.wText(
               TextStyle(
                 fontSize: 22.0,
                 fontWeight: FontWeight.w700,
@@ -62,7 +64,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             const SizedBox(
               height: 4.0,
             ),
-            'You can add some profile information on the current step.'.wText(
+            S.current.reg_usr_detail.wText(
               TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
@@ -122,7 +124,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                             _user.avatar = avatarUrl;
                           } else {
                             DialogService.of(context).showSnackBar(
-                              'Upload image failed',
+                              S.current.upload_image_failed,
                               type: SnackBarType.error,
                             );
                           }
@@ -137,7 +139,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                           borderRadius: BorderRadius.circular(4.0),
                           color: Theme.of(context).colorScheme.secondary,
                         ),
-                        child: 'Edit Photo'.wText(
+                        child: S.current.edit_photo.wText(
                           TextStyle(
                             fontSize: 10.0,
                             color: Theme.of(context).iconTheme.color,
@@ -159,7 +161,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                         controller: TextEditingController(
                           text: _user.first ?? '',
                         ),
-                        hintText: 'First Name',
+                        hintText: S.current.first_name,
                         keyboardType: TextInputType.name,
                         onSaved: (name) => _user.first = name,
                       ),
@@ -171,7 +173,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                         controller: TextEditingController(
                           text: _user.last ?? '',
                         ),
-                        hintText: 'Last Name',
+                        hintText: S.current.last_name,
                         keyboardType: TextInputType.name,
                         onSaved: (name) => _user.last = name,
                       ),
@@ -188,7 +190,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
               controller: TextEditingController(
                 text: _user.email ?? '',
               ),
-              hintText: 'Email Address',
+              hintText: S.current.email_address,
               keyboardType: TextInputType.emailAddress,
               onSaved: (email) => _user.email = email,
             ),
@@ -200,7 +202,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
               controller: TextEditingController(
                 text: _user.phone ?? '',
               ),
-              hintText: 'Phone Number',
+              hintText: S.current.phone_number,
               keyboardType: TextInputType.phone,
               onSaved: (phone) => _user.phone = phone,
             ),
@@ -212,12 +214,12 @@ class _AddProfilePageState extends State<AddProfilePage> {
               controller: TextEditingController(
                 text: _user.gender ?? '',
               ),
-              hintText: 'Male / Female',
+              hintText: S.current.gender,
               readOnly: true,
               onTap: () async {
                 var result = await DialogService.of(context).bottomChoose(
-                  title: 'Choose Gender',
-                  values: ['MALE', 'FEMALE'],
+                  title: S.current.choose_gender,
+                  values: genderType,
                 );
                 if (result != null) {
                   _user.gender = result;
@@ -233,7 +235,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
               controller: TextEditingController(
                 text: _user.dob == null ? '' : _user.dob!.dobValue,
               ),
-              hintText: 'Date of Birth',
+              hintText: S.current.date_of_birth,
               readOnly: true,
               onTap: () async {
                 _formKey.currentState!.save();
@@ -256,7 +258,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             ),
             widget.isLogin
                 ? CustomFillButton(
-                    title: 'Update Profile'.toUpperCase(),
+                    title: S.current.upt_profile.toUpperCase(),
                     onTap: () async {
                       _formKey.currentState!.save();
                       FocusScope.of(context).unfocus();
@@ -275,7 +277,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     },
                   )
                 : CustomFillButton(
-                    title: 'Next'.toUpperCase(),
+                    title: S.current.next.toUpperCase(),
                     onTap: () async {
                       _formKey.currentState!.save();
                       FocusScope.of(context).unfocus();

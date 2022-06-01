@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/car_model.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/util/app_config.dart';
 import 'package:mefood/widget/common/common.dart';
 import 'package:mefood/widget/delivery/account.dart';
 
@@ -39,7 +41,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
           ),
           accountItemWidget(
             context,
-            title: car!.name ?? 'Car Name',
+            title: car!.name ?? S.current.hint_car_name,
             leading: Icon(
               Icons.car_rental,
               color: Theme.of(context).colorScheme.secondary,
@@ -47,8 +49,8 @@ class _DeliveryPageState extends State<DeliveryPage> {
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.car_rental),
-                title: 'Update Name',
-                hintText: 'Car Name',
+                title: '${S.current.update} ${S.current.name}',
+                hintText: S.current.hint_car_name,
                 initValue: car!.name,
               );
               if (result != null && result.isNotEmpty) {
@@ -63,7 +65,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
           ),
           accountItemWidget(
             context,
-            title: car!.number ?? 'Car Plate Number',
+            title: car!.number ?? S.current.car_plate,
             leading: Icon(
               Icons.numbers,
               color: Theme.of(context).colorScheme.secondary,
@@ -71,8 +73,8 @@ class _DeliveryPageState extends State<DeliveryPage> {
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.numbers),
-                title: 'Update Plate Number',
-                hintText: 'Car Plate Number',
+                title: '${S.current.update} ${S.current.car_plate}',
+                hintText: S.current.car_plate,
                 initValue: car!.number,
               );
               if (result != null && result.isNotEmpty) {
@@ -87,7 +89,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
           ),
           accountItemWidget(
             context,
-            title: car!.color ?? 'Car Color',
+            title: car!.color ?? S.current.hint_car_color,
             leading: Icon(
               Icons.palette_outlined,
               color: Theme.of(context).colorScheme.secondary,
@@ -105,7 +107,9 @@ class _DeliveryPageState extends State<DeliveryPage> {
           ),
           accountItemWidget(
             context,
-            title: car!.since == null ? 'Car Since' : '${car!.since} year',
+            title: car!.since == null
+                ? S.current.hint_car_since
+                : '${car!.since} ${S.current.year}',
             leading: Icon(
               Icons.code,
               color: Theme.of(context).colorScheme.secondary,
@@ -113,8 +117,8 @@ class _DeliveryPageState extends State<DeliveryPage> {
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.code),
-                title: 'Update Since',
-                hintText: 'Car Since',
+                title: '${S.current.update} ${S.current.hint_car_since}',
+                hintText: S.current.hint_car_since,
                 keyboardType: TextInputType.number,
                 initValue: car!.since.toString(),
               );
@@ -130,19 +134,15 @@ class _DeliveryPageState extends State<DeliveryPage> {
           ),
           accountItemWidget(
             context,
-            title: car!.type ?? 'Delivery Type',
+            title: car!.type ?? S.current.delivery_type,
             leading: Icon(
               Icons.merge_type,
               color: Theme.of(context).colorScheme.secondary,
             ),
             onTap: () async {
               var result = await DialogService.of(context).bottomChoose(
-                title: 'Delivery Type',
-                values: [
-                  'Car',
-                  'Motocycle',
-                  'Walker',
-                ],
+                title: S.current.delivery_type,
+                values: deliveryType,
               );
               if (result != null && result.isNotEmpty) {
                 if (result != car!.type) {
@@ -157,7 +157,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
           accountItemWidget(
             context,
             title: car!.distance == null
-                ? 'Delivery Distance'
+                ? S.current.hint_delivery_distance
                 : '${car!.distance} Km',
             leading: Icon(
               Icons.social_distance,
@@ -166,8 +166,9 @@ class _DeliveryPageState extends State<DeliveryPage> {
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.social_distance),
-                title: 'Update Distance',
-                hintText: 'Delivery Distance',
+                title:
+                    '${S.current.update} ${S.current.hint_delivery_distance}',
+                hintText: S.current.hint_delivery_distance,
                 keyboardType: TextInputType.number,
                 initValue: car!.distance.toString(),
               );
@@ -183,8 +184,9 @@ class _DeliveryPageState extends State<DeliveryPage> {
           ),
           accountItemWidget(
             context,
-            title:
-                car!.weight == null ? 'Delivery Weight' : '${car!.weight} Kg',
+            title: car!.weight == null
+                ? S.current.hint_delivery_weight
+                : '${car!.weight} Kg',
             leading: Icon(
               Icons.monitor_weight,
               color: Theme.of(context).colorScheme.secondary,
@@ -192,8 +194,8 @@ class _DeliveryPageState extends State<DeliveryPage> {
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.monitor_weight),
-                title: 'Update Weight',
-                hintText: 'Delivery Weight',
+                title: '${S.current.update} ${S.current.hint_delivery_weight}',
+                hintText: S.current.hint_delivery_weight,
                 keyboardType: TextInputType.number,
                 initValue: car!.weight.toString(),
               );
@@ -209,7 +211,9 @@ class _DeliveryPageState extends State<DeliveryPage> {
           ),
           accountItemWidget(
             context,
-            title: car!.speed == null ? 'Delivery Speed' : '${car!.speed} Km/h',
+            title: car!.speed == null
+                ? S.current.hint_delivery_speed
+                : '${car!.speed} Km/h',
             leading: Icon(
               Icons.speed,
               color: Theme.of(context).colorScheme.secondary,
@@ -217,8 +221,8 @@ class _DeliveryPageState extends State<DeliveryPage> {
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.speed),
-                title: 'Update Speed',
-                hintText: 'Delivery Speed',
+                title: '${S.current.update} ${S.current.hint_delivery_speed}',
+                hintText: S.current.hint_delivery_speed,
                 keyboardType: TextInputType.number,
                 initValue: car!.speed.toString(),
               );
@@ -236,7 +240,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
             height: 40.0,
           ),
           CustomFillButton(
-            title: 'Update Delivery'.toUpperCase(),
+            title: '${S.current.update} ${S.current.delivery}'.toUpperCase(),
             onTap: isUpdated
                 ? () async {
                     var resp = await car!.update(context);
@@ -244,7 +248,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
                       if (widget.updateCar != null) {
                         widget.updateCar!(car!);
                         DialogService.of(context).showSnackBar(
-                          'Success updated car data',
+                          S.current.success_data_updated,
                         );
                       }
                     } else {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/mail_model.dart';
 import 'package:mefood/service/service.dart';
 
@@ -31,7 +32,7 @@ class MailProvider extends ChangeNotifier {
       notifyListeners();
       return null;
     } else {
-      return 'Failed fetch mails';
+      return S.current.failed_process;
     }
   }
 
@@ -81,7 +82,7 @@ class MailProvider extends ChangeNotifier {
     }
     var allUnread = true;
     for (var item in selectedItems) {
-      if (item.model.status != 'UNREAD') {
+      if (item.model.status != S.current.unread.toUpperCase()) {
         allUnread = false;
         break;
       }
@@ -115,7 +116,7 @@ class MailProvider extends ChangeNotifier {
   }) async {
     var mail = mails![index];
     await mail.updateMail(status);
-    if (status == 'READ') {
+    if (status == S.current.read.toUpperCase()) {
       mail.model.status = status;
     } else {
       mails!.remove(mail);
@@ -132,11 +133,11 @@ class MailProvider extends ChangeNotifier {
     var noFailed = true;
     for (var item in mails!) {
       if (item.isSelected) {
-        var resp = await item.updateMail('READ');
+        var resp = await item.updateMail(S.current.read.toUpperCase());
         if (resp != null) {
           noFailed = false;
         } else {
-          item.model.status = 'READ';
+          item.model.status = S.current.read.toUpperCase();
         }
       }
     }
@@ -146,7 +147,7 @@ class MailProvider extends ChangeNotifier {
     if (noFailed) {
       return null;
     } else {
-      return 'Failed some process';
+      return S.current.failed_process;
     }
   }
 
@@ -158,7 +159,7 @@ class MailProvider extends ChangeNotifier {
     List<ExtMail> deleteItems = [];
     for (var item in mails!) {
       if (item.isSelected) {
-        var resp = await item.updateMail('DELETE');
+        var resp = await item.updateMail(S.current.delete.toUpperCase());
         if (resp != null) {
           noFailed = false;
         } else {
@@ -176,14 +177,14 @@ class MailProvider extends ChangeNotifier {
     if (noFailed) {
       return null;
     } else {
-      return 'Failed some process';
+      return S.current.failed_process;
     }
   }
 
   int getUnreadCount() {
     var unreadList = [];
     for (var mail in mails!) {
-      if (mail.model.status == 'UNREAD') {
+      if (mail.model.status == S.current.unread.toUpperCase()) {
         unreadList.add(mail);
       }
     }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/auth/page/page.dart';
+import 'package:mefood/screen/delivery/auth/success_register_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
-
-import 'success_register_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -95,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const SizedBox(
                           width: 16.0,
                         ),
-                        'Go To Login'.wText(
+                        S.current.go_to_login.wText(
                           TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w700,

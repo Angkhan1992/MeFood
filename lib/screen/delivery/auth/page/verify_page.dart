@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mefood/provider/provider.dart';
-
-import 'package:mefood/service/service.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/widget/common/common.dart';
 import 'package:provider/provider.dart';
+
+import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/provider.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/widget/common/common.dart';
 
 class DeliveryVerifyPage extends StatefulWidget {
   final Function()? onPrevious;
@@ -22,8 +22,6 @@ class DeliveryVerifyPage extends StatefulWidget {
 }
 
 class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
-  final ImagePicker _picker = ImagePicker();
-
   var _idcard = '';
   var _license = '';
   var _plate = '';
@@ -43,7 +41,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           const SizedBox(
             height: 16.0,
           ),
-          'Verification'.wText(
+          S.current.verification.wText(
             TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w700,
@@ -52,7 +50,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           const SizedBox(
             height: 4.0,
           ),
-          'You can verify your email, car and id on the curretn page.'.wText(
+          S.current.dsc_verify.wText(
             TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w400,
@@ -64,7 +62,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           CustomTextField(
             prefix: const Icon(Icons.code),
             controller: _codeController,
-            hintText: 'Email Verification Code',
+            hintText: S.current.verify_code,
             keyboardType: TextInputType.number,
           ),
           const SizedBox(
@@ -72,38 +70,56 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
           ),
           ImageUploadWidget(
             height: 200.0,
-            header: 'Add Idcard or Passport',
+            header: S.current.idcard_passport,
             placeImageSize: 75.0,
             placeFontSize: 18.0,
             link: _idcard,
-            onPicker: () => _onPickerAvatar(type: VerifyImageType.id_card),
+            onPicker: () async {
+              var imagePath = await ImagePickerService.of(context).picker();
+              uploadImage(
+                filePath: imagePath!,
+                type: VerifyImageType.id_card,
+              );
+            },
           ),
           const SizedBox(
             height: 16.0,
           ),
           ImageUploadWidget(
             height: 120.0,
-            header: 'Car Plate',
+            header: S.current.car_plate,
             placeImageSize: 60.0,
             placeFontSize: 16.0,
             link: _plate,
-            onPicker: () => _onPickerAvatar(type: VerifyImageType.plate),
+            onPicker: () async {
+              var imagePath = await ImagePickerService.of(context).picker();
+              uploadImage(
+                filePath: imagePath!,
+                type: VerifyImageType.plate,
+              );
+            },
           ),
           const SizedBox(
             height: 16.0,
           ),
           ImageUploadWidget(
             height: 200.0,
-            header: 'Car Licenese',
+            header: S.current.car_license,
             placeImageSize: 75.0,
             placeFontSize: 18.0,
             link: _license,
-            onPicker: () => _onPickerAvatar(type: VerifyImageType.license),
+            onPicker: () async {
+              var imagePath = await ImagePickerService.of(context).picker();
+              uploadImage(
+                filePath: imagePath!,
+                type: VerifyImageType.license,
+              );
+            },
           ),
           const SizedBox(
             height: 16.0,
           ),
-          'Car Images (Front, Back, Left and Right)'.wText(
+          S.current.car_images.wText(
             TextStyle(
               fontSize: 14.0,
             ),
@@ -119,9 +135,14 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
                   placeImageSize: 40.0,
                   placeFontSize: 10.0,
                   link: _images[0],
-                  onPicker: () {
+                  onPicker: () async {
                     _imageIndex = 0;
-                    _onPickerAvatar(type: VerifyImageType.car);
+                    var imagePath =
+                        await ImagePickerService.of(context).picker();
+                    uploadImage(
+                      filePath: imagePath!,
+                      type: VerifyImageType.car,
+                    );
                   },
                 ),
               ),
@@ -135,9 +156,14 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
                     placeImageSize: 40.0,
                     placeFontSize: 10.0,
                     link: _images[i],
-                    onPicker: () {
+                    onPicker: () async {
                       _imageIndex = i;
-                      _onPickerAvatar(type: VerifyImageType.car);
+                      var imagePath =
+                          await ImagePickerService.of(context).picker();
+                      uploadImage(
+                        filePath: imagePath!,
+                        type: VerifyImageType.car,
+                      );
                     },
                   ),
                 ),
@@ -148,14 +174,14 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
             height: 40.0,
           ),
           CustomOutlineButton(
-            title: 'Previous'.toUpperCase(),
+            title: S.current.previous.toUpperCase(),
             onTap: widget.onPrevious,
           ),
           const SizedBox(
             height: 16.0,
           ),
           CustomFillButton(
-            title: 'Next'.toUpperCase(),
+            title: S.current.next.toUpperCase(),
             onTap: onNext,
             isLoading: _isUpload,
           ),
@@ -167,97 +193,37 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
     );
   }
 
-  void _onPickerAvatar({
+  void uploadImage({
+    required String filePath,
     required VerifyImageType type,
-  }) {
-    DialogService.of(context).showBottomSheet(
-      Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          'Choose Method'.wText(
-            TextStyle(
-              fontSize: 14.0,
-              color: Theme.of(context).hintColor,
-            ),
-          ),
-          const SizedBox(
-            height: 24.0,
-          ),
-          InkWell(
-            onTap: () => _imagePicker(
-              context,
-              ImageSource.gallery,
-              type,
-            ),
-            child: 'From Gallery'.wText(
-              TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-          InkWell(
-            onTap: () => _imagePicker(
-              context,
-              ImageSource.camera,
-              type,
-            ),
-            child: 'From Camera'.wText(
-              TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
+  }) async {
+    var path = '';
+    switch (type) {
+      case VerifyImageType.id_card:
+        path = 'upload/idcard';
+        break;
+      case VerifyImageType.license:
+        path = 'upload/driver';
+        break;
+      case VerifyImageType.plate:
+        path = 'upload/plate';
+        break;
+      case VerifyImageType.car:
+        path = 'upload/car';
+        break;
+    }
+    var resp = await APIService.of().upload(
+      path: path,
+      filePath: filePath,
     );
-  }
 
-  void _imagePicker(
-    BuildContext context,
-    ImageSource source,
-    VerifyImageType type,
-  ) async {
-    Navigator.of(context).pop();
-
-    final XFile? pickedFile = await _picker.pickImage(
-      source: source,
-    );
-    if (pickedFile != null) {
-      var filePath = pickedFile.path;
-
-      var path = '';
-      switch (type) {
-        case VerifyImageType.id_card:
-          path = 'upload/idcard';
-          break;
-        case VerifyImageType.license:
-          path = 'upload/driver';
-          break;
-        case VerifyImageType.plate:
-          path = 'upload/plate';
-          break;
-        case VerifyImageType.car:
-          path = 'upload/car';
-          break;
-      }
-      var resp = await APIService.of().upload(
-        path: path,
-        filePath: filePath,
+    if (resp['ret'] == 10000) {
+      setImageUrl(resp['result'], type);
+    } else {
+      DialogService.of(context).showSnackBar(
+        S.current.upload_image_failed,
+        type: SnackBarType.error,
       );
-
-      if (resp['ret'] == 10000) {
-        setImageUrl(resp['result'], type);
-      } else {
-        DialogService.of(context).showSnackBar(
-          'Upload image failed',
-          type: SnackBarType.error,
-        );
-      }
     }
   }
 
@@ -285,30 +251,30 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
   void onNext() async {
     if (_idcard.isEmpty) {
       DialogService.of(context).showSnackBar(
-        'Empty IDCard Image.',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (_plate.isEmpty) {
       DialogService.of(context).showSnackBar(
-        'Empty Car Plate Image.',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
     if (_license.isEmpty) {
       DialogService.of(context).showSnackBar(
-        'Empty Car License Image.',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
-    var faces = ['Front', 'Back', 'Left', 'Right'];
+
     for (var image in _images) {
       if (image.isEmpty) {
         DialogService.of(context).showSnackBar(
-          'Empty ${faces[_images.indexOf(image)]} Car Image.',
+          S.current.input_all_fields,
           type: SnackBarType.error,
         );
         return;
@@ -318,7 +284,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
     var code = _codeController.text;
     if (code.isEmpty) {
       DialogService.of(context).showSnackBar(
-        'Empty Verification Code.',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
@@ -356,7 +322,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
       }
     } else {
       DialogService.of(context).showSnackBar(
-        'Failed Server Error',
+        S.current.sever_error,
         type: SnackBarType.error,
       );
     }

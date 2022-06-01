@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 
@@ -20,7 +21,7 @@ extension EUserModel on UserModel {
 
   Future<String?> update(BuildContext? context) async {
     if (!isFullData) {
-      return 'Please fill full data';
+      return S.current.input_all_fields;
     }
     var resp = await APIService.of(context: context).post(
       '${APIService.kUrlAuth}/updateUser',
@@ -33,7 +34,7 @@ extension EUserModel on UserModel {
         return resp['msg'];
       }
     } else {
-      return 'Failed Server Error';
+      return S.current.sever_error;
     }
   }
 
@@ -53,7 +54,7 @@ extension EUserModel on UserModel {
         return resp['msg'];
       }
     } else {
-      return 'Server Error';
+      return S.current.sever_error;
     }
   }
 
@@ -78,7 +79,7 @@ extension EUserModel on UserModel {
         return resp['msg'];
       }
     } else {
-      return 'Server Error';
+      return S.current.sever_error;
     }
   }
 }

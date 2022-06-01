@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
+
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/product_model.dart';
 import 'package:mefood/model/restaurant_model.dart';
 import 'package:mefood/provider/category_provider.dart';
@@ -12,10 +15,8 @@ import 'package:mefood/service/json_service.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/widget/common/appbar.dart';
+import 'package:mefood/widget/main/fake_widget.dart';
 import 'package:mefood/widget/main/home_widget.dart';
-import 'package:provider/provider.dart';
-
-import '../../../widget/main/fake_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
         children: [
-          const CustomHeaderView(
-            title: 'Home',
+          CustomHeaderView(
+            title: S.current.home,
           ),
           Expanded(
             child: ClipRRect(
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: sizeIcon,
                             color: Theme.of(context).secondaryHeaderColor,
                           ),
-                          title: 'Categories',
+                          title: S.current.category,
                           extend: 'View All',
                           onExtend: () => NavigatorService.of(context).push(
                             screen: AllCategoryScreen(
@@ -88,8 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icons.favorite_outline,
                             color: Theme.of(context).secondaryHeaderColor,
                           ),
-                          title: 'Hot Products',
-                          extend: 'View All',
+                          title: S.current.hot_products,
+                          extend: S.current.view_all,
                           onExtend: () {},
                         ),
                         productWidget(),
@@ -98,8 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             LineIcons.objectGroup,
                             color: Theme.of(context).secondaryHeaderColor,
                           ),
-                          title: 'Restaurauants',
-                          extend: 'View All',
+                          title: S.current.restaurants,
+                          extend: S.current.view_all,
                           onExtend: () {},
                         ),
                         restaurantWidget(),
@@ -108,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             LineIcons.jediOrder,
                             color: Theme.of(context).secondaryHeaderColor,
                           ),
-                          title: 'New Products',
+                          title: S.current.new_products,
                         ),
                         orderWidget(),
                       ],

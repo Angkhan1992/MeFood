@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mefood/model/category_model.dart';
-import 'package:mefood/widget/common/appbar.dart';
 
-import '../../../themes/dimens.dart';
+import 'package:mefood/model/category_model.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/widget/common/appbar.dart';
 
 class CategoryScreen extends StatefulWidget {
   final CategoryModel category;

@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/app_config.dart';
 import 'package:mefood/widget/common/button.dart';
@@ -134,27 +135,27 @@ class DialogService {
   }) async {
     var backgroundColor = Colors.white;
     var icons = LineIcons.check;
-    var title = 'Success';
+    var title = S.current.success;
     switch (type) {
       case SnackBarType.success:
         backgroundColor = Colors.green;
         icons = Icons.check_circle_outline;
-        title = 'Success';
+        title = S.current.success;
         break;
       case SnackBarType.waring:
         backgroundColor = Colors.orange;
         icons = Icons.warning_amber_outlined;
-        title = 'Waring';
+        title = S.current.waring;
         break;
       case SnackBarType.info:
         backgroundColor = Colors.blueGrey;
         icons = Icons.info_outline;
-        title = 'Information';
+        title = S.current.information;
         break;
       case SnackBarType.error:
         backgroundColor = Colors.red;
         icons = Icons.cancel_outlined;
-        title = 'Error';
+        title = S.current.error;
         break;
     }
 
@@ -271,7 +272,7 @@ class DialogService {
 
   void kShowProcessingDialog() {
     showSnackBar(
-      'Processing now ...',
+      S.current.processing_now,
       type: SnackBarType.waring,
     );
   }

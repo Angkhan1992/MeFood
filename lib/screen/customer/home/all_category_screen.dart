@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mefood/service/navigator_service.dart';
 
-import '../../../model/category_model.dart';
-import '../../../themes/dimens.dart';
-import '../../../widget/common/appbar.dart';
-import '../../../widget/main/fake_widget.dart';
-import 'category_screen.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/model/category_model.dart';
+import 'package:mefood/screen/customer/home/category_screen.dart';
+import 'package:mefood/service/navigator_service.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/widget/common/appbar.dart';
+import 'package:mefood/widget/main/fake_widget.dart';
 
 class AllCategoryScreen extends StatefulWidget {
   final List<CategoryModel> categories;
@@ -25,7 +26,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
     return Scaffold(
       appBar: CustomAppbar(
         context,
-        title: 'All Categories',
+        title: S.current.category,
         icon: SvgPicture.asset(
           'assets/icons/ic_category.svg',
           width: sizeAppbarIcon,

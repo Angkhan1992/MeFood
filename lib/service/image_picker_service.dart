@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';
 
@@ -52,7 +53,7 @@ class ImagePickerService {
             const SizedBox(
               height: 16.0,
             ),
-            'Choose Method'.wText(
+            S.current.choose_method.wText(
               TextStyle(
                 fontSize: 14.0,
                 color: Theme.of(context).hintColor,
@@ -63,7 +64,7 @@ class ImagePickerService {
             ),
             InkWell(
               onTap: () => Navigator.of(context).pop(ImageSource.gallery),
-              child: 'From Gallery'.wText(
+              child: S.current.type_gallery.wText(
                 TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
@@ -75,7 +76,7 @@ class ImagePickerService {
             ),
             InkWell(
               onTap: () => Navigator.of(context).pop(ImageSource.camera),
-              child: 'From Camera'.wText(
+              child: S.current.type_camera.wText(
                 TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w600,
