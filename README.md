@@ -8,8 +8,7 @@ Lao Delivery System
 flutter pub run build_runner build --delete-conflicting-outputs
 
 ### Run with optional model
-flutter run --flavor delivery -t lib/delivery.dart
-\n
+flutter run --flavor delivery -t lib/delivery.dart<br/>
 flutter run --flavor customer -t lib/customer.dart
 
 ## Developer Search Key
