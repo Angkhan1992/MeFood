@@ -51,6 +51,16 @@ extension EString on String {
     );
   }
 
+  Widget get wToolbar {
+    return Text(
+      this,
+      style: const TextStyle(
+        fontFamily: 'Horizon',
+        fontSize: 36,
+      ),
+    );
+  }
+
   Widget colorTitle(Color color) {
     return Text(
       this,
@@ -74,6 +84,14 @@ extension EString on String {
       textAlign: centerLine ? TextAlign.center : TextAlign.left,
     );
   }
+
+  Widget get subtitle => Text(
+        this,
+        style: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.w400,
+        ),
+      );
 
   Color? get convert2Color {
     try {

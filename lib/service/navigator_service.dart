@@ -25,4 +25,15 @@ class NavigatorService {
           .then((value) => {if (pop != null) pop(value)});
     }
   }
+
+  void pushByRoute({
+    required String routeName,
+  }) {
+    if (context != null) {
+      Navigator.pushNamed(
+        context!,
+        routeName,
+      );
+    }
+  }
 }

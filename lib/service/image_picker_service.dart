@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mefood/extensions/extensions.dart';
@@ -14,7 +15,13 @@ class ImagePickerService {
   }
 
   Future<String?> picker() async {
-    var imageSource = await _showPickerDialog();
+    ImageSource? imageSource;
+    if (kIsWeb) {
+      imageSource = ImageSource.gallery;
+    } else {
+      imageSource = await _showPickerBottomSheet();
+    }
+
     if (imageSource == null) {
       return null;
     }
@@ -27,7 +34,7 @@ class ImagePickerService {
     return pickedFile.path;
   }
 
-  Future<ImageSource?> _showPickerDialog() async {
+  Future<ImageSource?> _showPickerBottomSheet() async {
     return await showModalBottomSheet<ImageSource?>(
       context: context,
       isScrollControlled: false,
@@ -91,4 +98,74 @@ class ImagePickerService {
       ),
     );
   }
+
+  // Future<ImageSource?> _showPickerDialog() async {
+  //   return await showModalBottomSheet<ImageSource?>(
+  //     context: context,
+  //     isScrollControlled: false,
+  //     shape: const RoundedRectangleBorder(
+  //       borderRadius: BorderRadius.only(
+  //         topRight: Radius.circular(offsetBase),
+  //         topLeft: Radius.circular(offsetBase),
+  //       ),
+  //     ),
+  //     backgroundColor: Theme.of(context).colorScheme.background,
+  //     isDismissible: true,
+  //     builder: (_) => Container(
+  //       padding: const EdgeInsets.symmetric(
+  //         horizontal: offsetBase,
+  //         vertical: offsetXSm,
+  //       ),
+  //       child: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           NorchWidget(
+  //             color: Theme.of(context).hintColor,
+  //           ),
+  //           const SizedBox(
+  //             height: 16.0,
+  //           ),
+  //           S.current.choose_method.wText(
+  //             TextStyle(
+  //               fontSize: 14.0,
+  //               color: Theme.of(context).hintColor,
+  //             ),
+  //           ),
+  //           const SizedBox(
+  //             height: 24.0,
+  //           ),
+  //           InkWell(
+  //             onTap: () => Navigator.of(context).pop(ImageSource.gallery),
+  //             child: S.current.type_gallery.wText(
+  //               TextStyle(
+  //                 fontSize: 18.0,
+  //                 fontWeight: FontWeight.w600,
+  //               ),
+  //             ),
+  //           ),
+  //           const SizedBox(
+  //             height: 16.0,
+  //           ),
+  //           InkWell(
+  //             onTap: () => Navigator.of(context).pop(ImageSource.camera),
+  //             child: S.current.type_camera.wText(
+  //               TextStyle(
+  //                 fontSize: 18.0,
+  //                 fontWeight: FontWeight.w600,
+  //               ),
+  //             ),
+  //           ),
+  //           const SizedBox(
+  //             height: 16.0,
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+}
+
+enum ImagePickerType {
+  bottomsheet,
+  dialog,
 }

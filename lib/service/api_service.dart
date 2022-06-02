@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
 
-const kDomain = 'http://192.168.0.253:52526';
+// const kDomain = 'http://192.168.0.253:52526';
+const kDomain = 'http://51.68.185.254:41515';
 
 const kUrlAvatar = '$kDomain/assets/avatar/';
 const kUrlIDCard = '$kDomain/assets/idcard/';
@@ -16,10 +17,10 @@ const kUrlCar = '$kDomain/assets/car/';
 class APIService {
   final BuildContext? context;
 
-  static final kUrlCategory = '$kDomain/category';
-  static final kUrlAuth = '$kDomain/auth';
-  static final kUrlSupport = '$kDomain/support';
-  static final kUrlHistory = '$kDomain/history';
+  static final kUrlCategory = '$kDomain/api/category';
+  static final kUrlAuth = '$kDomain/api/auth';
+  static final kUrlSupport = '$kDomain/api/support';
+  static final kUrlHistory = '$kDomain/api/history';
 
   APIService({this.context});
 
@@ -31,38 +32,51 @@ class APIService {
     String link,
     Map<String, dynamic>? param,
   ) async {
-    var url = Uri.parse(link);
+    try {
+      var url = Uri.parse(link);
 
-    var body = <String, String>{};
-    for (var key in param!.keys) {
-      body[key] = param[key].toString();
-    }
-
-    if (context != null) {
-      DialogService.of(context!).showProgressLoading();
-    }
-    final response = await http.post(
-      url,
-      body: body,
-    );
-    if (context != null) {
-      Navigator.of(context!).pop();
-    }
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      try {
-        var json = jsonDecode(response.body);
-        logger.d(json.toString());
-        return json;
-      } catch (e) {
-        logger.e(e);
-        return null;
+      var body = <String, String>{};
+      for (var key in param!.keys) {
+        body[key] = param[key].toString();
       }
-    } else {
-      logger.e(response.statusCode);
+
+      if (context != null) {
+        DialogService.of(context!).showProgressLoading();
+      }
+      final response = await http.post(
+        url,
+        body: body,
+      );
+      if (context != null) {
+        Navigator.of(context!).pop();
+      }
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        try {
+          var json = jsonDecode(response.body);
+          logger.d(json.toString());
+          return json;
+        } catch (e) {
+          logger.e(e);
+          return null;
+        }
+      } else {
+        logger.e(response.statusCode);
+        return {
+          'msg': 'Network Error! - Status Code ${response.statusCode}',
+          'ret': 9998,
+          'result': response.statusCode,
+        };
+      }
+    } catch (e) {
+      if (context != null) {
+        Navigator.of(context!).pop();
+      }
+      logger.e(e);
       return {
-        'msg': 'Network Error! - Status Code ${response.statusCode}',
-        'ret': 9998,
-        'result': response.statusCode,
+        'msg': 'Network Error! - $e',
+        'ret': 9997,
+        'result': e.toString(),
       };
     }
   }
@@ -109,7 +123,7 @@ class APIService {
     required String path,
     required String filePath,
   }) async {
-    var url = Uri.parse('$kDomain/$path');
+    var url = Uri.parse('$kDomain/api/$path');
     var request = http.MultipartRequest("POST", url);
     request.files.add(await http.MultipartFile.fromPath('file', filePath));
     var response = await request.send();

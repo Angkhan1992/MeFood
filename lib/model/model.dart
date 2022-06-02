@@ -8,3 +8,5 @@ export 'product_model.dart';
 export 'user_model.dart';
 export 'mail_model.dart';
 export 'center_model.dart';
+export 'restaurant_model.dart';
+export 'member_model.dart';

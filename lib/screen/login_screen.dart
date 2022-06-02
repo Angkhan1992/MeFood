@@ -8,6 +8,7 @@ import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/auth/pending_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/common/common.dart';
 import 'package:provider/provider.dart';
 
@@ -222,6 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() async {
+    logger.d(kDomain);
     if (_event!.value != LoginEvent.none) {
       DialogService.of(context).kShowProcessingDialog();
       return;

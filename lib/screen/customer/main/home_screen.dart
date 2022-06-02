@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           children: [
             for (var i = 0; i < 10; i++) ...{
-              RestaurantModel.fakeModel(context),
+              fakeRestaurantModel(context),
               const SizedBox(
                 width: offsetBase,
               ),
