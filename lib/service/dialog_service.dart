@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
@@ -31,7 +33,7 @@ class DialogService {
   Future<dynamic> bubbleDialog({
     required Widget child,
     required List<Widget> actions,
-    String iconUrl = 'assets/images/logo.png',
+    String iconUrl = 'assets/images/svg.png',
     double iconBorderWidth = 2.0,
     EdgeInsets childPadding = const EdgeInsets.all(offsetXMd),
     Color background = Colors.white,
@@ -113,7 +115,7 @@ class DialogService {
                           child: ClipRRect(
                             borderRadius:
                                 BorderRadius.circular(bubbleSize / 2.0),
-                            child: Image.asset(iconUrl),
+                            child: SvgPicture.asset(iconUrl),
                           ),
                         ),
                         const Spacer(),
@@ -158,81 +160,122 @@ class DialogService {
         title = S.current.error;
         break;
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Stack(
-          children: [
-            Positioned(
-              top: 3,
-              left: 3,
-              child: Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    colors: [kPrimaryColor, backgroundColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  icons,
-                  size: 24.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            CustomPaint(
-              painter: DialogBackPainter(),
-              child: ClipPath(
-                clipper: DialogBackClipper(),
+    if (Platform.isIOS || Platform.isAndroid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Stack(
+            children: [
+              Positioned(
+                top: 3,
+                left: 3,
                 child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(offsetBase),
+                  width: 38,
+                  height: 38,
                   decoration: BoxDecoration(
+                    shape: BoxShape.circle,
                     gradient: LinearGradient(
-                      colors: [backgroundColor, kHintColor],
+                      colors: [kPrimaryColor, backgroundColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: offsetXLg),
-                        child: Text(
-                          title,
-                          style: CustomText.bold(
-                            fontSize: fontXMd,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: offsetSm),
-                      Text(
-                        content,
-                        style: CustomText.medium(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ],
+                  alignment: Alignment.center,
+                  child: Icon(
+                    icons,
+                    size: 24.0,
+                    color: Colors.white,
                   ),
                 ),
               ),
-            ),
-          ],
+              CustomPaint(
+                painter: DialogBackPainter(),
+                child: ClipPath(
+                  clipper: DialogBackClipper(),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(offsetBase),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [backgroundColor, kHintColor],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: offsetXLg),
+                          child: Text(
+                            title,
+                            style: CustomText.bold(
+                              fontSize: fontXMd,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: offsetSm),
+                        Text(
+                          content,
+                          style: CustomText.medium(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          duration: const Duration(milliseconds: 3000),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        duration: const Duration(milliseconds: 3000),
-      ),
-    );
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              const Spacer(),
+              Container(
+                width: 400,
+                padding: const EdgeInsets.all(offsetBase),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  color: backgroundColor,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: CustomText.bold(
+                        fontSize: fontXMd,
+                      ),
+                    ),
+                    const SizedBox(height: offsetSm),
+                    Text(
+                      content,
+                      style: CustomText.medium(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          duration: const Duration(milliseconds: 3000),
+        ),
+      );
+    }
   }
 
   void showBottomSheet(Widget child) {
@@ -743,6 +786,68 @@ class DialogService {
           ],
         ),
       ),
+    );
+  }
+
+  Future<String?> showDescktopChooserDialog({
+    required String title,
+    List<String>? values,
+  }) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Container(
+              width: 600,
+              height: 400,
+              padding: const EdgeInsets.all(24.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(24.0),
+              ),
+              child: Column(
+                children: [
+                  title.wText(TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.w700,
+                  )),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for (var value in values!) ...{
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                              ),
+                              child: InkWell(
+                                onTap: () => Navigator.of(context).pop(value),
+                                child: value.wText(TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                              ),
+                            ),
+                          },
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

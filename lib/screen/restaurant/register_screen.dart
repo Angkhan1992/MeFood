@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/restaurant/rest_auth_provider.dart';
@@ -7,6 +8,7 @@ import 'package:mefood/screen/restaurant/auth/basic_page.dart';
 import 'package:mefood/screen/restaurant/auth/owner_page.dart';
 import 'package:mefood/screen/restaurant/auth/success_page.dart';
 import 'package:mefood/screen/restaurant/auth/users_page.dart';
+import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/restraurant/layout_builder.dart';
 import 'package:mefood/widget/restraurant/register_widget.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +39,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           builder: (context, provider, child) {
             var pages = [
               BasicPage(
-                onNext: (restaurant) => provider.setRestaurant(restaurant),
+                onNext: (restaurant) {
+                  logger.d(restaurant);
+                  provider.setRestaurant(restaurant);
+                  _stepperEvent.value = 2;
+                },
               ),
               OwnerPage(),
               UsersPage(),
@@ -52,8 +58,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 56.0,
                   child: Row(
                     children: [
-                      Image.asset(
-                        'assets/images/logo.png',
+                      SvgPicture.asset(
+                        'assets/images/logo.svg',
                         width: 36.0,
                         height: 36.0,
                       ),

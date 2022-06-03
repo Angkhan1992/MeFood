@@ -1140,6 +1140,26 @@ class S {
     );
   }
 
+  /// `Logo`
+  String get logo {
+    return Intl.message(
+      'Logo',
+      name: 'logo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Galleries`
+  String get galleries {
+    return Intl.message(
+      'Galleries',
+      name: 'galleries',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Car License`
   String get car_license {
     return Intl.message(

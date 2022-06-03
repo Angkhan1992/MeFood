@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/service/dialog_service.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/service/router_service.dart';
+import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/common/common.dart';
 import 'package:mefood/widget/restraurant/layout_builder.dart';
 
@@ -32,8 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    'assets/images/logo.png',
+                  SvgPicture.asset(
+                    'assets/images/logo.svg',
                     width: 48.0,
                     height: 48.0,
                   ),
@@ -50,6 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 constraints: BoxConstraints(
                   minWidth: 600.0,
                   maxWidth: 1000.0,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: [kShadowContainer],
                 ),
                 child: AspectRatio(
                   aspectRatio: 2.0,
@@ -268,7 +274,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void onLogin() async {
     formKey.currentState!.save();
     if (email.isEmpty || password.isEmpty) {
-      Fluttertoast.showToast(msg: S.current.input_all_fields);
+      DialogService.of(context).showSnackBar(
+        S.current.input_all_fields,
+        type: SnackBarType.error,
+      );
       return;
     }
   }

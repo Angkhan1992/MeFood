@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 
 class StepperWidget extends StatelessWidget {
@@ -110,39 +112,30 @@ class WebCachImage extends StatelessWidget {
                     ],
                   ),
                 )
-              : Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(radius - 1),
-                    child: Image.network(
-                      url,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        return Container();
-                      },
-                      errorBuilder: (context, child, loadingProgress) {
-                        return Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.error_outline,
-                                size: previewIconSize,
-                                color: Colors.red,
-                              ),
-                              const SizedBox(
-                                height: 16.0,
-                              ),
-                              Text(
-                                'Failed Image Loaded!',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(radius - 2),
+                  child: CachedNetworkImage(
+                    imageUrl: url,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                      child: SizedBox(
+                        width: previewIconSize,
+                        height: previewIconSize,
+                        child: CircularProgressIndicator(
+                          value: downloadProgress.progress,
+                          strokeWidth: 2.0,
+                        ),
+                      ),
                     ),
+                    errorWidget: (context, url, error) => Center(
+                      child: SvgPicture.asset(
+                        'assets/images/logo.svg',
+                        width: previewIconSize * 1.25,
+                        height: previewIconSize * 1.25,
+                        color: Theme.of(context).hintColor,
+                      ),
+                    ),
+                    fit: BoxFit.cover,
                   ),
                 ),
         ),

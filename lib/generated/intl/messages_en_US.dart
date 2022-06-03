@@ -117,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "free_member": MessageLookupByLibrary.simpleMessage("Free Member"),
         "from_current_location":
             MessageLookupByLibrary.simpleMessage("From the Current Location"),
+        "galleries": MessageLookupByLibrary.simpleMessage("Galleries"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "go_to_login": MessageLookupByLibrary.simpleMessage("Go To Login"),
         "hint_car_color":
@@ -157,6 +158,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "latitude": MessageLookupByLibrary.simpleMessage("Latitude"),
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
         "login_by_tour": MessageLookupByLibrary.simpleMessage("Login By Tour"),
+        "logo": MessageLookupByLibrary.simpleMessage("Logo"),
         "logout": MessageLookupByLibrary.simpleMessage("Server Error!!!"),
         "longitude": MessageLookupByLibrary.simpleMessage("Longitude"),
         "manual_membership":

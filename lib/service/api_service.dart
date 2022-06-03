@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
@@ -13,6 +15,8 @@ const kUrlIDCard = '$kDomain/assets/idcard/';
 const kUrlDriver = '$kDomain/assets/drivercard/';
 const kUrlPlate = '$kDomain/assets/plate/';
 const kUrlCar = '$kDomain/assets/car/';
+const kUrlLogo = '$kDomain/assets/logo/';
+const kUrlGallery = '$kDomain/assets/gallery/';
 
 class APIService {
   final BuildContext? context;
@@ -121,14 +125,43 @@ class APIService {
 
   Future<dynamic> upload({
     required String path,
-    required String filePath,
+    String? filePath,
+    PlatformFile? webFile,
   }) async {
-    var url = Uri.parse('$kDomain/api/$path');
-    var request = http.MultipartRequest("POST", url);
-    request.files.add(await http.MultipartFile.fromPath('file', filePath));
-    var response = await request.send();
-    var responseData = await response.stream.toBytes();
-    var responseString = String.fromCharCodes(responseData);
-    return json.decode(responseString);
+    try {
+      if (context != null) {
+        DialogService.of(context!).showProgressLoading();
+      }
+
+      var url = Uri.parse('$kDomain/api/$path');
+      var request = http.MultipartRequest("POST", url);
+      if (kIsWeb) {
+        request.files.add(
+          http.MultipartFile(
+            'file',
+            webFile!.readStream!,
+            webFile.size,
+            filename: webFile.name,
+          ),
+        );
+      } else {
+        request.files.add(await http.MultipartFile.fromPath('file', filePath!));
+      }
+      var response = await request.send();
+      // var responseData = await response.stream.toBytes();
+      var responseString = await response.stream.bytesToString();
+      // var responseString = String.fromCharCodes(responseData);
+
+      if (context != null) {
+        Navigator.of(context!).pop();
+      }
+      return json.decode(responseString);
+    } catch (e) {
+      if (context != null) {
+        Navigator.of(context!).pop();
+      }
+      logger.e(e);
+      return e;
+    }
   }
 }

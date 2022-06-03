@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mefood/model/member_model.dart';
 
 class OwnerPage extends StatefulWidget {
-  OwnerPage({Key? key}) : super(key: key);
+  final Function()? onPrevious;
+  final Function(MemberModel owner)? onNext;
+
+  OwnerPage({
+    Key? key,
+    this.onPrevious,
+    this.onNext,
+  }) : super(key: key);
 
   @override
   State<OwnerPage> createState() => _OwnerPageState();
 }
 
 class _OwnerPageState extends State<OwnerPage> {
+  var owner = MemberModel();
+
   @override
   Widget build(BuildContext context) {
     return Padding(

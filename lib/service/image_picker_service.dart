@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,6 +34,26 @@ class ImagePickerService {
       return null;
     }
     return pickedFile.path;
+  }
+
+  Future<Uint8List?> pickerAsByte() async {
+    ImageSource? imageSource;
+    if (kIsWeb) {
+      imageSource = ImageSource.gallery;
+    } else {
+      imageSource = await _showPickerBottomSheet();
+    }
+
+    if (imageSource == null) {
+      return null;
+    }
+    final XFile? pickedFile = await ImagePicker().pickImage(
+      source: imageSource,
+    );
+    if (pickedFile == null) {
+      return null;
+    }
+    return await pickedFile.readAsBytes();
   }
 
   Future<ImageSource?> _showPickerBottomSheet() async {

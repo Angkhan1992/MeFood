@@ -29,6 +29,7 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   HttpOverrides.global = MyHttpOverrides();
 
   InjectService().initialise(Injector());
@@ -68,24 +69,6 @@ class MyApp extends StatelessWidget {
       darkTheme: getDarkThemeData(),
       initialRoute: RouterService.routeLogin,
       routes: RouterService.getRoutes(),
-      // onGenerateRoute: (settings) {
-      //   if (settings.name == RouterService.routeRegister) {
-      //     return PageRouteBuilder(
-      //       pageBuilder: (_, __, ___) => RegisterScreen(),
-      //     );
-      //   }
-      //   if (settings.name == RouterService.routeLogin) {
-      //     return PageRouteBuilder(
-      //       pageBuilder: (_, __, ___) => LoginScreen(),
-      //     );
-      //   }
-      //   if (settings.name == RouterService.routeHome) {
-      //     return PageRouteBuilder(
-      //       pageBuilder: (_, __, ___) => HomeScreen(),
-      //     );
-      //   }
-      //   return null;
-      // },
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,

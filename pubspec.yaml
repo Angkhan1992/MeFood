@@ -34,6 +34,7 @@ dependencies:
   avatar_glow: any
   animated_text_kit: any
   image_picker: any
+  file_picker: ^4.6.1
   crypto: any
   url_launcher: ^6.1.2
 

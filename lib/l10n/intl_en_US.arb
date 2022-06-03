@@ -108,6 +108,8 @@
     "information" : "Information",
     "error" : "Error",
     "processing_now" : "Processing now ...",
+    "logo" : "Logo",
+    "galleries" : "Galleries",
     
     "car_license" : "Car License",
     "car_plate" : "Car Plate",
