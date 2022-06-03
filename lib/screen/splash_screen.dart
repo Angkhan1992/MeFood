@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -33,9 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 150,
+            SvgPicture.asset(
+              'assets/images/logo.svg',
+              width: 150,
             ),
             const SizedBox(
               height: offsetXMd,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/service/dialog_service.dart';
@@ -34,8 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SvgPicture.asset(
-                    'assets/images/logo.svg',
+                  Image.asset(
+                    'assets/images/web/logo.png',
                     width: 48.0,
                     height: 48.0,
                   ),

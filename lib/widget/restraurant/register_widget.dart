@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 
 class StepperWidget extends StatelessWidget {
@@ -128,8 +127,8 @@ class WebCachImage extends StatelessWidget {
                       ),
                     ),
                     errorWidget: (context, url, error) => Center(
-                      child: SvgPicture.asset(
-                        'assets/images/logo.svg',
+                      child: Image.asset(
+                        'assets/images/web/logo.png',
                         width: previewIconSize * 1.25,
                         height: previewIconSize * 1.25,
                         color: Theme.of(context).hintColor,

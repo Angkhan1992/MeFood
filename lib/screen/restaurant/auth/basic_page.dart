@@ -3,13 +3,16 @@ import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
+
 import 'package:mefood/extensions/extensions.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/restaurant_model.dart';
-import 'package:mefood/service/location_service.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:mefood/util/app_config.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/common/common.dart';
 import 'package:mefood/widget/restraurant/register_widget.dart';
@@ -34,23 +37,24 @@ class _BasicPageState extends State<BasicPage> {
 
   LocationService? locationService;
   var locationEnabled = false;
+  final _controller = Completer();
 
   @override
   void initState() {
     super.initState();
+
+    restaurant.address = AddressModel();
 
     Timer.run(() async {
       locationService = LocationService.of(context);
       var service = await locationService!.initService();
       if (service != null) {
         if (mounted) {
-          DialogService.of(context).showSnackBar(
-            service,
-            type: SnackBarType.error,
-          );
+          Fluttertoast.showToast(msg: service);
         }
       } else {
         setState(() {
+          logger.d(locationService!.getCurrentLcoation());
           locationEnabled = true;
         });
       }
@@ -104,10 +108,8 @@ class _BasicPageState extends State<BasicPage> {
                             child: CustomTextField(
                               prefix: Icon(LineIcons.user),
                               hintText: 'Restaurant Name',
-                              onSaved: (value) {
-                                if (value != null) {
-                                  restaurant.name = value;
-                                }
+                              onChanged: (value) {
+                                restaurant.name = value;
                               },
                             ),
                           ),
@@ -139,10 +141,8 @@ class _BasicPageState extends State<BasicPage> {
                                   });
                                 }
                               },
-                              onSaved: (value) {
-                                if (value != null) {
-                                  restaurant.category = value;
-                                }
+                              onChanged: (value) {
+                                restaurant.category = value;
                               },
                             ),
                           ),
@@ -155,10 +155,8 @@ class _BasicPageState extends State<BasicPage> {
                             child: CustomTextField(
                               prefix: Icon(Icons.email_outlined),
                               hintText: S.current.email_address,
-                              onSaved: (value) {
-                                if (value != null) {
-                                  restaurant.email = value;
-                                }
+                              onChanged: (value) {
+                                restaurant.email = value;
                               },
                             ),
                           ),
@@ -169,10 +167,8 @@ class _BasicPageState extends State<BasicPage> {
                             child: CustomTextField(
                               prefix: Icon(Icons.phone_android),
                               hintText: S.current.phone_number,
-                              onSaved: (value) {
-                                if (value != null) {
-                                  restaurant.phone = value;
-                                }
+                              onChanged: (value) {
+                                restaurant.phone = value;
                               },
                             ),
                           ),
@@ -184,113 +180,151 @@ class _BasicPageState extends State<BasicPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          'Restaurant Address'.subtitle,
-                          const Spacer(),
-                          InkWell(
-                            onTap: () async {
-                              if (locationEnabled) {}
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on_rounded,
-                                  color: locationEnabled
-                                      ? Theme.of(context).colorScheme.secondary
-                                      : Theme.of(context).hintColor,
-                                ),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                S.current.from_current_location.wText(
-                                  TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: locationEnabled
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                        : Theme.of(context).hintColor,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                      'Restaurant Address'.subtitle,
                       const SizedBox(height: 24.0),
                       Row(
                         children: [
                           Expanded(
-                            child: CustomTextField(
-                              prefix: Icon(Icons.location_on_rounded),
-                              hintText: S.current.address1,
-                              onSaved: (value) =>
-                                  restaurant.address!.address1 = value,
+                            child: Column(
+                              children: [
+                                CustomTextField(
+                                  controller: TextEditingController(
+                                    text: restaurant.address!.address1,
+                                  ),
+                                  prefix: Icon(Icons.location_on_rounded),
+                                  hintText: S.current.address1,
+                                  onChanged: (value) =>
+                                      restaurant.address!.address1 = value,
+                                ),
+                                const SizedBox(height: 16.0),
+                                CustomTextField(
+                                  controller: TextEditingController(
+                                    text: restaurant.address!.address2,
+                                  ),
+                                  prefix: Icon(Icons.location_on_rounded),
+                                  hintText: S.current.address2_optional,
+                                  onChanged: (value) =>
+                                      restaurant.address!.address2 = value,
+                                ),
+                                const SizedBox(height: 16.0),
+                                CustomTextField(
+                                  controller: TextEditingController(
+                                    text: restaurant.address!.city,
+                                  ),
+                                  prefix: Icon(Icons.location_city),
+                                  hintText: S.current.city,
+                                  onChanged: (value) =>
+                                      restaurant.address!.city = value,
+                                ),
+                                const SizedBox(height: 16.0),
+                                CustomTextField(
+                                  controller: TextEditingController(
+                                    text: restaurant.address!.province,
+                                  ),
+                                  prefix: Icon(Icons.location_city),
+                                  hintText: S.current.province,
+                                  onChanged: (value) =>
+                                      restaurant.address!.province = value,
+                                ),
+                                const SizedBox(height: 16.0),
+                                CustomTextField(
+                                  prefix: Icon(Icons.code),
+                                  hintText: S.current.postal_code,
+                                  controller: TextEditingController(
+                                    text: restaurant.address!.postal,
+                                  ),
+                                  onChanged: (value) =>
+                                      restaurant.address!.postal = value,
+                                ),
+                                const SizedBox(height: 16.0),
+                                CustomTextField(
+                                  prefix: Icon(Icons.language),
+                                  controller:
+                                      TextEditingController(text: 'Laos'),
+                                  hintText: S.current.country,
+                                  onChanged: (value) =>
+                                      restaurant.address!.country = value,
+                                  readOnly: true,
+                                  suffix: Icon(Icons.arrow_drop_down),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(
                             width: 40.0,
                           ),
                           Expanded(
-                            child: CustomTextField(
-                              prefix: Icon(Icons.location_on_rounded),
-                              hintText: S.current.address2_optional,
-                              onSaved: (value) =>
-                                  restaurant.address!.address2 = value,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16.0),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextField(
-                              prefix: Icon(Icons.location_city),
-                              hintText: S.current.city,
-                              onSaved: (value) =>
-                                  restaurant.address!.city = value,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 40.0,
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              prefix: Icon(Icons.location_city),
-                              hintText: S.current.province,
-                              onSaved: (value) =>
-                                  restaurant.address!.province = value,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16.0),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomTextField(
-                              prefix: Icon(Icons.code),
-                              hintText: S.current.postal_code,
-                              onSaved: (value) =>
-                                  restaurant.address!.postal = value,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 40.0,
-                          ),
-                          Expanded(
-                            child: CustomTextField(
-                              prefix: Icon(Icons.language),
-                              controller: TextEditingController(text: 'Laos'),
-                              hintText: S.current.country,
-                              onSaved: (value) =>
-                                  restaurant.address!.country = value,
-                              readOnly: true,
-                              suffix: Icon(Icons.arrow_drop_down),
+                            child: Column(
+                              children: [
+                                CustomTextField(
+                                  controller: TextEditingController(
+                                    text: restaurant.address!.lat,
+                                  ),
+                                  prefix: Icon(Icons.location_on_rounded),
+                                  hintText: S.current.latitude,
+                                  onChanged: (value) =>
+                                      restaurant.address!.lat = value,
+                                ),
+                                const SizedBox(height: 16.0),
+                                CustomTextField(
+                                  controller: TextEditingController(
+                                    text: restaurant.address!.lon,
+                                  ),
+                                  prefix: Icon(Icons.location_on_rounded),
+                                  hintText: S.current.longitude,
+                                  onChanged: (value) =>
+                                      restaurant.address!.lon = value,
+                                ),
+                                const SizedBox(height: 16.0),
+                                Container(
+                                  height: 240.0,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(7.0),
+                                    child: locationEnabled
+                                        ? Stack(
+                                            children: [
+                                              GoogleMap(
+                                                mapType: MapType.hybrid,
+                                                initialCameraPosition:
+                                                    CameraPosition(
+                                                  target: LatLng(
+                                                    17.92355341161312,
+                                                    102.64934482052922,
+                                                  ),
+                                                  zoom: CAMERA_ZOOM,
+                                                ),
+                                                onMapCreated:
+                                                    (GoogleMapController
+                                                        controller) {
+                                                  _controller
+                                                      .complete(controller);
+                                                },
+                                                onCameraIdle: onUpdatedMap,
+                                              ),
+                                              Center(
+                                                child: Icon(
+                                                  Icons.my_location_outlined,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary
+                                                      .withOpacity(0.75),
+                                                  size: 32.0,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Container(),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -320,7 +354,8 @@ class _BasicPageState extends State<BasicPage> {
                                       await APIService.of(context: context)
                                           .upload(
                                     path: 'upload/logo',
-                                    filePath: file.path,
+                                    webFile: file,
+                                    // filePath: file.path,
                                   );
                                   if (resp['ret'] == 10000) {
                                     var imageUrl = '$kUrlLogo${resp['result']}';
@@ -366,7 +401,7 @@ class _BasicPageState extends State<BasicPage> {
                                       await APIService.of(context: context)
                                           .upload(
                                     path: 'upload/gallery',
-                                    filePath: file.path,
+                                    webFile: file,
                                   );
                                   if (resp['ret'] == 10000) {
                                     var imageUrl =
@@ -396,7 +431,7 @@ class _BasicPageState extends State<BasicPage> {
                                         await APIService.of(context: context)
                                             .upload(
                                       path: 'upload/gallery',
-                                      filePath: file.path,
+                                      webFile: file,
                                     );
                                     if (resp['ret'] == 10000) {
                                       var imageUrl =
@@ -439,24 +474,33 @@ class _BasicPageState extends State<BasicPage> {
     );
   }
 
+  void onUpdatedMap() async {
+    final GoogleMapController controller = await _controller.future;
+    LatLngBounds visibleRegion = await controller.getVisibleRegion();
+    LatLng latlng = LatLng(
+      (visibleRegion.northeast.latitude + visibleRegion.southwest.latitude) / 2,
+      (visibleRegion.northeast.longitude + visibleRegion.southwest.longitude) /
+          2,
+    );
+    logger.d(latlng);
+    restaurant.address!.lat = latlng.latitude.toString();
+    restaurant.address!.lon = latlng.longitude.toString();
+    setState(() {});
+  }
+
   void onNext() {
     for (var gallery in galleries) {
       if (gallery.isEmpty) {
-        DialogService.of(context).showSnackBar(
-          S.current.input_all_fields,
-          type: SnackBarType.error,
-        );
+        Fluttertoast.showToast(msg: S.current.input_all_fields);
         return;
       }
     }
     var galleryData = jsonEncode(galleries);
     restaurant.galleries = galleryData;
+    restaurant.address!.country = 'Laos';
     var error = restaurant.hasFullData;
     if (error != null) {
-      DialogService.of(context).showSnackBar(
-        error,
-        type: SnackBarType.error,
-      );
+      Fluttertoast.showToast(msg: error);
       return;
     }
     if (widget.onNext != null) {

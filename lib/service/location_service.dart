@@ -38,6 +38,7 @@ class LocationService {
     _location!.onLocationChanged.listen((event) {
       _currentLocation = event;
     });
+    return null;
   }
 
   LocationData? getCurrentLcoation() {

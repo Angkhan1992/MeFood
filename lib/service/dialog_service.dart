@@ -792,6 +792,7 @@ class DialogService {
   Future<String?> showDescktopChooserDialog({
     required String title,
     List<String>? values,
+    bool isExpand = false,
   }) async {
     return showDialog(
       context: context,
@@ -800,14 +801,17 @@ class DialogService {
           backgroundColor: Colors.transparent,
           body: Center(
             child: Container(
-              width: 600,
-              height: 400,
+              constraints: BoxConstraints(
+                maxHeight: 400.0,
+              ),
+              width: 500.0,
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(24.0),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   title.wText(TextStyle(
                     fontSize: 22.0,
@@ -820,28 +824,20 @@ class DialogService {
                   const SizedBox(
                     height: 8.0,
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          for (var value in values!) ...{
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8.0,
-                              ),
-                              child: InkWell(
-                                onTap: () => Navigator.of(context).pop(value),
-                                child: value.wText(TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w400,
-                                )),
-                              ),
-                            ),
-                          },
-                        ],
+                  for (var value in values!) ...{
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                      ),
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pop(value),
+                        child: value.wText(TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w400,
+                        )),
                       ),
                     ),
-                  ),
+                  },
                 ],
               ),
             ),

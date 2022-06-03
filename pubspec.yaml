@@ -48,6 +48,7 @@ dependencies:
   # get: ^4.6.5
 
   google_maps_flutter: any
+  google_maps_flutter_web: ^0.3.3
   location: any
   connectivity_plus: any
   geocoding: any
@@ -116,6 +117,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/web/
     - assets/icons/
     - assets/icons/menu/
     - assets/icons/category/

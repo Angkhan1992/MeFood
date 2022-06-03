@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/provider.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:provider/provider.dart';
@@ -211,4 +212,21 @@ class DrawMailIcon extends StatelessWidget {
       ),
     );
   }
+}
+
+Row WebLogo() {
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Image.asset(
+        'assets/images/web/logo.png',
+        width: 36.0,
+        height: 36.0,
+      ),
+      const SizedBox(
+        width: 24.0,
+      ),
+      S.current.mefood.wToolbar,
+    ],
+  );
 }

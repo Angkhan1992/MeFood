@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
   final Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final Function(String)? onSubmitted;
+  final Function(String)? onChanged;
   final Function()? onTap;
   final bool obscureText;
   final bool readOnly;
@@ -22,6 +23,7 @@ class CustomTextField extends StatelessWidget {
     this.onSaved,
     this.validator,
     this.onSubmitted,
+    this.onChanged,
     this.onTap,
     this.obscureText = false,
     this.readOnly = false,
@@ -83,6 +85,7 @@ class CustomTextField extends StatelessWidget {
               validator: validator,
               onTap: onTap,
               onFieldSubmitted: onSubmitted,
+              onChanged: onChanged,
             ),
           ),
           if (suffix != null) ...{

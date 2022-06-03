@@ -18,6 +18,7 @@ class RestaurantModel with _$RestaurantModel {
     String? category,
     String? regdate,
   }) = _RestaurantModel;
+
   factory RestaurantModel.fromJson(Map<String, dynamic> json) =>
       _$RestaurantModelFromJson(json);
 }
