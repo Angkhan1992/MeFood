@@ -16,4 +16,14 @@ class RestaurantAuthProvider extends ChangeNotifier {
     restaurant = model;
     notifyListeners();
   }
+
+  void setOwner(MemberModel model) {
+    owner = model;
+    notifyListeners();
+  }
+
+  void addUsers(MemberModel model) {
+    members.add(model);
+    notifyListeners();
+  }
 }

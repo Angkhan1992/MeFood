@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/provider/restaurant/rest_auth_provider.dart';
 import 'package:mefood/service/router_service.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/constants.dart';
-import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
 
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: getThemeData(),
       darkTheme: getDarkThemeData(),
-      initialRoute: RouterService.routeLogin,
+      initialRoute: RouterService.routeRegister,
       routes: RouterService.getRoutes(),
       localizationsDelegates: const [
         S.delegate,

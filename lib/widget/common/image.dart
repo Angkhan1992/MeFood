@@ -233,17 +233,17 @@ class AvatarImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var primary = borderColor ?? Theme.of(context).primaryColor;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(size / 2),
-      child: Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: primary,
-          ),
-          borderRadius: BorderRadius.circular(size / 2),
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: primary,
         ),
+        borderRadius: BorderRadius.circular(size / 2),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size / 2 - 1),
         child: CachedNetworkImage(
           imageUrl: avatar ?? 'http',
           placeholder: (context, url) => Center(
@@ -263,6 +263,7 @@ class AvatarImageWidget extends StatelessWidget {
               color: primary,
             ),
           ),
+          fit: BoxFit.cover,
         ),
       ),
     );

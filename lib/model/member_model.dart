@@ -9,6 +9,7 @@ class MemberModel with _$MemberModel {
     int? id,
     int? ret_id,
     String? name,
+    String? avatar,
     String? email,
     String? phone,
     String? regdate,

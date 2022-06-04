@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/provider/restaurant/rest_auth_provider.dart';
-import 'package:mefood/screen/delivery/auth/page/securit_page.dart';
 import 'package:mefood/screen/restaurant/auth/basic_page.dart';
 import 'package:mefood/screen/restaurant/auth/owner_page.dart';
 import 'package:mefood/screen/restaurant/auth/success_page.dart';
@@ -9,7 +10,6 @@ import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/common/appbar.dart';
 import 'package:mefood/widget/restraurant/layout_builder.dart';
 import 'package:mefood/widget/restraurant/register_widget.dart';
-import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -25,7 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'Basic',
     'Owner',
     'Users',
-    'Secuit',
     'Success',
   ];
 
@@ -36,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return Consumer<RestaurantAuthProvider>(
           builder: (context, provider, child) {
             var pages = [
+              SuccessPage(),
               BasicPage(
                 onNext: (restaurant) {
                   logger.d(restaurant);
@@ -43,10 +43,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _stepperEvent.value = 2;
                 },
               ),
-              OwnerPage(),
-              UsersPage(),
-              SecuritPage(),
-              SuccessPage(),
+              OwnerPage(
+                onNext: (owner) {
+                  logger.d(owner);
+                  provider.setOwner(owner);
+                  _stepperEvent.value = 3;
+                },
+                onPrevious: () => _stepperEvent.value = 1,
+              ),
+              UsersPage(
+                onNext: (admin, user) async {
+                  provider.addUsers(admin);
+                  provider.addUsers(user);
+
+                  _stepperEvent.value = 4;
+                },
+                onPrevious: () => _stepperEvent.value = 2,
+              ),
             ];
             return Column(
               children: [
@@ -116,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           step: value,
           title: titles[0],
         ),
-        for (var i = 1; i < 5; i++) ...{
+        for (var i = 1; i < 4; i++) ...{
           Expanded(
             flex: 2,
             child: Padding(

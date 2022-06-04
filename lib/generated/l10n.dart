@@ -110,20 +110,20 @@ class S {
     );
   }
 
-  /// `Logout`
+  /// `Server Error!!!`
   String get sever_error {
     return Intl.message(
-      'Logout',
+      'Server Error!!!',
       name: 'sever_error',
       desc: '',
       args: [],
     );
   }
 
-  /// `Server Error!!!`
+  /// `Logout`
   String get logout {
     return Intl.message(
-      'Server Error!!!',
+      'Logout',
       name: 'logout',
       desc: '',
       args: [],
@@ -1160,6 +1160,66 @@ class S {
     );
   }
 
+  /// `Avatar`
+  String get avatar {
+    return Intl.message(
+      'Avatar',
+      name: 'avatar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full Name`
+  String get full_name {
+    return Intl.message(
+      'Full Name',
+      name: 'full_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Owner Information`
+  String get owner_info {
+    return Intl.message(
+      'Owner Information',
+      name: 'owner_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Admin Information`
+  String get admin_info {
+    return Intl.message(
+      'Admin Information',
+      name: 'admin_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User Information`
+  String get user_info {
+    return Intl.message(
+      'User Information',
+      name: 'user_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get status {
+    return Intl.message(
+      'Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Car License`
   String get car_license {
     return Intl.message(
@@ -1380,30 +1440,30 @@ class S {
     );
   }
 
-  /// `· Should be over 8 characters`
+  /// `You can choose one support and go to there. And you can pay to them.`
   String get dsc_pay_manual_01 {
     return Intl.message(
-      '· Should be over 8 characters',
+      'You can choose one support and go to there. And you can pay to them.',
       name: 'dsc_pay_manual_01',
       desc: '',
       args: [],
     );
   }
 
-  /// `· Should be over 8 characters`
+  /// `After payment, they will scan your pay QR code. The below one is your QR.`
   String get dsc_pay_manual_02 {
     return Intl.message(
-      '· Should be over 8 characters',
+      'After payment, they will scan your pay QR code. The below one is your QR.',
       name: 'dsc_pay_manual_02',
       desc: '',
       args: [],
     );
   }
 
-  /// `· Should be over 8 characters`
+  /// `After scaning QR code, you can restart your app and then your memebership will be upgraded`
   String get dsc_pay_manual_03 {
     return Intl.message(
-      '· Should be over 8 characters',
+      'After scaning QR code, you can restart your app and then your memebership will be upgraded',
       name: 'dsc_pay_manual_03',
       desc: '',
       args: [],

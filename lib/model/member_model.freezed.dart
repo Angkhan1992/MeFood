@@ -26,6 +26,8 @@ mixin _$MemberModel {
   set ret_id(int? value) => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   set name(String? value) => throw _privateConstructorUsedError;
+  String? get avatar => throw _privateConstructorUsedError;
+  set avatar(String? value) => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   set email(String? value) => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -50,6 +52,7 @@ abstract class $MemberModelCopyWith<$Res> {
       {int? id,
       int? ret_id,
       String? name,
+      String? avatar,
       String? email,
       String? phone,
       String? regdate,
@@ -69,6 +72,7 @@ class _$MemberModelCopyWithImpl<$Res> implements $MemberModelCopyWith<$Res> {
     Object? id = freezed,
     Object? ret_id = freezed,
     Object? name = freezed,
+    Object? avatar = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? regdate = freezed,
@@ -86,6 +90,10 @@ class _$MemberModelCopyWithImpl<$Res> implements $MemberModelCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avatar: avatar == freezed
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -118,6 +126,7 @@ abstract class _$$_MemberModelCopyWith<$Res>
       {int? id,
       int? ret_id,
       String? name,
+      String? avatar,
       String? email,
       String? phone,
       String? regdate,
@@ -139,6 +148,7 @@ class __$$_MemberModelCopyWithImpl<$Res> extends _$MemberModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? ret_id = freezed,
     Object? name = freezed,
+    Object? avatar = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? regdate = freezed,
@@ -156,6 +166,10 @@ class __$$_MemberModelCopyWithImpl<$Res> extends _$MemberModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avatar: avatar == freezed
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -184,6 +198,7 @@ class _$_MemberModel implements _MemberModel {
       {this.id,
       this.ret_id,
       this.name,
+      this.avatar,
       this.email,
       this.phone,
       this.regdate,
@@ -199,6 +214,8 @@ class _$_MemberModel implements _MemberModel {
   @override
   String? name;
   @override
+  String? avatar;
+  @override
   String? email;
   @override
   String? phone;
@@ -209,7 +226,7 @@ class _$_MemberModel implements _MemberModel {
 
   @override
   String toString() {
-    return 'MemberModel(id: $id, ret_id: $ret_id, name: $name, email: $email, phone: $phone, regdate: $regdate, type: $type)';
+    return 'MemberModel(id: $id, ret_id: $ret_id, name: $name, avatar: $avatar, email: $email, phone: $phone, regdate: $regdate, type: $type)';
   }
 
   @JsonKey(ignore: true)
@@ -228,6 +245,7 @@ abstract class _MemberModel implements MemberModel {
       {int? id,
       int? ret_id,
       String? name,
+      String? avatar,
       String? email,
       String? phone,
       String? regdate,
@@ -242,6 +260,8 @@ abstract class _MemberModel implements MemberModel {
   int? get ret_id => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
+  @override
+  String? get avatar => throw _privateConstructorUsedError;
   @override
   String? get email => throw _privateConstructorUsedError;
   @override

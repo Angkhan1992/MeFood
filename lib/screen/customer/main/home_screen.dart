@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/product_model.dart';
-import 'package:mefood/model/restaurant_model.dart';
 import 'package:mefood/provider/category_provider.dart';
 import 'package:mefood/screen/customer/home/all_category_screen.dart';
 import 'package:mefood/screen/customer/home/category_screen.dart';

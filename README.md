@@ -25,9 +25,9 @@ create-dmg \
 --volname "mefood" \
 --window-pos 200 120 \
 --window-size 1200 750 \
---icon-size 130 \
+--icon-size 128 \
 --text-size 14 \
---icon "mefood.app" 260 250 \
+--icon "mefood.app" 256 256 \
 --hide-extension "mefood.app" \
 --app-drop-link 540 250 \
 --hdiutil-quiet \

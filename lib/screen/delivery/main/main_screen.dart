@@ -32,7 +32,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final _event = ValueNotifier(0);
   final _titles = [
-    S.current.status_map.toUpperCase(),
+    S.current.status.toUpperCase(),
     S.current.orders.toUpperCase(),
     S.current.history.toUpperCase(),
     S.current.chat.toUpperCase(),

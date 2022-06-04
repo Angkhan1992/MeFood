@@ -245,7 +245,7 @@ class _AddressPageState extends State<AddressPage> {
             },
           ),
           const SizedBox(
-            height: 40.0,
+            height: 16.0,
           ),
           CustomFillButton(
             title: S.current.update_address.toUpperCase(),

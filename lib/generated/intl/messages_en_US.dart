@@ -26,9 +26,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "address1": MessageLookupByLibrary.simpleMessage("Address1"),
         "address2_optional":
             MessageLookupByLibrary.simpleMessage("Address2 (Optional)"),
+        "admin_info": MessageLookupByLibrary.simpleMessage("Admin Information"),
         "almost_done": MessageLookupByLibrary.simpleMessage("Almost Done"),
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "as_read": MessageLookupByLibrary.simpleMessage("As Read"),
+        "avatar": MessageLookupByLibrary.simpleMessage("Avatar"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "car_images": MessageLookupByLibrary.simpleMessage("Car Images"),
         "car_info": MessageLookupByLibrary.simpleMessage("Car Information"),
@@ -78,11 +80,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "dsc_contact_us": MessageLookupByLibrary.simpleMessage(
             "You can send some information to MEFOOD. We will reply in 48hrs. Thanks for your contact."),
         "dsc_pay_manual_01": MessageLookupByLibrary.simpleMessage(
-            "· Should be over 8 characters"),
+            "You can choose one support and go to there. And you can pay to them."),
         "dsc_pay_manual_02": MessageLookupByLibrary.simpleMessage(
-            "· Should be over 8 characters"),
+            "After payment, they will scan your pay QR code. The below one is your QR."),
         "dsc_pay_manual_03": MessageLookupByLibrary.simpleMessage(
-            "· Should be over 8 characters"),
+            "After scaning QR code, you can restart your app and then your memebership will be upgraded"),
         "dsc_rex_pass_length": MessageLookupByLibrary.simpleMessage(
             "· Should be over 8 characters"),
         "dsc_rex_pass_lower": MessageLookupByLibrary.simpleMessage(
@@ -117,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "free_member": MessageLookupByLibrary.simpleMessage("Free Member"),
         "from_current_location":
             MessageLookupByLibrary.simpleMessage("From the Current Location"),
+        "full_name": MessageLookupByLibrary.simpleMessage("Full Name"),
         "galleries": MessageLookupByLibrary.simpleMessage("Galleries"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "go_to_login": MessageLookupByLibrary.simpleMessage("Go To Login"),
@@ -159,7 +162,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
         "login_by_tour": MessageLookupByLibrary.simpleMessage("Login By Tour"),
         "logo": MessageLookupByLibrary.simpleMessage("Logo"),
-        "logout": MessageLookupByLibrary.simpleMessage("Server Error!!!"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "longitude": MessageLookupByLibrary.simpleMessage("Longitude"),
         "manual_membership":
             MessageLookupByLibrary.simpleMessage("Manual Membership"),
@@ -178,6 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Not Match Email"),
         "offers": MessageLookupByLibrary.simpleMessage("Offers"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "owner_info": MessageLookupByLibrary.simpleMessage("Owner Information"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "pending_48_desc": MessageLookupByLibrary.simpleMessage(
             "Your account is pending yet. We will reply in 48 hrs. Thanks for your understanding."),
@@ -216,8 +220,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "sever_error": MessageLookupByLibrary.simpleMessage("Logout"),
+        "sever_error": MessageLookupByLibrary.simpleMessage("Server Error!!!"),
         "soon": MessageLookupByLibrary.simpleMessage("Soon"),
+        "status": MessageLookupByLibrary.simpleMessage("Status"),
         "status_map": MessageLookupByLibrary.simpleMessage("Status Map"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "success": MessageLookupByLibrary.simpleMessage("Success"),
@@ -244,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "upt_car": MessageLookupByLibrary.simpleMessage("Update Car"),
         "upt_profile": MessageLookupByLibrary.simpleMessage("Update Profile"),
         "upt_securit": MessageLookupByLibrary.simpleMessage("Update Securit"),
+        "user_info": MessageLookupByLibrary.simpleMessage("User Information"),
         "usr_address": MessageLookupByLibrary.simpleMessage("User Address"),
         "verification": MessageLookupByLibrary.simpleMessage("Verification"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),

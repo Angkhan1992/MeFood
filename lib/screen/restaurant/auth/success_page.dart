@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mefood/extensions/extensions.dart';
 
 class SuccessPage extends StatefulWidget {
   SuccessPage({Key? key}) : super(key: key);
@@ -34,10 +35,17 @@ class _SuccessPageState extends State<SuccessPage> {
           ),
           const SizedBox(height: 24.0),
           Container(
-            height: 1000,
+            padding: const EdgeInsets.all(40.0),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.onSecondaryContainer,
               borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Column(
+              children: [
+                'Thanks for your register to MeFood Restaurant'.wText(
+                  TextStyle(),
+                ),
+              ],
             ),
           ),
         ],

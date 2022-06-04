@@ -187,103 +187,104 @@ class _AccountScreenState extends State<AccountScreen> {
     ];
     return Expanded(
       child: ValueListenableBuilder<int>(
-          valueListenable: selectedEvent,
-          builder: (context, v, w) {
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => selectedEvent.value = 0,
-                        child: Container(
-                          height: 48.0,
-                          decoration: BoxDecoration(
-                            color: v == 0 ? selectedColor : Colors.transparent,
-                            border: Border.all(
+        valueListenable: selectedEvent,
+        builder: (context, v, w) {
+          return Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () => selectedEvent.value = 0,
+                      child: Container(
+                        height: 48.0,
+                        decoration: BoxDecoration(
+                          color: v == 0 ? selectedColor : Colors.transparent,
+                          border: Border.all(
+                            color: selectedColor,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(24.0),
+                            bottomLeft: Radius.circular(24.0),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          S.current.my_profile.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500,
+                            color: v == 0 ? selectedTextColor : selectedColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () => selectedEvent.value = 1,
+                      child: Container(
+                        height: 48.0,
+                        decoration: BoxDecoration(
+                          color: v == 1 ? selectedColor : Colors.transparent,
+                          border: Border(
+                            top: BorderSide(
                               color: selectedColor,
                             ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(24.0),
-                              bottomLeft: Radius.circular(24.0),
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            S.current.my_profile.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
-                              color: v == 0 ? selectedTextColor : selectedColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => selectedEvent.value = 1,
-                        child: Container(
-                          height: 48.0,
-                          decoration: BoxDecoration(
-                            color: v == 1 ? selectedColor : Colors.transparent,
-                            border: Border(
-                              top: BorderSide(
-                                color: selectedColor,
-                              ),
-                              bottom: BorderSide(
-                                color: selectedColor,
-                              ),
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            S.current.address.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
-                              color: v == 1 ? selectedTextColor : selectedColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: InkWell(
-                        onTap: () => selectedEvent.value = 2,
-                        child: Container(
-                          height: 48.0,
-                          decoration: BoxDecoration(
-                            color: v == 2 ? selectedColor : Colors.transparent,
-                            border: Border.all(
+                            bottom: BorderSide(
                               color: selectedColor,
                             ),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(24.0),
-                              bottomRight: Radius.circular(24.0),
-                            ),
                           ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            S.current.delivery.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
-                              color: v == 2 ? selectedTextColor : selectedColor,
-                            ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          S.current.address.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500,
+                            color: v == 1 ? selectedTextColor : selectedColor,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Expanded(child: screens[v]),
-              ],
-            );
-          }),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () => selectedEvent.value = 2,
+                      child: Container(
+                        height: 48.0,
+                        decoration: BoxDecoration(
+                          color: v == 2 ? selectedColor : Colors.transparent,
+                          border: Border.all(
+                            color: selectedColor,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(24.0),
+                            bottomRight: Radius.circular(24.0),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          S.current.delivery.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500,
+                            color: v == 2 ? selectedTextColor : selectedColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              Expanded(child: screens[v]),
+            ],
+          );
+        },
+      ),
     );
   }
 }
