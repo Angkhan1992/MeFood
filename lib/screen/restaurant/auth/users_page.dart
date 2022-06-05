@@ -2,13 +2,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/restraurant/register_widget.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/restaurant/restaurant.dart';
 
 class UsersPage extends StatefulWidget {
   final Function(MemberModel admin, MemberModel user)? onNext;
@@ -79,7 +79,7 @@ class _UsersPageState extends State<UsersPage> {
                           'Admin Photo'.subtitle,
                           const SizedBox(height: 24.0),
                           WebCachImage(
-                            url: admin.avatar ?? '',
+                            url: admin.linkAvatar ?? '',
                             shortDesc: '300 * 300 Avatar',
                             picker: () async {
                               var result = await FilePicker.platform.pickFiles(
@@ -96,7 +96,7 @@ class _UsersPageState extends State<UsersPage> {
                                 if (resp['ret'] == 10000) {
                                   var imageUrl = '$kUrlAvatar${resp['result']}';
                                   setState(() {
-                                    admin.avatar = imageUrl;
+                                    admin.linkAvatar = imageUrl;
                                   });
                                 }
                               }
@@ -118,7 +118,7 @@ class _UsersPageState extends State<UsersPage> {
                           CustomTextField(
                             prefix: Icon(LineIcons.user),
                             hintText: S.current.full_name,
-                            onChanged: (value) => admin.name = value,
+                            // onChanged: (value) => admin.fullName = value,
                           ),
                           const SizedBox(height: 16.0),
                           CustomTextField(
@@ -186,7 +186,7 @@ class _UsersPageState extends State<UsersPage> {
                           'User Photo'.subtitle,
                           const SizedBox(height: 24.0),
                           WebCachImage(
-                            url: user.avatar ?? '',
+                            url: user.linkAvatar ?? '',
                             shortDesc: '300 * 300 Avatar',
                             picker: () async {
                               var result = await FilePicker.platform.pickFiles(
@@ -203,7 +203,7 @@ class _UsersPageState extends State<UsersPage> {
                                 if (resp['ret'] == 10000) {
                                   var imageUrl = '$kUrlAvatar${resp['result']}';
                                   setState(() {
-                                    user.avatar = imageUrl;
+                                    user.linkAvatar = imageUrl;
                                   });
                                 }
                               }
@@ -225,7 +225,7 @@ class _UsersPageState extends State<UsersPage> {
                           CustomTextField(
                             prefix: Icon(LineIcons.user),
                             hintText: S.current.full_name,
-                            onChanged: (value) => user.name = value,
+                            // onChanged: (value) => user.fullName = value,
                           ),
                           const SizedBox(height: 16.0),
                           CustomTextField(
@@ -309,7 +309,7 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   void onNext() {
-    var errorAdmin = admin.hasFullData(adminPass);
+    var errorAdmin = admin.hasFullData;
     if (errorAdmin != null) {
       Fluttertoast.showToast(msg: errorAdmin);
       return;
@@ -318,7 +318,7 @@ class _UsersPageState extends State<UsersPage> {
       Fluttertoast.showToast(msg: 'Invalid Password');
       return;
     }
-    var errorUser = user.hasFullData(userPass);
+    var errorUser = user.hasFullData;
     if (errorUser != null) {
       Fluttertoast.showToast(msg: errorUser);
       return;

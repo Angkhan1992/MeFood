@@ -3,22 +3,24 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/service/service.dart';
-import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/provider/provider.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class AuthSupportPage extends StatefulWidget {
-  const AuthSupportPage({Key? key}) : super(key: key);
+  final MemberModel? member;
+  const AuthSupportPage({
+    Key? key,
+    this.member,
+  }) : super(key: key);
 
   @override
   State<AuthSupportPage> createState() => _AuthSupportPageState();
 }
 
 class _AuthSupportPageState extends State<AuthSupportPage> {
-  var _user = UserModel();
+  var _user = MemberModel();
 
   final _contentController = TextEditingController();
 
@@ -27,8 +29,7 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
     super.initState();
 
     Timer.run(() {
-      _user = Provider.of<DriverProvider>(context, listen: false).user.user ??
-          UserModel();
+      _user = widget.member == null ? MemberModel() : widget.member!.copyWith();
       setState(() {});
     });
   }

@@ -9,17 +9,15 @@ import 'package:gif_view/gif_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:mefood/extensions/extensions.dart';
+
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/colors.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/themes/textstyle.dart';
 import 'package:mefood/util/app_config.dart';
-import 'package:mefood/widget/common/button.dart';
-import 'package:mefood/widget/common/textfield.dart';
-
-import '../themes/colors.dart';
-import '../themes/dimens.dart';
-import '../themes/textstyles.dart';
-import '../widget/common/appbar.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class DialogService {
   final BuildContext context;

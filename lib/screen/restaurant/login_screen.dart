@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/service/dialog_service.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/service/router_service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/restraurant/layout_builder.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/restaurant/layout_builder.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

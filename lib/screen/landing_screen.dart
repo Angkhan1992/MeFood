@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/screen/customer/main/main_screen.dart' as cs;
 import 'package:mefood/screen/delivery/main/main_screen.dart' as dl;
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);

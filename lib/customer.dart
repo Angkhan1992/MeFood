@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:mefood/provider/customer/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/constants.dart';
@@ -39,11 +39,12 @@ void main() async {
 
   F.appFlavor = Flavor.customer;
 
+  var authProvider = AuthProvider();
+
   runApp(
     MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (context) => UserModel()),
-        ChangeNotifierProvider(create: (context) => CategoryProvider()),
+        ChangeNotifierProvider(create: (context) => authProvider),
       ],
       child: const MyApp(),
     ),

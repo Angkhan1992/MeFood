@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/provider/delivery/delivery_provider.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/delivery/delivery.dart';
 import 'package:mefood/screen/delivery/account/account_screen.dart';
 import 'package:mefood/screen/delivery/account/mail_screen.dart';
 import 'package:mefood/screen/delivery/account/membership_screen.dart';
@@ -18,8 +18,8 @@ import 'package:mefood/screen/delivery/main/order_page.dart';
 import 'package:mefood/screen/delivery/main/status_page.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/delivery/delivery.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/customer/customer.dart';
 import 'package:mefood/widget/page/network_error.dart';
 
 class MainScreen extends StatefulWidget {
@@ -92,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     AvatarImageWidget(
-                                      avatar: provider.user!.avatar,
+                                      avatar: provider.user!.linkAvatar,
                                     ),
                                     const SizedBox(
                                       height: 16.0,
@@ -133,7 +133,9 @@ class _MainScreenState extends State<MainScreen> {
                             Navigator.of(context).pop();
                             NavigatorService.of(context).push(
                               screen: AccountScreen(
-                                provider: provider,
+                                member: provider.user,
+                                address: provider.address,
+                                car: provider.car,
                               ),
                             );
                           },
@@ -263,9 +265,9 @@ class _MainScreenState extends State<MainScreen> {
         );
       case 2:
         return DriverCalendar(
-          onTapBack: () {},
-          onTapForward: () {},
-          onTapCalendar: () async {},
+          onPrevious: () {},
+          onNext: () {},
+          onDatePicker: () async {},
         );
       case 3:
         return TextActionButton(title: 'Support');

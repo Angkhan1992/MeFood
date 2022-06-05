@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
 
-import 'package:mefood/extensions/e_string.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/button.dart';
-import 'package:mefood/widget/common/textfield.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

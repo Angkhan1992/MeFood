@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/provider/provider.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/provider/base/base.dart';
+import 'package:mefood/widget/base/base.dart';
 import 'package:provider/provider.dart';
 
 class MailDetail extends StatefulWidget {

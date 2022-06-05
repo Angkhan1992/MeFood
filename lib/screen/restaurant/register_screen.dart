@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/provider/restaurant/rest_auth_provider.dart';
+import 'package:mefood/provider/restaurant/auth_provider.dart';
 import 'package:mefood/screen/restaurant/auth/basic_page.dart';
 import 'package:mefood/screen/restaurant/auth/owner_page.dart';
 import 'package:mefood/screen/restaurant/auth/success_page.dart';
 import 'package:mefood/screen/restaurant/auth/users_page.dart';
 import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/appbar.dart';
-import 'package:mefood/widget/restraurant/layout_builder.dart';
-import 'package:mefood/widget/restraurant/register_widget.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/restaurant/restaurant.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -32,10 +31,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return CustomLayout(
       builder: (context, app) {
-        return Consumer<RestaurantAuthProvider>(
+        return Consumer<AuthProvider>(
           builder: (context, provider, child) {
             var pages = [
-              SuccessPage(),
               BasicPage(
                 onNext: (restaurant) {
                   logger.d(restaurant);
@@ -59,6 +57,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _stepperEvent.value = 4;
                 },
                 onPrevious: () => _stepperEvent.value = 2,
+              ),
+              SuccessPage(
+                onConfirm: () => Navigator.pop(context),
               ),
             ];
             return Column(
@@ -155,8 +156,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       children: [
         Divider(),
         Container(
+          padding: const EdgeInsets.symmetric(vertical: 40.0),
           constraints: BoxConstraints(maxWidth: 1000.0),
-          height: 300,
+          child: FooterView(),
         ),
       ],
     );

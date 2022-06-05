@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/extensions/extensions.dart';
+
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/provider/provider.dart';
-import 'package:mefood/service/service.dart';
 import 'package:mefood/util/app_config.dart';
 import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:provider/provider.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class PasswordPage extends StatefulWidget {
-  final Function()? onDone;
+  final Function(String pass)? onDone;
   const PasswordPage({
     Key? key,
     this.onDone,
@@ -127,18 +125,8 @@ class _PasswordPageState extends State<PasswordPage> {
       return;
     }
 
-    var provider = Provider.of<DriverProvider>(context, listen: false);
-    var user = provider.user.user!;
-    var resp = await user.updatePassword(context, pass: pass);
-    if (resp == null) {
-      if (widget.onDone != null) {
-        widget.onDone!();
-      }
-    } else {
-      DialogService.of(context).showSnackBar(
-        resp,
-        type: SnackBarType.error,
-      );
+    if (widget.onDone != null) {
+      widget.onDone!(pass);
     }
   }
 }

@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/category_model.dart';
-import 'package:mefood/screen/customer/home/category_screen.dart';
-import 'package:mefood/service/navigator_service.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/themes/dimens.dart';
-import 'package:mefood/widget/common/appbar.dart';
-import 'package:mefood/widget/main/fake_widget.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class AllCategoryScreen extends StatefulWidget {
   final List<CategoryModel> categories;
@@ -41,16 +38,17 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
         ),
         itemBuilder: (context, index) {
           var category = widget.categories[index];
-          return listCell(
-            context,
-            model: category,
-            onTap: () => NavigatorService.of(context).push(
-              screen: CategoryScreen(
-                category: category,
-              ),
-              replace: true,
-            ),
-          );
+          return Container();
+          // return listCell(
+          //   context,
+          //   model: category,
+          //   onTap: () => NavigatorService.of(context).push(
+          //     screen: CategoryScreen(
+          //       category: category,
+          //     ),
+          //     replace: true,
+          //   ),
+          // );
         },
         separatorBuilder: (context, index) {
           return const SizedBox(

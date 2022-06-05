@@ -1,21 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/user_model.dart';
-import 'package:mefood/provider/provider.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/screen/delivery/account/page/address_page.dart';
 import 'package:mefood/screen/delivery/account/page/delivery_page.dart';
 import 'package:mefood/screen/delivery/account/page/profile_page.dart';
-import 'package:mefood/service/service.dart';
-import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class AccountScreen extends StatefulWidget {
-  final DeliveryProvider provider;
+  final MemberModel? member;
+  final AddressModel? address;
+  final CarModel? car;
 
   const AccountScreen({
     Key? key,
-    required this.provider,
+    this.member,
+    this.address,
+    this.car,
   }) : super(key: key);
 
   @override
@@ -26,12 +29,12 @@ class _AccountScreenState extends State<AccountScreen> {
   var selectedTap = 0;
   final selectedEvent = ValueNotifier(0);
 
-  UserModel? user;
+  MemberModel? user;
 
   @override
   void initState() {
     super.initState();
-    user = widget.provider.user!.copyWith();
+    Timer.run(() {});
   }
 
   @override
@@ -56,7 +59,7 @@ class _AccountScreenState extends State<AccountScreen> {
               child: Stack(
                 children: [
                   AvatarImageWidget(
-                    avatar: user!.avatar,
+                    avatar: user!.linkAvatar,
                     borderColor: Theme.of(context).colorScheme.secondary,
                     size: 90.0,
                   ),
@@ -64,32 +67,32 @@ class _AccountScreenState extends State<AccountScreen> {
                     alignment: Alignment.bottomRight,
                     child: InkWell(
                       onTap: () async {
-                        var filePath =
-                            await ImagePickerService.of(context).picker();
-                        if (filePath != null) {
-                          var respAvatar = await APIService.of().upload(
-                            path: 'upload/avatar',
-                            filePath: filePath,
-                          );
-                          if (respAvatar['ret'] == 10000) {
-                            var avatarUrl =
-                                '$kUrlAvatar${respAvatar['result']}';
-                            logger.d(avatarUrl);
-                            user!.avatar = avatarUrl;
-                            var respUser = await user!.update(context);
-                            if (respUser == null) {
-                              widget.provider.setUser(user!);
-                            } else {
-                              user!.avatar = widget.provider.user!.avatar;
-                            }
-                            setState(() {});
-                          } else {
-                            DialogService.of(context).showSnackBar(
-                              S.current.upload_image_failed,
-                              type: SnackBarType.error,
-                            );
-                          }
-                        }
+                        // var filePath =
+                        //     await ImagePickerService.of(context).picker();
+                        // if (filePath != null) {
+                        //   var respAvatar = await APIService.of().upload(
+                        //     path: 'upload/avatar',
+                        //     filePath: filePath,
+                        //   );
+                        //   if (respAvatar['ret'] == 10000) {
+                        //     var avatarUrl =
+                        //         '$kUrlAvatar${respAvatar['result']}';
+                        //     logger.d(avatarUrl);
+                        //     user!.avatar = avatarUrl;
+                        //     var respUser = await user!.update(context);
+                        //     if (respUser == null) {
+                        //       widget.provider.setUser(user!);
+                        //     } else {
+                        //       user!.avatar = widget.provider.user!.avatar;
+                        //     }
+                        //     setState(() {});
+                        //   } else {
+                        //     DialogService.of(context).showSnackBar(
+                        //       S.current.upload_image_failed,
+                        //       type: SnackBarType.error,
+                        //     );
+                        //   }
+                        // }
                       },
                       child: Container(
                         width: 32.0,
@@ -128,24 +131,24 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 InkWell(
                   onTap: () async {
-                    var values = await DialogService.of(context).twoValueField(
-                      title: S.current.change_name,
-                      hintText: [S.current.first_name, S.current.last_name],
-                      initValue: [user!.first!, user!.last!],
-                      prefix: Icon(Icons.account_circle_outlined),
-                    );
-                    if (values != null) {
-                      user!.first = values[0];
-                      user!.last = values[1];
-                      var resp = await user!.update(context);
-                      if (resp != null) {
-                        user!.first = widget.provider.user!.first;
-                        user!.last = widget.provider.user!.last;
-                      } else {
-                        widget.provider.setUser(user!);
-                      }
-                      setState(() {});
-                    }
+                    // var values = await DialogService.of(context).twoValueField(
+                    //   title: S.current.change_name,
+                    //   hintText: [S.current.first_name, S.current.last_name],
+                    //   initValue: [user!.first!, user!.last!],
+                    //   prefix: Icon(Icons.account_circle_outlined),
+                    // );
+                    // if (values != null) {
+                    //   user!.first = values[0];
+                    //   user!.last = values[1];
+                    //   var resp = await user!.update(context);
+                    //   if (resp != null) {
+                    //     user!.first = widget.provider.user!.first;
+                    //     user!.last = widget.provider.user!.last;
+                    //   } else {
+                    //     widget.provider.setUser(user!);
+                    //   }
+                    //   setState(() {});
+                    // }
                   },
                   child: Icon(
                     Icons.edit,
@@ -172,17 +175,17 @@ class _AccountScreenState extends State<AccountScreen> {
       ProfilePage(
         user: user!,
         updateUser: (user) {
-          widget.provider.setUser(user);
+          // widget.provider.setUser(user);
         },
       ),
       AddressPage(
-        address: widget.provider.address!,
+        address: widget.address!,
         updateAddress: (address) {
-          widget.provider.setAddress(address);
+          // widget.provider.setAddress(address);
         },
       ),
       DeliveryPage(
-        car: widget.provider.car!,
+        car: widget.car!,
       ),
     ];
     return Expanded(

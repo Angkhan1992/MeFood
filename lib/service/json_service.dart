@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:mefood/model/category_model.dart';
 import 'package:flutter/services.dart' as bundle;
-import 'package:mefood/model/country_model.dart';
+import 'package:mefood/model/model.dart';
 
 class JsonService {
   static Future<List<CategoryModel>> readCategoryFromJson() async {

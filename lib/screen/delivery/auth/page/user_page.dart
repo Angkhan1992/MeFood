@@ -1,27 +1,25 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/app_config.dart';
-import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class AddProfilePage extends StatefulWidget {
   final bool isLogin;
-  final Function(UserModel, int)? onNext;
+  final MemberModel? member;
+  final Function(MemberModel)? onNext;
+
   AddProfilePage({
     Key? key,
     this.isLogin = false,
+    this.member,
     this.onNext,
   }) : super(key: key);
 
@@ -30,7 +28,7 @@ class AddProfilePage extends StatefulWidget {
 }
 
 class _AddProfilePageState extends State<AddProfilePage> {
-  UserModel _user = UserModel();
+  MemberModel? _user;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -38,8 +36,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
     super.initState();
 
     Timer.run(() {
-      _user = Provider.of<DriverProvider>(context, listen: false).user.user ??
-          UserModel();
+      _user = widget.member == null ? MemberModel() : widget.member!.copyWith();
       setState(() {});
     });
   }
@@ -77,58 +74,34 @@ class _AddProfilePageState extends State<AddProfilePage> {
               children: [
                 Column(
                   children: [
-                    Container(
-                      width: 80.0,
-                      height: 80.0,
-                      decoration: (_user.avatar == null ||
-                              _user.avatar!.isEmpty)
-                          ? null
-                          : BoxDecoration(
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(40.0),
-                        child: (_user.avatar == null || _user.avatar!.isEmpty)
-                            ? SvgPicture.asset(
-                                'assets/icons/menu/ic_profile.svg',
-                                color: Theme.of(context).colorScheme.secondary,
-                              )
-                            : CachedNetworkImage(
-                                imageUrl: _user.avatar!,
-                                placeholder: (context, url) =>
-                                    CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
-                              ),
-                      ),
+                    AvatarImageWidget(
+                      avatar: _user!.linkAvatar,
+                      size: 80.0,
                     ),
                     const SizedBox(
                       height: 4.0,
                     ),
                     InkWell(
                       onTap: () async {
-                        var result =
-                            await ImagePickerService.of(context).picker();
-                        if (result != null) {
-                          var resp =
-                              await APIService.of(context: context).upload(
-                            path: 'upload/avatar',
-                            filePath: result,
-                          );
-                          if (resp['ret'] == 10000) {
-                            var avatarUrl = '$kUrlAvatar${resp['result']}';
-                            logger.d(avatarUrl);
-                            _user.avatar = avatarUrl;
-                          } else {
-                            DialogService.of(context).showSnackBar(
-                              S.current.upload_image_failed,
-                              type: SnackBarType.error,
-                            );
-                          }
-                        }
+                        // var result =
+                        //     await ImagePickerService.of(context).picker();
+                        // if (result != null) {
+                        //   var resp =
+                        //       await APIService.of(context: context).upload(
+                        //     path: 'upload/avatar',
+                        //     filePath: result,
+                        //   );
+                        //   if (resp['ret'] == 10000) {
+                        //     var avatarUrl = '$kUrlAvatar${resp['result']}';
+                        //     logger.d(avatarUrl);
+                        //     _user.avatar = avatarUrl;
+                        //   } else {
+                        //     DialogService.of(context).showSnackBar(
+                        //       S.current.upload_image_failed,
+                        //       type: SnackBarType.error,
+                        //     );
+                        //   }
+                        // }
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -159,11 +132,11 @@ class _AddProfilePageState extends State<AddProfilePage> {
                       CustomTextField(
                         prefix: const Icon(LineIcons.user),
                         controller: TextEditingController(
-                          text: _user.first ?? '',
+                          text: _user!.firstName ?? '',
                         ),
                         hintText: S.current.first_name,
                         keyboardType: TextInputType.name,
-                        onSaved: (name) => _user.first = name,
+                        // onChanged: (name) => _user!.fullName = name,
                       ),
                       const SizedBox(
                         height: 16.0,
@@ -171,11 +144,11 @@ class _AddProfilePageState extends State<AddProfilePage> {
                       CustomTextField(
                         prefix: const Icon(LineIcons.user),
                         controller: TextEditingController(
-                          text: _user.last ?? '',
+                          text: _user!.lastName ?? '',
                         ),
                         hintText: S.current.last_name,
                         keyboardType: TextInputType.name,
-                        onSaved: (name) => _user.last = name,
+                        // onSaved: (name) => _user.last = name,
                       ),
                     ],
                   ),
@@ -188,11 +161,11 @@ class _AddProfilePageState extends State<AddProfilePage> {
             CustomTextField(
               prefix: const Icon(Icons.email_outlined),
               controller: TextEditingController(
-                text: _user.email ?? '',
+                text: _user!.email ?? '',
               ),
               hintText: S.current.email_address,
               keyboardType: TextInputType.emailAddress,
-              onSaved: (email) => _user.email = email,
+              onSaved: (email) => _user!.email = email,
             ),
             const SizedBox(
               height: 16.0,
@@ -200,11 +173,11 @@ class _AddProfilePageState extends State<AddProfilePage> {
             CustomTextField(
               prefix: const Icon(Icons.phone_android_outlined),
               controller: TextEditingController(
-                text: _user.phone ?? '',
+                text: _user!.phone ?? '',
               ),
               hintText: S.current.phone_number,
               keyboardType: TextInputType.phone,
-              onSaved: (phone) => _user.phone = phone,
+              onSaved: (phone) => _user!.phone = phone,
             ),
             const SizedBox(
               height: 16.0,
@@ -212,7 +185,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
             CustomTextField(
               prefix: const Icon(LineIcons.genderless),
               controller: TextEditingController(
-                text: _user.gender ?? '',
+                text: _user!.gender ?? '',
               ),
               hintText: S.current.gender,
               readOnly: true,
@@ -222,7 +195,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   values: genderType,
                 );
                 if (result != null) {
-                  _user.gender = result;
+                  _user!.gender = result;
                   setState(() {});
                 }
               },
@@ -233,14 +206,14 @@ class _AddProfilePageState extends State<AddProfilePage> {
             CustomTextField(
               prefix: const Icon(LineIcons.calendar),
               controller: TextEditingController(
-                text: _user.dob == null ? '' : _user.dob!.dobValue,
+                text: _user!.dob == null ? '' : _user!.dob!.dobValue,
               ),
               hintText: S.current.date_of_birth,
               readOnly: true,
               onTap: () async {
                 _formKey.currentState!.save();
                 var dateFormatter = DateFormat('yyyy/MM/dd');
-                var initDate = dateFormatter.parse(_user.dob ?? '1990/01/01');
+                var initDate = dateFormatter.parse(_user!.dob ?? '1990/01/01');
                 var chooseDate = await showDatePicker(
                   context: context,
                   initialDate: initDate,
@@ -248,7 +221,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
                   lastDate: dateFormatter.parse('2010/12/31'),
                 );
                 if (chooseDate != null) {
-                  _user.dob = dateFormatter.format(chooseDate);
+                  _user!.dob = dateFormatter.format(chooseDate);
                   setState(() {});
                 }
               },
@@ -263,17 +236,17 @@ class _AddProfilePageState extends State<AddProfilePage> {
                       _formKey.currentState!.save();
                       FocusScope.of(context).unfocus();
 
-                      var resp = await _user.update(context);
-                      if (resp == null) {
-                        if (widget.onNext != null) {
-                          widget.onNext!(_user, _user.id!);
-                        }
-                      } else {
-                        DialogService.of(context).showSnackBar(
-                          resp,
-                          type: SnackBarType.error,
-                        );
-                      }
+                      // var resp = await _user.update(context);
+                      // if (resp == null) {
+                      //   if (widget.onNext != null) {
+                      //     widget.onNext!(_user, _user.id!);
+                      //   }
+                      // } else {
+                      //   DialogService.of(context).showSnackBar(
+                      //     resp,
+                      //     type: SnackBarType.error,
+                      //   );
+                      // }
                     },
                   )
                 : CustomFillButton(
@@ -281,17 +254,17 @@ class _AddProfilePageState extends State<AddProfilePage> {
                     onTap: () async {
                       _formKey.currentState!.save();
                       FocusScope.of(context).unfocus();
-                      var resp = await _user.add(context);
-                      if (resp == null) {
-                        if (widget.onNext != null) {
-                          widget.onNext!(_user, _user.id!);
-                        }
-                      } else {
-                        DialogService.of(context).showSnackBar(
-                          resp,
-                          type: SnackBarType.error,
-                        );
-                      }
+                      // var resp = await _user.add(context);
+                      // if (resp == null) {
+                      //   if (widget.onNext != null) {
+                      //     widget.onNext!(_user, _user.id!);
+                      //   }
+                      // } else {
+                      //   DialogService.of(context).showSnackBar(
+                      //     resp,
+                      //     type: SnackBarType.error,
+                      //   );
+                      // }
                     },
                   ),
             const SizedBox(

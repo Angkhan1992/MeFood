@@ -3,13 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/provider/provider.dart';
+import 'package:mefood/provider/delivery/delivery.dart';
 import 'package:mefood/util/constants.dart';
 import 'package:mefood/util/logger.dart';
 
@@ -35,8 +35,8 @@ class _ManualMembershipState extends State<ManualMembership> {
   void initDate() async {
     provider = Provider.of<DeliveryProvider>(context, listen: false);
     var currentLocation = LatLng(
-      provider!.getCurrentLcoation()!.latitude!,
-      provider!.getCurrentLcoation()!.longitude!,
+      provider!.latitude!,
+      provider!.longitude!,
     );
 
     models.clear();
@@ -129,13 +129,15 @@ class _ManualMembershipState extends State<ManualMembership> {
   }
 
   Widget supportItem(
-    CenterModel model, {
+    CenterModel support, {
     bool isSelected = false,
     Function()? onTap,
   }) {
     var accentColor = isSelected
         ? Theme.of(context).colorScheme.secondary
         : Theme.of(context).hintColor;
+    var user = support.member;
+    var address = support.address;
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -156,7 +158,7 @@ class _ManualMembershipState extends State<ManualMembership> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              model.name!,
+              user!.fullName,
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -177,11 +179,11 @@ class _ManualMembershipState extends State<ManualMembership> {
                 ),
                 InkWell(
                   onTap: () => urlEmailLaunch(
-                    model.email!,
+                    user.email!,
                     subject: S.current.manual_membership,
                   ),
                   child: Text(
-                    model.email!,
+                    user.email!,
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w300,
@@ -206,9 +208,9 @@ class _ManualMembershipState extends State<ManualMembership> {
                   width: 16.0,
                 ),
                 InkWell(
-                  onTap: () => urlPhoneCallLaunch(model.phone!),
+                  onTap: () => urlPhoneCallLaunch(user.phone!),
                   child: Text(
-                    '+856 ${model.phone!}',
+                    '+856 ${user.phone!}',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w300,
@@ -234,11 +236,11 @@ class _ManualMembershipState extends State<ManualMembership> {
                 ),
                 InkWell(
                   onTap: () => urlGoogleMapLaunch(
-                    model.address!.lat!,
-                    model.address!.lon!,
+                    address!.lat!,
+                    address.lon!,
                   ),
                   child: Text(
-                    '${model.address!.lat} ${model.address!.lon}',
+                    '${address!.lat} ${address.lon}',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w300,
@@ -262,18 +264,18 @@ class _ManualMembershipState extends State<ManualMembership> {
                 const SizedBox(
                   width: 16.0,
                 ),
-                Text(
-                  '${model.address!.distanceWith(
-                    LatLng(
-                      provider!.getCurrentLcoation()!.latitude!,
-                      provider!.getCurrentLcoation()!.longitude!,
-                    ),
-                  )} Km',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
+                // Text(
+                //   '${user.address!.distanceWith(
+                //     LatLng(
+                //       provider!.getCurrentLcoation()!.latitude!,
+                //       provider!.getCurrentLcoation()!.longitude!,
+                //     ),
+                //   )} Km',
+                //   style: TextStyle(
+                //     fontSize: 16.0,
+                //     fontWeight: FontWeight.w300,
+                //   ),
+                // ),
               ],
             ),
           ],

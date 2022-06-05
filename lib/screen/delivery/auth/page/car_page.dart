@@ -1,22 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/app_config.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:provider/provider.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class AddCarPage extends StatefulWidget {
+  final CarModel? car;
   final Function()? onPrevious;
   final Function(CarModel)? onNext;
   final bool isLogin;
 
   AddCarPage({
     Key? key,
+    this.car,
     this.isLogin = false,
     this.onPrevious,
     this.onNext,
@@ -36,8 +37,7 @@ class _AddCarPageState extends State<AddCarPage> {
   void initState() {
     super.initState();
     Timer.run(() {
-      _car = Provider.of<DriverProvider>(context, listen: false).user.car ??
-          CarModel();
+      _car = widget.car == null ? CarModel() : widget.car!.copyWith();
       setState(() {});
     });
   }
@@ -208,7 +208,7 @@ class _AddCarPageState extends State<AddCarPage> {
                           FocusScope.of(context).unfocus();
                           _formKey.currentState!.save();
 
-                          var resp = await _car.add(context);
+                          var resp = _car.hasFullData;
                           if (resp == null) {
                             if (widget.onNext != null) {
                               widget.onNext!(_car);

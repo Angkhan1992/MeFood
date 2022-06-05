@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:mefood/provider/delivery/delivery.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/address_model.dart';
-import 'package:mefood/provider/provider.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/delivery/account.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/delivery/delivery.dart';
 
 class AddressPage extends StatefulWidget {
   final AddressModel address;
@@ -204,8 +203,8 @@ class _AddressPageState extends State<AddressPage> {
               if (address!.lat == null || address!.lat!.isEmpty) {
                 var provider =
                     Provider.of<DeliveryProvider>(context, listen: false);
-                initPosition.add(provider.getCurrentLcoation()!.latitude!);
-                initPosition.add(provider.getCurrentLcoation()!.longitude!);
+                // initPosition.add(provider.getCurrentLcoation()!.latitude!);
+                // initPosition.add(provider.getCurrentLcoation()!.longitude!);
               } else {
                 initPosition.add(double.parse(address!.lat!));
                 initPosition.add(double.parse(address!.lon!));
@@ -231,17 +230,17 @@ class _AddressPageState extends State<AddressPage> {
           CustomOutlineButton(
             title: S.current.from_current_location.toUpperCase(),
             onTap: () async {
-              var status =
-                  Provider.of<DeliveryProvider>(context, listen: false);
-              var addresses = await placemarkFromCoordinates(
-                status.getCurrentLcoation()!.latitude!,
-                status.getCurrentLcoation()!.longitude!,
-              );
-              logger.d(addresses.first);
-              address!.fromPlacemark(addresses.first);
-              address!.lat = status.getCurrentLcoation()!.latitude.toString();
-              address!.lon = status.getCurrentLcoation()!.longitude.toString();
-              setState(() {});
+              // var status =
+              //     Provider.of<DeliveryProvider>(context, listen: false);
+              // var addresses = await placemarkFromCoordinates(
+              //   status.getCurrentLcoation()!.latitude!,
+              //   status.getCurrentLcoation()!.longitude!,
+              // );
+              // logger.d(addresses.first);
+              // address!.fromPlacemark(addresses.first);
+              // address!.lat = status.getCurrentLcoation()!.latitude.toString();
+              // address!.lon = status.getCurrentLcoation()!.longitude.toString();
+              // setState(() {});
             },
           ),
           const SizedBox(

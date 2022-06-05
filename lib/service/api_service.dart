@@ -22,8 +22,12 @@ class APIService {
   final BuildContext? context;
 
   static final kUrlCategory = '$kDomain/api/category';
+
   static final kUrlAuth = '$kDomain/api/auth';
+  static final kUrlAuthDelivery = '$kDomain/api/auth/delivery';
+
   static final kUrlSupport = '$kDomain/api/support';
+
   static final kUrlHistory = '$kDomain/api/history';
 
   APIService({this.context});

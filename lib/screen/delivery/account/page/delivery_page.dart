@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/car_model.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/app_config.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/delivery/account.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/delivery/delivery.dart';
 
 class DeliveryPage extends StatefulWidget {
   final CarModel car;

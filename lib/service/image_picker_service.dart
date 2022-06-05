@@ -3,10 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class ImagePickerService {
   BuildContext context;

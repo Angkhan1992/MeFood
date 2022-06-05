@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:mefood/provider/base/mail_provider.dart';
+import 'package:mefood/provider/delivery/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/constants.dart';
@@ -37,8 +38,8 @@ void main() async {
   await AppInitializer().initialise(injector!);
 
   F.appFlavor = Flavor.delivery;
-  var deliveryProvider = DeliveryProvider();
-  await deliveryProvider.initProvider();
+
+  var authProvider = AuthProvider();
 
   var mailProvider = MailProvider();
   await mailProvider.initMails();
@@ -46,9 +47,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => DriverProvider()),
-        ChangeNotifierProvider(create: (context) => deliveryProvider),
-        ChangeNotifierProvider(create: (context) => OrderProvider()),
+        ChangeNotifierProvider(create: (context) => authProvider),
         ChangeNotifierProvider(create: (context) => mailProvider),
       ],
       child: const MyApp(),

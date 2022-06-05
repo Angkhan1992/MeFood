@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/delivery/delivery.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/provider/provider.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/screen/delivery/auth/page/page.dart';
 import 'package:mefood/screen/delivery/auth/success_register_screen.dart';
 import 'package:mefood/service/service.dart';
@@ -20,7 +20,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _pageIndex = ValueNotifier(0);
-  DriverProvider? _provider;
+  AuthProvider? _provider;
 
   @override
   void initState() {
@@ -31,10 +31,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     var screens = [
       AddProfilePage(
-        onNext: (user, id) {
+        onNext: (user) {
           if (_provider != null) {
             _provider!.setUser(user);
-            _provider!.setUserId(id);
             _pageIndex.value = 1;
             logger.d(user);
           }
@@ -61,15 +60,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         onNext: () => _pageIndex.value = 4,
       ),
       PasswordPage(
-        onDone: () => NavigatorService.of(context).push(
+        onDone: (pass) => NavigatorService.of(context).push(
           screen: SuccessRegisterScreen(),
           replace: true,
         ),
       ),
     ];
-    return Consumer<DriverProvider>(
+    return Consumer<AuthProvider>(
       builder: (context, value, child) {
-        _provider = Provider.of<DriverProvider>(context, listen: false);
+        _provider = value;
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 0,

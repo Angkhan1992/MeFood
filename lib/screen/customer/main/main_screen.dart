@@ -2,15 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
-import 'package:mefood/extensions/e_string.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/screen/customer/main/home_screen.dart';
 import 'package:mefood/screen/customer/main/offer_screen.dart';
 import 'package:mefood/screen/customer/main/order_screen.dart';
 import 'package:mefood/screen/customer/main/setting_screen.dart';
 import 'package:mefood/themes/dimens.dart';
-import 'package:mefood/themes/textstyles.dart';
-import 'package:mefood/widget/common/appbar.dart';
+import 'package:mefood/themes/textstyle.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

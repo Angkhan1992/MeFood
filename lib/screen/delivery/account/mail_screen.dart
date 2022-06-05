@@ -2,18 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:mefood/provider/base/base.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/account/mail_detail.dart';
 import 'package:mefood/service/dialog_service.dart';
 import 'package:mefood/service/navigator_service.dart';
-import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/delivery/account.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class MailScreen extends StatefulWidget {
   const MailScreen({Key? key}) : super(key: key);
@@ -37,25 +35,25 @@ class _MailScreenState extends State<MailScreen> {
   }
 
   void _onRefresh() async {
-    logger.d('OnRefresh');
-    var deliveryProvider =
-        Provider.of<DeliveryProvider>(context, listen: false);
-    await _provider!.fetchMails(deliveryProvider.user!.id!);
-    _refreshController.refreshCompleted();
+    // logger.d('OnRefresh');
+    // var deliveryProvider =
+    //     Provider.of<DeliveryProvider>(context, listen: false);
+    // await _provider!.fetchMails(deliveryProvider.user!.id!);
+    // _refreshController.refreshCompleted();
   }
 
   void fetchDate() async {
-    var deliveryProvider =
-        Provider.of<DeliveryProvider>(context, listen: false);
-    _provider = Provider.of<MailProvider>(context, listen: false);
+    // var deliveryProvider =
+    //     Provider.of<DeliveryProvider>(context, listen: false);
+    // _provider = Provider.of<MailProvider>(context, listen: false);
 
-    var resp = await _provider!.fetchMails(deliveryProvider.user!.id!);
-    if (resp != null) {
-      DialogService.of(context).showSnackBar(
-        resp,
-        type: SnackBarType.error,
-      );
-    }
+    // var resp = await _provider!.fetchMails(deliveryProvider.user!.id!);
+    // if (resp != null) {
+    //   DialogService.of(context).showSnackBar(
+    //     resp,
+    //     type: SnackBarType.error,
+    //   );
+    // }
   }
 
   @override
@@ -308,7 +306,7 @@ class _MailScreenState extends State<MailScreen> {
                     children: [
                       MainMenuButton(
                         title: S.current.as_read,
-                        isEnable: provider.isAllUnRead() != null &&
+                        isEnabled: provider.isAllUnRead() != null &&
                             provider.isAllUnRead()!,
                         onTap: () async {
                           var resp = await provider.onAsRead();
@@ -323,7 +321,7 @@ class _MailScreenState extends State<MailScreen> {
                       const Spacer(),
                       MainMenuButton(
                         title: S.current.delete,
-                        isEnable: provider.isAllUnRead() != null,
+                        isEnabled: provider.isAllUnRead() != null,
                         onTap: () => provider.onDelete(),
                       ),
                     ],

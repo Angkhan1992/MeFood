@@ -1,24 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/util/logger.dart';
-import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class AddAddressPage extends StatefulWidget {
+  final AddressModel? address;
   final Function()? onPrevious;
   final Function(AddressModel)? onNext;
   final bool isLogin;
 
   AddAddressPage({
     Key? key,
+    this.address,
     this.isLogin = false,
     this.onPrevious,
     this.onNext,
@@ -39,8 +37,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
     super.initState();
     Timer.run(() {
       _address =
-          Provider.of<DriverProvider>(context, listen: false).user.address ??
-              AddressModel();
+          widget.address == null ? AddressModel() : widget.address!.copyWith();
       setState(() {});
     });
   }
@@ -197,7 +194,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                         onTap: () async {
                           FocusScope.of(context).unfocus();
                           _formKey.currentState!.save();
-                          var resp = await _address.add(context);
+                          var resp = _address.hasFullData;
                           if (resp == null) {
                             if (widget.onNext != null) {
                               widget.onNext!(_address);
@@ -223,13 +220,13 @@ class _AddAddressPageState extends State<AddAddressPage> {
   }
 
   void onGetCurrentAddress() async {
-    var status = Provider.of<DeliveryProvider>(context, listen: false);
-    var addresses = await placemarkFromCoordinates(
-      status.getCurrentLcoation()!.latitude!,
-      status.getCurrentLcoation()!.longitude!,
-    );
-    logger.d(addresses.first);
-    _address.fromPlacemark(addresses.first);
-    setState(() {});
+    // var status = Provider.of<DeliveryProvider>(context, listen: false);
+    // var addresses = await placemarkFromCoordinates(
+    //   status.getCurrentLcoation()!.latitude!,
+    //   status.getCurrentLcoation()!.longitude!,
+    // );
+    // logger.d(addresses.first);
+    // _address.fromPlacemark(addresses.first);
+    // setState(() {});
   }
 }

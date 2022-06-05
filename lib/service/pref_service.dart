@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mefood/model/mail_model.dart';
+import 'package:mefood/model/model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefService {

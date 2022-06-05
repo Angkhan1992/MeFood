@@ -7,15 +7,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/app_config.dart';
 import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/restraurant/register_widget.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/restaurant/restaurant.dart';
 
 class BasicPage extends StatefulWidget {
   final Function(RestaurantModel restaurant)? onNext;

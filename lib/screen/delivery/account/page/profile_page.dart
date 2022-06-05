@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/user_model.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/dialog_service.dart';
 import 'package:mefood/util/app_config.dart';
-import 'package:mefood/widget/common/button.dart';
+import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/delivery/account.dart';
 
 class ProfilePage extends StatefulWidget {
-  final UserModel user;
-  final Function(UserModel)? updateUser;
+  final MemberModel user;
+  final Function(MemberModel)? updateUser;
 
   const ProfilePage({
     Key? key,
@@ -23,7 +23,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  UserModel? user;
+  MemberModel? user;
   var isUpdated = false;
 
   @override
@@ -162,20 +162,20 @@ class _ProfilePageState extends State<ProfilePage> {
             title: 'Update Profile'.toUpperCase(),
             onTap: isUpdated
                 ? () async {
-                    var resp = await user!.update(context);
-                    if (resp != null) {
-                      DialogService.of(context).showSnackBar(
-                        resp,
-                        type: SnackBarType.error,
-                      );
-                      return;
-                    }
-                    if (widget.updateUser != null) {
-                      widget.updateUser!(user!);
-                      DialogService.of(context).showSnackBar(
-                        S.current.success_data_updated,
-                      );
-                    }
+                    // var resp = await user!.update(context);
+                    // if (resp != null) {
+                    //   DialogService.of(context).showSnackBar(
+                    //     resp,
+                    //     type: SnackBarType.error,
+                    //   );
+                    //   return;
+                    // }
+                    // if (widget.updateUser != null) {
+                    //   widget.updateUser!(user!);
+                    //   DialogService.of(context).showSnackBar(
+                    //     S.current.success_data_updated,
+                    //   );
+                    // }
                   }
                 : null,
           ),

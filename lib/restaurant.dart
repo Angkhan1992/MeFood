@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/provider/restaurant/rest_auth_provider.dart';
+import 'package:mefood/provider/restaurant/auth_provider.dart';
 import 'package:mefood/service/router_service.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -39,19 +39,10 @@ void main() async {
 
   F.appFlavor = Flavor.delivery;
 
-  // var deliveryProvider = DeliveryProvider();
-  // await deliveryProvider.initProvider();
-
-  // var mailProvider = MailProvider();
-  // await mailProvider.initMails();
-
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => RestaurantAuthProvider()),
-        // ChangeNotifierProvider(create: (context) => deliveryProvider),
-        // ChangeNotifierProvider(create: (context) => OrderProvider()),
-        // ChangeNotifierProvider(create: (context) => mailProvider),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
       ],
       child: const MyApp(),
     ),

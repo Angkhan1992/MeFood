@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class SuccessRegisterScreen extends StatefulWidget {
   const SuccessRegisterScreen({Key? key}) : super(key: key);

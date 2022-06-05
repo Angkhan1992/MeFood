@@ -2,13 +2,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/restraurant/register_widget.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/restaurant/restaurant.dart';
 
 class OwnerPage extends StatefulWidget {
   final Function()? onPrevious;
@@ -75,7 +75,7 @@ class _OwnerPageState extends State<OwnerPage> {
                           'Owner Photo'.subtitle,
                           const SizedBox(height: 24.0),
                           WebCachImage(
-                            url: owner.avatar ?? '',
+                            url: owner.linkAvatar ?? '',
                             shortDesc: '300 * 300 Avatar',
                             picker: () async {
                               var result = await FilePicker.platform.pickFiles(
@@ -92,7 +92,7 @@ class _OwnerPageState extends State<OwnerPage> {
                                 if (resp['ret'] == 10000) {
                                   var imageUrl = '$kUrlAvatar${resp['result']}';
                                   setState(() {
-                                    owner.avatar = imageUrl;
+                                    owner.linkAvatar = imageUrl;
                                   });
                                 }
                               }
@@ -114,7 +114,7 @@ class _OwnerPageState extends State<OwnerPage> {
                           CustomTextField(
                             prefix: Icon(LineIcons.user),
                             hintText: S.current.full_name,
-                            onChanged: (value) => owner.name = value,
+                            // onChanged: (value) => owner.name = value,
                           ),
                           const SizedBox(height: 16.0),
                           CustomTextField(
@@ -198,7 +198,7 @@ class _OwnerPageState extends State<OwnerPage> {
   }
 
   void onNext() {
-    var error = owner.hasFullData(pass);
+    var error = owner.hasFullData;
     if (error != null) {
       Fluttertoast.showToast(msg: error);
       return;

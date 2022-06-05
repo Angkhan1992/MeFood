@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/service/service.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class DeliveryVerifyPage extends StatefulWidget {
   final Function()? onPrevious;
@@ -249,86 +247,24 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
   }
 
   void onNext() async {
-    if (_idcard.isEmpty) {
-      DialogService.of(context).showSnackBar(
-        S.current.input_all_fields,
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    if (_plate.isEmpty) {
-      DialogService.of(context).showSnackBar(
-        S.current.input_all_fields,
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    if (_license.isEmpty) {
-      DialogService.of(context).showSnackBar(
-        S.current.input_all_fields,
-        type: SnackBarType.error,
-      );
-      return;
-    }
+    // if (_user!.hasFullData != null) {
+    //   DialogService.of(context).showSnackBar(
+    //     _user!.hasFullData!,
+    //     type: SnackBarType.error,
+    //   );
+    // }
+    // if (_car!.hasFullData != null) {
+    //   DialogService.of(context).showSnackBar(
+    //     _car!.hasFullData!,
+    //     type: SnackBarType.error,
+    //   );
+    // }
+    // if (widget.onNext != null) {
+    //   widget.onNext!(_user!, _car!);
+    // }
 
-    for (var image in _images) {
-      if (image.isEmpty) {
-        DialogService.of(context).showSnackBar(
-          S.current.input_all_fields,
-          type: SnackBarType.error,
-        );
-        return;
-      }
-    }
-
-    var code = _codeController.text;
-    if (code.isEmpty) {
-      DialogService.of(context).showSnackBar(
-        S.current.input_all_fields,
-        type: SnackBarType.error,
-      );
-      return;
-    }
-
-    _isUpload = true;
-    setState(() {});
-
-    var provider = Provider.of<DriverProvider>(context, listen: false);
-    var params = {
-      'code': code,
-      'idcard': _idcard,
-      'plate': _plate,
-      'license': _license,
-      'front': _images[0],
-      'back': _images[1],
-      'left': _images[2],
-      'right': _images[3],
-      'id': provider.user.id,
-    };
-    var resp = await APIService().post(
-      APIService.kUrlAuth + '/regDeliveryVerify',
-      params,
-    );
-
-    if (resp != null) {
-      if (resp['ret'] == 10000) {
-        provider.setVerifyInfor(params);
-        widget.onNext!();
-      } else {
-        DialogService.of(context).showSnackBar(
-          resp['msg'],
-          type: SnackBarType.error,
-        );
-      }
-    } else {
-      DialogService.of(context).showSnackBar(
-        S.current.sever_error,
-        type: SnackBarType.error,
-      );
-    }
-
-    _isUpload = false;
-    setState(() {});
+    // _isUpload = false;
+    // setState(() {});
   }
 }
 
