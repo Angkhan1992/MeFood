@@ -9,6 +9,7 @@ part 'restaurant_model.g.dart';
 class RestaurantModel with _$RestaurantModel {
   factory RestaurantModel({
     int? id,
+    AddressModel? address,
     String? name,
     String? email,
     String? phone,
@@ -16,8 +17,6 @@ class RestaurantModel with _$RestaurantModel {
     String? galleries,
     String? category,
     String? regdate,
-    // extend field
-    AddressModel? address,
   }) = _RestaurantModel;
 
   factory RestaurantModel.fromJson(Map<String, dynamic> json) =>

@@ -52,18 +52,18 @@ extension ECarModel on CarModel {
       return hasFullData!;
     }
 
-    var resp = await APIService.of(context: context).post(
-      '${APIService.kUrlAuth}/updateCar',
-      toJson(),
-    );
-    if (resp != null) {
-      if (resp['ret'] == 10000) {
-        return null;
-      } else {
-        return resp['msg'];
-      }
-    } else {
-      return 'Server Error!';
-    }
+    // var resp = await APIService.of(context).post(
+    //   '${APIService.kUrlAuth}/updateCar',
+    //   toJson(),
+    // );
+    // if (resp != null) {
+    //   if (resp['ret'] == 10000) {
+    //     return null;
+    //   } else {
+    //     return resp['msg'];
+    //   }
+    // } else {
+    //   return 'Server Error!';
+    // }
   }
 }

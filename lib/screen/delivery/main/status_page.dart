@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:mefood/provider/delivery/delivery_provider.dart';
-import 'package:mefood/util/app_config.dart';
+import 'package:mefood/util/config.dart';
 // import 'package:mefood/widget/page/permission_error.dart';
 
 class StatusPage extends StatefulWidget {

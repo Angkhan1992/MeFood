@@ -116,7 +116,7 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
       return;
     }
 
-    var resp = await APIService.of(context: context).post(
+    var resp = await APIService.of(context).post(
       '${APIService.kUrlSupport}/pendingDelivery',
       {
         'usr_id': _user.id!,

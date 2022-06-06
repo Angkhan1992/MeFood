@@ -12,16 +12,17 @@ import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/util/app_config.dart';
-import 'package:mefood/util/logger.dart';
+import 'package:mefood/util/util.dart';
 import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/restaurant/restaurant.dart';
 
 class BasicPage extends StatefulWidget {
+  final RestaurantModel? model;
   final Function(RestaurantModel restaurant)? onNext;
 
   BasicPage({
     Key? key,
+    this.model,
     this.onNext,
   }) : super(key: key);
 
@@ -43,7 +44,9 @@ class _BasicPageState extends State<BasicPage> {
   void initState() {
     super.initState();
 
-    restaurant.address = AddressModel();
+    restaurant =
+        widget.model == null ? RestaurantModel() : widget.model!.copyWith();
+    restaurant.address ??= AddressModel();
 
     Timer.run(() async {
       locationService = LocationService.of(context);
@@ -75,7 +78,7 @@ class _BasicPageState extends State<BasicPage> {
             children: [
               const SizedBox(width: 24.0),
               Text(
-                'Basic Information',
+                S.current.base_info,
                 style: TextStyle(
                   fontSize: 22.0,
                   fontWeight: FontWeight.w700,
@@ -100,7 +103,7 @@ class _BasicPageState extends State<BasicPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      'Name & Category'.subtitle,
+                      S.current.name_category.subtitle,
                       const SizedBox(height: 24.0),
                       Row(
                         children: [
@@ -108,9 +111,7 @@ class _BasicPageState extends State<BasicPage> {
                             child: CustomTextField(
                               prefix: Icon(LineIcons.user),
                               hintText: 'Restaurant Name',
-                              onChanged: (value) {
-                                restaurant.name = value;
-                              },
+                              onChanged: (value) => restaurant.name = value,
                             ),
                           ),
                           const SizedBox(
@@ -123,17 +124,15 @@ class _BasicPageState extends State<BasicPage> {
                               ),
                               prefix: Icon(Icons.category_sharp),
                               suffix: Icon(Icons.arrow_drop_down),
-                              hintText: 'Category',
+                              hintText: S.current.category,
                               readOnly: true,
                               onTap: () async {
                                 var result = await DialogService.of(context)
                                     .showDescktopChooserDialog(
-                                  title: 'Choose Category',
-                                  values: [
-                                    'Restaurant',
-                                    'Coffee & Bar',
-                                    'Market',
-                                  ],
+                                  title: S.current.choose_category,
+                                  values: RESTAURANTTYPE.values
+                                      .map((e) => e.valueString)
+                                      .toList(),
                                 );
                                 if (result != null) {
                                   setState(() {
@@ -155,9 +154,7 @@ class _BasicPageState extends State<BasicPage> {
                             child: CustomTextField(
                               prefix: Icon(Icons.email_outlined),
                               hintText: S.current.email_address,
-                              onChanged: (value) {
-                                restaurant.email = value;
-                              },
+                              onChanged: (value) => restaurant.email = value,
                             ),
                           ),
                           const SizedBox(
@@ -167,9 +164,7 @@ class _BasicPageState extends State<BasicPage> {
                             child: CustomTextField(
                               prefix: Icon(Icons.phone_android),
                               hintText: S.current.phone_number,
-                              onChanged: (value) {
-                                restaurant.phone = value;
-                              },
+                              onChanged: (value) => restaurant.phone = value,
                             ),
                           ),
                         ],
@@ -180,7 +175,7 @@ class _BasicPageState extends State<BasicPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      'Restaurant Address'.subtitle,
+                      S.current.address.subtitle,
                       const SizedBox(height: 24.0),
                       Row(
                         children: [
@@ -296,8 +291,8 @@ class _BasicPageState extends State<BasicPage> {
                                                 initialCameraPosition:
                                                     CameraPosition(
                                                   target: LatLng(
-                                                    17.92355341161312,
-                                                    102.64934482052922,
+                                                    defaultLatitude,
+                                                    defaultLongitude,
                                                   ),
                                                   zoom: CAMERA_ZOOM,
                                                 ),
@@ -335,14 +330,14 @@ class _BasicPageState extends State<BasicPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      'Restaurant Logo'.subtitle,
+                      S.current.logo.subtitle,
                       const SizedBox(height: 24.0),
                       Row(
                         children: [
                           Expanded(
                             child: WebCachImage(
                               url: restaurant.logo ?? '',
-                              shortDesc: '256 * 256 Pixels',
+                              shortDesc: '256 * 256 ${S.current.image}',
                               picker: () async {
                                 var result =
                                     await FilePicker.platform.pickFiles(
@@ -351,11 +346,9 @@ class _BasicPageState extends State<BasicPage> {
                                 if (result != null) {
                                   var file = result.files.single;
                                   var resp =
-                                      await APIService.of(context: context)
-                                          .upload(
-                                    path: 'upload/logo',
+                                      await APIService.of(context).upload(
+                                    path: 'logo',
                                     webFile: file,
-                                    // filePath: file.path,
                                   );
                                   if (resp['ret'] == 10000) {
                                     var imageUrl = '$kUrlLogo${resp['result']}';
@@ -368,12 +361,10 @@ class _BasicPageState extends State<BasicPage> {
                               },
                             ),
                           ),
-                          const SizedBox(width: 16.0),
-                          const Spacer(),
-                          const SizedBox(width: 16.0),
-                          const Spacer(),
-                          const SizedBox(width: 16.0),
-                          const Spacer(),
+                          for (var i = 1; i < 4; i++) ...{
+                            const SizedBox(width: 16.0),
+                            const Spacer(),
+                          },
                         ],
                       ),
                     ],
@@ -389,7 +380,7 @@ class _BasicPageState extends State<BasicPage> {
                           Expanded(
                             child: WebCachImage(
                               url: galleries[0],
-                              shortDesc: '900 * 750 Pixels',
+                              shortDesc: '900 * 750 ${S.current.image}',
                               picker: () async {
                                 var result =
                                     await FilePicker.platform.pickFiles(
@@ -398,9 +389,8 @@ class _BasicPageState extends State<BasicPage> {
                                 if (result != null) {
                                   var file = result.files.single;
                                   var resp =
-                                      await APIService.of(context: context)
-                                          .upload(
-                                    path: 'upload/gallery',
+                                      await APIService.of(context).upload(
+                                    path: 'gallery',
                                     webFile: file,
                                   );
                                   if (resp['ret'] == 10000) {
@@ -419,7 +409,7 @@ class _BasicPageState extends State<BasicPage> {
                             Expanded(
                               child: WebCachImage(
                                 url: galleries[i],
-                                shortDesc: '900 * 750 Pixels',
+                                shortDesc: '900 * 750 ${S.current.image}',
                                 picker: () async {
                                   var result =
                                       await FilePicker.platform.pickFiles(
@@ -428,9 +418,8 @@ class _BasicPageState extends State<BasicPage> {
                                   if (result != null) {
                                     var file = result.files.single;
                                     var resp =
-                                        await APIService.of(context: context)
-                                            .upload(
-                                      path: 'upload/gallery',
+                                        await APIService.of(context).upload(
+                                      path: 'gallery',
                                       webFile: file,
                                     );
                                     if (resp['ret'] == 10000) {

@@ -16,7 +16,7 @@ import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/colors.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/themes/textstyle.dart';
-import 'package:mefood/util/app_config.dart';
+import 'package:mefood/util/config.dart';
 import 'package:mefood/widget/base/base.dart';
 
 class DialogService {

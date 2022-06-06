@@ -3,7 +3,7 @@ import 'package:line_icons/line_icons.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/util/app_config.dart';
+import 'package:mefood/util/config.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/base/base.dart';
 

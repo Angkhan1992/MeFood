@@ -242,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (F.isDelivery) {
       var resp = await APIService(context: context).post(
-        APIService.kUrlAuthDelivery + '/login',
+        APIService.kUrlDeliveryAuth + '/login',
         {
           'email': _email,
           'password': _password!.generateMD5,

@@ -8,7 +8,7 @@ import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
-import 'package:mefood/util/app_config.dart';
+import 'package:mefood/util/config.dart';
 import 'package:mefood/widget/base/base.dart';
 
 class AddProfilePage extends StatefulWidget {

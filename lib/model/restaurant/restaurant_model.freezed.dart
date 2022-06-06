@@ -22,6 +22,8 @@ RestaurantModel _$RestaurantModelFromJson(Map<String, dynamic> json) {
 mixin _$RestaurantModel {
   int? get id => throw _privateConstructorUsedError;
   set id(int? value) => throw _privateConstructorUsedError;
+  AddressModel? get address => throw _privateConstructorUsedError;
+  set address(AddressModel? value) => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   set name(String? value) => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
@@ -35,11 +37,7 @@ mixin _$RestaurantModel {
   String? get category => throw _privateConstructorUsedError;
   set category(String? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
-  set regdate(String? value) =>
-      throw _privateConstructorUsedError; // extend field
-  AddressModel? get address =>
-      throw _privateConstructorUsedError; // extend field
-  set address(AddressModel? value) => throw _privateConstructorUsedError;
+  set regdate(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,14 +52,14 @@ abstract class $RestaurantModelCopyWith<$Res> {
       _$RestaurantModelCopyWithImpl<$Res>;
   $Res call(
       {int? id,
+      AddressModel? address,
       String? name,
       String? email,
       String? phone,
       String? logo,
       String? galleries,
       String? category,
-      String? regdate,
-      AddressModel? address});
+      String? regdate});
 
   $AddressModelCopyWith<$Res>? get address;
 }
@@ -78,6 +76,7 @@ class _$RestaurantModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? address = freezed,
     Object? name = freezed,
     Object? email = freezed,
     Object? phone = freezed,
@@ -85,13 +84,16 @@ class _$RestaurantModelCopyWithImpl<$Res>
     Object? galleries = freezed,
     Object? category = freezed,
     Object? regdate = freezed,
-    Object? address = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -120,10 +122,6 @@ class _$RestaurantModelCopyWithImpl<$Res>
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel?,
     ));
   }
 
@@ -148,14 +146,14 @@ abstract class _$$_RestaurantModelCopyWith<$Res>
   @override
   $Res call(
       {int? id,
+      AddressModel? address,
       String? name,
       String? email,
       String? phone,
       String? logo,
       String? galleries,
       String? category,
-      String? regdate,
-      AddressModel? address});
+      String? regdate});
 
   @override
   $AddressModelCopyWith<$Res>? get address;
@@ -175,6 +173,7 @@ class __$$_RestaurantModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? address = freezed,
     Object? name = freezed,
     Object? email = freezed,
     Object? phone = freezed,
@@ -182,13 +181,16 @@ class __$$_RestaurantModelCopyWithImpl<$Res>
     Object? galleries = freezed,
     Object? category = freezed,
     Object? regdate = freezed,
-    Object? address = freezed,
   }) {
     return _then(_$_RestaurantModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      address: address == freezed
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -217,10 +219,6 @@ class __$$_RestaurantModelCopyWithImpl<$Res>
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      address: address == freezed
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel?,
     ));
   }
 }
@@ -230,20 +228,22 @@ class __$$_RestaurantModelCopyWithImpl<$Res>
 class _$_RestaurantModel implements _RestaurantModel {
   _$_RestaurantModel(
       {this.id,
+      this.address,
       this.name,
       this.email,
       this.phone,
       this.logo,
       this.galleries,
       this.category,
-      this.regdate,
-      this.address});
+      this.regdate});
 
   factory _$_RestaurantModel.fromJson(Map<String, dynamic> json) =>
       _$$_RestaurantModelFromJson(json);
 
   @override
   int? id;
+  @override
+  AddressModel? address;
   @override
   String? name;
   @override
@@ -258,13 +258,10 @@ class _$_RestaurantModel implements _RestaurantModel {
   String? category;
   @override
   String? regdate;
-// extend field
-  @override
-  AddressModel? address;
 
   @override
   String toString() {
-    return 'RestaurantModel(id: $id, name: $name, email: $email, phone: $phone, logo: $logo, galleries: $galleries, category: $category, regdate: $regdate, address: $address)';
+    return 'RestaurantModel(id: $id, address: $address, name: $name, email: $email, phone: $phone, logo: $logo, galleries: $galleries, category: $category, regdate: $regdate)';
   }
 
   @JsonKey(ignore: true)
@@ -281,20 +278,22 @@ class _$_RestaurantModel implements _RestaurantModel {
 abstract class _RestaurantModel implements RestaurantModel {
   factory _RestaurantModel(
       {int? id,
+      AddressModel? address,
       String? name,
       String? email,
       String? phone,
       String? logo,
       String? galleries,
       String? category,
-      String? regdate,
-      AddressModel? address}) = _$_RestaurantModel;
+      String? regdate}) = _$_RestaurantModel;
 
   factory _RestaurantModel.fromJson(Map<String, dynamic> json) =
       _$_RestaurantModel.fromJson;
 
   @override
   int? get id => throw _privateConstructorUsedError;
+  @override
+  AddressModel? get address => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override
@@ -309,8 +308,6 @@ abstract class _RestaurantModel implements RestaurantModel {
   String? get category => throw _privateConstructorUsedError;
   @override
   String? get regdate => throw _privateConstructorUsedError;
-  @override // extend field
-  AddressModel? get address => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_RestaurantModelCopyWith<_$_RestaurantModel> get copyWith =>

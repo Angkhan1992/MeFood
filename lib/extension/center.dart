@@ -6,7 +6,7 @@ import 'package:mefood/util/logger.dart';
 extension ECenterModel on CenterModel {
   static Future<List<CenterModel>> getAllCenterData(
       BuildContext context) async {
-    var resp = await APIService.of(context: context).post(
+    var resp = await APIService.of(context).post(
       '${APIService.kUrlSupport}/center',
       {},
     );

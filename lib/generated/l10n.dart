@@ -710,6 +710,16 @@ class S {
     );
   }
 
+  /// `Choose Category`
+  String get choose_category {
+    return Intl.message(
+      'Choose Category',
+      name: 'choose_category',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Date of Birth`
   String get date_of_birth {
     return Intl.message(
@@ -855,6 +865,16 @@ class S {
     return Intl.message(
       'Read',
       name: 'read',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image`
+  String get image {
+    return Intl.message(
+      'Image',
+      name: 'image',
       desc: '',
       args: [],
     );
@@ -1070,6 +1090,16 @@ class S {
     );
   }
 
+  /// `Not Match Password`
+  String get no_match_pass {
+    return Intl.message(
+      'Not Match Password',
+      name: 'no_match_pass',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Upgrade Now`
   String get upgrade_now {
     return Intl.message(
@@ -1180,6 +1210,26 @@ class S {
     );
   }
 
+  /// `Base Information`
+  String get base_info {
+    return Intl.message(
+      'Base Information',
+      name: 'base_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name & Category`
+  String get name_category {
+    return Intl.message(
+      'Name & Category',
+      name: 'name_category',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Owner Information`
   String get owner_info {
     return Intl.message(
@@ -1215,6 +1265,16 @@ class S {
     return Intl.message(
       'Status',
       name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Owner`
+  String get owner {
+    return Intl.message(
+      'Owner',
+      name: 'owner',
       desc: '',
       args: [],
     );

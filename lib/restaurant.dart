@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/provider/restaurant/auth_provider.dart';
+import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/service/router_service.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -37,12 +37,14 @@ void main() async {
   injector = Injector();
   await AppInitializer().initialise(injector!);
 
-  F.appFlavor = Flavor.delivery;
+  F.appFlavor = Flavor.restaurant;
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => RestaurantProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
       ],
       child: const MyApp(),
     ),
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: getThemeData(),
       darkTheme: getDarkThemeData(),
-      initialRoute: RouterService.routeRegister,
+      initialRoute: RouterService.routeLogin,
       routes: RouterService.getRoutes(),
       localizationsDelegates: const [
         S.delegate,

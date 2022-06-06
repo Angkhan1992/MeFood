@@ -16,7 +16,7 @@ class MailProvider extends ChangeNotifier {
   }
 
   Future<String?> fetchMails(int usr_id) async {
-    var resp = await APIService.of().post(
+    var resp = await APIService.of(null).post(
       '${APIService.kUrlHistory}/getMails',
       {
         'id': usr_id,

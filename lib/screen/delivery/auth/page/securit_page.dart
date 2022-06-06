@@ -334,7 +334,7 @@ class _SecuritPageState extends State<SecuritPage> {
         path = 'upload/car';
         break;
     }
-    var resp = await APIService.of(context: context).upload(
+    var resp = await APIService.of(context).upload(
       path: path,
       filePath: filepath,
     );

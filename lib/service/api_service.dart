@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
 
-// const kDomain = 'http://192.168.0.253:52526';
-const kDomain = 'http://51.68.185.254:41515';
+const kDomain =
+    kDebugMode ? 'http://192.168.0.253:52526' : 'http://51.68.185.254:41515';
 
 const kUrlAvatar = '$kDomain/assets/avatar/';
 const kUrlIDCard = '$kDomain/assets/idcard/';
@@ -21,18 +21,18 @@ const kUrlGallery = '$kDomain/assets/gallery/';
 class APIService {
   final BuildContext? context;
 
-  static final kUrlCategory = '$kDomain/api/category';
+  static final kUrlSupport = '$kDomain/api/v1/support';
+  static final kUrlHistory = '$kDomain/api/v1/history';
+  static final kUrlUpload = '$kDomain/api/v1/upload';
 
-  static final kUrlAuth = '$kDomain/api/auth';
-  static final kUrlAuthDelivery = '$kDomain/api/auth/delivery';
+  static final kUrlCategory = '$kDomain/api/v1/category';
 
-  static final kUrlSupport = '$kDomain/api/support';
-
-  static final kUrlHistory = '$kDomain/api/history';
+  static final kUrlDelivery = '$kDomain/api/v1/delivery';
+  static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';
 
   APIService({this.context});
 
-  factory APIService.of({BuildContext? context}) {
+  factory APIService.of(BuildContext? context) {
     return APIService(context: context);
   }
 
@@ -137,7 +137,7 @@ class APIService {
         DialogService.of(context!).showProgressLoading();
       }
 
-      var url = Uri.parse('$kDomain/api/$path');
+      var url = Uri.parse('$kUrlUpload/$path');
       var request = http.MultipartRequest("POST", url);
       if (kIsWeb) {
         request.files.add(

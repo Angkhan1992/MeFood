@@ -50,20 +50,20 @@ extension EAddressModel on AddressModel {
     if (hasFullData != null) {
       return hasFullData;
     }
-    var resp = await APIService.of(context: context).post(
-      '${APIService.kUrlAuth}/updateAddress',
-      toJson(),
-    );
+    // var resp = await APIService.of(context).post(
+    //   '${APIService.kUrlAuth}/updateAddress',
+    //   toJson(),
+    // );
 
-    if (resp != null) {
-      if (resp['ret'] == 10000) {
-        return null;
-      } else {
-        return resp['msg'];
-      }
-    } else {
-      return 'Server Error!';
-    }
+    // if (resp != null) {
+    //   if (resp['ret'] == 10000) {
+    //     return null;
+    //   } else {
+    //     return resp['msg'];
+    //   }
+    // } else {
+    //   return 'Server Error!';
+    // }
   }
 
   Future<String?> addToRestaurant(BuildContext? context) async {

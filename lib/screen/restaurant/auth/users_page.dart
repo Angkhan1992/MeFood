@@ -87,9 +87,8 @@ class _UsersPageState extends State<UsersPage> {
                               );
                               if (result != null) {
                                 var file = result.files.single;
-                                var resp = await APIService.of(context: context)
-                                    .upload(
-                                  path: 'upload/avatar',
+                                var resp = await APIService.of(context).upload(
+                                  path: 'avatar',
                                   webFile: file,
                                   // filePath: file.path,
                                 );
@@ -194,9 +193,8 @@ class _UsersPageState extends State<UsersPage> {
                               );
                               if (result != null) {
                                 var file = result.files.single;
-                                var resp = await APIService.of(context: context)
-                                    .upload(
-                                  path: 'upload/avatar',
+                                var resp = await APIService.of(context).upload(
+                                  path: 'avatar',
                                   webFile: file,
                                   // filePath: file.path,
                                 );

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/util/app_config.dart';
+import 'package:mefood/util/config.dart';
 
 extension EString on String {
   static const String emailRegx =

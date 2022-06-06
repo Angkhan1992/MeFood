@@ -31,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "as_read": MessageLookupByLibrary.simpleMessage("As Read"),
         "avatar": MessageLookupByLibrary.simpleMessage("Avatar"),
+        "base_info": MessageLookupByLibrary.simpleMessage("Base Information"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "car_images": MessageLookupByLibrary.simpleMessage("Car Images"),
         "car_info": MessageLookupByLibrary.simpleMessage("Car Information"),
@@ -39,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "change_name": MessageLookupByLibrary.simpleMessage("Change Name"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
+        "choose_category":
+            MessageLookupByLibrary.simpleMessage("Choose Category"),
         "choose_color": MessageLookupByLibrary.simpleMessage("Choose Color"),
         "choose_gender": MessageLookupByLibrary.simpleMessage("Choose Gender"),
         "choose_location":
@@ -146,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hot_products": MessageLookupByLibrary.simpleMessage("Hot Products"),
         "idcard_passport":
             MessageLookupByLibrary.simpleMessage("ID Card or Passport"),
+        "image": MessageLookupByLibrary.simpleMessage("Image"),
         "inbox": MessageLookupByLibrary.simpleMessage("Inbox"),
         "information": MessageLookupByLibrary.simpleMessage("Information"),
         "input_all_fields":
@@ -173,14 +177,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "my_earn": MessageLookupByLibrary.simpleMessage("My Earn"),
         "my_profile": MessageLookupByLibrary.simpleMessage("My Profile"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "name_category":
+            MessageLookupByLibrary.simpleMessage("Name & Category"),
         "new_products": MessageLookupByLibrary.simpleMessage("New Products"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no_have_account_yet": MessageLookupByLibrary.simpleMessage(
             "If you have not account yet?"),
         "no_match_email":
             MessageLookupByLibrary.simpleMessage("Not Match Email"),
+        "no_match_pass":
+            MessageLookupByLibrary.simpleMessage("Not Match Password"),
         "offers": MessageLookupByLibrary.simpleMessage("Offers"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "owner": MessageLookupByLibrary.simpleMessage("Owner"),
         "owner_info": MessageLookupByLibrary.simpleMessage("Owner Information"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "pending_48_desc": MessageLookupByLibrary.simpleMessage(

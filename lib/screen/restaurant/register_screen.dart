@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/provider/restaurant/auth_provider.dart';
@@ -20,13 +21,6 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _stepperEvent = ValueNotifier(1);
 
-  var titles = [
-    'Basic',
-    'Owner',
-    'Users',
-    'Success',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return CustomLayout(
@@ -35,6 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           builder: (context, provider, child) {
             var pages = [
               BasicPage(
+                model: provider.restaurant,
                 onNext: (restaurant) {
                   logger.d(restaurant);
                   provider.setRestaurant(restaurant);
@@ -42,6 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
               ),
               OwnerPage(
+                model: provider.owner,
                 onNext: (owner) {
                   logger.d(owner);
                   provider.setOwner(owner);
@@ -122,6 +118,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget stepperView(int value) {
+    var titles = [
+      'Basic',
+      S.current.owner,
+      'Users',
+      'Success',
+    ];
     return Row(
       children: [
         const Spacer(),

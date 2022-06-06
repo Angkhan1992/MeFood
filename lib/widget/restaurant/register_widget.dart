@@ -1,6 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/service/service.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class StepperWidget extends StatelessWidget {
   final int number;
@@ -139,6 +145,145 @@ class WebCachImage extends StatelessWidget {
                 ),
         ),
       ),
+    );
+  }
+}
+
+class MemberWidget extends StatefulWidget {
+  final String header;
+  final Function(String pass, String repass)? onChangePass;
+  final MemberModel? model;
+
+  const MemberWidget({
+    Key? key,
+    required this.header,
+    this.onChangePass,
+    this.model,
+  }) : super(key: key);
+
+  @override
+  State<MemberWidget> createState() => _MemberWidgetState();
+}
+
+class _MemberWidgetState extends State<MemberWidget> {
+  bool isPassVisible = false, isRepassVisible = false;
+  var pass = '', repass = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              '${widget.header} ${S.current.avatar}'.subtitle,
+              const SizedBox(height: 24.0),
+              WebCachImage(
+                url: widget.model!.linkAvatar ?? '',
+                shortDesc: '300 * 300 ${S.current.image}',
+                picker: () async {
+                  var result = await FilePicker.platform.pickFiles(
+                    withReadStream: true,
+                  );
+                  if (result != null) {
+                    var file = result.files.single;
+                    var resp = await APIService.of(context).upload(
+                      path: 'avatar',
+                      webFile: file,
+                    );
+                    if (resp['ret'] == 10000) {
+                      var imageUrl = '$kUrlAvatar${resp['result']}';
+                      setState(() {
+                        widget.model!.linkAvatar = imageUrl;
+                      });
+                    }
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: 40.0,
+        ),
+        Expanded(
+          flex: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              S.current.owner_info.subtitle,
+              const SizedBox(height: 24.0),
+              CustomTextField(
+                prefix: Icon(LineIcons.user),
+                hintText: S.current.first_name,
+                onChanged: (value) => widget.model!.firstName = value,
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                prefix: Icon(LineIcons.user),
+                hintText: S.current.last_name,
+                onChanged: (value) => widget.model!.lastName = value,
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                prefix: Icon(Icons.email_outlined),
+                hintText: S.current.email_address,
+                onChanged: (value) => widget.model!.email = value,
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                prefix: Icon(Icons.phone_android),
+                hintText: S.current.phone_number,
+                onChanged: (value) => widget.model!.phone = value,
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                prefix: Icon(Icons.lock),
+                hintText: S.current.password,
+                suffix: InkWell(
+                  onTap: () => setState(() {
+                    isPassVisible = !isPassVisible;
+                  }),
+                  child: Icon(
+                    isPassVisible
+                        ? Icons.remove_red_eye
+                        : Icons.remove_red_eye_outlined,
+                  ),
+                ),
+                obscureText: isPassVisible,
+                onChanged: (value) {
+                  pass = value;
+                  widget.onChangePass!(pass, repass);
+                },
+              ),
+              const SizedBox(height: 16.0),
+              CustomTextField(
+                prefix: Icon(Icons.lock),
+                hintText: S.current.confirm_password,
+                suffix: InkWell(
+                  onTap: () => setState(() {
+                    isRepassVisible = !isRepassVisible;
+                  }),
+                  child: Icon(
+                    isRepassVisible
+                        ? Icons.remove_red_eye
+                        : Icons.remove_red_eye_outlined,
+                  ),
+                ),
+                obscureText: isRepassVisible,
+                onChanged: (value) {
+                  repass = value;
+                  widget.onChangePass!(pass, repass);
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

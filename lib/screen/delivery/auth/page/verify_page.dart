@@ -210,7 +210,7 @@ class _DeliveryVerifyPageState extends State<DeliveryVerifyPage> {
         path = 'upload/car';
         break;
     }
-    var resp = await APIService.of().upload(
+    var resp = await APIService.of(null).upload(
       path: path,
       filePath: filePath,
     );

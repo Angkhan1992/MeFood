@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mefood/service/service.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -178,7 +179,7 @@ class _ManualMembershipState extends State<ManualMembership> {
                   width: 16.0,
                 ),
                 InkWell(
-                  onTap: () => urlEmailLaunch(
+                  onTap: () => LaunchService.email(
                     user.email!,
                     subject: S.current.manual_membership,
                   ),
@@ -208,7 +209,7 @@ class _ManualMembershipState extends State<ManualMembership> {
                   width: 16.0,
                 ),
                 InkWell(
-                  onTap: () => urlPhoneCallLaunch(user.phone!),
+                  onTap: () => LaunchService.dialPhone(user.phone!),
                   child: Text(
                     '+856 ${user.phone!}',
                     style: TextStyle(
@@ -235,7 +236,7 @@ class _ManualMembershipState extends State<ManualMembership> {
                   width: 16.0,
                 ),
                 InkWell(
-                  onTap: () => urlGoogleMapLaunch(
+                  onTap: () => LaunchService.googleMap(
                     address!.lat!,
                     address.lon!,
                   ),

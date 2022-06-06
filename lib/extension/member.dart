@@ -25,22 +25,22 @@ extension EMemberModel on MemberModel {
   String get fullName => '$firstName $lastName';
 
   Future<String?> update(BuildContext? context) async {
-    if (hasFullData != null) {
-      return hasFullData;
-    }
-    var resp = await APIService.of(context: context).post(
-      '${APIService.kUrlAuth}/updateUser',
-      toJson(),
-    );
-    if (resp != null) {
-      if (resp['ret'] == 10000) {
-        return null;
-      } else {
-        return resp['msg'];
-      }
-    } else {
-      return S.current.sever_error;
-    }
+    // if (hasFullData != null) {
+    //   return hasFullData;
+    // }
+    // var resp = await APIService.of(context).post(
+    //   '${APIService.kUrlAuth}/updateUser',
+    //   toJson(),
+    // );
+    // if (resp != null) {
+    //   if (resp['ret'] == 10000) {
+    //     return null;
+    //   } else {
+    //     return resp['msg'];
+    //   }
+    // } else {
+    //   return S.current.sever_error;
+    // }
   }
 
   Future<String?> add(BuildContext? context) async {
@@ -48,21 +48,21 @@ extension EMemberModel on MemberModel {
       return hasFullData;
     }
 
-    var resp = await APIService.of(context: context).post(
-      APIService.kUrlAuthDelivery + '/registerUser',
-      toJson(),
-    );
+    // var resp = await APIService.of(context).post(
+    //   APIService.kUrlAuthDelivery + '/registerUser',
+    //   toJson(),
+    // );
 
-    if (resp != null) {
-      if (resp['ret'] == 10000) {
-        id = resp['result']['user_id'] as int;
-        return null;
-      } else {
-        return resp['msg'];
-      }
-    } else {
-      return S.current.sever_error;
-    }
+    // if (resp != null) {
+    //   if (resp['ret'] == 10000) {
+    //     id = resp['result']['user_id'] as int;
+    //     return null;
+    //   } else {
+    //     return resp['msg'];
+    //   }
+    // } else {
+    //   return S.current.sever_error;
+    // }
   }
 
   Future<String?> updatePassword(
@@ -70,23 +70,23 @@ extension EMemberModel on MemberModel {
     required String pass,
   }) async {
     // if (!pass.validatePassword) return 'Invalid password';
-    var resp = await APIService(context: context).post(
-      APIService.kUrlAuthDelivery + '/registerPassword',
-      {
-        'usr_id': id,
-        'password': pass.generateMD5,
-      },
-    );
+    // var resp = await APIService(context: context).post(
+    //   APIService.kUrlAuthDelivery + '/registerPassword',
+    //   {
+    //     'usr_id': id,
+    //     'password': pass.generateMD5,
+    //   },
+    // );
 
-    if (resp != null) {
-      if (resp['ret'] == 10000) {
-        id = resp['result']['user_id'] as int;
-        return null;
-      } else {
-        return resp['msg'];
-      }
-    } else {
-      return S.current.sever_error;
-    }
+    // if (resp != null) {
+    //   if (resp['ret'] == 10000) {
+    //     id = resp['result']['user_id'] as int;
+    //     return null;
+    //   } else {
+    //     return resp['msg'];
+    //   }
+    // } else {
+    //   return S.current.sever_error;
+    // }
   }
 }
