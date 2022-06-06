@@ -47,6 +47,7 @@ class _BasicPageState extends State<BasicPage> {
     restaurant =
         widget.model == null ? RestaurantModel() : widget.model!.copyWith();
     restaurant.address ??= AddressModel();
+    galleries = restaurant.galleryArray;
 
     Timer.run(() async {
       locationService = LocationService.of(context);
@@ -109,8 +110,12 @@ class _BasicPageState extends State<BasicPage> {
                         children: [
                           Expanded(
                             child: CustomTextField(
+                              controller: TextEditingController(
+                                text: restaurant.name,
+                              ),
                               prefix: Icon(LineIcons.user),
-                              hintText: 'Restaurant Name',
+                              hintText:
+                                  '${S.current.restaurants} ${S.current.name}',
                               onChanged: (value) => restaurant.name = value,
                             ),
                           ),
@@ -153,6 +158,9 @@ class _BasicPageState extends State<BasicPage> {
                           Expanded(
                             child: CustomTextField(
                               prefix: Icon(Icons.email_outlined),
+                              controller: TextEditingController(
+                                text: restaurant.email,
+                              ),
                               hintText: S.current.email_address,
                               onChanged: (value) => restaurant.email = value,
                             ),
@@ -163,6 +171,9 @@ class _BasicPageState extends State<BasicPage> {
                           Expanded(
                             child: CustomTextField(
                               prefix: Icon(Icons.phone_android),
+                              controller: TextEditingController(
+                                text: restaurant.phone,
+                              ),
                               hintText: S.current.phone_number,
                               onChanged: (value) => restaurant.phone = value,
                             ),

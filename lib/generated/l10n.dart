@@ -1280,6 +1280,36 @@ class S {
     );
   }
 
+  /// `Admin`
+  String get admin {
+    return Intl.message(
+      'Admin',
+      name: 'admin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User`
+  String get user {
+    return Intl.message(
+      'User',
+      name: 'user',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Users`
+  String get add_users {
+    return Intl.message(
+      'Add Users',
+      name: 'add_users',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Car License`
   String get car_license {
     return Intl.message(

@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/widgets.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/service/service.dart';
 
 class AuthProvider extends ChangeNotifier {
   RestaurantModel? restaurant;
@@ -25,5 +30,32 @@ class AuthProvider extends ChangeNotifier {
   void addUsers(MemberModel model) {
     members.add(model);
     notifyListeners();
+  }
+
+  Future<String?> register(
+    BuildContext? context, {
+    required String ownerPass,
+    required String adminPass,
+    required String userPass,
+  }) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlRestaurantAuth}/register',
+      {
+        'restaurant': jsonEncode(restaurant!.toJson()),
+        'address': jsonEncode(restaurant!.address!.toJson()),
+        'owner': jsonEncode(owner!.toRegisterJson(ownerPass)),
+        'admin': jsonEncode(members[0].toRegisterJson(adminPass)),
+        'user': jsonEncode(members[1].toRegisterJson(userPass)),
+      },
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return S.current.sever_error;
+    }
   }
 }

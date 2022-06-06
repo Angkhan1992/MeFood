@@ -166,7 +166,7 @@ class MemberWidget extends StatefulWidget {
 }
 
 class _MemberWidgetState extends State<MemberWidget> {
-  bool isPassVisible = false, isRepassVisible = false;
+  bool isPassVisible = true, isRepassVisible = true;
   var pass = '', repass = '';
 
   @override
@@ -215,7 +215,7 @@ class _MemberWidgetState extends State<MemberWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              S.current.owner_info.subtitle,
+              '${widget.header} ${S.current.information}'.subtitle,
               const SizedBox(height: 24.0),
               CustomTextField(
                 prefix: Icon(LineIcons.user),

@@ -89,7 +89,9 @@ extension GenderType on GENDERTYPE {
 enum MEMBERTYPE {
   ADMIN,
   CUSTOMER,
-  RESTAURANT,
+  RESTOWNER,
+  RESTADMIN,
+  RESTUSER,
   DELIVERY,
 }
 
@@ -100,8 +102,12 @@ extension MemberType on MEMBERTYPE {
         return 'ADMIN';
       case MEMBERTYPE.CUSTOMER:
         return 'CUSTOMER';
-      case MEMBERTYPE.RESTAURANT:
-        return 'RESTAURANT';
+      case MEMBERTYPE.RESTADMIN:
+        return 'RESTADMIN';
+      case MEMBERTYPE.RESTUSER:
+        return 'RESTUSER';
+      case MEMBERTYPE.RESTOWNER:
+        return 'RESTOWNER';
       case MEMBERTYPE.DELIVERY:
         return 'DELIVERY';
     }
@@ -268,6 +274,50 @@ extension RestaurantType on RESTAURANTTYPE {
       return false;
     }
     var auth = RESTAURANTTYPE.values.first;
+    if (type == null) {
+      auth = value(typeString)!;
+    } else {
+      auth = type;
+    }
+    return this == auth;
+  }
+}
+
+enum RESTTYPE {
+  ADMIN,
+  OWNER,
+  USER,
+}
+
+extension RestType on RESTTYPE {
+  String get valueString {
+    switch (this) {
+      case RESTTYPE.ADMIN:
+        return 'ADMIN';
+      case RESTTYPE.OWNER:
+        return 'OWNER';
+      case RESTTYPE.USER:
+        return 'USER';
+    }
+  }
+
+  RESTTYPE? value(String? valueString) {
+    if (valueString == null) {
+      return null;
+    }
+    for (var item in RESTTYPE.values) {
+      if (valueString == item.valueString) {
+        return item;
+      }
+    }
+    return RESTTYPE.values.first;
+  }
+
+  bool equal(RESTTYPE? type, String? typeString) {
+    if (type == null && typeString == null) {
+      return false;
+    }
+    var auth = RESTTYPE.values.first;
     if (type == null) {
       auth = value(typeString)!;
     } else {

@@ -122,6 +122,9 @@
     "user_info" : "User Information",
     "status" : "Status",
     "owner" : "Owner",
+    "admin" : "Admin",
+    "user" : "User",
+    "add_users" : "Add Users",
     
     "car_license" : "Car License",
     "car_plate" : "Car Plate",

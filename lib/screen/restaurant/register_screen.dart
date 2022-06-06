@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _stepperEvent = ValueNotifier(1);
+  String ownerPass = '';
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +40,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               OwnerPage(
                 model: provider.owner,
-                onNext: (owner) {
+                onNext: (owner, pass) {
                   logger.d(owner);
                   provider.setOwner(owner);
+                  ownerPass = pass;
                   _stepperEvent.value = 3;
                 },
                 onPrevious: () => _stepperEvent.value = 1,
               ),
               UsersPage(
-                onNext: (admin, user) async {
+                onNext: (admin, user, adminPass, userPass) async {
                   provider.addUsers(admin);
                   provider.addUsers(user);
 
+                  var error = await provider.register(
+                    context,
+                    ownerPass: ownerPass,
+                    adminPass: adminPass,
+                    userPass: userPass,
+                  );
+                  if (error != null) {
+                    Fluttertoast.showToast(msg: error);
+                    return;
+                  }
                   _stepperEvent.value = 4;
                 },
                 onPrevious: () => _stepperEvent.value = 2,

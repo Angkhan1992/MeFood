@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/service/dialog_service.dart';
-import 'package:mefood/service/navigator_service.dart';
-import 'package:mefood/service/router_service.dart';
+import 'package:mefood/provider/restaurant/restaurant_provider.dart';
+import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:mefood/util/util.dart';
 import 'package:mefood/widget/base/base.dart';
-import 'package:mefood/widget/restaurant/layout_builder.dart';
+import 'package:mefood/widget/restaurant/restaurant.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var email = '';
   var password = '';
+  var type = '';
 
   @override
   Widget build(BuildContext context) {
@@ -171,18 +174,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Column(
                                     children: [
                                       CustomTextField(
+                                        controller: TextEditingController(
+                                          text: email,
+                                        ),
                                         prefix: Icon(Icons.email_outlined),
                                         hintText: S.current.email_user_id,
-                                        onSaved: (value) {
-                                          if (value != null) {
-                                            email = value;
-                                          }
-                                        },
+                                        onChanged: (value) => email = value,
                                       ),
                                       const SizedBox(
                                         height: 16.0,
                                       ),
                                       CustomTextField(
+                                        controller: TextEditingController(
+                                          text: password,
+                                        ),
                                         prefix: Icon(Icons.lock),
                                         hintText: S.current.password,
                                         suffix: InkWell(
@@ -198,11 +203,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                           },
                                         ),
                                         obscureText: isObscure,
-                                        onSaved: (value) {
-                                          if (value != null) {
-                                            password = value;
+                                        onChanged: (value) => password = value,
+                                      ),
+                                      const SizedBox(
+                                        height: 16.0,
+                                      ),
+                                      CustomTextField(
+                                        controller: TextEditingController(
+                                          text: type,
+                                        ),
+                                        prefix: Icon(Icons.category_sharp),
+                                        suffix: Icon(Icons.arrow_drop_down),
+                                        hintText: S.current.category,
+                                        readOnly: true,
+                                        onTap: () async {
+                                          var result =
+                                              await DialogService.of(context)
+                                                  .showDescktopChooserDialog(
+                                            title: S.current.choose_category,
+                                            values: RESTTYPE.values
+                                                .map((e) => e.valueString)
+                                                .toList(),
+                                          );
+                                          if (result != null) {
+                                            setState(() {
+                                              type = result;
+                                            });
                                           }
                                         },
+                                        onChanged: (value) => type = value,
                                       ),
                                     ],
                                   ),
@@ -236,17 +265,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
                                     const Spacer(),
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Text(
-                                        'Forgot Password?',
-                                        style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w400,
-                                          decoration: TextDecoration.underline,
+                                    if (false)
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Text(
+                                          'Forgot Password?',
+                                          style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w400,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
                                         ),
                                       ),
-                                    ),
                                   ],
                                 ),
                                 const Spacer(),
@@ -272,12 +303,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void onLogin() async {
     formKey.currentState!.save();
-    if (email.isEmpty || password.isEmpty) {
+    if (email.isEmpty || password.isEmpty || type.isEmpty) {
       DialogService.of(context).showSnackBar(
         S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
+    }
+    var provider = Provider.of<RestaurantProvider>(context, listen: false);
+    var error = await provider.login(
+      context,
+      email: email,
+      pass: password,
+      type: type,
+    );
+    if (error != null) {
+      Fluttertoast.showToast(msg: error);
+      return;
+    }
+    if (provider.user != null) {
+      if (provider.user!.deleted == 1) {
+      } else if (provider.user!.enabled == 1) {
+        NavigatorService.of(context).pushByRoute(
+          routeName: RouterService.routePending,
+        );
+      } else {}
+    } else {
+      Fluttertoast.showToast(msg: S.current.sever_error);
     }
   }
 }

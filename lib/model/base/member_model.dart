@@ -18,11 +18,10 @@ class MemberModel with _$MemberModel {
     @JsonKey(name: 'auth_phone') int? authPhone,
     @JsonKey(name: 'member_type') String? memberType,
     @JsonKey(name: 'id_type') int? typeId,
-    @JsonKey(name: 'is_enable') int? isEnable,
-    @JsonKey(name: 'is_removed') int? isRemoved,
     String? regdate,
     String? update,
-    String? other,
+    int? enabled,
+    int? deleted,
     // extend fields
     String? linkAvatar,
     String? linkIdCard,

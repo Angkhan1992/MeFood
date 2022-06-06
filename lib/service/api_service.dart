@@ -30,6 +30,9 @@ class APIService {
   static final kUrlDelivery = '$kDomain/api/v1/delivery';
   static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';
 
+  static final kUrlRestaurant = '$kDomain/api/v1/restaurant';
+  static final kUrlRestaurantAuth = '$kDomain/api/v1/restaurant/auth';
+
   APIService({this.context});
 
   factory APIService.of(BuildContext? context) {

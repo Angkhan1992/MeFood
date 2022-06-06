@@ -13,7 +13,7 @@ import 'package:mefood/widget/restaurant/restaurant.dart';
 class OwnerPage extends StatefulWidget {
   final MemberModel? model;
   final Function()? onPrevious;
-  final Function(MemberModel owner)? onNext;
+  final Function(MemberModel owner, String password)? onNext;
 
   OwnerPage({
     Key? key,
@@ -76,6 +76,7 @@ class _OwnerPageState extends State<OwnerPage> {
             child: Column(
               children: [
                 MemberWidget(
+                  model: owner,
                   header: S.current.owner,
                   onChangePass: (pass, repass) {
                     this.pass = pass;
@@ -123,7 +124,7 @@ class _OwnerPageState extends State<OwnerPage> {
       return;
     }
     if (widget.onNext != null) {
-      widget.onNext!(owner);
+      widget.onNext!(owner, pass);
     }
   }
 }

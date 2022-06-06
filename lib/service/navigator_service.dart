@@ -28,12 +28,20 @@ class NavigatorService {
 
   void pushByRoute({
     required String routeName,
+    bool replace = false,
   }) {
     if (context != null) {
-      Navigator.pushNamed(
-        context!,
-        routeName,
-      );
+      if (replace) {
+        Navigator.pushReplacementNamed(
+          context!,
+          routeName,
+        );
+      } else {
+        Navigator.pushNamed(
+          context!,
+          routeName,
+        );
+      }
     }
   }
 }

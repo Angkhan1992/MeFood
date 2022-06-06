@@ -10,4 +10,5 @@ export 'loading_service.dart';
 export 'location_service.dart';
 export 'navigator_service.dart';
 export 'pref_service.dart';
+export 'router_service.dart';
 export 'socket_service.dart';

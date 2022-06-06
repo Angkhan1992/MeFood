@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/service/service.dart';
 
 extension EMemberModel on MemberModel {
   String? get hasFullData {
@@ -24,6 +23,12 @@ extension EMemberModel on MemberModel {
 
   String get fullName => '$firstName $lastName';
 
+  dynamic toRegisterJson(String pass) {
+    var result = toJson();
+    result['pass'] = pass.generateMD5;
+    return result;
+  }
+
   Future<String?> update(BuildContext? context) async {
     // if (hasFullData != null) {
     //   return hasFullData;
@@ -34,28 +39,6 @@ extension EMemberModel on MemberModel {
     // );
     // if (resp != null) {
     //   if (resp['ret'] == 10000) {
-    //     return null;
-    //   } else {
-    //     return resp['msg'];
-    //   }
-    // } else {
-    //   return S.current.sever_error;
-    // }
-  }
-
-  Future<String?> add(BuildContext? context) async {
-    if (hasFullData != null) {
-      return hasFullData;
-    }
-
-    // var resp = await APIService.of(context).post(
-    //   APIService.kUrlAuthDelivery + '/registerUser',
-    //   toJson(),
-    // );
-
-    // if (resp != null) {
-    //   if (resp['ret'] == 10000) {
-    //     id = resp['result']['user_id'] as int;
     //     return null;
     //   } else {
     //     return resp['msg'];

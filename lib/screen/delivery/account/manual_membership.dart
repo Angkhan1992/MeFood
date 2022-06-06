@@ -11,7 +11,6 @@ import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/delivery/delivery.dart';
-import 'package:mefood/util/constants.dart';
 import 'package:mefood/util/logger.dart';
 
 class ManualMembership extends StatefulWidget {
