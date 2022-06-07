@@ -322,12 +322,20 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     if (provider.user != null) {
+      logger.d(provider.user);
       if (provider.user!.deleted == 1) {
-      } else if (provider.user!.enabled == 1) {
+        NavigatorService.of(context).pushByRoute(
+          routeName: RouterService.routeBlock,
+        );
+      } else if (provider.user!.enabled == 0) {
         NavigatorService.of(context).pushByRoute(
           routeName: RouterService.routePending,
         );
-      } else {}
+      } else {
+        NavigatorService.of(context).pushByRoute(
+          routeName: RouterService.routeHome,
+        );
+      }
     } else {
       Fluttertoast.showToast(msg: S.current.sever_error);
     }

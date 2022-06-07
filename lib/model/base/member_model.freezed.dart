@@ -60,8 +60,8 @@ mixin _$MemberModel {
   set typeId(int? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
   set regdate(String? value) => throw _privateConstructorUsedError;
-  String? get update => throw _privateConstructorUsedError;
-  set update(String? value) => throw _privateConstructorUsedError;
+  String? get updated => throw _privateConstructorUsedError;
+  set updated(String? value) => throw _privateConstructorUsedError;
   int? get enabled => throw _privateConstructorUsedError;
   set enabled(int? value) => throw _privateConstructorUsedError;
   int? get deleted => throw _privateConstructorUsedError;
@@ -97,7 +97,7 @@ abstract class $MemberModelCopyWith<$Res> {
       @JsonKey(name: 'member_type') String? memberType,
       @JsonKey(name: 'id_type') int? typeId,
       String? regdate,
-      String? update,
+      String? updated,
       int? enabled,
       int? deleted,
       String? linkAvatar,
@@ -127,7 +127,7 @@ class _$MemberModelCopyWithImpl<$Res> implements $MemberModelCopyWith<$Res> {
     Object? memberType = freezed,
     Object? typeId = freezed,
     Object? regdate = freezed,
-    Object? update = freezed,
+    Object? updated = freezed,
     Object? enabled = freezed,
     Object? deleted = freezed,
     Object? linkAvatar = freezed,
@@ -186,9 +186,9 @@ class _$MemberModelCopyWithImpl<$Res> implements $MemberModelCopyWith<$Res> {
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      update: update == freezed
-          ? _value.update
-          : update // ignore: cast_nullable_to_non_nullable
+      updated: updated == freezed
+          ? _value.updated
+          : updated // ignore: cast_nullable_to_non_nullable
               as String?,
       enabled: enabled == freezed
           ? _value.enabled
@@ -231,7 +231,7 @@ abstract class _$$_MemberModelCopyWith<$Res>
       @JsonKey(name: 'member_type') String? memberType,
       @JsonKey(name: 'id_type') int? typeId,
       String? regdate,
-      String? update,
+      String? updated,
       int? enabled,
       int? deleted,
       String? linkAvatar,
@@ -263,7 +263,7 @@ class __$$_MemberModelCopyWithImpl<$Res> extends _$MemberModelCopyWithImpl<$Res>
     Object? memberType = freezed,
     Object? typeId = freezed,
     Object? regdate = freezed,
-    Object? update = freezed,
+    Object? updated = freezed,
     Object? enabled = freezed,
     Object? deleted = freezed,
     Object? linkAvatar = freezed,
@@ -322,9 +322,9 @@ class __$$_MemberModelCopyWithImpl<$Res> extends _$MemberModelCopyWithImpl<$Res>
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
               as String?,
-      update: update == freezed
-          ? _value.update
-          : update // ignore: cast_nullable_to_non_nullable
+      updated: updated == freezed
+          ? _value.updated
+          : updated // ignore: cast_nullable_to_non_nullable
               as String?,
       enabled: enabled == freezed
           ? _value.enabled
@@ -363,7 +363,7 @@ class _$_MemberModel implements _MemberModel {
       @JsonKey(name: 'member_type') this.memberType,
       @JsonKey(name: 'id_type') this.typeId,
       this.regdate,
-      this.update,
+      this.updated,
       this.enabled,
       this.deleted,
       this.linkAvatar,
@@ -406,7 +406,7 @@ class _$_MemberModel implements _MemberModel {
   @override
   String? regdate;
   @override
-  String? update;
+  String? updated;
   @override
   int? enabled;
   @override
@@ -419,7 +419,7 @@ class _$_MemberModel implements _MemberModel {
 
   @override
   String toString() {
-    return 'MemberModel(id: $id, firstName: $firstName, lastName: $lastName, email: $email, gender: $gender, dob: $dob, authEmail: $authEmail, authType: $authType, phone: $phone, authPhone: $authPhone, memberType: $memberType, typeId: $typeId, regdate: $regdate, update: $update, enabled: $enabled, deleted: $deleted, linkAvatar: $linkAvatar, linkIdCard: $linkIdCard)';
+    return 'MemberModel(id: $id, firstName: $firstName, lastName: $lastName, email: $email, gender: $gender, dob: $dob, authEmail: $authEmail, authType: $authType, phone: $phone, authPhone: $authPhone, memberType: $memberType, typeId: $typeId, regdate: $regdate, updated: $updated, enabled: $enabled, deleted: $deleted, linkAvatar: $linkAvatar, linkIdCard: $linkIdCard)';
   }
 
   @JsonKey(ignore: true)
@@ -448,7 +448,7 @@ abstract class _MemberModel implements MemberModel {
       @JsonKey(name: 'member_type') String? memberType,
       @JsonKey(name: 'id_type') int? typeId,
       String? regdate,
-      String? update,
+      String? updated,
       int? enabled,
       int? deleted,
       String? linkAvatar,
@@ -491,7 +491,7 @@ abstract class _MemberModel implements MemberModel {
   @override
   String? get regdate => throw _privateConstructorUsedError;
   @override
-  String? get update => throw _privateConstructorUsedError;
+  String? get updated => throw _privateConstructorUsedError;
   @override
   int? get enabled => throw _privateConstructorUsedError;
   @override

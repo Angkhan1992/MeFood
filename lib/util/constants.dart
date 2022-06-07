@@ -1,4 +1,5 @@
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/generated/l10n.dart';
 
 const kFontFamily = 'Nunito';
 
@@ -22,4 +23,13 @@ final pendingList = [
     'leading': LineIcons.lock,
     'title': 'Securit Account',
   },
+];
+
+final constactCategory = [
+  S.current.cat_contact_01,
+  S.current.cat_contact_02,
+  S.current.cat_contact_03,
+  S.current.cat_contact_04,
+  S.current.cat_contact_05,
+  S.current.cat_contact_06,
 ];

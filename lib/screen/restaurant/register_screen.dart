@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/provider/restaurant/auth_provider.dart';
+import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/screen/restaurant/auth/basic_page.dart';
 import 'package:mefood/screen/restaurant/auth/owner_page.dart';
 import 'package:mefood/screen/restaurant/auth/success_page.dart';
@@ -84,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       InkWell(
                         onTap: () => Navigator.pop(context),
                         child: Text(
-                          'Login'.toUpperCase(),
+                          S.current.login.toUpperCase(),
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w700,

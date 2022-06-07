@@ -33,12 +33,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "as_read": MessageLookupByLibrary.simpleMessage("As Read"),
         "avatar": MessageLookupByLibrary.simpleMessage("Avatar"),
+        "back": MessageLookupByLibrary.simpleMessage("Back"),
         "base_info": MessageLookupByLibrary.simpleMessage("Base Information"),
+        "blc_reason_01": MessageLookupByLibrary.simpleMessage(
+            "1. We found some restrictions from your actions."),
+        "blc_reason_02": MessageLookupByLibrary.simpleMessage(
+            "2. Some clients were report for your actions."),
+        "blc_reason_03": MessageLookupByLibrary.simpleMessage(
+            "3. You violented MeFood privacy & policy often."),
+        "blocked_account":
+            MessageLookupByLibrary.simpleMessage("Blocked Account"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "car_images": MessageLookupByLibrary.simpleMessage("Car Images"),
         "car_info": MessageLookupByLibrary.simpleMessage("Car Information"),
         "car_license": MessageLookupByLibrary.simpleMessage("Car License"),
         "car_plate": MessageLookupByLibrary.simpleMessage("Car Plate"),
+        "cat_contact_01": MessageLookupByLibrary.simpleMessage("Block Account"),
+        "cat_contact_02":
+            MessageLookupByLibrary.simpleMessage("Pending Account"),
+        "cat_contact_03":
+            MessageLookupByLibrary.simpleMessage("Report to MeFood"),
+        "cat_contact_04": MessageLookupByLibrary.simpleMessage("Report Issue"),
+        "cat_contact_05": MessageLookupByLibrary.simpleMessage("New Feature"),
+        "cat_contact_06": MessageLookupByLibrary.simpleMessage("Other"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "change_name": MessageLookupByLibrary.simpleMessage("Change Name"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
@@ -156,6 +173,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "information": MessageLookupByLibrary.simpleMessage("Information"),
         "input_all_fields":
             MessageLookupByLibrary.simpleMessage("Please fill all fields"),
+        "input_some_messages":
+            MessageLookupByLibrary.simpleMessage("Please input some messages"),
         "landing_desc_01": MessageLookupByLibrary.simpleMessage(
             "Welcome to Customer of MeFood. You can get a good food and delivery service from MeFood."),
         "landing_desc_02": MessageLookupByLibrary.simpleMessage(
@@ -167,6 +186,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "latitude": MessageLookupByLibrary.simpleMessage("Latitude"),
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
         "login_by_tour": MessageLookupByLibrary.simpleMessage("Login By Tour"),
+        "login_to_others":
+            MessageLookupByLibrary.simpleMessage("Login to Others"),
         "logo": MessageLookupByLibrary.simpleMessage("Logo"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "longitude": MessageLookupByLibrary.simpleMessage("Longitude"),
@@ -239,6 +260,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "success": MessageLookupByLibrary.simpleMessage("Success"),
         "success_data_updated":
             MessageLookupByLibrary.simpleMessage("Successfully data updated"),
+        "success_user_updated":
+            MessageLookupByLibrary.simpleMessage("Success user updated!"),
         "type_camera": MessageLookupByLibrary.simpleMessage("From Camera"),
         "type_car": MessageLookupByLibrary.simpleMessage("Car"),
         "type_female": MessageLookupByLibrary.simpleMessage("FEMALE"),

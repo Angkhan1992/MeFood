@@ -36,7 +36,6 @@ class RestaurantProvider extends ChangeNotifier {
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {
-        logger.d(resp['result']);
         restaurant = RestaurantModel.fromJson(resp['result']['restaurant']);
         user = MemberModel.fromJson(resp['result']['user']);
         notifyListeners();

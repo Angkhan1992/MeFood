@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/service/service.dart';
 
 extension EMemberModel on MemberModel {
   String? get hasFullData {
@@ -29,47 +30,22 @@ extension EMemberModel on MemberModel {
     return result;
   }
 
-  Future<String?> update(BuildContext? context) async {
-    // if (hasFullData != null) {
-    //   return hasFullData;
-    // }
-    // var resp = await APIService.of(context).post(
-    //   '${APIService.kUrlAuth}/updateUser',
-    //   toJson(),
-    // );
-    // if (resp != null) {
-    //   if (resp['ret'] == 10000) {
-    //     return null;
-    //   } else {
-    //     return resp['msg'];
-    //   }
-    // } else {
-    //   return S.current.sever_error;
-    // }
-  }
-
-  Future<String?> updatePassword(
+  Future<String?> update(
     BuildContext? context, {
-    required String pass,
+    String? password,
   }) async {
-    // if (!pass.validatePassword) return 'Invalid password';
-    // var resp = await APIService(context: context).post(
-    //   APIService.kUrlAuthDelivery + '/registerPassword',
-    //   {
-    //     'usr_id': id,
-    //     'password': pass.generateMD5,
-    //   },
-    // );
-
-    // if (resp != null) {
-    //   if (resp['ret'] == 10000) {
-    //     id = resp['result']['user_id'] as int;
-    //     return null;
-    //   } else {
-    //     return resp['msg'];
-    //   }
-    // } else {
-    //   return S.current.sever_error;
-    // }
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlUser}/update',
+      toJson(),
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return S.current.sever_error;
+    }
   }
 }

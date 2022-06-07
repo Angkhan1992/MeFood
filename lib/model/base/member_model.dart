@@ -19,7 +19,7 @@ class MemberModel with _$MemberModel {
     @JsonKey(name: 'member_type') String? memberType,
     @JsonKey(name: 'id_type') int? typeId,
     String? regdate,
-    String? update,
+    String? updated,
     int? enabled,
     int? deleted,
     // extend fields

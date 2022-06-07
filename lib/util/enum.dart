@@ -284,8 +284,8 @@ extension RestaurantType on RESTAURANTTYPE {
 }
 
 enum RESTTYPE {
-  ADMIN,
   OWNER,
+  ADMIN,
   USER,
 }
 

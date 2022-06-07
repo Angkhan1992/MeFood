@@ -124,7 +124,13 @@
     "owner" : "Owner",
     "admin" : "Admin",
     "user" : "User",
+    "back" : "Back",
     "add_users" : "Add Users",
+    "login_to_others" : "Login to Others",
+    "success_user_updated" : "Success user updated!",
+    "input_some_messages" : "Please input some messages",
+    
+    "blocked_account" : "Blocked Account",
     
     "car_license" : "Car License",
     "car_plate" : "Car Plate",
@@ -136,6 +142,17 @@
 
     "dsc_verify" : "You can update some identify information and will reivew in 48 hrs.",
     "dsc_contact_us" : "You can send some information to MEFOOD. We will reply in 48hrs. Thanks for your contact.",
+
+    "blc_reason_01" : "1. We found some restrictions from your actions.",
+    "blc_reason_02" : "2. Some clients were report for your actions.",
+    "blc_reason_03" : "3. You violented MeFood privacy & policy often.",
+
+    "cat_contact_01" : "Block Account",
+    "cat_contact_02" : "Pending Account",
+    "cat_contact_03" : "Report to MeFood",
+    "cat_contact_04" : "Report Issue",
+    "cat_contact_05" : "New Feature",
+    "cat_contact_06" : "Other",
 
     "cnd_delivery_free_01" : "Search Range: 5Km",
     "cnd_delivery_free_02" : "Max Follow Restraunt: 5 Stores",

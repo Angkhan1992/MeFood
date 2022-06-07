@@ -24,6 +24,7 @@ class APIService {
   static final kUrlSupport = '$kDomain/api/v1/support';
   static final kUrlHistory = '$kDomain/api/v1/history';
   static final kUrlUpload = '$kDomain/api/v1/upload';
+  static final kUrlUser = '$kDomain/api/v1/user';
 
   static final kUrlCategory = '$kDomain/api/v1/category';
 

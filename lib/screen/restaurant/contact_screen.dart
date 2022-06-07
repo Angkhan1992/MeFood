@@ -1,40 +1,37 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
-
-import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/provider/restaurant/restaurant.dart';
+import 'package:mefood/model/base/member_model.dart';
+import 'package:mefood/provider/restaurant/restaurant_provider.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/restaurant/restaurant.dart';
+import 'package:provider/provider.dart';
 
-class PendingAccount extends StatefulWidget {
-  PendingAccount({Key? key}) : super(key: key);
+class ContactScreen extends StatefulWidget {
+  ContactScreen({Key? key}) : super(key: key);
 
   @override
-  State<PendingAccount> createState() => _PendingAccountState();
+  State<ContactScreen> createState() => _ContactScreenState();
 }
 
-class _PendingAccountState extends State<PendingAccount> {
-  RestaurantProvider? provider;
-  String pass = '', repass = '';
+class _ContactScreenState extends State<ContactScreen> {
+  MemberModel? user;
 
   @override
   void initState() {
     super.initState();
-
     Timer.run(() {
-      provider = Provider.of<RestaurantProvider>(context, listen: false);
+      var provider = Provider.of<RestaurantProvider>(context, listen: false);
+      user = provider.user;
       setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return provider == null
+    return user == null
         ? Container()
         : CustomLayout(
             builder: (context, app) {
@@ -51,7 +48,7 @@ class _PendingAccountState extends State<PendingAccount> {
                         InkWell(
                           onTap: () => Navigator.pop(context),
                           child: Text(
-                            S.current.login_to_others.toUpperCase(),
+                            S.current.back.toUpperCase(),
                             style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.w700,
@@ -78,26 +75,12 @@ class _PendingAccountState extends State<PendingAccount> {
                                 Row(
                                   children: [
                                     const SizedBox(width: 24.0),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          S.current.pending_account,
-                                          style: TextStyle(
-                                            fontSize: 22.0,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4.0),
-                                        Text(
-                                          S.current.pending_48_desc,
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                      ],
+                                    Text(
+                                      S.current.pending_account,
+                                      style: TextStyle(
+                                        fontSize: 22.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                     const Spacer(),
                                     const SizedBox(width: 16.0),
@@ -115,16 +98,6 @@ class _PendingAccountState extends State<PendingAccount> {
                                   ),
                                   child: Column(
                                     children: [
-                                      MemberWidget(
-                                        model: provider!.user,
-                                        header: provider!.user!.memberType!
-                                            .replaceAll('REST', '')
-                                            .firstUppercase,
-                                        onChangePass: (pass, repass) {
-                                          this.pass = pass;
-                                          this.repass = repass;
-                                        },
-                                      ),
                                       const SizedBox(
                                         height: 40.0,
                                       ),
@@ -133,8 +106,8 @@ class _PendingAccountState extends State<PendingAccount> {
                                           const Spacer(),
                                           Expanded(
                                             child: CustomFillButton(
-                                              title: S.current.update,
-                                              onTap: update,
+                                              title: S.current.submit,
+                                              onTap: submit,
                                             ),
                                           ),
                                           const Spacer(),
@@ -162,25 +135,5 @@ class _PendingAccountState extends State<PendingAccount> {
           );
   }
 
-  void update() async {
-    if (provider!.user!.hasFullData != null) {
-      Fluttertoast.showToast(msg: provider!.user!.hasFullData!);
-      return;
-    }
-    if (pass.isNotEmpty || repass.isNotEmpty) {
-      if (pass != repass) {
-        Fluttertoast.showToast(msg: S.current.no_match_pass);
-        return;
-      }
-    }
-    var err = await provider!.user!.update(
-      context,
-      password: pass.isEmpty ? null : pass,
-    );
-    if (err != null) {
-      Fluttertoast.showToast(msg: err);
-      return;
-    }
-    Fluttertoast.showToast(msg: S.current.success_user_updated);
-  }
+  void submit() async {}
 }

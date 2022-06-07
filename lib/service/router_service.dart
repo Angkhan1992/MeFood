@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mefood/screen/restaurant/auth/contact_block.dart';
 import 'package:mefood/screen/restaurant/block_account.dart';
+import 'package:mefood/screen/restaurant/contact_screen.dart';
 import 'package:mefood/screen/restaurant/home_screen.dart';
 import 'package:mefood/screen/restaurant/login_screen.dart';
 import 'package:mefood/screen/restaurant/pending_account.dart';
@@ -11,6 +13,8 @@ class RouterService {
   static String routeRegister = '/register';
   static String routePending = '/pending';
   static String routeBlock = '/block';
+  static String routeContact = '/contact';
+  static String routeContactBlock = '/contactBlock';
 
   static getRoutes() {
     return <String, WidgetBuilder>{
@@ -19,6 +23,8 @@ class RouterService {
       routeRegister: (context) => RegisterScreen(),
       routePending: (context) => PendingAccount(),
       routeBlock: (context) => BlockAccount(),
+      routeContact: (context) => ContactScreen(),
+      routeContactBlock: (context) => ContactBlock(),
     };
   }
 }

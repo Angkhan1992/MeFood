@@ -131,4 +131,9 @@ extension EString on String {
 
   String get dobValue =>
       DateFormat('MM/dd/yyyy').format(DateFormat('yyyy/MM/dd').parse(this));
+
+  String get firstUppercase {
+    var lowercasae = toLowerCase();
+    return lowercasae[0].toUpperCase() + lowercasae.substring(1);
+  }
 }

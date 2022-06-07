@@ -116,6 +116,7 @@ class CustomTextMemo extends StatelessWidget {
   final String? hintText;
   final TextEditingController? controller;
   final Function(String?)? onSaved;
+  final Function(String)? onChanged;
   final Function(String)? onSubmitted;
   final int lines;
   final double height;
@@ -125,6 +126,7 @@ class CustomTextMemo extends StatelessWidget {
     this.hintText,
     this.controller,
     this.onSaved,
+    this.onChanged,
     this.onSubmitted,
     this.lines = 7,
     this.height = 200.0,
@@ -162,6 +164,7 @@ class CustomTextMemo extends StatelessWidget {
         ),
         onSaved: onSaved,
         onFieldSubmitted: onSubmitted,
+        onChanged: onChanged,
       ),
     );
   }

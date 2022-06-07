@@ -6,6 +6,7 @@ import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/util/util.dart';
 import 'package:mefood/widget/base/base.dart';
 
 class StepperWidget extends StatelessWidget {
@@ -171,6 +172,7 @@ class _MemberWidgetState extends State<MemberWidget> {
 
   @override
   Widget build(BuildContext context) {
+    logger.d(widget.model);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -219,24 +221,36 @@ class _MemberWidgetState extends State<MemberWidget> {
               const SizedBox(height: 24.0),
               CustomTextField(
                 prefix: Icon(LineIcons.user),
+                controller: TextEditingController(
+                  text: widget.model!.firstName,
+                ),
                 hintText: S.current.first_name,
                 onChanged: (value) => widget.model!.firstName = value,
               ),
               const SizedBox(height: 16.0),
               CustomTextField(
                 prefix: Icon(LineIcons.user),
+                controller: TextEditingController(
+                  text: widget.model!.lastName,
+                ),
                 hintText: S.current.last_name,
                 onChanged: (value) => widget.model!.lastName = value,
               ),
               const SizedBox(height: 16.0),
               CustomTextField(
                 prefix: Icon(Icons.email_outlined),
+                controller: TextEditingController(
+                  text: widget.model!.email,
+                ),
                 hintText: S.current.email_address,
                 onChanged: (value) => widget.model!.email = value,
               ),
               const SizedBox(height: 16.0),
               CustomTextField(
                 prefix: Icon(Icons.phone_android),
+                controller: TextEditingController(
+                  text: widget.model!.phone,
+                ),
                 hintText: S.current.phone_number,
                 onChanged: (value) => widget.model!.phone = value,
               ),

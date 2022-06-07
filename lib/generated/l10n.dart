@@ -1300,11 +1300,61 @@ class S {
     );
   }
 
+  /// `Back`
+  String get back {
+    return Intl.message(
+      'Back',
+      name: 'back',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add Users`
   String get add_users {
     return Intl.message(
       'Add Users',
       name: 'add_users',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login to Others`
+  String get login_to_others {
+    return Intl.message(
+      'Login to Others',
+      name: 'login_to_others',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Success user updated!`
+  String get success_user_updated {
+    return Intl.message(
+      'Success user updated!',
+      name: 'success_user_updated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input some messages`
+  String get input_some_messages {
+    return Intl.message(
+      'Please input some messages',
+      name: 'input_some_messages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Blocked Account`
+  String get blocked_account {
+    return Intl.message(
+      'Blocked Account',
+      name: 'blocked_account',
       desc: '',
       args: [],
     );
@@ -1385,6 +1435,96 @@ class S {
     return Intl.message(
       'You can send some information to MEFOOD. We will reply in 48hrs. Thanks for your contact.',
       name: 'dsc_contact_us',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1. We found some restrictions from your actions.`
+  String get blc_reason_01 {
+    return Intl.message(
+      '1. We found some restrictions from your actions.',
+      name: 'blc_reason_01',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2. Some clients were report for your actions.`
+  String get blc_reason_02 {
+    return Intl.message(
+      '2. Some clients were report for your actions.',
+      name: 'blc_reason_02',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3. You violented MeFood privacy & policy often.`
+  String get blc_reason_03 {
+    return Intl.message(
+      '3. You violented MeFood privacy & policy often.',
+      name: 'blc_reason_03',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Block Account`
+  String get cat_contact_01 {
+    return Intl.message(
+      'Block Account',
+      name: 'cat_contact_01',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Account`
+  String get cat_contact_02 {
+    return Intl.message(
+      'Pending Account',
+      name: 'cat_contact_02',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Report to MeFood`
+  String get cat_contact_03 {
+    return Intl.message(
+      'Report to MeFood',
+      name: 'cat_contact_03',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Report Issue`
+  String get cat_contact_04 {
+    return Intl.message(
+      'Report Issue',
+      name: 'cat_contact_04',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Feature`
+  String get cat_contact_05 {
+    return Intl.message(
+      'New Feature',
+      name: 'cat_contact_05',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get cat_contact_06 {
+    return Intl.message(
+      'Other',
+      name: 'cat_contact_06',
       desc: '',
       args: [],
     );
