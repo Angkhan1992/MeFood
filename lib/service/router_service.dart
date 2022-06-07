@@ -6,8 +6,10 @@ import 'package:mefood/screen/restaurant/home_screen.dart';
 import 'package:mefood/screen/restaurant/login_screen.dart';
 import 'package:mefood/screen/restaurant/pending_account.dart';
 import 'package:mefood/screen/restaurant/register_screen.dart';
+import 'package:mefood/screen/splash_screen.dart';
 
 class RouterService {
+  static String routeSplash = '/splash';
   static String routeHome = '/home';
   static String routeLogin = '/login';
   static String routeRegister = '/register';
@@ -18,6 +20,7 @@ class RouterService {
 
   static getRoutes() {
     return <String, WidgetBuilder>{
+      routeSplash: (context) => SplashScreen(),
       routeHome: (context) => HomeScreen(),
       routeLogin: (context) => LoginScreen(),
       routeRegister: (context) => RegisterScreen(),

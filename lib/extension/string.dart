@@ -93,6 +93,30 @@ extension EString on String {
         ),
       );
 
+  Widget get cardTitle => Text(
+        this,
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w700,
+        ),
+      );
+
+  Widget get pageSubTitle => Text(
+        this,
+        style: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w200,
+        ),
+      );
+
+  Widget get pageTitle => Text(
+        this,
+        style: TextStyle(
+          fontSize: 22.0,
+          fontWeight: FontWeight.w700,
+        ),
+      );
+
   Color? get convert2Color {
     try {
       int value = int.parse(this, radix: 16);

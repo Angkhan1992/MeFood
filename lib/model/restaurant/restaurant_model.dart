@@ -13,10 +13,11 @@ class RestaurantModel with _$RestaurantModel {
     String? name,
     String? email,
     String? phone,
-    String? logo,
-    String? galleries,
     String? category,
     String? regdate,
+    //extend field
+    String? logo,
+    List<String>? galleries,
   }) = _RestaurantModel;
 
   factory RestaurantModel.fromJson(Map<String, dynamic> json) =>

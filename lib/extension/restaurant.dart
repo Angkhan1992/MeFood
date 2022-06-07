@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
@@ -28,9 +26,5 @@ extension ERestaurantModel on RestaurantModel {
       return '${S.current.empty} ${S.current.category}';
     }
     return null;
-  }
-
-  List<String> get galleryArray {
-    return galleries == null ? ['', '', '', ''] : jsonDecode(galleries!);
   }
 }

@@ -236,50 +236,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 16.0,
-                                ),
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {},
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                          ),
-                                          const SizedBox(
-                                            width: 16.0,
-                                          ),
-                                          Text(
-                                            'Remember Password',
-                                            style: TextStyle(
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    if (false)
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Text(
-                                          'Forgot Password?',
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w400,
-                                            decoration:
-                                                TextDecoration.underline,
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
                                 const Spacer(),
                                 CustomFillButton(
                                   title: 'Login to MeFood',
@@ -322,7 +278,6 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     if (provider.user != null) {
-      logger.d(provider.user);
       if (provider.user!.deleted == 1) {
         NavigatorService.of(context).pushByRoute(
           routeName: RouterService.routeBlock,

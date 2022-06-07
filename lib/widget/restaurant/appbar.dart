@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/restaurant/restaurant.dart';
 
 class FooterView extends StatefulWidget {
   const FooterView({Key? key}) : super(key: key);
@@ -189,6 +192,90 @@ class _FooterViewState extends State<FooterView> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class HeaderView extends StatelessWidget {
+  const HeaderView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(maxWidth: 1000.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+      height: 56.0,
+      child: Row(
+        children: [
+          WebLogo(),
+          const Spacer(),
+          PopupMenuButton(
+            position: PopupMenuPosition.under,
+            offset: Offset(0.0, 24.0),
+            elevation: 1,
+            itemBuilder: (context) {
+              return [
+                CustomMenuItem(
+                  icon: Icon(
+                    LineIcons.user,
+                    size: 18.0,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  title: 'ACCOUNT',
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                CustomMenuItem(
+                  icon: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: SvgPicture.asset(
+                      'assets/icons/menu/ic_sign.svg',
+                      color: Colors.red,
+                      width: 14.0,
+                      height: 14.0,
+                    ),
+                  ),
+                  title: 'LOGOUT',
+                  color: Colors.red,
+                ),
+              ];
+            },
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    LineIcons.user,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                const SizedBox(
+                  width: 16.0,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Black Gold',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text('Owner'),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

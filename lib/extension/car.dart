@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/service/service.dart';
 
 extension ECarModel on CarModel {
   String? get hasFullData {

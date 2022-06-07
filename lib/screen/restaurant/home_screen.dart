@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
+
+import 'package:mefood/provider/restaurant/restaurant.dart';
+import 'package:mefood/screen/restaurant/home/feature/admin_user.dart';
+import 'package:mefood/screen/restaurant/home/feature/dashboard.dart';
+import 'package:mefood/screen/restaurant/home/feature/delivery_order.dart';
+import 'package:mefood/screen/restaurant/home/feature/member_user.dart';
+import 'package:mefood/screen/restaurant/home/feature/pending_order.dart';
+import 'package:mefood/screen/restaurant/home/feature/product_page.dart';
+import 'package:mefood/screen/restaurant/home/feature/request_order.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/restaurant/restaurant.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,40 +21,37 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _pageEvent = ValueNotifier('0:0');
+  var screens = {
+    '0:0': Dashboard(),
+    '1:0': ProductPage(),
+    '2:0': RequestOrder(),
+    '2:1': PendingOrder(),
+    '2:2': DeliveryOrder(),
+    '3:0': AdminUser(),
+    '3:1': MemberUser(),
+  };
 
   @override
   Widget build(BuildContext context) {
     return CustomLayout(
       builder: (context, app) {
-        return Column(
-          children: [
-            Container(
-              constraints: BoxConstraints(maxWidth: 1000.0),
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              height: 56.0,
-              child: Row(
-                children: [
-                  WebLogo(),
-                  const Spacer(),
-                ],
-              ),
-            ),
-            Divider(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 1000.0),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16.0,
-                        horizontal: 24.0,
-                      ),
-                      child: ValueListenableBuilder<String>(
-                        valueListenable: _pageEvent,
-                        builder: (context, value, child) {
-                          return Row(
+        return Consumer<RestaurantProvider>(
+          builder: (context, provider, child) {
+            return Column(
+              children: [
+                HeaderView(),
+                Divider(),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 1000.0),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16.0,
+                            horizontal: 24.0,
+                          ),
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
@@ -60,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(16.0),
                                     boxShadow: [kShadowContainer],
                                   ),
-                                  child: leftMenu(value),
+                                  child: leftMenu(),
                                 ),
                               ),
                               const SizedBox(
@@ -68,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Container(
                                 width: 700,
+                                constraints: BoxConstraints(minHeight: 735.0),
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 24.0,
                                   vertical: 40.0,
@@ -79,32 +86,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(16.0),
                                   boxShadow: [kShadowContainer],
                                 ),
-                                child: Column(
-                                  children: [],
-                                ),
+                                child:
+                                    screens[provider.pageIndex] ?? Container(),
                               ),
                             ],
-                          );
-                        },
-                      ),
+                          ),
+                        ),
+                        Divider(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 40.0),
+                          constraints: BoxConstraints(maxWidth: 1000.0),
+                          child: FooterView(),
+                        ),
+                      ],
                     ),
-                    Divider(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 40.0),
-                      constraints: BoxConstraints(maxWidth: 1000.0),
-                      child: FooterView(),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         );
       },
     );
   }
 
-  Widget leftMenu(String value) {
+  Widget leftMenu() {
+    var provider = context.read<RestaurantProvider>();
     var leftMenu = [
       {
         'icon': Icon(LineIcons.dashcube),
@@ -119,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
       {
         'icon': Icon(LineIcons.jediOrder),
         'title': 'Orders',
-        'menus': ['Pending', 'Delivery'],
+        'menus': ['Request', 'Pending', 'Delivery'],
       },
       {
         'icon': Icon(LineIcons.users),
@@ -164,8 +171,8 @@ class _HomeScreenState extends State<HomeScreen> {
         'menus': ['KYGABYTE', 'How to Use'],
       },
     ];
-    var superIndex = int.parse(value.split(':')[0]);
-    var subIndex = int.parse(value.split(':')[1]);
+    var superIndex = int.parse(provider.pageIndex.split(':')[0]);
+    var subIndex = int.parse(provider.pageIndex.split(':')[1]);
     return Column(
       children: [
         for (var menu in leftMenu) ...{
@@ -181,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       textColor: Theme.of(context).hintColor,
                       onTap: () {
                         superIndex = leftMenu.indexOf(menu);
-                        _pageEvent.value = '$superIndex:0';
+                        provider.setPageIndex('$superIndex:0');
                       },
                     )
                   : ExpandedTitle(
@@ -192,11 +199,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       subIndex: subIndex,
                       onTap: () {
                         superIndex = leftMenu.indexOf(menu);
-                        _pageEvent.value = '$superIndex:0';
+                        provider.setPageIndex('$superIndex:0');
                       },
                       onItemTap: (index) {
                         subIndex = index;
-                        _pageEvent.value = '$superIndex:$subIndex';
+                        provider.setPageIndex('$superIndex:$subIndex');
                       },
                     ),
         },

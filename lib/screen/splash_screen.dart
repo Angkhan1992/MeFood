@@ -2,8 +2,10 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:provider/provider.dart';
 
 import 'login_screen.dart';
 
@@ -50,16 +52,39 @@ class _SplashScreenState extends State<SplashScreen> {
                         colors: colorizeColors,
                         speed: const Duration(milliseconds: 500),
                       )
-                    : ColorizeAnimatedText(
-                        S.current.for_customer,
-                        textStyle: colorizeTextStyle,
-                        colors: colorizeColors,
-                        speed: const Duration(milliseconds: 500),
-                      ),
+                    : F.isCustomer
+                        ? ColorizeAnimatedText(
+                            S.current.for_customer,
+                            textStyle: colorizeTextStyle,
+                            colors: colorizeColors,
+                            speed: const Duration(milliseconds: 500),
+                          )
+                        : ColorizeAnimatedText(
+                            'MeFood Restaurant',
+                            textStyle: colorizeTextStyle,
+                            colors: colorizeColors,
+                            speed: const Duration(milliseconds: 500),
+                          ),
               ],
               totalRepeatCount: 1,
-              onFinished: () {
-                NavigatorService.of(context).push(screen: const LoginScreen());
+              onFinished: () async {
+                if (F.isRestaurant) {
+                  var provider =
+                      Provider.of<RestaurantProvider>(context, listen: false);
+                  var err = await provider.loginToken();
+                  if (err == null) {
+                    NavigatorService.of(context).pushByRoute(
+                      routeName: RouterService.routeHome,
+                    );
+                  } else {
+                    NavigatorService.of(context).pushByRoute(
+                      routeName: RouterService.routeLogin,
+                    );
+                  }
+                } else {
+                  NavigatorService.of(context)
+                      .push(screen: const LoginScreen());
+                }
               },
             ),
           ],

@@ -42,8 +42,9 @@ class APIService {
 
   Future<Map<String, dynamic>?> post(
     String link,
-    Map<String, dynamic>? param,
-  ) async {
+    Map<String, dynamic>? param, {
+    bool checkToken = true,
+  }) async {
     try {
       var url = Uri.parse(link);
 
@@ -55,8 +56,24 @@ class APIService {
       if (context != null) {
         DialogService.of(context!).showProgressLoading();
       }
+
+      var token = await PrefService.of().token();
+      if (kDebugMode) {
+        token = '7b1da596571b9fd7d887f806f33cca05';
+      }
+      if (checkToken && token == null) {
+        return {
+          'msg': 'Expired Token!',
+          'ret': 9996,
+          'result': 'Expired Token',
+        };
+      }
+
       final response = await http.post(
         url,
+        headers: {
+          'authorization': token ?? 'token',
+        },
         body: body,
       );
       if (context != null) {

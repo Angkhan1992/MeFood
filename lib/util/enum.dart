@@ -125,7 +125,10 @@ extension MemberType on MEMBERTYPE {
     return MEMBERTYPE.values.first;
   }
 
-  bool equal(MEMBERTYPE? type, String? typeString) {
+  bool equal({
+    MEMBERTYPE? type,
+    String? typeString,
+  }) {
     if (type == null && typeString == null) {
       return false;
     }
@@ -318,6 +321,65 @@ extension RestType on RESTTYPE {
       return false;
     }
     var auth = RESTTYPE.values.first;
+    if (type == null) {
+      auth = value(typeString)!;
+    } else {
+      auth = type;
+    }
+    return this == auth;
+  }
+}
+
+enum GALLERYTYPE {
+  LOGO,
+  AVATAR,
+  IDCARD,
+  LICENSE,
+  PLATE,
+  CAR,
+  RESTAURANT,
+  PRODUCT,
+}
+
+extension GalleryType on GALLERYTYPE {
+  String get valueString {
+    switch (this) {
+      case GALLERYTYPE.LOGO:
+        return 'LOGO';
+      case GALLERYTYPE.AVATAR:
+        return 'AVATAR';
+      case GALLERYTYPE.IDCARD:
+        return 'IDCARD';
+      case GALLERYTYPE.LICENSE:
+        return 'LICENSE';
+      case GALLERYTYPE.PLATE:
+        return 'PLATE';
+      case GALLERYTYPE.CAR:
+        return 'CAR';
+      case GALLERYTYPE.RESTAURANT:
+        return 'RESTAURANT';
+      case GALLERYTYPE.PRODUCT:
+        return 'PRODUCT';
+    }
+  }
+
+  GALLERYTYPE? value(String? valueString) {
+    if (valueString == null) {
+      return null;
+    }
+    for (var item in GALLERYTYPE.values) {
+      if (valueString == item.valueString) {
+        return item;
+      }
+    }
+    return GALLERYTYPE.values.first;
+  }
+
+  bool equal(GALLERYTYPE? type, String? typeString) {
+    if (type == null && typeString == null) {
+      return false;
+    }
+    var auth = GALLERYTYPE.values.first;
     if (type == null) {
       auth = value(typeString)!;
     } else {

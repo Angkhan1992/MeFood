@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 
-class AuthProvider extends ChangeNotifier {
+class AuthProvider with ChangeNotifier, DiagnosticableTreeMixin {
   RestaurantModel? restaurant;
   MemberModel? owner;
   List<MemberModel> members = [];
@@ -57,5 +58,15 @@ class AuthProvider extends ChangeNotifier {
     } else {
       return S.current.sever_error;
     }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(StringProperty('restaurant', jsonEncode(restaurant!.toJson())));
+    properties.add(StringProperty('owner', jsonEncode(owner!.toJson())));
+    properties.add(StringProperty(
+        'members', jsonEncode(members.map((e) => e.toJson()).toList())));
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,7 @@ class _BasicPageState extends State<BasicPage> {
     restaurant =
         widget.model == null ? RestaurantModel() : widget.model!.copyWith();
     restaurant.address ??= AddressModel();
-    galleries = restaurant.galleryArray;
+    galleries = restaurant.galleries!;
 
     Timer.run(() async {
       locationService = LocationService.of(context);
@@ -495,8 +494,7 @@ class _BasicPageState extends State<BasicPage> {
         return;
       }
     }
-    var galleryData = jsonEncode(galleries);
-    restaurant.galleries = galleryData;
+    restaurant.galleries = galleries;
     restaurant.address!.country = 'Laos';
     var error = restaurant.hasFullData;
     if (error != null) {

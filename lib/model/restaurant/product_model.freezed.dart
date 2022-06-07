@@ -22,22 +22,31 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 mixin _$ProductModel {
   String? get id => throw _privateConstructorUsedError;
   set id(String? value) => throw _privateConstructorUsedError;
-  String? get cooking_time => throw _privateConstructorUsedError;
-  set cooking_time(String? value) => throw _privateConstructorUsedError;
+  RestaurantModel? get restaurant => throw _privateConstructorUsedError;
+  set restaurant(RestaurantModel? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'prepare_time')
+  String? get prepareTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'prepare_time')
+  set prepareTime(String? value) => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   set title(String? value) => throw _privateConstructorUsedError;
   String? get desc => throw _privateConstructorUsedError;
   set desc(String? value) => throw _privateConstructorUsedError;
+  int? get value => throw _privateConstructorUsedError;
+  set value(int? value) => throw _privateConstructorUsedError;
+  String? get unit => throw _privateConstructorUsedError;
+  set unit(String? value) => throw _privateConstructorUsedError;
+  int? get price => throw _privateConstructorUsedError;
+  set price(int? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
   set regdate(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
-  set other(String? value) =>
+  set other(String? value) => throw _privateConstructorUsedError;
+  int? get hidden => throw _privateConstructorUsedError;
+  set hidden(int? value) => throw _privateConstructorUsedError; // extend fields
+  List<String>? get galleries =>
       throw _privateConstructorUsedError; // extend fields
-  RestaurantModel? get restaurant =>
-      throw _privateConstructorUsedError; // extend fields
-  set restaurant(RestaurantModel? value) => throw _privateConstructorUsedError;
-  String? get galleries => throw _privateConstructorUsedError;
-  set galleries(String? value) => throw _privateConstructorUsedError;
+  set galleries(List<String>? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,13 +61,17 @@ abstract class $ProductModelCopyWith<$Res> {
       _$ProductModelCopyWithImpl<$Res>;
   $Res call(
       {String? id,
-      String? cooking_time,
+      RestaurantModel? restaurant,
+      @JsonKey(name: 'prepare_time') String? prepareTime,
       String? title,
       String? desc,
+      int? value,
+      String? unit,
+      int? price,
       String? regdate,
       String? other,
-      RestaurantModel? restaurant,
-      String? galleries});
+      int? hidden,
+      List<String>? galleries});
 
   $RestaurantModelCopyWith<$Res>? get restaurant;
 }
@@ -74,12 +87,16 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? cooking_time = freezed,
+    Object? restaurant = freezed,
+    Object? prepareTime = freezed,
     Object? title = freezed,
     Object? desc = freezed,
+    Object? value = freezed,
+    Object? unit = freezed,
+    Object? price = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
-    Object? restaurant = freezed,
+    Object? hidden = freezed,
     Object? galleries = freezed,
   }) {
     return _then(_value.copyWith(
@@ -87,9 +104,13 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      cooking_time: cooking_time == freezed
-          ? _value.cooking_time
-          : cooking_time // ignore: cast_nullable_to_non_nullable
+      restaurant: restaurant == freezed
+          ? _value.restaurant
+          : restaurant // ignore: cast_nullable_to_non_nullable
+              as RestaurantModel?,
+      prepareTime: prepareTime == freezed
+          ? _value.prepareTime
+          : prepareTime // ignore: cast_nullable_to_non_nullable
               as String?,
       title: title == freezed
           ? _value.title
@@ -99,6 +120,18 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
               as String?,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int?,
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int?,
       regdate: regdate == freezed
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
@@ -107,14 +140,14 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
-      restaurant: restaurant == freezed
-          ? _value.restaurant
-          : restaurant // ignore: cast_nullable_to_non_nullable
-              as RestaurantModel?,
+      hidden: hidden == freezed
+          ? _value.hidden
+          : hidden // ignore: cast_nullable_to_non_nullable
+              as int?,
       galleries: galleries == freezed
           ? _value.galleries
           : galleries // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
     ));
   }
 
@@ -139,13 +172,17 @@ abstract class _$$_ProductModelCopyWith<$Res>
   @override
   $Res call(
       {String? id,
-      String? cooking_time,
+      RestaurantModel? restaurant,
+      @JsonKey(name: 'prepare_time') String? prepareTime,
       String? title,
       String? desc,
+      int? value,
+      String? unit,
+      int? price,
       String? regdate,
       String? other,
-      RestaurantModel? restaurant,
-      String? galleries});
+      int? hidden,
+      List<String>? galleries});
 
   @override
   $RestaurantModelCopyWith<$Res>? get restaurant;
@@ -165,12 +202,16 @@ class __$$_ProductModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? cooking_time = freezed,
+    Object? restaurant = freezed,
+    Object? prepareTime = freezed,
     Object? title = freezed,
     Object? desc = freezed,
+    Object? value = freezed,
+    Object? unit = freezed,
+    Object? price = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
-    Object? restaurant = freezed,
+    Object? hidden = freezed,
     Object? galleries = freezed,
   }) {
     return _then(_$_ProductModel(
@@ -178,9 +219,13 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      cooking_time: cooking_time == freezed
-          ? _value.cooking_time
-          : cooking_time // ignore: cast_nullable_to_non_nullable
+      restaurant: restaurant == freezed
+          ? _value.restaurant
+          : restaurant // ignore: cast_nullable_to_non_nullable
+              as RestaurantModel?,
+      prepareTime: prepareTime == freezed
+          ? _value.prepareTime
+          : prepareTime // ignore: cast_nullable_to_non_nullable
               as String?,
       title: title == freezed
           ? _value.title
@@ -190,6 +235,18 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
               as String?,
+      value: value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as int?,
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as int?,
       regdate: regdate == freezed
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
@@ -198,14 +255,14 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
-      restaurant: restaurant == freezed
-          ? _value.restaurant
-          : restaurant // ignore: cast_nullable_to_non_nullable
-              as RestaurantModel?,
+      hidden: hidden == freezed
+          ? _value.hidden
+          : hidden // ignore: cast_nullable_to_non_nullable
+              as int?,
       galleries: galleries == freezed
           ? _value.galleries
           : galleries // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>?,
     ));
   }
 }
@@ -216,12 +273,16 @@ class __$$_ProductModelCopyWithImpl<$Res>
 class _$_ProductModel implements _ProductModel {
   _$_ProductModel(
       {this.id,
-      this.cooking_time,
+      this.restaurant,
+      @JsonKey(name: 'prepare_time') this.prepareTime,
       this.title,
       this.desc,
+      this.value,
+      this.unit,
+      this.price,
       this.regdate,
       this.other,
-      this.restaurant,
+      this.hidden,
       this.galleries});
 
   factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
@@ -230,24 +291,33 @@ class _$_ProductModel implements _ProductModel {
   @override
   String? id;
   @override
-  String? cooking_time;
+  RestaurantModel? restaurant;
+  @override
+  @JsonKey(name: 'prepare_time')
+  String? prepareTime;
   @override
   String? title;
   @override
   String? desc;
   @override
+  int? value;
+  @override
+  String? unit;
+  @override
+  int? price;
+  @override
   String? regdate;
   @override
   String? other;
+  @override
+  int? hidden;
 // extend fields
   @override
-  RestaurantModel? restaurant;
-  @override
-  String? galleries;
+  List<String>? galleries;
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, cooking_time: $cooking_time, title: $title, desc: $desc, regdate: $regdate, other: $other, restaurant: $restaurant, galleries: $galleries)';
+    return 'ProductModel(id: $id, restaurant: $restaurant, prepareTime: $prepareTime, title: $title, desc: $desc, value: $value, unit: $unit, price: $price, regdate: $regdate, other: $other, hidden: $hidden, galleries: $galleries)';
   }
 
   @JsonKey(ignore: true)
@@ -264,13 +334,17 @@ class _$_ProductModel implements _ProductModel {
 abstract class _ProductModel implements ProductModel {
   factory _ProductModel(
       {String? id,
-      String? cooking_time,
+      RestaurantModel? restaurant,
+      @JsonKey(name: 'prepare_time') String? prepareTime,
       String? title,
       String? desc,
+      int? value,
+      String? unit,
+      int? price,
       String? regdate,
       String? other,
-      RestaurantModel? restaurant,
-      String? galleries}) = _$_ProductModel;
+      int? hidden,
+      List<String>? galleries}) = _$_ProductModel;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;
@@ -278,19 +352,28 @@ abstract class _ProductModel implements ProductModel {
   @override
   String? get id => throw _privateConstructorUsedError;
   @override
-  String? get cooking_time => throw _privateConstructorUsedError;
+  RestaurantModel? get restaurant => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'prepare_time')
+  String? get prepareTime => throw _privateConstructorUsedError;
   @override
   String? get title => throw _privateConstructorUsedError;
   @override
   String? get desc => throw _privateConstructorUsedError;
   @override
+  int? get value => throw _privateConstructorUsedError;
+  @override
+  String? get unit => throw _privateConstructorUsedError;
+  @override
+  int? get price => throw _privateConstructorUsedError;
+  @override
   String? get regdate => throw _privateConstructorUsedError;
   @override
   String? get other => throw _privateConstructorUsedError;
-  @override // extend fields
-  RestaurantModel? get restaurant => throw _privateConstructorUsedError;
   @override
-  String? get galleries => throw _privateConstructorUsedError;
+  int? get hidden => throw _privateConstructorUsedError;
+  @override // extend fields
+  List<String>? get galleries => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>
