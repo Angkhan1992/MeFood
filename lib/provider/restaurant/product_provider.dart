@@ -1,10 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:mefood/model/model.dart';
 
 class ProductProvider with ChangeNotifier, DiagnosticableTreeMixin {
   ProductModel? product;
+
+  ProductProvider() {
+    product = ProductModel();
+  }
 
   void setProduct(ProductModel model) {
     product = model;

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/themes/theme.dart';
@@ -7,6 +8,7 @@ class CustomFillButton extends StatelessWidget {
   final Color? backgroundColor;
   final bool isLoading;
   final Function()? onTap;
+  final bool isMenu;
 
   const CustomFillButton({
     Key? key,
@@ -14,6 +16,7 @@ class CustomFillButton extends StatelessWidget {
     this.backgroundColor,
     this.onTap,
     this.isLoading = false,
+    this.isMenu = false,
   }) : super(key: key);
 
   @override
@@ -21,7 +24,7 @@ class CustomFillButton extends StatelessWidget {
     var opacity = onTap == null ? 0.5 : 1.0;
     return SizedBox(
       width: double.infinity,
-      height: 48.0,
+      height: isMenu ? 40.0 : 48.0,
       child: TextButton(
         onPressed: onTap,
         child: isLoading

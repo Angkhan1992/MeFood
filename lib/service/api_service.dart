@@ -9,6 +9,7 @@ import 'package:mefood/util/logger.dart';
 
 const kDomain =
     kDebugMode ? 'http://192.168.0.253:52526' : 'http://51.68.185.254:41515';
+// const kDomain = 'http://51.68.185.254:41515';
 
 const kUrlAvatar = '$kDomain/assets/avatar/';
 const kUrlIDCard = '$kDomain/assets/idcard/';
@@ -33,6 +34,7 @@ class APIService {
 
   static final kUrlRestaurant = '$kDomain/api/v1/restaurant';
   static final kUrlRestaurantAuth = '$kDomain/api/v1/restaurant/auth';
+  static final kUrlRestaurantProduct = '$kDomain/api/v1/restaurant/product';
 
   APIService({this.context});
 
@@ -59,7 +61,7 @@ class APIService {
 
       var token = await PrefService.of().token();
       if (kDebugMode) {
-        token = '7b1da596571b9fd7d887f806f33cca05';
+        token = '00ee0ddba0097dd12c1abcc8d331d639';
       }
       if (checkToken && token == null) {
         return {
@@ -68,6 +70,7 @@ class APIService {
           'result': 'Expired Token',
         };
       }
+      logger.d(url);
 
       final response = await http.post(
         url,
@@ -173,9 +176,7 @@ class APIService {
         request.files.add(await http.MultipartFile.fromPath('file', filePath!));
       }
       var response = await request.send();
-      // var responseData = await response.stream.toBytes();
       var responseString = await response.stream.bytesToString();
-      // var responseString = String.fromCharCodes(responseData);
 
       if (context != null) {
         Navigator.of(context!).pop();

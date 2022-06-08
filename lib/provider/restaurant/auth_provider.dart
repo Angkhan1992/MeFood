@@ -48,6 +48,7 @@ class AuthProvider with ChangeNotifier, DiagnosticableTreeMixin {
         'admin': jsonEncode(members[0].toRegisterJson(adminPass)),
         'user': jsonEncode(members[1].toRegisterJson(userPass)),
       },
+      checkToken: false,
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
-import 'package:mefood/provider/restaurant/product_provider.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/restaurant/restaurant.dart';
 
@@ -25,9 +25,13 @@ class _ProductDetailState extends State<ProductDetail> {
   Widget build(BuildContext context) {
     return CustomLayout(
       builder: (context, app) {
+        var restaurantProvider = context.read<RestaurantProvider>();
         return Column(
           children: [
-            HeaderView(),
+            HeaderView(
+              key: const Key('header_view'),
+              user: restaurantProvider.user!,
+            ),
             Divider(),
             Expanded(
               child: SingleChildScrollView(

@@ -8,13 +8,13 @@ part 'product_model.g.dart';
 class ProductModel with _$ProductModel {
   @JsonSerializable(fieldRename: FieldRename.snake)
   factory ProductModel({
-    String? id,
+    int? id,
     RestaurantModel? restaurant,
-    @JsonKey(name: 'prepare_time') String? prepareTime,
+    @JsonKey(name: 'prepare_time') int? prepareTime,
     String? title,
-    String? desc,
-    int? value,
-    String? unit,
+    @JsonKey(name: 'description') String? desc,
+    @JsonKey(name: 'unit_value') int? value,
+    @JsonKey(name: 'product_unit') String? unit,
     int? price,
     String? regdate,
     String? other,

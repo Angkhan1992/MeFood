@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/restaurant/restaurant.dart';
 
@@ -197,7 +199,11 @@ class _FooterViewState extends State<FooterView> {
 }
 
 class HeaderView extends StatelessWidget {
-  const HeaderView({Key? key}) : super(key: key);
+  final MemberModel user;
+  const HeaderView({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -249,10 +255,38 @@ class HeaderView extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   padding: const EdgeInsets.all(4.0),
-                  child: Icon(
-                    LineIcons.user,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
+                  child: user.linkAvatar == null
+                      ? Icon(
+                          LineIcons.user,
+                          color: Theme.of(context).colorScheme.secondary,
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(12.0),
+                          child: CachedNetworkImage(
+                            imageUrl: user.linkAvatar!,
+                            placeholder: (context, url) => Center(
+                              child: SizedBox(
+                                width: 18.0,
+                                height: 18.0,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1.0,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Center(
+                              child: Image.asset(
+                                'assets/images/web/logo.png',
+                                width: 18.0,
+                                height: 18.0,
+                                color: Theme.of(context).hintColor,
+                              ),
+                            ),
+                            width: 24.0,
+                            height: 24.0,
+                          ),
+                        ),
                 ),
                 const SizedBox(
                   width: 16.0,
@@ -262,13 +296,17 @@ class HeaderView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Black Gold',
+                      user.firstName != null ? user.fullName : 'MeFood',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    Text('Owner'),
+                    Text(
+                      user.memberType != null
+                          ? user.memberType!.replaceAll('REST', '')
+                          : 'USER',
+                    ),
                   ],
                 ),
               ],

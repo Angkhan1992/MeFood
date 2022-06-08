@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/util/util.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
@@ -16,7 +17,10 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    var provider = context.read<RestaurantProvider>();
+    var user = context.read<RestaurantProvider>().user;
+    var type = (user == null || user.memberType == null)
+        ? MEMBERTYPE.RESTUSER.name
+        : user.memberType;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -24,8 +28,7 @@ class _DashboardState extends State<Dashboard> {
         const SizedBox(height: 24.0),
         Row(
           children: [
-            // MEMBERTYPE.RESTOWNER.equal(typeString: provider.user!.memberType!)
-            true
+            MEMBERTYPE.RESTOWNER.equal(typeString: type)
                 ? Expanded(
                     child: CardView(
                       iconData: LineIcons.barChartAlt,
@@ -39,8 +42,8 @@ class _DashboardState extends State<Dashboard> {
                     child: CardView(
                       iconData: LineIcons.productHunt,
                       title: 'Products',
-                      subtitle1: 'Monthly : 18',
-                      subtitle2: 'All : 413',
+                      subtitle1: 'Monthly : 18 Products',
+                      subtitle2: 'All : 413 Products',
                       percent: '4.28\%',
                     ),
                   ),

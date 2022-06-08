@@ -20,21 +20,27 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
-  String? get id => throw _privateConstructorUsedError;
-  set id(String? value) => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  set id(int? value) => throw _privateConstructorUsedError;
   RestaurantModel? get restaurant => throw _privateConstructorUsedError;
   set restaurant(RestaurantModel? value) => throw _privateConstructorUsedError;
   @JsonKey(name: 'prepare_time')
-  String? get prepareTime => throw _privateConstructorUsedError;
+  int? get prepareTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'prepare_time')
-  set prepareTime(String? value) => throw _privateConstructorUsedError;
+  set prepareTime(int? value) => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   set title(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'description')
   String? get desc => throw _privateConstructorUsedError;
+  @JsonKey(name: 'description')
   set desc(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'unit_value')
   int? get value => throw _privateConstructorUsedError;
+  @JsonKey(name: 'unit_value')
   set value(int? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_unit')
   String? get unit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_unit')
   set unit(String? value) => throw _privateConstructorUsedError;
   int? get price => throw _privateConstructorUsedError;
   set price(int? value) => throw _privateConstructorUsedError;
@@ -60,13 +66,13 @@ abstract class $ProductModelCopyWith<$Res> {
           ProductModel value, $Res Function(ProductModel) then) =
       _$ProductModelCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {int? id,
       RestaurantModel? restaurant,
-      @JsonKey(name: 'prepare_time') String? prepareTime,
+      @JsonKey(name: 'prepare_time') int? prepareTime,
       String? title,
-      String? desc,
-      int? value,
-      String? unit,
+      @JsonKey(name: 'description') String? desc,
+      @JsonKey(name: 'unit_value') int? value,
+      @JsonKey(name: 'product_unit') String? unit,
       int? price,
       String? regdate,
       String? other,
@@ -103,7 +109,7 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       restaurant: restaurant == freezed
           ? _value.restaurant
           : restaurant // ignore: cast_nullable_to_non_nullable
@@ -111,7 +117,7 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
       prepareTime: prepareTime == freezed
           ? _value.prepareTime
           : prepareTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -171,13 +177,13 @@ abstract class _$$_ProductModelCopyWith<$Res>
       __$$_ProductModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {int? id,
       RestaurantModel? restaurant,
-      @JsonKey(name: 'prepare_time') String? prepareTime,
+      @JsonKey(name: 'prepare_time') int? prepareTime,
       String? title,
-      String? desc,
-      int? value,
-      String? unit,
+      @JsonKey(name: 'description') String? desc,
+      @JsonKey(name: 'unit_value') int? value,
+      @JsonKey(name: 'product_unit') String? unit,
       int? price,
       String? regdate,
       String? other,
@@ -218,7 +224,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       restaurant: restaurant == freezed
           ? _value.restaurant
           : restaurant // ignore: cast_nullable_to_non_nullable
@@ -226,7 +232,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
       prepareTime: prepareTime == freezed
           ? _value.prepareTime
           : prepareTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -276,9 +282,9 @@ class _$_ProductModel implements _ProductModel {
       this.restaurant,
       @JsonKey(name: 'prepare_time') this.prepareTime,
       this.title,
-      this.desc,
-      this.value,
-      this.unit,
+      @JsonKey(name: 'description') this.desc,
+      @JsonKey(name: 'unit_value') this.value,
+      @JsonKey(name: 'product_unit') this.unit,
       this.price,
       this.regdate,
       this.other,
@@ -289,19 +295,22 @@ class _$_ProductModel implements _ProductModel {
       _$$_ProductModelFromJson(json);
 
   @override
-  String? id;
+  int? id;
   @override
   RestaurantModel? restaurant;
   @override
   @JsonKey(name: 'prepare_time')
-  String? prepareTime;
+  int? prepareTime;
   @override
   String? title;
   @override
+  @JsonKey(name: 'description')
   String? desc;
   @override
+  @JsonKey(name: 'unit_value')
   int? value;
   @override
+  @JsonKey(name: 'product_unit')
   String? unit;
   @override
   int? price;
@@ -333,13 +342,13 @@ class _$_ProductModel implements _ProductModel {
 
 abstract class _ProductModel implements ProductModel {
   factory _ProductModel(
-      {String? id,
+      {int? id,
       RestaurantModel? restaurant,
-      @JsonKey(name: 'prepare_time') String? prepareTime,
+      @JsonKey(name: 'prepare_time') int? prepareTime,
       String? title,
-      String? desc,
-      int? value,
-      String? unit,
+      @JsonKey(name: 'description') String? desc,
+      @JsonKey(name: 'unit_value') int? value,
+      @JsonKey(name: 'product_unit') String? unit,
       int? price,
       String? regdate,
       String? other,
@@ -350,19 +359,22 @@ abstract class _ProductModel implements ProductModel {
       _$_ProductModel.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @override
   RestaurantModel? get restaurant => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'prepare_time')
-  String? get prepareTime => throw _privateConstructorUsedError;
+  int? get prepareTime => throw _privateConstructorUsedError;
   @override
   String? get title => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'description')
   String? get desc => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'unit_value')
   int? get value => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'product_unit')
   String? get unit => throw _privateConstructorUsedError;
   @override
   int? get price => throw _privateConstructorUsedError;

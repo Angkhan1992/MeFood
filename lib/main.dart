@@ -36,12 +36,20 @@ void main() async {
   injector = Injector();
   await AppInitializer().initialise(injector!);
 
-  F.appFlavor = Flavor.delivery;
+  F.appFlavor = Flavor.restaurant;
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<RestaurantProvider>(
+          create: (context) => RestaurantProvider(),
+        ),
+        ChangeNotifierProvider<ProductProvider>(
+          create: (context) => ProductProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -58,7 +66,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: getThemeData(),
       darkTheme: getDarkThemeData(),
-      initialRoute: RouterService.routeLogin,
+      initialRoute: RouterService.routeSplash,
       routes: RouterService.getRoutes(),
       localizationsDelegates: const [
         S.delegate,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/model/base/base.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/provider/restaurant/restaurant.dart';
@@ -39,7 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, provider, child) {
             return Column(
               children: [
-                HeaderView(),
+                HeaderView(
+                  key: const Key('header_view'),
+                  user: provider.user ?? MemberModel(),
+                ),
                 Divider(),
                 Expanded(
                   child: SingleChildScrollView(
@@ -114,58 +118,69 @@ class _HomeScreenState extends State<HomeScreen> {
     var provider = context.read<RestaurantProvider>();
     var leftMenu = [
       {
+        'index': 0,
         'icon': Icon(LineIcons.dashcube),
         'title': 'Dashboard',
         'menus': [],
       },
       {
+        'index': 1,
         'icon': Icon(LineIcons.productHunt),
         'title': 'Products',
         'menus': [],
       },
       {
+        'index': 3,
         'icon': Icon(LineIcons.jediOrder),
         'title': 'Orders',
         'menus': ['Request', 'Pending', 'Delivery'],
       },
       {
+        'index': 4,
         'icon': Icon(LineIcons.users),
         'title': 'Members',
         'menus': ['Admins', 'Users'],
       },
       {},
       {
+        'index': 5,
         'icon': Icon(LineIcons.sitemap),
         'title': 'Website',
         'menus': ['Home', 'Product'],
       },
       {
+        'index': 6,
         'icon': Icon(LineIcons.barChart),
         'title': 'Analysis',
         'menus': ['Order', 'Earn'],
       },
       {
+        'index': 7,
         'icon': Icon(LineIcons.history),
         'title': 'History',
         'menus': [],
       },
       {},
       {
+        'index': 8,
         'icon': Icon(LineIcons.cardboardVr),
         'title': 'Membership',
         'menus': [],
       },
       {
+        'index': 9,
         'icon': Icon(LineIcons.superpowers),
         'title': 'Term & Privacy',
         'menus': ['Privacy & Policy', 'Term & Conditions'],
       },
       {
+        'index': 9,
         'icon': Icon(LineIcons.phoneVolume),
         'title': 'Contact Us',
         'menus': ['Bug Report', 'Member Report'],
       },
       {
+        'index': 10,
         'icon': Icon(LineIcons.addressCard),
         'title': 'About Us',
         'menus': ['KYGABYTE', 'How to Use'],
@@ -182,12 +197,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? ListTile(
                       leading: (menu['icon'] as Widget),
                       title: Text(menu['title'] as String),
-                      selected: leftMenu.indexOf(menu) == superIndex,
+                      selected: menu['index'] == superIndex,
                       selectedColor: Theme.of(context).colorScheme.secondary,
                       iconColor: Theme.of(context).hintColor,
                       textColor: Theme.of(context).hintColor,
                       onTap: () {
-                        superIndex = leftMenu.indexOf(menu);
+                        superIndex = menu['index'];
                         provider.setPageIndex('$superIndex:0');
                       },
                     )
@@ -195,10 +210,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: (menu['icon'] as Widget),
                       title: menu['title'] as String,
                       subs: (menu['menus'] as List<String>),
-                      selected: leftMenu.indexOf(menu) == superIndex,
+                      selected: menu['index'] == superIndex,
                       subIndex: subIndex,
                       onTap: () {
-                        superIndex = leftMenu.indexOf(menu);
+                        superIndex = menu['index'];
                         provider.setPageIndex('$superIndex:0');
                       },
                       onItemTap: (index) {
