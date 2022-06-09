@@ -1,30 +1,37 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/customer/customer.dart';
 import 'package:mefood/service/service.dart';
 
-class CustomerProvider extends ChangeNotifier {
-  CustomerModel? customer;
-
-  CustomerProvider() {
-    customer = CustomerModel();
+extension ECustomer on CustomerModel {
+  String? get validate {
+    return null;
   }
 
-  Future<String?> login(
+  Future<String?> register(
     BuildContext context, {
-    required String email,
     required String pass,
   }) async {
-    if (email.isEmpty || pass.isEmpty) {
-      return 'Please fill email and password.';
+    if (validate != null) {
+      return validate;
     }
+
+    var param = user!.toJson();
+    param['pass'] = pass.generateMD5;
+
     var resp = await APIService.of(context).post(
-      '${APIService.kUrlCustomerAuth}/login',
-      {},
+      '${APIService.kUrlCustomerAuth}/register',
+      {
+        'user': jsonEncode(param),
+      },
       checkToken: false,
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {
+        return null;
       } else {
         return resp['msg'];
       }

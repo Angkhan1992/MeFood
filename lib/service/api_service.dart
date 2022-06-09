@@ -32,6 +32,9 @@ class APIService {
   static final kUrlDelivery = '$kDomain/api/v1/delivery';
   static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';
 
+  static final kUrlCustomer = '$kDomain/api/v1/customer';
+  static final kUrlCustomerAuth = '$kDomain/api/v1/customer/auth';
+
   static final kUrlRestaurant = '$kDomain/api/v1/restaurant';
   static final kUrlRestaurantAuth = '$kDomain/api/v1/restaurant/auth';
   static final kUrlRestaurantProduct = '$kDomain/api/v1/restaurant/product';
@@ -60,9 +63,9 @@ class APIService {
       }
 
       var token = await PrefService.of().token();
-      if (kDebugMode) {
-        token = '6b47427cead1999fc7115984192c539b';
-      }
+      // if (kDebugMode) {
+      //   token = '6b47427cead1999fc7115984192c539b';
+      // }
       if (checkToken && token == null) {
         return {
           'msg': 'Expired Token!',

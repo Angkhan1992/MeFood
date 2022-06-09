@@ -2,6 +2,7 @@ export 'address.dart';
 export 'car.dart';
 export 'center.dart';
 export 'color.dart';
+export 'customer.dart';
 export 'date.dart';
 export 'int.dart';
 export 'mail.dart';

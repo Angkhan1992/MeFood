@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/provider/delivery/auth_provider.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -81,8 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         CustomTextField(
                           prefix: const Icon(LineIcons.user),
-                          controller: TextEditingController(
-                              text: 'bgold1118@gmail.com'),
                           hintText: S.current.email_user_id,
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (email) {
@@ -95,8 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           prefix: const Icon(LineIcons.key),
                           hintText: S.current.password,
-                          controller:
-                              TextEditingController(text: 'Black123456@'),
                           obscureText: _passVisible,
                           textInputAction: TextInputAction.done,
                           suffix: InkWell(
@@ -282,7 +279,7 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } else {
-      // [Future] customer login
+      var provider = context.read<CustomerProvider>();
     }
   }
 
@@ -295,6 +292,13 @@ class _LoginScreenState extends State<LoginScreen> {
       screen: F.isDelivery
           ? const dl_reg.RegisterScreen()
           : const cs_reg.RegisterScreen(),
+      pop: (val) {
+        if (val != null && val) {
+          if (mounted) {
+            DialogService.of(context).showSnackBar('Success user registered!');
+          }
+        }
+      },
     );
   }
 }
