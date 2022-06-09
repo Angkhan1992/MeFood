@@ -46,7 +46,7 @@ class _BasicPageState extends State<BasicPage> {
     restaurant =
         widget.model == null ? RestaurantModel() : widget.model!.copyWith();
     restaurant.address ??= AddressModel();
-    galleries = restaurant.galleries!;
+    galleries = restaurant.galleries ?? ['', '', '', ''];
 
     Timer.run(() async {
       locationService = LocationService.of(context);
@@ -132,7 +132,7 @@ class _BasicPageState extends State<BasicPage> {
                               readOnly: true,
                               onTap: () async {
                                 var result = await DialogService.of(context)
-                                    .showDescktopChooserDialog(
+                                    .showDesktopChooserDialog(
                                   title: S.current.choose_category,
                                   values: RESTAURANTTYPE.values
                                       .map((e) => e.valueString)

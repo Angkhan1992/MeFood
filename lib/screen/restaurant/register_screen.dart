@@ -108,6 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 horizontal: 24.0,
                               ),
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const SizedBox(height: 40.0),
                                   stepperView(v),

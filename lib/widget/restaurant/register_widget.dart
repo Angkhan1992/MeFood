@@ -121,7 +121,7 @@ class WebCachImage extends StatelessWidget {
               : ClipRRect(
                   borderRadius: BorderRadius.circular(radius - 2),
                   child: CachedNetworkImage(
-                    imageUrl: url,
+                    imageUrl: '$kDomain$url',
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) => Center(
                       child: SizedBox(

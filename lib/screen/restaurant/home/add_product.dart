@@ -34,7 +34,6 @@ class _AddProductState extends State<AddProduct> {
         return Column(
           children: [
             HeaderView(
-              key: const Key('header_view'),
               user: restaurantProvider.user!,
             ),
             Divider(),

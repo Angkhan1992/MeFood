@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/service/api_service.dart';
 import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/restaurant/restaurant.dart';
 
@@ -254,20 +255,22 @@ class HeaderView extends StatelessWidget {
                     ),
                     shape: BoxShape.circle,
                   ),
-                  padding: const EdgeInsets.all(4.0),
                   child: user.linkAvatar == null
-                      ? Icon(
-                          LineIcons.user,
-                          color: Theme.of(context).colorScheme.secondary,
+                      ? Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Icon(
+                            LineIcons.user,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
                         )
                       : ClipRRect(
-                          borderRadius: BorderRadius.circular(12.0),
+                          borderRadius: BorderRadius.circular(16.0),
                           child: CachedNetworkImage(
-                            imageUrl: user.linkAvatar!,
+                            imageUrl: '$kDomain${user.linkAvatar!}',
                             placeholder: (context, url) => Center(
                               child: SizedBox(
-                                width: 18.0,
-                                height: 18.0,
+                                width: 24.0,
+                                height: 24.0,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 1.0,
                                   color:
@@ -278,13 +281,13 @@ class HeaderView extends StatelessWidget {
                             errorWidget: (context, url, error) => Center(
                               child: Image.asset(
                                 'assets/images/web/logo.png',
-                                width: 18.0,
-                                height: 18.0,
+                                width: 24.0,
+                                height: 24.0,
                                 color: Theme.of(context).hintColor,
                               ),
                             ),
-                            width: 24.0,
-                            height: 24.0,
+                            width: 32.0,
+                            height: 32.0,
                           ),
                         ),
                 ),

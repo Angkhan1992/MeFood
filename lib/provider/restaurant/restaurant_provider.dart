@@ -7,6 +7,7 @@ import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/base/base.dart';
 import 'package:mefood/model/restaurant/restaurant.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/util/util.dart';
 
 class RestaurantProvider with ChangeNotifier, DiagnosticableTreeMixin {
   RestaurantModel? restaurant;
@@ -48,6 +49,28 @@ class RestaurantProvider with ChangeNotifier, DiagnosticableTreeMixin {
     products.insert(0, model);
     await _saveProvider();
     notifyListeners();
+  }
+
+  Future<void> updateProduct(ProductModel model) async {
+    products[products.indexWhere((element) => element.id == model.id)] = model;
+    logger.d(products);
+    await _saveProvider();
+    notifyListeners();
+  }
+
+  Future<void> removeProduct(ProductModel model) async {
+    var selectedIndex = -1;
+    for (var product in products) {
+      if (product.id == model.id) {
+        selectedIndex = products.indexOf(product);
+        break;
+      }
+    }
+    if (selectedIndex > -1) {
+      products.removeAt(selectedIndex);
+      await _saveProvider();
+      notifyListeners();
+    }
   }
 
   void setPageIndex(String index) {

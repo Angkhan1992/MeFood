@@ -41,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
             return Column(
               children: [
                 HeaderView(
-                  key: const Key('header_view'),
                   user: provider.user ?? MemberModel(),
                 ),
                 Divider(),

@@ -787,7 +787,7 @@ class DialogService {
     );
   }
 
-  Future<String?> showDescktopChooserDialog({
+  Future<String?> showDesktopChooserDialog({
     required String title,
     List<String>? values,
     bool isExpand = false,
@@ -836,6 +836,71 @@ class DialogService {
                       ),
                     ),
                   },
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<bool?> showDesktopConfirmDialog({
+    required String title,
+    required String desc,
+  }) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Container(
+              width: 500.0,
+              padding: const EdgeInsets.all(24.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(24.0),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  const Divider(),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    desc,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 40.0),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomOutlineButton(
+                          title: 'Cancel'.toUpperCase(),
+                          onTap: () => Navigator.of(context).pop(false),
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      Expanded(
+                        child: CustomFillButton(
+                          title: 'Confirm'.toUpperCase(),
+                          onTap: () => Navigator.of(context).pop(true),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

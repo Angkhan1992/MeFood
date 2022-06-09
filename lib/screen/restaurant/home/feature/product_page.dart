@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/screen/restaurant/home/add_product.dart';
 import 'package:mefood/screen/restaurant/home/base/empty_list.dart';
 import 'package:mefood/screen/restaurant/home/product_detail.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/util/util.dart';
 import 'package:mefood/widget/base/button.dart';
-import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage({Key? key}) : super(key: key);
@@ -26,6 +28,7 @@ class _ProductPageState extends State<ProductPage> {
     return Consumer<RestaurantProvider>(
       builder: (context, provider, child) {
         var products = provider.products;
+        logger.d(products);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,13 +1,13 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mefood/service/service.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/provider/restaurant/restaurant.dart';
-import 'package:mefood/service/api_service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/button.dart';
 import 'package:mefood/widget/base/textfield.dart';
@@ -31,7 +31,7 @@ class _ProductDetailState extends State<ProductDetail> {
   @override
   void initState() {
     super.initState();
-    _product = widget.model.copyWith();
+    _product = widget.model;
     galleries = _product.galleries!;
   }
 
@@ -43,7 +43,6 @@ class _ProductDetailState extends State<ProductDetail> {
         return Column(
           children: [
             HeaderView(
-              key: const Key('header_view'),
               user: restaurantProvider.user!,
             ),
             Divider(),
@@ -107,7 +106,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                   getPreviewWidget(),
                                   const SizedBox(height: 40.0),
                                   SizedBox(
-                                    width: 280.0,
+                                    width: 268.0,
                                     child: CustomFillButton(
                                       title: 'Update'.toUpperCase(),
                                       onTap: () async {
@@ -125,11 +124,29 @@ class _ProductDetailState extends State<ProductDetail> {
                                   ),
                                   const SizedBox(height: 24.0),
                                   SizedBox(
-                                    width: 280.0,
+                                    width: 268.0,
                                     child: CustomFillButton(
                                       title: 'Remove'.toUpperCase(),
                                       backgroundColor: Colors.redAccent,
-                                      onTap: () {},
+                                      onTap: () async {
+                                        var confirm =
+                                            await DialogService.of(context)
+                                                .showDesktopConfirmDialog(
+                                          title: 'Remove Product',
+                                          desc:
+                                              'Are you sure to remove this item? After remove,\nthat item will be not shown any more on MeFood.',
+                                        );
+                                        if (confirm == null || !confirm) {
+                                          return;
+                                        }
+                                        var err = await _product
+                                            .removeProduct(context);
+                                        if (err != null) {
+                                          Fluttertoast.showToast(msg: err);
+                                        } else {
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
                                     ),
                                   ),
                                 ],

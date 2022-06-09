@@ -11,13 +11,13 @@ const kDomain =
     kDebugMode ? 'http://192.168.0.253:52526' : 'http://51.68.185.254:41515';
 // const kDomain = 'http://51.68.185.254:41515';
 
-const kUrlAvatar = '$kDomain/assets/avatar/';
-const kUrlIDCard = '$kDomain/assets/idcard/';
-const kUrlDriver = '$kDomain/assets/drivercard/';
-const kUrlPlate = '$kDomain/assets/plate/';
-const kUrlCar = '$kDomain/assets/car/';
-const kUrlLogo = '$kDomain/assets/logo/';
-const kUrlGallery = '$kDomain/assets/gallery/';
+const kUrlAvatar = '/assets/avatar/';
+const kUrlIDCard = '/assets/idcard/';
+const kUrlDriver = '/assets/drivercard/';
+const kUrlPlate = '/assets/plate/';
+const kUrlCar = '/assets/car/';
+const kUrlLogo = '/assets/logo/';
+const kUrlGallery = '/assets/gallery/';
 
 class APIService {
   final BuildContext? context;
@@ -61,7 +61,7 @@ class APIService {
 
       var token = await PrefService.of().token();
       if (kDebugMode) {
-        token = '00ee0ddba0097dd12c1abcc8d331d639';
+        token = '6b47427cead1999fc7115984192c539b';
       }
       if (checkToken && token == null) {
         return {

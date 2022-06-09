@@ -4,12 +4,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/restaurant/restaurant.dart';
 import 'package:mefood/provider/restaurant/restaurant_provider.dart';
 import 'package:mefood/service/service.dart';
-import 'package:provider/provider.dart';
+
+final formatCurrency = NumberFormat('###,###,###');
 
 extension EProduct on ProductModel {
   String? get validate {
@@ -42,6 +46,10 @@ extension EProduct on ProductModel {
     return null;
   }
 
+  String get currency {
+    return '₭ ${formatCurrency.format(price)}';
+  }
+
   Widget listItem(
     BuildContext context, {
     Function()? onTap,
@@ -62,7 +70,8 @@ extension EProduct on ProductModel {
               AspectRatio(
                 aspectRatio: 1,
                 child: CachedNetworkImage(
-                  imageUrl: galleries![0],
+                  imageUrl:
+                      kDomain + (galleries == null ? 'url' : galleries![0]),
                   placeholder: (context, url) => Center(
                     child: SizedBox(
                       width: 60.0,
@@ -119,7 +128,7 @@ extension EProduct on ProductModel {
                             ),
                           ),
                           Text(
-                            '₭ $price',
+                            currency,
                             style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.w700,
@@ -176,7 +185,7 @@ extension EProduct on ProductModel {
                             ),
                             items: galleries!.map((link) {
                               return CachedNetworkImage(
-                                imageUrl: link,
+                                imageUrl: '$kDomain$link',
                                 width: 300.0,
                                 height: 300 * 5 / 8,
                                 progressIndicatorBuilder:
@@ -225,7 +234,7 @@ extension EProduct on ProductModel {
                           ),
                           const Spacer(),
                           Text(
-                            '₭ $price',
+                            currency,
                             style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700,
@@ -343,8 +352,8 @@ extension EProduct on ProductModel {
                       Text(
                         'Recent Reviews',
                         style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w200,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
@@ -403,10 +412,10 @@ extension EProduct on ProductModel {
                   color: Theme.of(context).colorScheme.secondary,
                   child: Center(
                     child: Text(
-                      '₭ $price\nADD CART',
+                      '${currency}\nADD CART',
                       style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w700,
                         color: Theme.of(context).primaryColor,
                       ),
                       textAlign: TextAlign.center,
@@ -458,6 +467,31 @@ extension EProduct on ProductModel {
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {
+        var provider = context.read<RestaurantProvider>();
+        await provider.updateProduct(this);
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return S.current.sever_error;
+    }
+  }
+
+  Future<String?> removeProduct(BuildContext context) async {
+    if (validate != null) {
+      return 'Already chaanged item information';
+    }
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlRestaurantProduct}/remove',
+      {
+        'product': jsonEncode(toJson()),
+      },
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        var provider = context.read<RestaurantProvider>();
+        await provider.removeProduct(this);
         return null;
       } else {
         return resp['msg'];

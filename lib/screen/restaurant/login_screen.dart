@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onTap: () async {
                                           var result =
                                               await DialogService.of(context)
-                                                  .showDescktopChooserDialog(
+                                                  .showDesktopChooserDialog(
                                             title: S.current.choose_category,
                                             values: RESTTYPE.values
                                                 .map((e) => e.valueString)
