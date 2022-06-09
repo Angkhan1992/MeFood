@@ -60,16 +60,9 @@ class _ProductPageState extends State<ProductPage> {
                     children: products
                         .map((e) => e.listItem(
                               context,
-                              onTap: () {
-                                var provider = Provider.of<ProductProvider>(
-                                  context,
-                                  listen: false,
-                                );
-                                provider.setProduct(e);
-                                NavigatorService.of(context).push(
-                                  screen: ProductDetail(),
-                                );
-                              },
+                              onTap: () => NavigatorService.of(context).push(
+                                screen: ProductDetail(model: e.copyWith()),
+                              ),
                             ))
                         .toList(),
                   ),

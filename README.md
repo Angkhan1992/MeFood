@@ -12,6 +12,8 @@ flutter run --flavor delivery -t lib/delivery.dart<br/>
 flutter run --flavor customer -t lib/customer.dart<br/>
 flutter run -d chrome --flavor restaurant -t lib/restaurant.dart
 
+flutter build web --release --web-renderer html -t lib/restaurant.dart
+
 
 ### Run with Restaurant macos app
 flutter run
@@ -19,6 +21,8 @@ flutter run
 ### Run with sever panel
 nohup node app.js &<br/>
 pkill node
+
+₭
 
 ### MacOS version release
 create-dmg \

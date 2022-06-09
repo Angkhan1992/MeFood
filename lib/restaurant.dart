@@ -47,9 +47,6 @@ void main() async {
         ChangeNotifierProvider<RestaurantProvider>(
           create: (context) => RestaurantProvider(),
         ),
-        ChangeNotifierProvider<ProductProvider>(
-          create: (context) => ProductProvider(),
-        ),
       ],
       child: const MyApp(),
     ),
