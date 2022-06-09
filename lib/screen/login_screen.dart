@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/provider/delivery/auth_provider.dart';
+import 'package:mefood/screen/customer/auth/register_screen.dart' as cs_reg;
+import 'package:mefood/screen/customer/main/main_screen.dart' as cs_log;
+import 'package:mefood/screen/delivery/auth/register_screen.dart' as dl_reg;
+import 'package:mefood/screen/landing_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/base/base.dart';
-import 'package:provider/provider.dart';
-
-import 'customer/auth/register_screen.dart' as cs_reg;
-import 'delivery/auth/register_screen.dart' as dl_reg;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -280,6 +282,27 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } else {
       var provider = context.read<CustomerProvider>();
+      var err = await provider.login(
+        context,
+        email: _email!,
+        pass: _password!,
+      );
+      if (err != null) {
+        DialogService.of(context).showSnackBar(
+          err,
+          type: SnackBarType.error,
+        );
+        return;
+      }
+      var isLanding = await PrefService.of().isLanding();
+      if (isLanding) {
+        NavigatorService.of(context).push(
+          screen: const cs_log.MainScreen(),
+          replace: true,
+        );
+      } else {
+        NavigatorService.of(context).push(screen: const LandingScreen());
+      }
     }
   }
 
