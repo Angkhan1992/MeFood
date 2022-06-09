@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/e_string.dart';
-
-import '../../../themes/dimens.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/themes/dimens.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({Key? key}) : super(key: key);
@@ -24,8 +24,8 @@ class _OrderScreenState extends State<OrderScreen> {
               left: offsetXMd,
             ),
             alignment: Alignment.centerLeft,
-            child:
-                'Order'.colorTitle(Theme.of(context).colorScheme.onSecondary),
+            child: S.current.orders
+                .colorTitle(Theme.of(context).colorScheme.onSecondary),
           ),
           Expanded(
             child: Container(

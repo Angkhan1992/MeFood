@@ -1,22 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/model/car_model.dart';
-import 'package:mefood/model/user_model.dart';
-import 'package:mefood/provider/provider.dart';
+
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/screen/delivery/auth/page/page.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:provider/provider.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class SecuritPage extends StatefulWidget {
-  final Function(UserModel, CarModel)? onNext;
+  final MemberModel? member;
+  final CarModel? car;
+  final Function(MemberModel member, CarModel car)? onNext;
 
   const SecuritPage({
     Key? key,
     this.onNext,
+    this.member,
+    this.car,
   }) : super(key: key);
 
   @override
@@ -24,6 +27,9 @@ class SecuritPage extends StatefulWidget {
 }
 
 class _SecuritPageState extends State<SecuritPage> {
+  CarModel? _car;
+  MemberModel? _user;
+
   Color? carColor;
 
   String? idCard;
@@ -34,26 +40,26 @@ class _SecuritPageState extends State<SecuritPage> {
   String? frontImage;
   String? backImage;
 
-  DriverProvider? provider;
-
   @override
   void initState() {
     super.initState();
     Timer.run(() {
-      provider = Provider.of<DriverProvider>(context, listen: false);
-
-      var car = provider!.user.car!;
-      carColor = car.color!.convert2Color;
-      logger.d(car.color);
+      _car = widget.car == null ? CarModel() : widget.car!.copyWith();
+      carColor = _car!.color!.convert2Color;
+      logger.d(_car!.color);
       logger.d(carColor);
-      plate = car.plate;
-      leftImage = car.left;
-      rightImage = car.right;
-      frontImage = car.front;
-      backImage = car.back;
-      license = car.license;
 
-      idCard = provider!.user.user!.idcard;
+      plate = _car!.linkPlate;
+      license = _car!.linkLicense;
+
+      if (_car!.galleries != null) {
+        leftImage = _car!.galleries![0];
+        rightImage = _car!.galleries![1];
+        frontImage = _car!.galleries![2];
+        backImage = _car!.galleries![3];
+      }
+
+      _user = widget.member == null ? MemberModel() : widget.member!.copyWith();
 
       setState(() {});
     });
@@ -68,7 +74,7 @@ class _SecuritPageState extends State<SecuritPage> {
           const SizedBox(
             height: 16.0,
           ),
-          'Driver Identify'.wText(
+          S.current.driver_identify.wText(
             TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w700,
@@ -77,8 +83,7 @@ class _SecuritPageState extends State<SecuritPage> {
           const SizedBox(
             height: 4.0,
           ),
-          'You can update some identify information and will reivew in 48 hrs.'
-              .wText(
+          S.current.dsc_verify.wText(
             TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w400,
@@ -91,7 +96,7 @@ class _SecuritPageState extends State<SecuritPage> {
             children: [
               Column(
                 children: [
-                  'ID Card or Passport'.wText(TextStyle(
+                  S.current.idcard_passport.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -123,7 +128,7 @@ class _SecuritPageState extends State<SecuritPage> {
               const SizedBox(height: 24.0),
               Column(
                 children: [
-                  'Car License'.wText(TextStyle(
+                  S.current.car_license.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -155,7 +160,7 @@ class _SecuritPageState extends State<SecuritPage> {
               const SizedBox(height: 24.0),
               Column(
                 children: [
-                  'Car Plate'.wText(TextStyle(
+                  S.current.car_plate.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -187,7 +192,7 @@ class _SecuritPageState extends State<SecuritPage> {
               const SizedBox(height: 24.0),
               Column(
                 children: [
-                  'Car Images'.wText(TextStyle(
+                  S.current.car_images.wText(TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   )),
@@ -299,7 +304,7 @@ class _SecuritPageState extends State<SecuritPage> {
               ),
               const SizedBox(height: 40.0),
               CustomFillButton(
-                title: 'Update Securit'.toUpperCase(),
+                title: S.current.upt_securit.toUpperCase(),
                 onTap: submit,
               ),
               const SizedBox(height: 24.0),
@@ -329,7 +334,7 @@ class _SecuritPageState extends State<SecuritPage> {
         path = 'upload/car';
         break;
     }
-    var resp = await APIService.of(context: context).upload(
+    var resp = await APIService.of(context).upload(
       path: path,
       filePath: filepath,
     );
@@ -338,7 +343,7 @@ class _SecuritPageState extends State<SecuritPage> {
       return resp['result'];
     } else {
       DialogService.of(context).showSnackBar(
-        'Upload image failed',
+        S.current.upload_image_failed,
         type: SnackBarType.error,
       );
     }
@@ -346,95 +351,20 @@ class _SecuritPageState extends State<SecuritPage> {
   }
 
   Future<void> submit() async {
-    if (carColor == null) {
+    if (_user!.hasFullData != null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        _user!.hasFullData!,
         type: SnackBarType.error,
       );
-      return;
     }
-    if (idCard == null) {
+    if (_car!.hasFullData != null) {
       DialogService.of(context).showSnackBar(
-        'Please fill all fields',
+        _car!.hasFullData!,
         type: SnackBarType.error,
       );
-      return;
     }
-    if (license == null) {
-      DialogService.of(context).showSnackBar(
-        'Please fill all fields',
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    if (plate == null) {
-      DialogService.of(context).showSnackBar(
-        'Please fill all fields',
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    if (leftImage == null) {
-      DialogService.of(context).showSnackBar(
-        'Please fill all fields',
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    if (rightImage == null) {
-      DialogService.of(context).showSnackBar(
-        'Please fill all fields',
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    if (frontImage == null) {
-      DialogService.of(context).showSnackBar(
-        'Please fill all fields',
-        type: SnackBarType.error,
-      );
-      return;
-    }
-    if (backImage == null) {
-      DialogService.of(context).showSnackBar(
-        'Please fill all fields',
-        type: SnackBarType.error,
-      );
-      return;
-    }
-
-    var resp = await APIService.of(context: context).post(
-      '${APIService.kUrlAuth}/updateSecurit',
-      {
-        'usr_id': provider!.user.user!.id,
-        'id_card': idCard,
-        'car_id': provider!.user.car!.id,
-        'color': carColor!.convett2String,
-        'license': license,
-        'plate': plate,
-        'left': leftImage,
-        'right': rightImage,
-        'front': frontImage,
-        'back': backImage,
-      },
-    );
-    if (resp!['ret'] == 10000) {
-      var user = provider!.user.user!;
-      user.idcard = idCard;
-
-      var car = provider!.user.car!;
-      car.license = license;
-      car.plate = plate;
-      car.left = leftImage;
-      car.right = rightImage;
-      car.front = frontImage;
-      car.back = backImage;
-      widget.onNext!(user, car);
-    } else {
-      DialogService.of(context).showSnackBar(
-        'Server Error!',
-        type: SnackBarType.error,
-      );
+    if (widget.onNext != null) {
+      widget.onNext!(_user!, _car!);
     }
   }
 }

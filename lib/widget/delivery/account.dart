@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/widget/common/button.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class MemberShipWidget extends StatelessWidget {
   final bool isSelected;
@@ -97,37 +97,6 @@ class MemberShipWidget extends StatelessWidget {
             ),
           }
         ],
-      ),
-    );
-  }
-}
-
-class MainMenuButton extends StatelessWidget {
-  final String title;
-  final bool isEnable;
-  final Function()? onTap;
-
-  const MainMenuButton({
-    Key? key,
-    required this.title,
-    this.isEnable = false,
-    this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (isEnable) onTap!();
-      },
-      child: title.wText(
-        TextStyle(
-          fontSize: 16.0,
-          fontWeight: FontWeight.w700,
-          color: isEnable
-              ? Theme.of(context).colorScheme.secondary
-              : Theme.of(context).hintColor,
-        ),
       ),
     );
   }

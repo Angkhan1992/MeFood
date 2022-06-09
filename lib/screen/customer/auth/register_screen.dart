@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/util/logger.dart';
 
-import '../../../extensions/e_string.dart';
-import '../../../themes/dimens.dart';
-import '../../../widget/common/button.dart';
-import '../../../widget/common/textfield.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/util/logger.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -68,13 +68,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    'Register'.wTitle,
+                    S.current.register.wTitle,
                     const SizedBox(
                       height: offsetLg,
                     ),
                     CustomTextField(
                       prefix: const Icon(LineIcons.user),
-                      hintText: 'First Name',
+                      hintText: S.current.first_name,
                       onSaved: (name) {
                         _firstName = name;
                       },
@@ -84,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       prefix: const Icon(LineIcons.user),
-                      hintText: 'Last Name',
+                      hintText: S.current.last_name,
                       onSaved: (name) {
                         _lastName = name;
                       },
@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       prefix: const Icon(LineIcons.user),
-                      hintText: 'Email or User ID',
+                      hintText: S.current.email_user_id,
                       keyboardType: TextInputType.emailAddress,
                       onSaved: (email) {
                         _email = email;
@@ -105,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       prefix: const Icon(LineIcons.phone),
-                      hintText: 'Phone Number',
+                      hintText: S.current.phone_number,
                       keyboardType: TextInputType.phone,
                       onSaved: (phone) {
                         _phone = phone;
@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       prefix: const Icon(LineIcons.key),
-                      hintText: 'Password',
+                      hintText: S.current.password,
                       obscureText: true,
                       textInputAction: TextInputAction.done,
                       suffix: const Icon(LineIcons.eye),
@@ -129,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       prefix: const Icon(LineIcons.key),
-                      hintText: 'Re-Password',
+                      hintText: S.current.confirm_password,
                       obscureText: true,
                       textInputAction: TextInputAction.done,
                       suffix: const Icon(LineIcons.eye),
@@ -139,7 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const Spacer(),
                     CustomFillButton(
-                      title: 'Register'.toUpperCase(),
+                      title: S.current.register.toUpperCase(),
                       onTap: () => _register(),
                     ),
                     const SizedBox(

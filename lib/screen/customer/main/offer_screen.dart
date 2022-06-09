@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/e_string.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
 
-import '../../../themes/dimens.dart';
+import 'package:mefood/themes/dimens.dart';
 
 class OfferScreen extends StatefulWidget {
   const OfferScreen({Key? key}) : super(key: key);
@@ -24,8 +25,8 @@ class _OfferScreenState extends State<OfferScreen> {
               left: offsetXMd,
             ),
             alignment: Alignment.centerLeft,
-            child:
-                'Offer'.colorTitle(Theme.of(context).colorScheme.onSecondary),
+            child: S.current.offers
+                .colorTitle(Theme.of(context).colorScheme.onSecondary),
           ),
           Expanded(
             child: Container(

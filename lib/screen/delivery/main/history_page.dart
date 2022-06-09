@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:mefood/generated/l10n.dart';
 
 class HistoryPage extends StatelessWidget {
   final DateTime initDate;
@@ -153,9 +154,9 @@ class HistoryPage extends StatelessWidget {
     required int type,
   }) {
     var titles = [
-      'Day',
-      'Month',
-      'Year',
+      S.current.day,
+      S.current.month,
+      S.current.year,
     ];
     var date = [
       DateFormat('dd').format(initDate),

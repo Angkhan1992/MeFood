@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/provider/provider.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/base/base.dart';
+import 'package:mefood/widget/base/base.dart';
 import 'package:provider/provider.dart';
 
 class MailDetail extends StatefulWidget {
@@ -34,8 +35,11 @@ class _MailDetailState extends State<MailDetail> {
 
   void initData() async {
     provider = Provider.of<MailProvider>(context, listen: false);
-    if (widget.mail.model.status == 'UNREAD') {
-      await provider!.updateMailByIndex(widget.index, status: 'READ');
+    if (widget.mail.model.status == S.current.unread.toUpperCase()) {
+      await provider!.updateMailByIndex(
+        widget.index,
+        status: S.current.read.toUpperCase(),
+      );
     }
   }
 
@@ -46,9 +50,12 @@ class _MailDetailState extends State<MailDetail> {
         title: getTitle(),
         actions: [
           TextActionButton(
-            title: 'DELETE',
+            title: S.current.delete.toUpperCase(),
             onTap: () async {
-              await provider!.updateMailByIndex(widget.index, status: 'DELETE');
+              await provider!.updateMailByIndex(
+                widget.index,
+                status: S.current.delete.toUpperCase(),
+              );
               Navigator.of(context).pop();
             },
           ),
@@ -99,7 +106,7 @@ class _MailDetailState extends State<MailDetail> {
 
   Widget getTitle() {
     var count = widget.unread;
-    if (widget.mail.model.status == 'UNREAD') {
+    if (widget.mail.model.status == S.current.unread.toUpperCase()) {
       count--;
     }
     return count == 0

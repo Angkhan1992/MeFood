@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/screen/customer/main/main_screen.dart' as cs;
 import 'package:mefood/screen/delivery/main/main_screen.dart' as dl;
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
@@ -15,14 +16,14 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   final _titles = [
-    'MeFood',
-    'Delivery',
-    'Analysis',
+    S.current.mefood,
+    S.current.delivery,
+    S.current.analysis,
   ];
   final _descs = [
-    'Welcome to Customer of MeFood. You can get a good food and delivery service from MeFood.',
-    'Fast and All Time Delivery. You can get your time in time. 24/7 Service.',
-    'Good Analysis System, You can check your order analysis result through chart.',
+    S.current.landing_desc_01,
+    S.current.landing_desc_02,
+    S.current.landing_desc_03,
   ];
 
   var selected = 0;

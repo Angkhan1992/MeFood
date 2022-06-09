@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/provider/delivery/delivery.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/model/address_model.dart';
-import 'package:mefood/provider/provider.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/delivery/account.dart';
+import 'package:mefood/widget/base/base.dart';
+import 'package:mefood/widget/delivery/delivery.dart';
 
 class AddressPage extends StatefulWidget {
   final AddressModel address;
@@ -51,8 +51,8 @@ class _AddressPageState extends State<AddressPage> {
             ),
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
-                hintText: 'Address1',
-                title: 'Update Address1',
+                hintText: S.current.address1,
+                title: '${S.current.update} ${S.current.address1}',
                 initValue: address!.address1,
                 keyboardType: TextInputType.streetAddress,
                 prefix: Icon(Icons.streetview),
@@ -76,8 +76,8 @@ class _AddressPageState extends State<AddressPage> {
             ),
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
-                hintText: 'City Name',
-                title: 'Update City',
+                hintText: S.current.city,
+                title: '${S.current.update} ${S.current.city}',
                 initValue: address!.city,
                 keyboardType: TextInputType.streetAddress,
                 prefix: Icon(Icons.location_city_rounded),
@@ -101,8 +101,8 @@ class _AddressPageState extends State<AddressPage> {
             ),
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
-                hintText: 'Province',
-                title: 'Update Province',
+                hintText: S.current.province,
+                title: '${S.current.update} ${S.current.province}',
                 initValue: address!.province,
                 keyboardType: TextInputType.streetAddress,
                 prefix: Icon(Icons.location_city_rounded),
@@ -126,8 +126,8 @@ class _AddressPageState extends State<AddressPage> {
             ),
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
-                hintText: 'Postal Code',
-                title: 'Update Postal Code',
+                hintText: S.current.postal_code,
+                title: '${S.current.update} ${S.current.postal_code}',
                 initValue: address!.postal,
                 keyboardType: TextInputType.number,
                 prefix: Icon(Icons.code),
@@ -165,7 +165,7 @@ class _AddressPageState extends State<AddressPage> {
           accountItemWidget(
             context,
             title: (address!.address2 == null || address!.address2!.isEmpty)
-                ? 'Address2'
+                ? S.current.address2_optional
                 : address!.address2!,
             leading: Icon(
               Icons.streetview,
@@ -173,8 +173,8 @@ class _AddressPageState extends State<AddressPage> {
             ),
             onTap: () async {
               var result = await DialogService.of(context).oneValueField(
-                hintText: 'Address2',
-                title: 'Update Address2',
+                hintText: S.current.address2_optional,
+                title: '${S.current.update} ${S.current.address2_optional}',
                 initValue: address!.address2,
                 keyboardType: TextInputType.streetAddress,
                 prefix: Icon(Icons.streetview),
@@ -192,7 +192,7 @@ class _AddressPageState extends State<AddressPage> {
           accountItemWidget(
             context,
             title: (address!.lat == null || address!.lat!.isEmpty)
-                ? 'Latitude: --------\nLongitude: --------'
+                ? '${S.current.latitude}: --------\n${S.current.longitude}: --------'
                 : '${address!.lat!}\n${address!.lon!}',
             leading: Icon(
               Icons.location_on,
@@ -203,15 +203,15 @@ class _AddressPageState extends State<AddressPage> {
               if (address!.lat == null || address!.lat!.isEmpty) {
                 var provider =
                     Provider.of<DeliveryProvider>(context, listen: false);
-                initPosition.add(provider.getCurrentLcoation()!.latitude!);
-                initPosition.add(provider.getCurrentLcoation()!.longitude!);
+                // initPosition.add(provider.getCurrentLcoation()!.latitude!);
+                // initPosition.add(provider.getCurrentLcoation()!.longitude!);
               } else {
                 initPosition.add(double.parse(address!.lat!));
                 initPosition.add(double.parse(address!.lon!));
               }
 
               var result = await DialogService.of(context).locationPicker(
-                title: 'Choose Location',
+                title: S.current.choose_location,
                 initPosition: initPosition,
               );
               if (result != null) {
@@ -228,26 +228,26 @@ class _AddressPageState extends State<AddressPage> {
             height: 40.0,
           ),
           CustomOutlineButton(
-            title: 'Use Current Location'.toUpperCase(),
+            title: S.current.from_current_location.toUpperCase(),
             onTap: () async {
-              var status =
-                  Provider.of<DeliveryProvider>(context, listen: false);
-              var addresses = await placemarkFromCoordinates(
-                status.getCurrentLcoation()!.latitude!,
-                status.getCurrentLcoation()!.longitude!,
-              );
-              logger.d(addresses.first);
-              address!.fromPlacemark(addresses.first);
-              address!.lat = status.getCurrentLcoation()!.latitude.toString();
-              address!.lon = status.getCurrentLcoation()!.longitude.toString();
-              setState(() {});
+              // var status =
+              //     Provider.of<DeliveryProvider>(context, listen: false);
+              // var addresses = await placemarkFromCoordinates(
+              //   status.getCurrentLcoation()!.latitude!,
+              //   status.getCurrentLcoation()!.longitude!,
+              // );
+              // logger.d(addresses.first);
+              // address!.fromPlacemark(addresses.first);
+              // address!.lat = status.getCurrentLcoation()!.latitude.toString();
+              // address!.lon = status.getCurrentLcoation()!.longitude.toString();
+              // setState(() {});
             },
           ),
           const SizedBox(
-            height: 40.0,
+            height: 16.0,
           ),
           CustomFillButton(
-            title: 'Update Address'.toUpperCase(),
+            title: S.current.update_address.toUpperCase(),
             onTap: isUpdated
                 ? () async {
                     var result = await address!.update(context);
@@ -255,7 +255,7 @@ class _AddressPageState extends State<AddressPage> {
                       if (widget.updateAddress != null) {
                         widget.updateAddress!(address!);
                         DialogService.of(context).showSnackBar(
-                          'Success updated address data',
+                          S.current.success_data_updated,
                         );
                       }
                     } else {

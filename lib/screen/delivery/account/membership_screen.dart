@@ -1,11 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/provider/provider.dart';
-import 'package:mefood/screen/delivery/account/manual_membership.dart';
-import 'package:mefood/service/service.dart';
-import 'package:mefood/widget/delivery/account.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/delivery/delivery.dart';
 import 'package:provider/provider.dart';
 
 class MembershipScreen extends StatefulWidget {
@@ -16,7 +13,7 @@ class MembershipScreen extends StatefulWidget {
 }
 
 class _MembershipScreenState extends State<MembershipScreen> {
-  var isProMember = false;
+  var isExpired = false;
   var expired = '01/01/2022';
 
   @override
@@ -25,8 +22,8 @@ class _MembershipScreenState extends State<MembershipScreen> {
 
     Timer.run(() {
       var provider = Provider.of<DeliveryProvider>(context, listen: false);
-      isProMember = provider.isProMember();
-      expired = provider.member!.localDate.visiableDate;
+      isExpired = provider.isExpired();
+      // expired = provider.user!.localDate.visiableDate;
       setState(() {});
     });
   }
@@ -35,7 +32,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Membership'.toUpperCase()),
+        title: Text(S.current.membership.toUpperCase()),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -44,58 +41,46 @@ class _MembershipScreenState extends State<MembershipScreen> {
         ),
         child: Column(
           children: [
-            Expanded(
-              child: MemberShipWidget(
-                title: 'Free Member',
-                price: 'Free',
-                conditions: [
-                  'Search Range: 5Km',
-                  'Max Follow Restraunt: 5 Stores',
-                  'Max Follow Customer: 5 Customers',
-                  'Max Available Time: 8 Hours',
-                ],
-                isSelected: !isProMember,
-              ),
-            ),
-            const SizedBox(
-              height: 24.0,
-            ),
-            Expanded(
-              child: MemberShipWidget(
-                title: 'Premium Member',
-                price: '\$5 per a month',
-                expired: expired,
-                conditions: [
-                  'Search Range: 50Km',
-                  'Max Follow Restraunt: Unlimited',
-                  'Max Follow Customer: Unlimited',
-                  'Max Available Time: Unlimited',
-                  'Analysis Earn: Enabled',
-                ],
-                isSelected: isProMember,
-                upgrade: () async {
-                  var values = ['In App Purchase', 'Contact to Support'];
-                  var result = await DialogService.of(context).bottomChoose(
-                    values: values,
-                  );
-                  if (result != null) {
-                    for (var i = 0; i < values.length; i++) {
-                      if (result == values[i]) {
-                        if (i == 0) {
-                          // [Future] iap for membership
-                        }
-                        if (i == 1) {
-                          NavigatorService.of(context).push(
-                            screen: ManualMembership(),
-                          );
-                          return;
-                        }
-                      }
-                    }
-                  }
-                },
-              ),
-            ),
+            // Expanded(
+            //   child: MemberShipWidget(
+            //     title: S.current.free_member,
+            //     price: S.current.free,
+            //     conditions: condFreeDelivery,
+            //     isSelected: !isExpired,
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 24.0,
+            // ),
+            // Expanded(
+            //   child: MemberShipWidget(
+            //     title: S.current.premium_member,
+            //     price: S.current.monthly_5,
+            //     expired: expired,
+            //     conditions: condProDelivery,
+            //     isSelected: isExpired,
+            //     upgrade: () async {
+            //       var result = await DialogService.of(context).bottomChoose(
+            //         values: paymentType,
+            //       );
+            //       if (result != null) {
+            //         for (var i = 0; i < paymentType.length; i++) {
+            //           if (result == paymentType[i]) {
+            //             if (i == 0) {
+            //               // [Future] iap for membership
+            //             }
+            //             if (i == 1) {
+            //               NavigatorService.of(context).push(
+            //                 screen: ManualMembership(),
+            //               );
+            //               return;
+            //             }
+            //           }
+            //         }
+            //       }
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

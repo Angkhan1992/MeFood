@@ -31,7 +31,7 @@ class LoadingService {
         builder: (BuildContext context) {
           return Center(
             child: LoadingAnimationWidget.fourRotatingDots(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.secondary,
               size: 48.0,
             ),
           );

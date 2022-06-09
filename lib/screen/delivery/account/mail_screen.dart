@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/provider/provider.dart';
+import 'package:mefood/provider/base/base.dart';
+import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/screen/delivery/account/mail_detail.dart';
 import 'package:mefood/service/dialog_service.dart';
 import 'package:mefood/service/navigator_service.dart';
-import 'package:mefood/util/logger.dart';
-import 'package:mefood/widget/common/common.dart';
-import 'package:mefood/widget/delivery/account.dart';
-import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class MailScreen extends StatefulWidget {
   const MailScreen({Key? key}) : super(key: key);
@@ -35,25 +35,25 @@ class _MailScreenState extends State<MailScreen> {
   }
 
   void _onRefresh() async {
-    logger.d('OnRefresh');
-    var deliveryProvider =
-        Provider.of<DeliveryProvider>(context, listen: false);
-    await _provider!.fetchMails(deliveryProvider.user!.id!);
-    _refreshController.refreshCompleted();
+    // logger.d('OnRefresh');
+    // var deliveryProvider =
+    //     Provider.of<DeliveryProvider>(context, listen: false);
+    // await _provider!.fetchMails(deliveryProvider.user!.id!);
+    // _refreshController.refreshCompleted();
   }
 
   void fetchDate() async {
-    var deliveryProvider =
-        Provider.of<DeliveryProvider>(context, listen: false);
-    _provider = Provider.of<MailProvider>(context, listen: false);
+    // var deliveryProvider =
+    //     Provider.of<DeliveryProvider>(context, listen: false);
+    // _provider = Provider.of<MailProvider>(context, listen: false);
 
-    var resp = await _provider!.fetchMails(deliveryProvider.user!.id!);
-    if (resp != null) {
-      DialogService.of(context).showSnackBar(
-        resp,
-        type: SnackBarType.error,
-      );
-    }
+    // var resp = await _provider!.fetchMails(deliveryProvider.user!.id!);
+    // if (resp != null) {
+    //   DialogService.of(context).showSnackBar(
+    //     resp,
+    //     type: SnackBarType.error,
+    //   );
+    // }
   }
 
   @override
@@ -62,9 +62,11 @@ class _MailScreenState extends State<MailScreen> {
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(provider.checkAmount() == 0
-                ? 'INBOX'
-                : '${provider.checkAmount()} Selected'),
+            title: Text(
+              provider.checkAmount() == 0
+                  ? S.current.inbox.toUpperCase()
+                  : '${provider.checkAmount()} ${S.current.selected}',
+            ),
             leading: provider.isEditing
                 ? InkWell(
                     child: Icon(
@@ -79,7 +81,8 @@ class _MailScreenState extends State<MailScreen> {
                 : null,
             actions: [
               TextActionButton(
-                title: provider.isEditing ? 'CANCEL' : 'EDIT',
+                title: (provider.isEditing ? S.current.cancel : S.current.edit)
+                    .toUpperCase(),
                 onTap: () => provider.setEditing(!provider.isEditing),
               ),
             ],
@@ -102,7 +105,7 @@ class _MailScreenState extends State<MailScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: CustomTextField(
                             prefix: Icon(Icons.search),
-                            hintText: 'Search',
+                            hintText: S.current.search,
                           ),
                         ),
                         const SizedBox(
@@ -120,7 +123,8 @@ class _MailScreenState extends State<MailScreen> {
                               endActionPane: ActionPane(
                                 motion: ScrollMotion(),
                                 children: [
-                                  if (mail.model.status == 'UNREAD')
+                                  if (mail.model.status ==
+                                      S.current.unread.toUpperCase())
                                     SlidableAction(
                                       backgroundColor: Theme.of(context)
                                           .colorScheme
@@ -128,24 +132,24 @@ class _MailScreenState extends State<MailScreen> {
                                       foregroundColor: Theme.of(context)
                                           .scaffoldBackgroundColor,
                                       icon: Icons.check_outlined,
-                                      label: 'READ',
+                                      label: S.current.read.toUpperCase(),
                                       onPressed: (context) =>
                                           provider.updateMailByIndex(
                                         i,
-                                        status: 'READ',
+                                        status: S.current.read,
                                       ),
                                     ),
                                   SlidableAction(
                                     onPressed: (context) =>
                                         provider.updateMailByIndex(
                                       i,
-                                      status: 'DELETE',
+                                      status: S.current.delete,
                                     ),
                                     backgroundColor: Colors.red,
                                     foregroundColor: Theme.of(context)
                                         .scaffoldBackgroundColor,
                                     icon: Icons.delete_forever,
-                                    label: 'DELETE',
+                                    label: S.current.delete.toUpperCase(),
                                   ),
                                 ],
                               ),
@@ -193,7 +197,9 @@ class _MailScreenState extends State<MailScreen> {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(6.0),
-                                              color: email.status == 'UNREAD'
+                                              color: email.status ==
+                                                      S.current.unread
+                                                          .toUpperCase()
                                                   ? Theme.of(context)
                                                       .colorScheme
                                                       .secondary
@@ -299,8 +305,8 @@ class _MailScreenState extends State<MailScreen> {
                   child: Row(
                     children: [
                       MainMenuButton(
-                        title: 'As Read',
-                        isEnable: provider.isAllUnRead() != null &&
+                        title: S.current.as_read,
+                        isEnabled: provider.isAllUnRead() != null &&
                             provider.isAllUnRead()!,
                         onTap: () async {
                           var resp = await provider.onAsRead();
@@ -314,8 +320,8 @@ class _MailScreenState extends State<MailScreen> {
                       ),
                       const Spacer(),
                       MainMenuButton(
-                        title: 'Delete',
-                        isEnable: provider.isAllUnRead() != null,
+                        title: S.current.delete,
+                        isEnabled: provider.isAllUnRead() != null,
                         onTap: () => provider.onDelete(),
                       ),
                     ],

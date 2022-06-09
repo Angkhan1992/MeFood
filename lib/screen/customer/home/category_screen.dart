@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mefood/model/category_model.dart';
-import 'package:mefood/widget/common/appbar.dart';
 
-import '../../../themes/dimens.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class CategoryScreen extends StatefulWidget {
   final CategoryModel category;
@@ -24,7 +24,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         context,
         title: widget.category.name!,
         icon: SvgPicture.asset(
-          'assets/icons/category/${widget.category.icon}',
+          'assets/icons/category/${widget.category.linkIcon}',
           width: sizeAppbarIcon,
           height: sizeAppbarIcon,
           color: Theme.of(context).iconTheme.color,

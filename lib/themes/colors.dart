@@ -15,3 +15,9 @@ const kAccentDarkColor = Color(0xff64ffda);
 const kHintDarkColor = Color(0xff554245);
 const kErrorDarkColor = Color(0xffff0000);
 const kTextDarkColor = Color(0xfff8f8f8);
+
+const kShadowContainer = BoxShadow(
+  blurRadius: 5.0,
+  spreadRadius: 1.0,
+  color: Colors.black12,
+);

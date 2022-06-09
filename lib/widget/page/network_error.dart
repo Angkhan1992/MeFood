@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mefood/generated/l10n.dart';
 
 class NetworkErrorPage extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class NetworkErrorPage extends StatelessWidget {
                 height: 48.0,
               ),
               Text(
-                'Network connection failed.\nPlease check your internet again.',
+                S.current.err_network_desc,
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 18.0,

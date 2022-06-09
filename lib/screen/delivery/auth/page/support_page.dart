@@ -1,23 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/service/service.dart';
-import 'package:provider/provider.dart';
 
-import 'package:mefood/extensions/extensions.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/provider/provider.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class AuthSupportPage extends StatefulWidget {
-  const AuthSupportPage({Key? key}) : super(key: key);
+  final MemberModel? member;
+  const AuthSupportPage({
+    Key? key,
+    this.member,
+  }) : super(key: key);
 
   @override
   State<AuthSupportPage> createState() => _AuthSupportPageState();
 }
 
 class _AuthSupportPageState extends State<AuthSupportPage> {
-  var _user = UserModel();
+  var _user = MemberModel();
 
   final _contentController = TextEditingController();
 
@@ -26,8 +29,7 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
     super.initState();
 
     Timer.run(() {
-      _user = Provider.of<DriverProvider>(context, listen: false).user.user ??
-          UserModel();
+      _user = widget.member == null ? MemberModel() : widget.member!.copyWith();
       setState(() {});
     });
   }
@@ -41,7 +43,7 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
           const SizedBox(
             height: 16.0,
           ),
-          'Contact Us'.wText(
+          S.current.contact_us.wText(
             TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.w700,
@@ -50,8 +52,7 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
           const SizedBox(
             height: 4.0,
           ),
-          'You can send some information to MEFOOD. We will reply in 48hrs. Thanks for your contact.'
-              .wText(
+          S.current.dsc_contact_us.wText(
             TextStyle(
               fontSize: 14.0,
               fontWeight: FontWeight.w400,
@@ -66,7 +67,7 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
             controller: TextEditingController(
               text: _user.email ?? '',
             ),
-            hintText: 'Email Address',
+            hintText: S.current.email_user_id,
             keyboardType: TextInputType.emailAddress,
             readOnly: true,
           ),
@@ -76,9 +77,9 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
           CustomTextField(
             prefix: const Icon(Icons.category),
             controller: TextEditingController(
-              text: 'Pending Account',
+              text: S.current.pending_account,
             ),
-            hintText: 'Category',
+            hintText: S.current.category,
             readOnly: true,
           ),
           const SizedBox(
@@ -86,13 +87,13 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
           ),
           CustomTextMemo(
             controller: _contentController,
-            hintText: 'Submit your problems',
+            hintText: S.current.hint_report_desc,
           ),
           const SizedBox(
             height: 40.0,
           ),
           CustomFillButton(
-            title: 'Submit',
+            title: S.current.submit,
             onTap: onSubmit,
           ),
           const SizedBox(
@@ -109,13 +110,13 @@ class _AuthSupportPageState extends State<AuthSupportPage> {
     var content = _contentController.text;
     if (content.isEmpty) {
       DialogService.of(context).showSnackBar(
-        'Please input some messages',
+        S.current.input_all_fields,
         type: SnackBarType.error,
       );
       return;
     }
 
-    var resp = await APIService.of(context: context).post(
+    var resp = await APIService.of(context).post(
       '${APIService.kUrlSupport}/pendingDelivery',
       {
         'usr_id': _user.id!,

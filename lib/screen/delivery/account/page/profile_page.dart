@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/model/user_model.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/dialog_service.dart';
-import 'package:mefood/widget/common/button.dart';
+import 'package:mefood/util/config.dart';
+import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/delivery/account.dart';
 
 class ProfilePage extends StatefulWidget {
-  final UserModel user;
-  final Function(UserModel)? updateUser;
+  final MemberModel user;
+  final Function(MemberModel)? updateUser;
 
   const ProfilePage({
     Key? key,
@@ -21,7 +23,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  UserModel? user;
+  MemberModel? user;
   var isUpdated = false;
 
   @override
@@ -48,29 +50,20 @@ class _ProfilePageState extends State<ProfilePage> {
             onTap: () async {
               var email = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.email_outlined),
-                title: 'Update Email',
-                hintText: 'Email Address',
+                title: '${S.current.update} ${S.current.email_address}',
+                hintText: S.current.email_address,
                 initValue: user!.email,
                 keyboardType: TextInputType.emailAddress,
               );
               if (email != null && email.isNotEmpty) {
                 if (email.validateEmail == null) {
                   if (email == user!.email) {
-                    DialogService.of(context).showSnackBar(
-                      'Not Changed Email!',
-                      type: SnackBarType.waring,
-                    );
                     return;
                   }
                   setState(() {
                     isUpdated = true;
                     user!.email = email;
                   });
-                } else {
-                  DialogService.of(context).showSnackBar(
-                    'Invalid Email Type',
-                    type: SnackBarType.error,
-                  );
                 }
               }
             },
@@ -85,17 +78,13 @@ class _ProfilePageState extends State<ProfilePage> {
             onTap: () async {
               var phone = await DialogService.of(context).oneValueField(
                 prefix: Icon(Icons.phone_android),
-                title: 'Update Phone Number',
-                hintText: 'Phone Number',
+                title: '${S.current.update} ${S.current.phone_number}',
+                hintText: S.current.phone_number,
                 initValue: user!.phone,
                 keyboardType: TextInputType.phone,
               );
               if (phone != null && phone.isNotEmpty) {
                 if (phone == user!.phone) {
-                  DialogService.of(context).showSnackBar(
-                    'Not Changed Phone Number!',
-                    type: SnackBarType.waring,
-                  );
                   return;
                 }
                 setState(() {
@@ -124,10 +113,6 @@ class _ProfilePageState extends State<ProfilePage> {
               if (chooseDate != null) {
                 var dateString = dateFormatter.format(chooseDate);
                 if (dateString == user!.dob) {
-                  DialogService.of(context).showSnackBar(
-                    'Not Changed Birthday!',
-                    type: SnackBarType.waring,
-                  );
                   return;
                 }
                 setState(() {
@@ -141,23 +126,18 @@ class _ProfilePageState extends State<ProfilePage> {
             context,
             title: user!.gender!,
             leading: Icon(
-              user!.gender! == 'MALE' ? Icons.male : Icons.female,
+              user!.gender! == S.current.type_male.toUpperCase()
+                  ? Icons.male
+                  : Icons.female,
               color: Theme.of(context).colorScheme.secondary,
             ),
             onTap: () async {
               var gender = await DialogService.of(context).bottomChoose(
-                title: 'Choose Gender',
-                values: [
-                  'MALE',
-                  'FEMALE',
-                ],
+                title: S.current.choose_gender,
+                values: genderType,
               );
               if (gender != null) {
                 if (gender == user!.gender) {
-                  DialogService.of(context).showSnackBar(
-                    'Not Changed Gender!',
-                    type: SnackBarType.waring,
-                  );
                   return;
                 }
                 setState(() {
@@ -182,20 +162,20 @@ class _ProfilePageState extends State<ProfilePage> {
             title: 'Update Profile'.toUpperCase(),
             onTap: isUpdated
                 ? () async {
-                    var resp = await user!.update(context);
-                    if (resp != null) {
-                      DialogService.of(context).showSnackBar(
-                        resp,
-                        type: SnackBarType.error,
-                      );
-                      return;
-                    }
-                    if (widget.updateUser != null) {
-                      widget.updateUser!(user!);
-                      DialogService.of(context).showSnackBar(
-                        'Success updated user data',
-                      );
-                    }
+                    // var resp = await user!.update(context);
+                    // if (resp != null) {
+                    //   DialogService.of(context).showSnackBar(
+                    //     resp,
+                    //     type: SnackBarType.error,
+                    //   );
+                    //   return;
+                    // }
+                    // if (widget.updateUser != null) {
+                    //   widget.updateUser!(user!);
+                    //   DialogService.of(context).showSnackBar(
+                    //     S.current.success_data_updated,
+                    //   );
+                    // }
                   }
                 : null,
           ),
@@ -203,14 +183,14 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 40.0,
           ),
           CustomOutlineButton(
-            title: 'Update Password'.toUpperCase(),
+            title: '${S.current.update} ${S.current.password}'.toUpperCase(),
             onTap: () {},
           ),
           const SizedBox(
             height: 16.0,
           ),
           CustomFillButton(
-            title: 'Delete Account'.toUpperCase(),
+            title: S.current.remove_account.toUpperCase(),
             backgroundColor: Colors.red,
             onTap: () {},
           ),

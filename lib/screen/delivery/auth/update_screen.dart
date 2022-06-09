@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mefood/provider/delivery/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mefood/provider/provider.dart';
 import 'package:mefood/screen/delivery/auth/page/page.dart';
 import 'package:mefood/screen/delivery/auth/page/securit_page.dart';
 import 'package:mefood/screen/delivery/auth/page/support_page.dart';
@@ -34,7 +34,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
         toolbarHeight: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Consumer<DriverProvider>(
+      body: Consumer<AuthProvider>(
         builder: (context, value, child) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -54,7 +54,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
                 child: [
                   AddProfilePage(
                     isLogin: true,
-                    onNext: (user, id) {
+                    onNext: (user) {
                       value.setUser(user);
                       onUpdateSuccess();
                     },

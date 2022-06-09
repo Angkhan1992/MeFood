@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:mefood/extensions/extensions.dart';
-import 'package:mefood/widget/common/common.dart';
+import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/widget/base/base.dart';
 
 class ColorPickerService {
   final BuildContext context;
@@ -45,7 +46,7 @@ class ColorPickerService {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    'Choose Color'.wText(TextStyle(
+                    S.current.choose_color.wText(TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w700,
                     )),
@@ -66,7 +67,7 @@ class ColorPickerService {
                         ),
                         Expanded(
                           child: CustomOutlineButton(
-                            title: 'Cancel',
+                            title: S.current.cancel,
                             onTap: () => Navigator.of(context).pop(),
                           ),
                         ),
@@ -75,7 +76,7 @@ class ColorPickerService {
                         ),
                         Expanded(
                           child: CustomFillButton(
-                            title: 'Choose',
+                            title: S.current.done,
                             onTap: () => Navigator.of(context).pop(_color),
                           ),
                         ),
