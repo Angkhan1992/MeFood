@@ -22,17 +22,16 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 mixin _$CategoryModel {
   int? get id => throw _privateConstructorUsedError;
   set id(int? value) => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  set name(String? value) => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  set title(String? value) => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   set description(String? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
   set regdate(String? value) => throw _privateConstructorUsedError;
   String? get updated => throw _privateConstructorUsedError;
-  set updated(String? value) =>
-      throw _privateConstructorUsedError; // extend field
-  String? get linkIcon => throw _privateConstructorUsedError; // extend field
-  set linkIcon(String? value) => throw _privateConstructorUsedError;
+  set updated(String? value) => throw _privateConstructorUsedError;
+  String? get other => throw _privateConstructorUsedError;
+  set other(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,11 +46,11 @@ abstract class $CategoryModelCopyWith<$Res> {
       _$CategoryModelCopyWithImpl<$Res>;
   $Res call(
       {int? id,
-      String? name,
+      String? title,
       String? description,
       String? regdate,
       String? updated,
-      String? linkIcon});
+      String? other});
 }
 
 /// @nodoc
@@ -66,20 +65,20 @@ class _$CategoryModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? title = freezed,
     Object? description = freezed,
     Object? regdate = freezed,
     Object? updated = freezed,
-    Object? linkIcon = freezed,
+    Object? other = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String?,
       description: description == freezed
           ? _value.description
@@ -93,9 +92,9 @@ class _$CategoryModelCopyWithImpl<$Res>
           ? _value.updated
           : updated // ignore: cast_nullable_to_non_nullable
               as String?,
-      linkIcon: linkIcon == freezed
-          ? _value.linkIcon
-          : linkIcon // ignore: cast_nullable_to_non_nullable
+      other: other == freezed
+          ? _value.other
+          : other // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -110,11 +109,11 @@ abstract class _$$_CategoryModelCopyWith<$Res>
   @override
   $Res call(
       {int? id,
-      String? name,
+      String? title,
       String? description,
       String? regdate,
       String? updated,
-      String? linkIcon});
+      String? other});
 }
 
 /// @nodoc
@@ -131,20 +130,20 @@ class __$$_CategoryModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? title = freezed,
     Object? description = freezed,
     Object? regdate = freezed,
     Object? updated = freezed,
-    Object? linkIcon = freezed,
+    Object? other = freezed,
   }) {
     return _then(_$_CategoryModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String?,
       description: description == freezed
           ? _value.description
@@ -158,9 +157,9 @@ class __$$_CategoryModelCopyWithImpl<$Res>
           ? _value.updated
           : updated // ignore: cast_nullable_to_non_nullable
               as String?,
-      linkIcon: linkIcon == freezed
-          ? _value.linkIcon
-          : linkIcon // ignore: cast_nullable_to_non_nullable
+      other: other == freezed
+          ? _value.other
+          : other // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -172,11 +171,11 @@ class __$$_CategoryModelCopyWithImpl<$Res>
 class _$_CategoryModel implements _CategoryModel {
   _$_CategoryModel(
       {this.id,
-      this.name,
+      this.title,
       this.description,
       this.regdate,
       this.updated,
-      this.linkIcon});
+      this.other});
 
   factory _$_CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryModelFromJson(json);
@@ -184,20 +183,19 @@ class _$_CategoryModel implements _CategoryModel {
   @override
   int? id;
   @override
-  String? name;
+  String? title;
   @override
   String? description;
   @override
   String? regdate;
   @override
   String? updated;
-// extend field
   @override
-  String? linkIcon;
+  String? other;
 
   @override
   String toString() {
-    return 'CategoryModel(id: $id, name: $name, description: $description, regdate: $regdate, updated: $updated, linkIcon: $linkIcon)';
+    return 'CategoryModel(id: $id, title: $title, description: $description, regdate: $regdate, updated: $updated, other: $other)';
   }
 
   @JsonKey(ignore: true)
@@ -214,11 +212,11 @@ class _$_CategoryModel implements _CategoryModel {
 abstract class _CategoryModel implements CategoryModel {
   factory _CategoryModel(
       {int? id,
-      String? name,
+      String? title,
       String? description,
       String? regdate,
       String? updated,
-      String? linkIcon}) = _$_CategoryModel;
+      String? other}) = _$_CategoryModel;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryModel.fromJson;
@@ -226,15 +224,15 @@ abstract class _CategoryModel implements CategoryModel {
   @override
   int? get id => throw _privateConstructorUsedError;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @override
   String? get description => throw _privateConstructorUsedError;
   @override
   String? get regdate => throw _privateConstructorUsedError;
   @override
   String? get updated => throw _privateConstructorUsedError;
-  @override // extend field
-  String? get linkIcon => throw _privateConstructorUsedError;
+  @override
+  String? get other => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_CategoryModelCopyWith<_$_CategoryModel> get copyWith =>

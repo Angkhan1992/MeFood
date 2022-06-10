@@ -1,5 +1,6 @@
 export 'address.dart';
 export 'car.dart';
+export 'category.dart';
 export 'center.dart';
 export 'color.dart';
 export 'customer.dart';

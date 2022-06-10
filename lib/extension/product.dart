@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/screen/customer/base/product_detail.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/widget/base/button.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/generated/l10n.dart';
@@ -48,6 +51,134 @@ extension EProduct on ProductModel {
 
   String get currency {
     return '₭ ${formatCurrency.format(price)}';
+  }
+
+  Widget customerListItem(BuildContext context) {
+    var height = 96.0;
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Container(
+        height: height,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12.0),
+          child: InkWell(
+            onTap: () => NavigatorService.of(context).push(
+              screen: ProductDetail(product: this),
+            ),
+            child: Row(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: CachedNetworkImage(
+                    imageUrl: '$kDomain${galleries![0]}',
+                    placeholder: (context, url) => Center(
+                      child: SizedBox(
+                        width: height / 2,
+                        height: height / 2,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.0,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Center(
+                      child: SvgPicture.asset(
+                        'assets/images/logo.svg',
+                        width: height / 3 * 2,
+                        height: height / 3 * 2,
+                        color: Theme.of(context).hintColor,
+                      ),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: offsetBase,
+                      vertical: offsetSm,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  title!,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  currency,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w700,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            Row(
+                              children: [
+                                ActionButton(
+                                  iconData: Icons.ios_share_rounded,
+                                ),
+                                const SizedBox(width: 16.0),
+                                ActionButton(
+                                  iconData: Icons.favorite_outline,
+                                  color: Colors.red,
+                                ),
+                                const SizedBox(width: 16.0),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                    vertical: 8.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  child: Text(
+                                    'Add Cart',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Text(
+                          desc!,
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w200,
+                          ),
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget listItem(
@@ -412,7 +543,7 @@ extension EProduct on ProductModel {
                   color: Theme.of(context).colorScheme.secondary,
                   child: Center(
                     child: Text(
-                      '${currency}\nADD CART',
+                      '$currency\nADD CART',
                       style: TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w700,

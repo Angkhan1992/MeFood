@@ -18,7 +18,11 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: offsetSm),
+      padding: const EdgeInsets.only(
+        top: offsetSm,
+        left: offsetSm,
+        right: offsetSm,
+      ),
       child: Row(
         children: [
           if (prefix != null) ...{
@@ -27,15 +31,23 @@ class CategoryWidget extends StatelessWidget {
               width: offsetBase,
             ),
           },
-          title.wText(
-            CustomText.bold(fontSize: fontXMd),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w200,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
           ),
           const Spacer(),
           if (extend != null)
             InkWell(
               onTap: onExtend,
               child: extend!.wText(
-                CustomText.medium(fontSize: fontSm),
+                CustomText.medium(
+                  fontSize: fontSm,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
             ),
         ],

@@ -53,6 +53,8 @@ mixin _$ProductModel {
   List<String>? get galleries =>
       throw _privateConstructorUsedError; // extend fields
   set galleries(List<String>? value) => throw _privateConstructorUsedError;
+  CategoryModel? get category => throw _privateConstructorUsedError;
+  set category(CategoryModel? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -77,9 +79,11 @@ abstract class $ProductModelCopyWith<$Res> {
       String? regdate,
       String? other,
       int? hidden,
-      List<String>? galleries});
+      List<String>? galleries,
+      CategoryModel? category});
 
   $RestaurantModelCopyWith<$Res>? get restaurant;
+  $CategoryModelCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -104,6 +108,7 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
     Object? other = freezed,
     Object? hidden = freezed,
     Object? galleries = freezed,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -154,6 +159,10 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
           ? _value.galleries
           : galleries // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ));
   }
 
@@ -165,6 +174,17 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
 
     return $RestaurantModelCopyWith<$Res>(_value.restaurant!, (value) {
       return _then(_value.copyWith(restaurant: value));
+    });
+  }
+
+  @override
+  $CategoryModelCopyWith<$Res>? get category {
+    if (_value.category == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.category!, (value) {
+      return _then(_value.copyWith(category: value));
     });
   }
 }
@@ -188,10 +208,13 @@ abstract class _$$_ProductModelCopyWith<$Res>
       String? regdate,
       String? other,
       int? hidden,
-      List<String>? galleries});
+      List<String>? galleries,
+      CategoryModel? category});
 
   @override
   $RestaurantModelCopyWith<$Res>? get restaurant;
+  @override
+  $CategoryModelCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -219,6 +242,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
     Object? other = freezed,
     Object? hidden = freezed,
     Object? galleries = freezed,
+    Object? category = freezed,
   }) {
     return _then(_$_ProductModel(
       id: id == freezed
@@ -269,6 +293,10 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.galleries
           : galleries // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ));
   }
 }
@@ -289,7 +317,8 @@ class _$_ProductModel implements _ProductModel {
       this.regdate,
       this.other,
       this.hidden,
-      this.galleries});
+      this.galleries,
+      this.category});
 
   factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
       _$$_ProductModelFromJson(json);
@@ -323,10 +352,12 @@ class _$_ProductModel implements _ProductModel {
 // extend fields
   @override
   List<String>? galleries;
+  @override
+  CategoryModel? category;
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, restaurant: $restaurant, prepareTime: $prepareTime, title: $title, desc: $desc, value: $value, unit: $unit, price: $price, regdate: $regdate, other: $other, hidden: $hidden, galleries: $galleries)';
+    return 'ProductModel(id: $id, restaurant: $restaurant, prepareTime: $prepareTime, title: $title, desc: $desc, value: $value, unit: $unit, price: $price, regdate: $regdate, other: $other, hidden: $hidden, galleries: $galleries, category: $category)';
   }
 
   @JsonKey(ignore: true)
@@ -353,7 +384,8 @@ abstract class _ProductModel implements ProductModel {
       String? regdate,
       String? other,
       int? hidden,
-      List<String>? galleries}) = _$_ProductModel;
+      List<String>? galleries,
+      CategoryModel? category}) = _$_ProductModel;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$_ProductModel.fromJson;
@@ -386,6 +418,8 @@ abstract class _ProductModel implements ProductModel {
   int? get hidden => throw _privateConstructorUsedError;
   @override // extend fields
   List<String>? get galleries => throw _privateConstructorUsedError;
+  @override
+  CategoryModel? get category => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>

@@ -15,7 +15,7 @@ const double fontLg = 22.0;
 const double fontXLg = 28.0;
 
 const double sizeHomeCategoryIcon = 32.0;
-const double sizeIcon = 24.0;
+const double sizeIcon = 22.0;
 const double sizeAppbarIcon = 20.0;
 const double sizeMark = 48.0;
 const double sizeOrderProduct = 120.0;

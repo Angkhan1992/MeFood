@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/extension/extension.dart';
 
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/model/base/base.dart';
+import 'package:mefood/screen/customer/home/all_category_screen.dart';
+import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/widget/base/base.dart';
 
@@ -18,6 +21,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _scrollController = ScrollController();
 
+  List<CategoryModel> categories = [];
+
   @override
   void initState() {
     super.initState();
@@ -25,11 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Timer.run(() => _initProvider());
   }
 
-  void _initProvider() async {
-    // _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
-    // var categories = await JsonService.readCategoryFromJson();
-    // _categoryProvider!.instanceOfCategories(categories);
-  }
+  void _initProvider() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -58,26 +59,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: [
                         CategoryWidget(
-                            prefix: SvgPicture.asset(
-                              'assets/icons/ic_category.svg',
-                              width: sizeIcon,
-                              height: sizeIcon,
-                              color: Theme.of(context).secondaryHeaderColor,
-                            ),
-                            title: S.current.category,
-                            extend: 'View All',
-                            onExtend: () {}
-                            // => NavigatorService.of(context).push(
-                            //   screen: AllCategoryScreen(
-                            //     categories: _categoryProvider!.categories,
-                            //   ),
-                            // ),
-                            ),
+                          prefix: Icon(
+                            Icons.category_outlined,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          title: S.current.category,
+                          extend: 'View All',
+                          onExtend: () => NavigatorService.of(context).push(
+                            screen: AllCategoryScreen(categories: categories),
+                          ),
+                        ),
                         categoryWidget(),
                         CategoryWidget(
                           prefix: Icon(
+                            LineIcons.productHunt,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          title: S.current.new_products,
+                        ),
+                        orderWidget(),
+                        CategoryWidget(
+                          prefix: Icon(
                             Icons.favorite_outline,
-                            color: Theme.of(context).secondaryHeaderColor,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           title: S.current.hot_products,
                           extend: S.current.view_all,
@@ -87,21 +94,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         CategoryWidget(
                           prefix: Icon(
                             LineIcons.objectGroup,
-                            color: Theme.of(context).secondaryHeaderColor,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           title: S.current.restaurants,
                           extend: S.current.view_all,
                           onExtend: () {},
                         ),
                         restaurantWidget(),
-                        CategoryWidget(
-                          prefix: Icon(
-                            LineIcons.jediOrder,
-                            color: Theme.of(context).secondaryHeaderColor,
-                          ),
-                          title: S.current.new_products,
-                        ),
-                        orderWidget(),
                       ],
                     ),
                   ),
@@ -121,28 +121,33 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        // child: Consumer<CategoryProvider>(
-        //   builder: (context, value, child) {
-        //     return Row(
-        //       children: [
-        //         for (var model in value.categories) ...{
-        //           homeCell(
-        //             context,
-        //             model: model,
-        //             onTap: () => NavigatorService.of(context).push(
-        //               screen: CategoryScreen(
-        //                 category: model,
-        //               ),
-        //             ),
-        //           ),
-        //           const SizedBox(
-        //             width: offsetBase,
-        //           ),
-        //         },
-        //       ],
-        //     );
-        //   },
-        // ),
+        child: FutureBuilder<List<CategoryModel>>(
+          future: ECategory.getCategories(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return ProgressWidget(
+                color: Theme.of(context).colorScheme.secondary,
+              );
+            }
+            if (snapshot.hasError) {
+              return Container();
+            }
+            if (snapshot.data == null) {
+              return Container();
+            }
+            categories = snapshot.data!;
+            return Row(
+              children: [
+                for (var model in categories) ...{
+                  model.homeCell(context),
+                  const SizedBox(
+                    width: offsetBase,
+                  ),
+                },
+              ],
+            );
+          },
+        ),
       ),
     );
   }

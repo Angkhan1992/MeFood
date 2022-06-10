@@ -18,6 +18,7 @@ const kUrlPlate = '/assets/plate/';
 const kUrlCar = '/assets/car/';
 const kUrlLogo = '/assets/logo/';
 const kUrlGallery = '/assets/gallery/';
+const kUrlCategory = '/assets/category/';
 
 class APIService {
   final BuildContext? context;
@@ -26,7 +27,6 @@ class APIService {
   static final kUrlHistory = '$kDomain/api/v1/history';
   static final kUrlUpload = '$kDomain/api/v1/upload';
   static final kUrlUser = '$kDomain/api/v1/user';
-
   static final kUrlCategory = '$kDomain/api/v1/category';
 
   static final kUrlDelivery = '$kDomain/api/v1/delivery';

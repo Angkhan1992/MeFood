@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mefood/extension/extension.dart';
 
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
@@ -37,18 +38,7 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
           vertical: offsetXMd,
         ),
         itemBuilder: (context, index) {
-          var category = widget.categories[index];
-          return Container();
-          // return listCell(
-          //   context,
-          //   model: category,
-          //   onTap: () => NavigatorService.of(context).push(
-          //     screen: CategoryScreen(
-          //       category: category,
-          //     ),
-          //     replace: true,
-          //   ),
-          // );
+          return widget.categories[index].listCell(context);
         },
         separatorBuilder: (context, index) {
           return const SizedBox(

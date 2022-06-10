@@ -41,4 +41,23 @@ class CustomerProvider extends ChangeNotifier {
       return S.current.sever_error;
     }
   }
+
+  Future<String?> loginToken() async {
+    var resp = await APIService.of(null).post(
+      '${APIService.kUrlCustomerAuth}/token',
+      {},
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        customer = CustomerModel.fromJson(resp['result']['customer']);
+        await PrefService.of().saveToken(resp['result']['token']);
+        notifyListeners();
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return S.current.sever_error;
+    }
+  }
 }

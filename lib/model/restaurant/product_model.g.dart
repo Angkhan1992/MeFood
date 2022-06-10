@@ -25,6 +25,9 @@ _$_ProductModel _$$_ProductModelFromJson(Map<String, dynamic> json) =>
       galleries: (json['galleries'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      category: json['category'] == null
+          ? null
+          : CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
@@ -41,4 +44,5 @@ Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
       'other': instance.other,
       'hidden': instance.hidden,
       'galleries': instance.galleries,
+      'category': instance.category,
     };

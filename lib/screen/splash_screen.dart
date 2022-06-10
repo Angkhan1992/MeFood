@@ -1,11 +1,14 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/provider/restaurant/restaurant.dart';
+import 'package:mefood/screen/customer/main/main_screen.dart' as cs_log;
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:provider/provider.dart';
 
 import 'login_screen.dart';
 
@@ -81,10 +84,21 @@ class _SplashScreenState extends State<SplashScreen> {
                       routeName: RouterService.routeLogin,
                     );
                   }
-                } else {
-                  NavigatorService.of(context)
-                      .push(screen: const LoginScreen());
+                  return;
                 }
+                if (F.isCustomer) {
+                  var provider = context.read<CustomerProvider>();
+                  var err = await provider.loginToken();
+                  if (err == null) {
+                    NavigatorService.of(context)
+                        .push(screen: cs_log.MainScreen());
+                  } else {
+                    NavigatorService.of(context)
+                        .push(screen: const LoginScreen());
+                  }
+                  return;
+                }
+                NavigatorService.of(context).push(screen: const LoginScreen());
               },
             ),
           ],

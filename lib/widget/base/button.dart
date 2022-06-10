@@ -187,3 +187,40 @@ class MainMenuButton extends StatelessWidget {
     );
   }
 }
+
+class ActionButton extends StatelessWidget {
+  final double size;
+  final IconData iconData;
+  final Color? color;
+  final Function()? onTap;
+
+  const ActionButton({
+    Key? key,
+    required this.iconData,
+    this.size = 24.0,
+    this.color,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var backgroundColor = color ?? Theme.of(context).colorScheme.secondary;
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: backgroundColor,
+        ),
+        child: Center(
+          child: Icon(
+            iconData,
+            size: size / 3 * 2,
+          ),
+        ),
+      ),
+    );
+  }
+}
