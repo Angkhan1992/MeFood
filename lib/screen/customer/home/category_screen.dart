@@ -26,7 +26,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       appBar: CustomAppbar(
         context,
-        title: widget.category.title!,
+        title: widget.category.title!.toUpperCase(),
         icon: SvgPicture.network(
           widget.category.icon,
           width: sizeAppbarIcon,
@@ -49,6 +49,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
             return EmptyListWidget();
           }
           List<ProductModel> products = snapshot.data!;
+          if (products.isEmpty) {
+            return EmptyListWidget();
+          }
           return SingleChildScrollView(
             controller: controller,
             child: Column(

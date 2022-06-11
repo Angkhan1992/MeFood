@@ -4,8 +4,8 @@ import 'package:line_icons/line_icons.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/screen/customer/main/cart_screen.dart';
 import 'package:mefood/screen/customer/main/home_screen.dart';
-import 'package:mefood/screen/customer/main/offer_screen.dart';
 import 'package:mefood/screen/customer/main/order_screen.dart';
 import 'package:mefood/screen/customer/main/setting_screen.dart';
 import 'package:mefood/themes/dimens.dart';
@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     var screens = [
       const HomeScreen(),
       const OrderScreen(),
-      const OfferScreen(),
+      const MyCartScreen(),
       const SettingScreen(),
     ];
     return WillPopScope(
@@ -48,13 +48,13 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     var bottomBarTitles = [
       S.current.home,
       S.current.orders,
-      S.current.offers,
+      'My Cart',
       S.current.profile,
     ];
     var bottomItemImages = [
       LineIcons.home,
-      LineIcons.jediOrder,
-      LineIcons.gift,
+      LineIcons.firstOrder,
+      LineIcons.shoppingCart,
       LineIcons.user,
     ];
     return CustomBottomBar(

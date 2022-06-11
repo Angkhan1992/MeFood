@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         CategoryWidget(
                           prefix: Icon(
-                            Icons.category_outlined,
+                            LineIcons.shoppingBag,
                             size: sizeIcon,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         categoryWidget(),
                         CategoryWidget(
                           prefix: Icon(
-                            LineIcons.productHunt,
+                            LineIcons.shoppingBasket,
                             size: sizeIcon,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         orderWidget(),
                         CategoryWidget(
                           prefix: Icon(
-                            Icons.favorite_outline,
+                            LineIcons.shirtsInBulk,
                             size: sizeIcon,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         productWidget(),
                         CategoryWidget(
                           prefix: Icon(
-                            LineIcons.objectGroup,
+                            LineIcons.coffee,
                             size: sizeIcon,
                             color: Theme.of(context).colorScheme.secondary,
                           ),

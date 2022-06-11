@@ -10,5 +10,7 @@ export 'mail.dart';
 export 'member.dart';
 export 'product.dart';
 export 'restaurant.dart';
+export 'review.dart';
+export 'sale.dart';
 export 'string.dart';
 export 'support.dart';

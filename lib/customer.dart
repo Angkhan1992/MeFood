@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:mefood/provider/customer/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/provider/customer/customer.dart';
@@ -40,11 +41,13 @@ void main() async {
   F.appFlavor = Flavor.customer;
 
   var customerProvider = CustomerProvider();
+  var cartProvider = CartProvider()..initData();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => customerProvider),
+        ChangeNotifierProvider(create: (context) => cartProvider),
       ],
       child: const MyApp(),
     ),

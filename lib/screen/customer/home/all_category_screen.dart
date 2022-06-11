@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
 
 import 'package:mefood/generated/l10n.dart';
@@ -24,12 +24,10 @@ class _AllCategoryScreenState extends State<AllCategoryScreen> {
     return Scaffold(
       appBar: CustomAppbar(
         context,
-        title: S.current.category,
-        icon: SvgPicture.asset(
-          'assets/icons/ic_category.svg',
-          width: sizeAppbarIcon,
-          height: sizeAppbarIcon,
-          color: Theme.of(context).colorScheme.onSecondary,
+        title: S.current.category.toUpperCase(),
+        icon: Icon(
+          LineIcons.shoppingBag,
+          size: sizeIcon,
         ),
       ),
       body: ListView.separated(

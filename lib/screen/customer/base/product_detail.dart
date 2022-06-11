@@ -203,7 +203,8 @@ class _ProductDetailState extends State<ProductDetail> {
                               ),
                             ],
                           ),
-                        const SizedBox(height: 16.0),
+                        const SizedBox(height: 24.0),
+                        reviewWidget(),
                       ],
                     ),
                   ),
@@ -228,33 +229,13 @@ class _ProductDetailState extends State<ProductDetail> {
             fontWeight: FontWeight.w700,
           ),
         ),
+        const SizedBox(
+          height: offsetBase,
+        ),
         for (var i = 0; i < 3; i++) ...{
+          EReview.fakeView(context),
           const SizedBox(
-            height: offsetSm,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            height: offsetBase,
           ),
         }
       ],
@@ -288,7 +269,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   Text(
                     '1',
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 22.0,
                       fontWeight: FontWeight.w400,
                       color: Theme.of(context).colorScheme.secondary,
                     ),
@@ -311,8 +292,8 @@ class _ProductDetailState extends State<ProductDetail> {
                 child: Text(
                   '${widget.product.currency}\nADD CART',
                   style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w700,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w200,
                     color: Theme.of(context).primaryColor,
                   ),
                   textAlign: TextAlign.center,

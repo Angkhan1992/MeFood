@@ -5,6 +5,7 @@ export 'base/mail_model.dart';
 export 'base/member_model.dart';
 export 'base/country_model.dart';
 export 'customer/order_model.dart';
+export 'customer/sale_model.dart';
 export 'delivery/car_model.dart';
 export 'delivery/delivery_model.dart';
 export 'restaurant/product_model.dart';

@@ -91,4 +91,21 @@ class PrefService {
     var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
     await prefs.setString('products', prodPref);
   }
+
+  Future<List<SaleModel>> getSales() async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = prefs.getString('mycart');
+    if (prodPref == null) {
+      return [];
+    }
+    return (jsonDecode(prodPref) as List)
+        .map((e) => SaleModel.fromJson(e))
+        .toList();
+  }
+
+  Future<void> setSales(List<SaleModel> products) async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
+    await prefs.setString('mycart', prodPref);
+  }
 }

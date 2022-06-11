@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mefood/extension/extension.dart';
-import 'package:mefood/generated/l10n.dart';
 
 import 'package:mefood/themes/dimens.dart';
 
-class OfferScreen extends StatefulWidget {
-  const OfferScreen({Key? key}) : super(key: key);
+class MyCartScreen extends StatefulWidget {
+  const MyCartScreen({Key? key}) : super(key: key);
 
   @override
-  State<OfferScreen> createState() => _OfferScreenState();
+  State<MyCartScreen> createState() => _MyCartScreenState();
 }
 
-class _OfferScreenState extends State<OfferScreen> {
+class _MyCartScreenState extends State<MyCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +24,8 @@ class _OfferScreenState extends State<OfferScreen> {
               left: offsetXMd,
             ),
             alignment: Alignment.centerLeft,
-            child: S.current.offers
-                .colorTitle(Theme.of(context).colorScheme.onSecondary),
+            child:
+                'MyCart'.colorTitle(Theme.of(context).colorScheme.onSecondary),
           ),
           Expanded(
             child: Container(

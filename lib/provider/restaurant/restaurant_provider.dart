@@ -7,7 +7,6 @@ import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/base/base.dart';
 import 'package:mefood/model/restaurant/restaurant.dart';
 import 'package:mefood/service/service.dart';
-import 'package:mefood/util/util.dart';
 
 class RestaurantProvider with ChangeNotifier, DiagnosticableTreeMixin {
   RestaurantModel? restaurant;
@@ -53,7 +52,6 @@ class RestaurantProvider with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<void> updateProduct(ProductModel model) async {
     products[products.indexWhere((element) => element.id == model.id)] = model;
-    logger.d(products);
     await _saveProvider();
     notifyListeners();
   }
