@@ -123,6 +123,7 @@ flutter:
     - assets/icons/category/
     - assets/jsons/
     - assets/gifs/
+    - assets/tags/
 
   fonts:
     - family: Nunito

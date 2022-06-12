@@ -49,13 +49,13 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       S.current.home,
       S.current.orders,
       'My Cart',
-      S.current.profile,
+      S.current.settings,
     ];
     var bottomItemImages = [
       LineIcons.home,
       LineIcons.firstOrder,
       LineIcons.shoppingCart,
-      LineIcons.user,
+      Icons.settings_outlined,
     ];
     return CustomBottomBar(
       backgroundColor: Theme.of(context).colorScheme.secondary,

@@ -22,7 +22,7 @@ class MailScreen extends StatefulWidget {
 
 class _MailScreenState extends State<MailScreen> {
   final _controller = ScrollController();
-  MailProvider? _provider;
+  // MailProvider? _provider;
 
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);

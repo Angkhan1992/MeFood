@@ -561,6 +561,114 @@ extension EProduct on ProductModel {
     );
   }
 
+  Widget productSquare(
+    BuildContext context, {
+    String? type,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(right: 8.0),
+      padding: const EdgeInsets.all(1.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      child: InkWell(
+        onTap: () => NavigatorService.of(context).push(
+          screen: ProductDetail(product: this),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(14.0),
+          child: Stack(children: [
+            CachedNetworkImage(
+              width: 250.0,
+              height: 200.0,
+              imageUrl: '$kDomain${galleries![0]}',
+              placeholder: (context, url) => Center(
+                child: SizedBox(
+                  width: 100.0,
+                  height: 100.0,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.0,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => Center(
+                child: SvgPicture.asset(
+                  'assets/images/logo.svg',
+                  width: 125.0,
+                  height: 125.0,
+                  color: Theme.of(context).hintColor,
+                ),
+              ),
+              fit: BoxFit.cover,
+            ),
+            Positioned.fill(
+              bottom: 0.0,
+              child: Container(
+                width: double.infinity,
+                height: 160.0,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 8.0,
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).primaryColor.withOpacity(0),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            title!,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            maxLines: 1,
+                          ),
+                        ),
+                        Text(
+                          currency,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      desc!,
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w200,
+                      ),
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (type != null) SvgPicture.asset('assets/tags/tag_$type.svg'),
+          ]),
+        ),
+      ),
+    );
+  }
+
   Future<String?> addProduct(
     BuildContext context,
     int restId,
@@ -630,5 +738,37 @@ extension EProduct on ProductModel {
     } else {
       return S.current.sever_error;
     }
+  }
+
+  static Future<List<ProductModel>> getNewProducts() async {
+    var resp = await APIService.of(null).post(
+      '${APIService.kUrlProduct}/new',
+      {},
+      checkToken: false,
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return (resp['result'] as List)
+            .map((e) => ProductModel.fromJson(e))
+            .toList();
+      }
+    }
+    return [];
+  }
+
+  static Future<List<ProductModel>> getTopProducts() async {
+    var resp = await APIService.of(null).post(
+      '${APIService.kUrlProduct}/top',
+      {},
+      checkToken: false,
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return (resp['result'] as List)
+            .map((e) => ProductModel.fromJson(e))
+            .toList();
+      }
+    }
+    return [];
   }
 }

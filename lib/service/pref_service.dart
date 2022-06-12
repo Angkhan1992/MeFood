@@ -108,4 +108,55 @@ class PrefService {
     var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
     await prefs.setString('mycart', prodPref);
   }
+
+  Future<List<CategoryModel>> getCategories() async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = prefs.getString('categories');
+    if (prodPref == null) {
+      return [];
+    }
+    return (jsonDecode(prodPref) as List)
+        .map((e) => CategoryModel.fromJson(e))
+        .toList();
+  }
+
+  Future<void> setCategories(List<CategoryModel> categories) async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = jsonEncode(categories.map((e) => e.toJson()).toList());
+    await prefs.setString('categories', prodPref);
+  }
+
+  Future<List<ProductModel>> getNewProducts() async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = prefs.getString('new_product');
+    if (prodPref == null) {
+      return [];
+    }
+    return (jsonDecode(prodPref) as List)
+        .map((e) => ProductModel.fromJson(e))
+        .toList();
+  }
+
+  Future<void> setNewProducts(List<ProductModel> products) async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
+    await prefs.setString('new_product', prodPref);
+  }
+
+  Future<List<ProductModel>> getHotProducts() async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = prefs.getString('hot_product');
+    if (prodPref == null) {
+      return [];
+    }
+    return (jsonDecode(prodPref) as List)
+        .map((e) => ProductModel.fromJson(e))
+        .toList();
+  }
+
+  Future<void> setHotProducts(List<ProductModel> products) async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
+    await prefs.setString('hot_product', prodPref);
+  }
 }

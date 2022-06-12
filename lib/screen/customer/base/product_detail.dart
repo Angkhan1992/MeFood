@@ -3,9 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
-import 'package:mefood/model/restaurant/restaurant.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:mefood/util/util.dart';
 import 'package:mefood/widget/base/base.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -21,6 +22,18 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  SaleModel? sale;
+  final _eventAmount = ValueNotifier(1);
+
+  @override
+  void initState() {
+    super.initState();
+    sale = SaleModel(
+      product: widget.product,
+      productAmount: 1,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -30,7 +43,7 @@ class _ProductDetailState extends State<ProductDetail> {
     return Scaffold(
       appBar: CustomAppbar(
         context,
-        title: widget.product.title!,
+        title: sale!.product!.title!,
       ),
       body: Column(
         children: [
@@ -46,7 +59,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       autoPlay: true,
                       enlargeCenterPage: true,
                     ),
-                    items: widget.product.galleries!.map((link) {
+                    items: sale!.product!.galleries!.map((link) {
                       return CachedNetworkImage(
                         imageUrl: '$kDomain$link',
                         width: width,
@@ -82,7 +95,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         Row(
                           children: [
                             Text(
-                              widget.product.title!,
+                              sale!.product!.title!,
                               style: TextStyle(
                                 fontSize: fontSizeTitle,
                                 fontWeight: FontWeight.w700,
@@ -91,7 +104,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             ),
                             const Spacer(),
                             Text(
-                              widget.product.currency,
+                              sale!.product!.currency,
                               style: TextStyle(
                                 fontSize: fontSizeTitle,
                                 fontWeight: FontWeight.w700,
@@ -105,7 +118,7 @@ class _ProductDetailState extends State<ProductDetail> {
                           height: 16.0,
                         ),
                         Text(
-                          widget.product.desc!,
+                          sale!.product!.desc!,
                           style: TextStyle(
                             fontSize: fontSizeBody,
                             fontWeight: FontWeight.w200,
@@ -124,7 +137,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               width: 8.0,
                             ),
                             Text(
-                              '${widget.product.prepareTime} Minutes',
+                              '${sale!.product!.prepareTime} Minutes',
                               style: TextStyle(
                                 fontSize: fontSizeBody,
                                 fontWeight: FontWeight.w400,
@@ -146,7 +159,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               width: 8.0,
                             ),
                             Text(
-                              '${widget.product.value} ${widget.product.unit}',
+                              '${sale!.product!.value} ${sale!.product!.unit}',
                               style: TextStyle(
                                 fontSize: fontSizeBody,
                                 fontWeight: FontWeight.w400,
@@ -181,7 +194,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         const SizedBox(
                           height: 16.0,
                         ),
-                        if (widget.product.restaurant != null)
+                        if (sale!.product!.restaurant != null)
                           Row(
                             children: [
                               Icon(
@@ -192,7 +205,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                 width: 8.0,
                               ),
                               Text(
-                                widget.product.restaurant!.name!,
+                                sale!.product!.restaurant!.name!,
                                 style: TextStyle(
                                   fontSize: fontSizeBody,
                                   fontWeight: FontWeight.w400,
@@ -252,56 +265,79 @@ class _ProductDetailState extends State<ProductDetail> {
           ),
         ),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.remove_circle_outline,
-                    color: Theme.of(context).colorScheme.secondary,
+      child: ValueListenableBuilder(
+        valueListenable: _eventAmount,
+        builder: (context, value, child) {
+          return Row(
+            children: [
+              Expanded(
+                child: Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          if (sale!.productAmount! == 1) {
+                            return;
+                          }
+                          _eventAmount.value = sale!.productAmount! - 1;
+                          sale!.productAmount = _eventAmount.value;
+                        },
+                        child: Icon(
+                          Icons.remove_circle_outline,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Text(
+                        '${sale!.productAmount}',
+                        style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (sale!.productAmount! == MAX_ORDER_AMOUNT) {
+                            return;
+                          }
+                          _eventAmount.value = sale!.productAmount! + 1;
+                          sale!.productAmount = _eventAmount.value;
+                        },
+                        child: Icon(
+                          Icons.add_circle_outline,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Text(
-                    '1',
-                    style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 16.0,
-                  ),
-                  Icon(
-                    Icons.add_circle_outline,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).colorScheme.secondary,
-              child: Center(
-                child: Text(
-                  '${widget.product.currency}\nADD CART',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w200,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-          ),
-        ],
+              Expanded(
+                child: Container(
+                  color: Theme.of(context).colorScheme.secondary,
+                  child: Center(
+                    child: Text(
+                      '${sale!.currency}\nADD CART',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w200,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

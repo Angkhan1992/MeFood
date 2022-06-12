@@ -1,11 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/extension/extension.dart';
+import 'package:provider/provider.dart';
 
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/base/base.dart';
+import 'package:mefood/model/restaurant/restaurant.dart';
+import 'package:mefood/provider/customer/customer.dart';
+import 'package:mefood/screen/customer/base/search_product.dart';
 import 'package:mefood/screen/customer/home/all_category_screen.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/dimens.dart';
@@ -40,6 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           CustomHeaderView(
             title: S.current.home,
+            actions: [
+              InkWell(
+                onTap: () => NavigatorService.of(context).push(
+                  screen: SearchProduct(),
+                ),
+                child: Icon(LineIcons.search),
+              ),
+            ],
           ),
           Expanded(
             child: ClipRRect(
@@ -71,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         categoryWidget(),
+                        const SizedBox(height: offsetSm),
                         CategoryWidget(
                           prefix: Icon(
                             LineIcons.shoppingBasket,
@@ -80,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: S.current.new_products,
                         ),
                         orderWidget(),
+                        const SizedBox(height: offsetSm),
                         CategoryWidget(
                           prefix: Icon(
                             LineIcons.shirtsInBulk,
@@ -87,10 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Theme.of(context).colorScheme.secondary,
                           ),
                           title: S.current.hot_products,
-                          extend: S.current.view_all,
-                          onExtend: () {},
                         ),
                         productWidget(),
+                        const SizedBox(height: offsetSm),
                         CategoryWidget(
                           prefix: Icon(
                             LineIcons.coffee,
@@ -102,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onExtend: () {},
                         ),
                         restaurantWidget(),
+                        const SizedBox(height: offsetBase),
                       ],
                     ),
                   ),
@@ -117,25 +132,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget categoryWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: offsetXMd,
+        vertical: offsetBase,
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: FutureBuilder<List<CategoryModel>>(
-          future: ECategory.getCategories(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return ProgressWidget(
-                color: Theme.of(context).colorScheme.secondary,
-              );
+        child: Consumer<CategoryProvider>(
+          builder: (context, provider, view) {
+            if (provider.categories!.isEmpty) {
+              return snapErrorWidget();
             }
-            if (snapshot.hasError) {
-              return Container();
-            }
-            if (snapshot.data == null) {
-              return Container();
-            }
-            categories = snapshot.data!;
+            categories = provider.categories!;
             return Row(
               children: [
                 for (var model in categories) ...{
@@ -155,57 +161,107 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget productWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: offsetXMd,
+        vertical: offsetBase,
       ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            for (var i = 0; i < 10; i++) ...{
-              // fakeHotModel(context, model: ProductModel()),
-              const SizedBox(
-                width: offsetBase,
+      child: Consumer<HotProductProvider>(
+        builder: (context, provider, view) {
+          if (provider.products!.isEmpty) {
+            return snapErrorWidget();
+          }
+          var hotProducts = provider.products!;
+          return Container(
+            height: 200.0,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: hotProducts
+                    .map((e) => e.productSquare(context, type: 'hot'))
+                    .toList(),
               ),
-            },
-          ],
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget restaurantWidget() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: offsetXMd,
-      ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            for (var i = 0; i < 10; i++) ...{
-              // fakeRestaurantModel(context),
-              const SizedBox(
-                width: offsetBase,
-              ),
-            },
-          ],
-        ),
-      ),
+    return FutureBuilder<List<RestaurantModel>>(
+      future: ERestaurantModel.getNewRestaurants(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return snapLoadingWidget();
+        }
+        if (snapshot.hasError || snapshot.data == null) {
+          return snapErrorWidget();
+        }
+        var restaurants = snapshot.data!;
+        return ListView.separated(
+          shrinkWrap: true,
+          itemCount: restaurants.length,
+          itemBuilder: (context, i) => restaurants[i].customerHomeList(context),
+          separatorBuilder: (context, i) => const SizedBox(
+            height: offsetXSm,
+          ),
+        );
+      },
     );
   }
 
   Widget orderWidget() {
-    return ListView.separated(
-      controller: _scrollController,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return Container();
-        // return fakeOrderModel(context, model: ProductModel());
-      },
-      separatorBuilder: (context, index) => const SizedBox(
-        height: offsetSm,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: offsetBase,
       ),
-      itemCount: 10,
+      child: Consumer<NewProductProvider>(
+        builder: (context, provider, view) {
+          if (provider.products!.isEmpty) {
+            return snapErrorWidget();
+          }
+          var newProducts = provider.products!;
+          return Container(
+            height: 200.0,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: newProducts
+                    .map((e) => e.productSquare(context, type: 'new'))
+                    .toList(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget snapErrorWidget() {
+    return Container(
+      height: 200.0,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/ic_empty.svg',
+            color: Theme.of(context).hintColor,
+            width: 40.0,
+            height: 40.0,
+          ),
+          const SizedBox(),
+          Text('Empty List'),
+        ],
+      ),
+    );
+  }
+
+  Widget snapLoadingWidget() {
+    return Container(
+      height: 200.0,
+      alignment: Alignment.center,
+      child: ProgressWidget(
+        color: Theme.of(context).colorScheme.secondary,
+      ),
     );
   }
 }

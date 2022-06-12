@@ -28,12 +28,14 @@ class APIService {
   static final kUrlUpload = '$kDomain/api/v1/upload';
   static final kUrlUser = '$kDomain/api/v1/user';
   static final kUrlCategory = '$kDomain/api/v1/category';
+  static final kUrlProduct = '$kDomain/api/v1/product';
 
   static final kUrlDelivery = '$kDomain/api/v1/delivery';
   static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';
 
   static final kUrlCustomer = '$kDomain/api/v1/customer';
   static final kUrlCustomerAuth = '$kDomain/api/v1/customer/auth';
+  static final kUrlCustomerHome = '$kDomain/api/v1/customer/home';
 
   static final kUrlRestaurant = '$kDomain/api/v1/restaurant';
   static final kUrlRestaurantAuth = '$kDomain/api/v1/restaurant/auth';
