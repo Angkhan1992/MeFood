@@ -4,13 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/provider/customer/customer.dart';
-import 'package:mefood/provider/restaurant/restaurant.dart';
+import 'package:mefood/provider/customer/customer.dart' as cust;
+import 'package:mefood/provider/restaurant/restaurant.dart' as rest;
 import 'package:mefood/screen/customer/main/main_screen.dart' as cs_log;
+import 'package:mefood/screen/login_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-
-import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -72,8 +71,8 @@ class _SplashScreenState extends State<SplashScreen> {
               totalRepeatCount: 1,
               onFinished: () async {
                 if (F.isRestaurant) {
-                  var provider =
-                      Provider.of<RestaurantProvider>(context, listen: false);
+                  var provider = Provider.of<rest.RestaurantProvider>(context,
+                      listen: false);
                   var err = await provider.loginToken();
                   if (err == null) {
                     NavigatorService.of(context).pushByRoute(
@@ -87,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   return;
                 }
                 if (F.isCustomer) {
-                  var provider = context.read<CustomerProvider>();
+                  var provider = context.read<cust.CustomerProvider>();
                   var err = await provider.loginToken();
                   if (err == null) {
                     NavigatorService.of(context)

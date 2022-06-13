@@ -159,4 +159,38 @@ class PrefService {
     var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
     await prefs.setString('hot_product', prodPref);
   }
+
+  Future<List<RestaurantModel>> getCustomerRestaurant() async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = prefs.getString('customer_restaurant');
+    if (prodPref == null) {
+      return [];
+    }
+    return (jsonDecode(prodPref) as List)
+        .map((e) => RestaurantModel.fromJson(e))
+        .toList();
+  }
+
+  Future<void> setCustomerRestaurant(List<RestaurantModel> products) async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
+    await prefs.setString('customer_restaurant', prodPref);
+  }
+
+  Future<List<OrderModel>> getOrders() async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = prefs.getString('order');
+    if (prodPref == null) {
+      return [];
+    }
+    return (jsonDecode(prodPref) as List)
+        .map((e) => OrderModel.fromJson(e))
+        .toList();
+  }
+
+  Future<void> setOrders(List<OrderModel> products) async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
+    await prefs.setString('order', prodPref);
+  }
 }

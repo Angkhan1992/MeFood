@@ -564,6 +564,7 @@ extension EProduct on ProductModel {
   Widget productSquare(
     BuildContext context, {
     String? type,
+    bool showRestaurant = true,
   }) {
     return Container(
       margin: const EdgeInsets.only(right: 8.0),
@@ -576,7 +577,10 @@ extension EProduct on ProductModel {
       ),
       child: InkWell(
         onTap: () => NavigatorService.of(context).push(
-          screen: ProductDetail(product: this),
+          screen: ProductDetail(
+            product: this,
+            showRestaurant: showRestaurant,
+          ),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(14.0),
@@ -760,6 +764,22 @@ extension EProduct on ProductModel {
     var resp = await APIService.of(null).post(
       '${APIService.kUrlProduct}/top',
       {},
+      checkToken: false,
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return (resp['result'] as List)
+            .map((e) => ProductModel.fromJson(e))
+            .toList();
+      }
+    }
+    return [];
+  }
+
+  static Future<List<ProductModel>> getNewProductsByRest(int restId) async {
+    var resp = await APIService.of(null).post(
+      '${APIService.kUrlProduct}/top',
+      {'id': restId},
       checkToken: false,
     );
     if (resp != null) {

@@ -13,6 +13,7 @@ _$_RestaurantModel _$$_RestaurantModelFromJson(Map<String, dynamic> json) =>
           ? null
           : AddressModel.fromJson(json['address'] as Map<String, dynamic>),
       name: json['name'] as String?,
+      description: json['description'] as String?,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
       category: json['category'] as String?,
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$_RestaurantModelToJson(_$_RestaurantModel instance) =>
       'id': instance.id,
       'address': instance.address,
       'name': instance.name,
+      'description': instance.description,
       'email': instance.email,
       'phone': instance.phone,
       'category': instance.category,

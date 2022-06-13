@@ -5,6 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/screen/customer/base/restaurant_detail.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/base.dart';
@@ -47,9 +48,9 @@ extension ERestaurantModel on RestaurantModel {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12.0),
           child: InkWell(
-            // onTap: () => NavigatorService.of(context).push(
-            //   screen: ProductDetail(product: this),
-            // ),
+            onTap: () => NavigatorService.of(context).push(
+              screen: RestaurantDetail(restaurant: this),
+            ),
             child: Row(
               children: [
                 AspectRatio(

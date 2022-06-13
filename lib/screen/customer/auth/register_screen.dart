@@ -72,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: offsetLg),
                     Stack(
                       children: [
-                        AvatarImageWidget(
+                        CircleAvatarNetwork(
                           avatar: '$kDomain${customer.user!.linkAvatar}',
                           borderColor: Theme.of(context).colorScheme.secondary,
                           size: 90.0,

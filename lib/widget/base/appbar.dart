@@ -55,11 +55,13 @@ class CustomBottomNavigationItem {
   final Widget icon;
   final Widget label;
   final Color? color;
+  final int badge;
 
   CustomBottomNavigationItem({
     required this.icon,
     required this.label,
     this.color,
+    this.badge = 0,
   });
 }
 
@@ -89,6 +91,7 @@ class CustomBottomBar extends StatelessWidget {
         children: children!.map((item) {
           Widget icon = item.icon;
           Widget label = item.label;
+          int badge = item.badge;
           int index = children!.indexOf(item);
           return GestureDetector(
             onTap: () => onChange!(index),
@@ -105,7 +108,14 @@ class CustomBottomBar extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  icon,
+                  badge == 0
+                      ? icon
+                      : Badge(
+                          child: icon,
+                          toAnimate: false,
+                          shape: BadgeShape.circle,
+                          badgeColor: Colors.red,
+                        ),
                   const SizedBox(
                     height: offsetXSm,
                   ),

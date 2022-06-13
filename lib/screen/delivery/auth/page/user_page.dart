@@ -74,7 +74,7 @@ class _AddProfilePageState extends State<AddProfilePage> {
               children: [
                 Column(
                   children: [
-                    AvatarImageWidget(
+                    CircleAvatarNetwork(
                       avatar: _user!.linkAvatar,
                       size: 80.0,
                     ),

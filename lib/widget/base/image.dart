@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
@@ -231,12 +232,12 @@ class CarImageWidget extends StatelessWidget {
   }
 }
 
-class AvatarImageWidget extends StatelessWidget {
+class CircleAvatarNetwork extends StatelessWidget {
   final String? avatar;
   final double size;
   final Color? borderColor;
 
-  const AvatarImageWidget({
+  const CircleAvatarNetwork({
     Key? key,
     this.avatar,
     this.size = 60.0,
@@ -280,6 +281,55 @@ class AvatarImageWidget extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
+    );
+  }
+}
+
+class CasualScrollView extends StatelessWidget {
+  final List<String> galleries;
+
+  const CasualScrollView({
+    Key? key,
+    required this.galleries,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: width * 5 / 8,
+        aspectRatio: 8 / 5,
+        viewportFraction: 1.0,
+        autoPlay: true,
+        enlargeCenterPage: true,
+      ),
+      items: galleries.map((link) {
+        return CachedNetworkImage(
+          imageUrl: '$kDomain$link',
+          width: width,
+          height: width * 5 / 8,
+          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+            child: SizedBox(
+              width: 75.0,
+              height: 75.0,
+              child: CircularProgressIndicator(
+                value: downloadProgress.progress,
+                strokeWidth: 2.0,
+              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => Center(
+            child: Image.asset(
+              'assets/images/web/logo.png',
+              width: 75.0,
+              height: 75.0,
+              color: Theme.of(context).hintColor,
+            ),
+          ),
+          fit: BoxFit.cover,
+        );
+      }).toList(),
     );
   }
 }

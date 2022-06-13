@@ -6,13 +6,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/screen/splash_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/util.dart';
-
-import 'generated/l10n.dart';
 
 Injector? injector;
 
@@ -40,19 +39,21 @@ void main() async {
   F.appFlavor = Flavor.customer;
 
   var customerProvider = CustomerProvider();
-  var cartProvider = CartProvider()..initData();
   var categoryProvider = CategoryProvider();
   var newProductProvider = NewProductProvider();
   var hotProductProvider = HotProductProvider();
+  var restaurantProvider = RestaurantProvider();
+  var orderProvider = OrderProvider();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => customerProvider),
-        ChangeNotifierProvider(create: (context) => cartProvider),
         ChangeNotifierProvider(create: (context) => categoryProvider),
+        ChangeNotifierProvider(create: (context) => orderProvider),
         ChangeNotifierProvider(create: (context) => newProductProvider),
         ChangeNotifierProvider(create: (context) => hotProductProvider),
+        ChangeNotifierProvider(create: (context) => restaurantProvider),
       ],
       child: const MyApp(),
     ),

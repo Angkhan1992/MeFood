@@ -5,12 +5,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/constants.dart';
-
-import 'generated/l10n.dart';
 
 Injector? injector;
 

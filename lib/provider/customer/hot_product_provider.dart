@@ -6,23 +6,22 @@ import 'package:mefood/service/service.dart';
 class HotProductProvider with ChangeNotifier {
   List<ProductModel>? products;
 
-  CategoryProvider() {
+  HotProductProvider() {
     products = [];
-
     initData();
   }
 
   Future<void> initData() async {
     products = await PrefService.of().getHotProducts();
     notifyListeners();
-    fetchData();
+    await fetchData();
   }
 
   Future<void> fetchData() async {
     var respCate = await EProduct.getTopProducts();
     if (respCate.isNotEmpty) {
       products = respCate;
-      updateLocal();
+      await updateLocal();
     }
   }
 

@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/base/base.dart';
-import 'package:mefood/model/restaurant/restaurant.dart';
 import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/screen/customer/base/search_product.dart';
 import 'package:mefood/screen/customer/home/all_category_screen.dart';
@@ -165,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Consumer<HotProductProvider>(
         builder: (context, provider, view) {
-          if (provider.products!.isEmpty) {
+          if (provider.products == null || provider.products!.isEmpty) {
             return snapErrorWidget();
           }
           var hotProducts = provider.products!;
@@ -186,16 +185,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget restaurantWidget() {
-    return FutureBuilder<List<RestaurantModel>>(
-      future: ERestaurantModel.getNewRestaurants(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return snapLoadingWidget();
-        }
-        if (snapshot.hasError || snapshot.data == null) {
+    return Consumer<RestaurantProvider>(
+      builder: (context, provider, view) {
+        if (provider.restaurants == null || provider.restaurants!.isEmpty) {
           return snapErrorWidget();
         }
-        var restaurants = snapshot.data!;
+        var restaurants = provider.restaurants!;
         return ListView.separated(
           shrinkWrap: true,
           itemCount: restaurants.length,
@@ -215,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Consumer<NewProductProvider>(
         builder: (context, provider, view) {
-          if (provider.products!.isEmpty) {
+          if (provider.products == null || provider.products!.isEmpty) {
             return snapErrorWidget();
           }
           var newProducts = provider.products!;
@@ -248,8 +243,14 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 40.0,
             height: 40.0,
           ),
-          const SizedBox(),
-          Text('Empty List'),
+          const SizedBox(height: offsetBase),
+          Text(
+            'Empty List',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w200,
+            ),
+          ),
         ],
       ),
     );
