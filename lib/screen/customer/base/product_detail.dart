@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/provider/base/base.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/screen/customer/base/restaurant_detail.dart';
@@ -32,7 +35,7 @@ class _ProductDetailState extends State<ProductDetail> {
     super.initState();
     sale = SaleModel(
       product: widget.product,
-      productAmount: 1,
+      amount: 1,
     );
   }
 
@@ -185,11 +188,11 @@ class _ProductDetailState extends State<ProductDetail> {
                     children: [
                       InkWell(
                         onTap: () {
-                          if (sale!.productAmount! == 1) {
+                          if (sale!.amount! == 1) {
                             return;
                           }
-                          _eventAmount.value = sale!.productAmount! - 1;
-                          sale!.productAmount = _eventAmount.value;
+                          _eventAmount.value = sale!.amount! - 1;
+                          sale!.amount = _eventAmount.value;
                         },
                         child: Icon(
                           Icons.remove_circle_outline,
@@ -200,7 +203,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         width: 16.0,
                       ),
                       Text(
-                        '${sale!.productAmount}',
+                        '${sale!.amount}',
                         style: TextStyle(
                           fontSize: 22.0,
                           fontWeight: FontWeight.w400,
@@ -212,11 +215,11 @@ class _ProductDetailState extends State<ProductDetail> {
                       ),
                       InkWell(
                         onTap: () {
-                          if (sale!.productAmount! == MAX_ORDER_AMOUNT) {
+                          if (sale!.amount! == MAX_ORDER_AMOUNT) {
                             return;
                           }
-                          _eventAmount.value = sale!.productAmount! + 1;
-                          sale!.productAmount = _eventAmount.value;
+                          _eventAmount.value = sale!.amount! + 1;
+                          sale!.amount = _eventAmount.value;
                         },
                         child: Icon(
                           Icons.add_circle_outline,
@@ -228,17 +231,22 @@ class _ProductDetailState extends State<ProductDetail> {
                 ),
               ),
               Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.secondary,
-                  child: Center(
-                    child: Text(
-                      '${sale!.currency}\nADD CART',
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w200,
-                        color: Theme.of(context).primaryColor,
+                child: InkWell(
+                  onTap: () {
+                    var provider = context.read<OrderProvider>();
+                  },
+                  child: Container(
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: Center(
+                      child: Text(
+                        '${sale!.currency}\nADD CART',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w200,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),

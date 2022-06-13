@@ -14,7 +14,7 @@ class OrderModel with _$OrderModel {
     // extend fields
     MemberModel? owner,
     MemberModel? delivery,
-    List<ProductModel>? models,
+    List<SaleModel>? models,
   }) = _OrderModel;
 
   factory OrderModel.fromJson(Map<String, dynamic> json) =>

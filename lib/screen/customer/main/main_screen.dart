@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/provider/customer/customer.dart';
+import 'package:mefood/provider/base/base.dart';
 import 'package:mefood/screen/customer/main/main.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/base.dart';

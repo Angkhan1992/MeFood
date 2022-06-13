@@ -8,7 +8,8 @@ part of 'sale_model.dart';
 
 _$_SaleModel _$$_SaleModelFromJson(Map<String, dynamic> json) => _$_SaleModel(
       id: json['id'] as int?,
-      productAmount: json['productAmount'] as int?,
+      amount: json['amount'] as int?,
+      regdate: json['regdate'] as String?,
       other: json['other'] as String?,
       product: json['product'] == null
           ? null
@@ -18,7 +19,8 @@ _$_SaleModel _$$_SaleModelFromJson(Map<String, dynamic> json) => _$_SaleModel(
 Map<String, dynamic> _$$_SaleModelToJson(_$_SaleModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'productAmount': instance.productAmount,
+      'amount': instance.amount,
+      'regdate': instance.regdate,
       'other': instance.other,
       'product': instance.product,
     };

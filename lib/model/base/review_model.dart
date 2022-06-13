@@ -8,14 +8,13 @@ part 'review_model.g.dart';
 abstract class ReviewModel with _$ReviewModel {
   factory ReviewModel({
     int? id,
+    MemberModel? user,
     String? content,
     int? rating,
-    int? typeId,
+    @JsonKey(name: 'type_id') int? typeId,
     String? type,
     String? regdate,
     String? other,
-    // extended field
-    MemberModel? user,
   }) = _ReviewModel;
   factory ReviewModel.fromJson(Map<String, dynamic> json) =>
       _$ReviewModelFromJson(json);

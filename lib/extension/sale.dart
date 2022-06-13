@@ -3,6 +3,6 @@ import 'package:mefood/model/model.dart';
 
 extension Sale on SaleModel {
   String get currency {
-    return '₭ ${formatCurrency.format(product!.price! * productAmount!)}';
+    return '₭ ${formatCurrency.format(product!.price! * amount!)}';
   }
 }

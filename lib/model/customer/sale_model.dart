@@ -8,7 +8,8 @@ part 'sale_model.g.dart';
 abstract class SaleModel with _$SaleModel {
   factory SaleModel({
     int? id,
-    int? productAmount,
+    int? amount,
+    String? regdate,
     String? other,
     ProductModel? product,
   }) = _SaleModel;

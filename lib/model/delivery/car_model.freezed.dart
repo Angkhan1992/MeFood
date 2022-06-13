@@ -24,11 +24,17 @@ mixin _$CarModel {
   set id(int? value) => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   set name(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'car_number')
   String? get number => throw _privateConstructorUsedError;
+  @JsonKey(name: 'car_number')
   set number(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'car_color')
   String? get color => throw _privateConstructorUsedError;
+  @JsonKey(name: 'car_color')
   set color(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'car_since')
   int? get since => throw _privateConstructorUsedError;
+  @JsonKey(name: 'car_since')
   set since(int? value) => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   set type(String? value) => throw _privateConstructorUsedError;
@@ -64,9 +70,9 @@ abstract class $CarModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? name,
-      String? number,
-      String? color,
-      int? since,
+      @JsonKey(name: 'car_number') String? number,
+      @JsonKey(name: 'car_color') String? color,
+      @JsonKey(name: 'car_since') int? since,
       String? type,
       int? distance,
       int? speed,
@@ -173,9 +179,9 @@ abstract class _$$_CarModelCopyWith<$Res> implements $CarModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? name,
-      String? number,
-      String? color,
-      int? since,
+      @JsonKey(name: 'car_number') String? number,
+      @JsonKey(name: 'car_color') String? color,
+      @JsonKey(name: 'car_since') int? since,
       String? type,
       int? distance,
       int? speed,
@@ -282,9 +288,9 @@ class _$_CarModel implements _CarModel {
   _$_CarModel(
       {this.id,
       this.name,
-      this.number,
-      this.color,
-      this.since,
+      @JsonKey(name: 'car_number') this.number,
+      @JsonKey(name: 'car_color') this.color,
+      @JsonKey(name: 'car_since') this.since,
       this.type,
       this.distance,
       this.speed,
@@ -303,10 +309,13 @@ class _$_CarModel implements _CarModel {
   @override
   String? name;
   @override
+  @JsonKey(name: 'car_number')
   String? number;
   @override
+  @JsonKey(name: 'car_color')
   String? color;
   @override
+  @JsonKey(name: 'car_since')
   int? since;
   @override
   String? type;
@@ -348,9 +357,9 @@ abstract class _CarModel implements CarModel {
   factory _CarModel(
       {int? id,
       String? name,
-      String? number,
-      String? color,
-      int? since,
+      @JsonKey(name: 'car_number') String? number,
+      @JsonKey(name: 'car_color') String? color,
+      @JsonKey(name: 'car_since') int? since,
       String? type,
       int? distance,
       int? speed,
@@ -368,10 +377,13 @@ abstract class _CarModel implements CarModel {
   @override
   String? get name => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'car_number')
   String? get number => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'car_color')
   String? get color => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'car_since')
   int? get since => throw _privateConstructorUsedError;
   @override
   String? get type => throw _privateConstructorUsedError;

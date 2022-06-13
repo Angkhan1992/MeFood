@@ -48,8 +48,9 @@ mixin _$ProductModel {
   set regdate(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
   set other(String? value) => throw _privateConstructorUsedError;
-  int? get hidden => throw _privateConstructorUsedError;
-  set hidden(int? value) => throw _privateConstructorUsedError; // extend fields
+  int? get enabled => throw _privateConstructorUsedError;
+  set enabled(int? value) =>
+      throw _privateConstructorUsedError; // extend fields
   List<String>? get galleries =>
       throw _privateConstructorUsedError; // extend fields
   set galleries(List<String>? value) => throw _privateConstructorUsedError;
@@ -78,7 +79,7 @@ abstract class $ProductModelCopyWith<$Res> {
       int? price,
       String? regdate,
       String? other,
-      int? hidden,
+      int? enabled,
       List<String>? galleries,
       CategoryModel? category});
 
@@ -106,7 +107,7 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
     Object? price = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
-    Object? hidden = freezed,
+    Object? enabled = freezed,
     Object? galleries = freezed,
     Object? category = freezed,
   }) {
@@ -151,9 +152,9 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
-      hidden: hidden == freezed
-          ? _value.hidden
-          : hidden // ignore: cast_nullable_to_non_nullable
+      enabled: enabled == freezed
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
               as int?,
       galleries: galleries == freezed
           ? _value.galleries
@@ -207,7 +208,7 @@ abstract class _$$_ProductModelCopyWith<$Res>
       int? price,
       String? regdate,
       String? other,
-      int? hidden,
+      int? enabled,
       List<String>? galleries,
       CategoryModel? category});
 
@@ -240,7 +241,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
     Object? price = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
-    Object? hidden = freezed,
+    Object? enabled = freezed,
     Object? galleries = freezed,
     Object? category = freezed,
   }) {
@@ -285,9 +286,9 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
-      hidden: hidden == freezed
-          ? _value.hidden
-          : hidden // ignore: cast_nullable_to_non_nullable
+      enabled: enabled == freezed
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
               as int?,
       galleries: galleries == freezed
           ? _value.galleries
@@ -316,7 +317,7 @@ class _$_ProductModel implements _ProductModel {
       this.price,
       this.regdate,
       this.other,
-      this.hidden,
+      this.enabled,
       this.galleries,
       this.category});
 
@@ -348,7 +349,7 @@ class _$_ProductModel implements _ProductModel {
   @override
   String? other;
   @override
-  int? hidden;
+  int? enabled;
 // extend fields
   @override
   List<String>? galleries;
@@ -357,7 +358,7 @@ class _$_ProductModel implements _ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, restaurant: $restaurant, prepareTime: $prepareTime, title: $title, desc: $desc, value: $value, unit: $unit, price: $price, regdate: $regdate, other: $other, hidden: $hidden, galleries: $galleries, category: $category)';
+    return 'ProductModel(id: $id, restaurant: $restaurant, prepareTime: $prepareTime, title: $title, desc: $desc, value: $value, unit: $unit, price: $price, regdate: $regdate, other: $other, enabled: $enabled, galleries: $galleries, category: $category)';
   }
 
   @JsonKey(ignore: true)
@@ -383,7 +384,7 @@ abstract class _ProductModel implements ProductModel {
       int? price,
       String? regdate,
       String? other,
-      int? hidden,
+      int? enabled,
       List<String>? galleries,
       CategoryModel? category}) = _$_ProductModel;
 
@@ -415,7 +416,7 @@ abstract class _ProductModel implements ProductModel {
   @override
   String? get other => throw _privateConstructorUsedError;
   @override
-  int? get hidden => throw _privateConstructorUsedError;
+  int? get enabled => throw _privateConstructorUsedError;
   @override // extend fields
   List<String>? get galleries => throw _privateConstructorUsedError;
   @override

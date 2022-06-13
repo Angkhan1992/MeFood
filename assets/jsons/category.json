@@ -16,7 +16,7 @@
             "description" : "Bivalves, Gastropods, Cephalopods, Chitons etc...",
             "icon" : "molluscs.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Molluscs"
         },
         {
             "id" : 3,
@@ -24,7 +24,7 @@
             "description" : "Carp, Catfish, Trout, Salmon etc...",
             "icon" : "fish.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Fish"
         },
         {
             "id" : 4,
@@ -32,7 +32,7 @@
             "description" : "Pork, Beef, Mutton, Veal etc...",
             "icon" : "meat.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Meat"
         },
         {
             "id" : 5,
@@ -40,7 +40,7 @@
             "description" : "Chicken, Duck, Quails, Turkeys etc...",
             "icon" : "poultry.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Poultry"
         },
         {
             "id" : 6,
@@ -48,7 +48,7 @@
             "description" : "Broccoli, Cabbage, Carrot, Beetroot etc...",
             "icon" : "vegetable.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Vegetable"
         },
         {
             "id" : 7,
@@ -56,7 +56,7 @@
             "description" : "Strawberry, Apple, Watermelon, Banana etc...",
             "icon" : "fruit.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Fruit"
         },
         {
             "id" : 8,
@@ -64,7 +64,7 @@
             "description" : "White Rice, Wheat, Barley, Sugarcane etc...",
             "icon" : "rice.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Rice"
         },
         {
             "id" : 9,
@@ -72,7 +72,7 @@
             "description" : "Soup is a primarily liquid food for Rice.",
             "icon" : "soup.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Soup"
         },
         {
             "id" : 10,
@@ -80,7 +80,7 @@
             "description" : "The food to be cooked using live fire and smoke ",
             "icon" : "barbecue.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Barbecue"
         },
         {
             "id" : 11,
@@ -88,7 +88,7 @@
             "description" : "Beer, Juice, Alcohol, Milk etc...",
             "icon" : "drink.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Drink"
         },
         {
             "id" : 12,
@@ -96,7 +96,7 @@
             "description" : "Food made from unleavened dough which is rolled flat and cut, stretched or extruded",
             "icon" : "noodle.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Noodle"
         },
         {
             "id" : 13,
@@ -104,7 +104,7 @@
             "description" : "A snack is a small portion of food generally eaten between meals.",
             "icon" : "snack.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Snack"
         },
         {
             "id" : 14,
@@ -112,7 +112,7 @@
             "description" : "Bread is a staple food prepared from a dough of flour and water, usually by baking.",
             "icon" : "bread.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Bread"
         },
         {
             "id" : 15,
@@ -120,7 +120,7 @@
             "description" : "Candy is characterized by the use of a significant amount of sugar or sugar substitutes.",
             "icon" : "candy.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Candy"
         },
         {
             "id" : 16,
@@ -128,7 +128,7 @@
             "description" : "Ice cream is a sweetened frozen food typically eaten as a snack or dessert.",
             "icon" : "icecream.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Icecream"
         },
         {
             "id" : 17,
@@ -136,7 +136,7 @@
             "description" : "Special Food Category.",
             "icon" : "other.svg",
             "regdate" : "2022-03-18",
-            "other" : "Shellfish"
+            "other" : "Others"
         }
     ]
 }

@@ -21,7 +21,7 @@ _$_ProductModel _$$_ProductModelFromJson(Map<String, dynamic> json) =>
       price: json['price'] as int?,
       regdate: json['regdate'] as String?,
       other: json['other'] as String?,
-      hidden: json['hidden'] as int?,
+      enabled: json['enabled'] as int?,
       galleries: (json['galleries'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -42,7 +42,7 @@ Map<String, dynamic> _$$_ProductModelToJson(_$_ProductModel instance) =>
       'price': instance.price,
       'regdate': instance.regdate,
       'other': instance.other,
-      'hidden': instance.hidden,
+      'enabled': instance.enabled,
       'galleries': instance.galleries,
       'category': instance.category,
     };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/screen/customer/home/category_screen.dart';
 import 'package:mefood/service/service.dart';
@@ -22,6 +23,22 @@ extension ECategory on CategoryModel {
     return [];
   }
 
+  Future<String?> add(BuildContext context) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlCategory}/add',
+      toJson(),
+      checkToken: false,
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    }
+    return S.current.sever_error;
+  }
+
   Future<List<ProductModel>> getProducts() async {
     var resp = await APIService.of(null).post(
       '${APIService.kUrlRestaurantProduct}/getByCat',
@@ -38,7 +55,7 @@ extension ECategory on CategoryModel {
     return [];
   }
 
-  String get icon => '$kDomain$kUrlCategory${title!.toLowerCase()}.svg';
+  String get icon => '$kDomain$kUrlCategory${name!.toLowerCase()}.svg';
 
   Widget homeCell(BuildContext context) {
     return Padding(
@@ -75,7 +92,7 @@ extension ECategory on CategoryModel {
             ),
             const SizedBox(height: 8.0),
             Text(
-              title!,
+              name!,
               style: TextStyle(
                 fontSize: 12.0,
                 color: Theme.of(context).colorScheme.secondary,
@@ -127,7 +144,7 @@ extension ECategory on CategoryModel {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title!,
+                    name!,
                     style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w500,

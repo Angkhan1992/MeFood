@@ -26,9 +26,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       appBar: CustomAppbar(
         context,
-        title: widget.category.title!.toUpperCase(),
+        title: widget.category.name!.toUpperCase(),
         icon: SvgPicture.network(
-          widget.category.icon,
+          widget.category.icon!,
           width: sizeAppbarIcon,
           height: sizeAppbarIcon,
           color: Theme.of(context).iconTheme.color,

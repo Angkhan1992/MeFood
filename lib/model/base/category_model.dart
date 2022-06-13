@@ -8,7 +8,7 @@ class CategoryModel with _$CategoryModel {
   @JsonSerializable(fieldRename: FieldRename.snake)
   factory CategoryModel({
     int? id,
-    String? title,
+    String? name,
     String? description,
     String? regdate,
     String? updated,

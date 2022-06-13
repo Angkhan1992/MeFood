@@ -18,7 +18,7 @@ class ProductModel with _$ProductModel {
     int? price,
     String? regdate,
     String? other,
-    int? hidden,
+    int? enabled,
     // extend fields
     List<String>? galleries,
     CategoryModel? category,

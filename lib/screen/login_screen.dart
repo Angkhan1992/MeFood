@@ -217,6 +217,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() async {
+    // Add Categories
+    var categories = await JsonService.readCategoryFromJson();
+    for (var category in categories) {
+      await category.add(context);
+    }
+    return;
+
     logger.d(kDomain);
     if (_event!.value != LoginEvent.none) {
       DialogService.of(context).kShowProcessingDialog();

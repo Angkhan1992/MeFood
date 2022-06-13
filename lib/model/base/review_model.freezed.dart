@@ -22,21 +22,22 @@ ReviewModel _$ReviewModelFromJson(Map<String, dynamic> json) {
 mixin _$ReviewModel {
   int? get id => throw _privateConstructorUsedError;
   set id(int? value) => throw _privateConstructorUsedError;
+  MemberModel? get user => throw _privateConstructorUsedError;
+  set user(MemberModel? value) => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   set content(String? value) => throw _privateConstructorUsedError;
   int? get rating => throw _privateConstructorUsedError;
   set rating(int? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'type_id')
   int? get typeId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'type_id')
   set typeId(int? value) => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   set type(String? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
   set regdate(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
-  set other(String? value) =>
-      throw _privateConstructorUsedError; // extended field
-  MemberModel? get user => throw _privateConstructorUsedError; // extended field
-  set user(MemberModel? value) => throw _privateConstructorUsedError;
+  set other(String? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,13 +52,13 @@ abstract class $ReviewModelCopyWith<$Res> {
       _$ReviewModelCopyWithImpl<$Res>;
   $Res call(
       {int? id,
+      MemberModel? user,
       String? content,
       int? rating,
-      int? typeId,
+      @JsonKey(name: 'type_id') int? typeId,
       String? type,
       String? regdate,
-      String? other,
-      MemberModel? user});
+      String? other});
 
   $MemberModelCopyWith<$Res>? get user;
 }
@@ -73,19 +74,23 @@ class _$ReviewModelCopyWithImpl<$Res> implements $ReviewModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? user = freezed,
     Object? content = freezed,
     Object? rating = freezed,
     Object? typeId = freezed,
     Object? type = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
-    Object? user = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as MemberModel?,
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -110,10 +115,6 @@ class _$ReviewModelCopyWithImpl<$Res> implements $ReviewModelCopyWith<$Res> {
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as MemberModel?,
     ));
   }
 
@@ -138,13 +139,13 @@ abstract class _$$_ReviewModelCopyWith<$Res>
   @override
   $Res call(
       {int? id,
+      MemberModel? user,
       String? content,
       int? rating,
-      int? typeId,
+      @JsonKey(name: 'type_id') int? typeId,
       String? type,
       String? regdate,
-      String? other,
-      MemberModel? user});
+      String? other});
 
   @override
   $MemberModelCopyWith<$Res>? get user;
@@ -163,19 +164,23 @@ class __$$_ReviewModelCopyWithImpl<$Res> extends _$ReviewModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? user = freezed,
     Object? content = freezed,
     Object? rating = freezed,
     Object? typeId = freezed,
     Object? type = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
-    Object? user = freezed,
   }) {
     return _then(_$_ReviewModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as MemberModel?,
       content: content == freezed
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -200,10 +205,6 @@ class __$$_ReviewModelCopyWithImpl<$Res> extends _$ReviewModelCopyWithImpl<$Res>
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
-      user: user == freezed
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as MemberModel?,
     ));
   }
 }
@@ -213,13 +214,13 @@ class __$$_ReviewModelCopyWithImpl<$Res> extends _$ReviewModelCopyWithImpl<$Res>
 class _$_ReviewModel implements _ReviewModel {
   _$_ReviewModel(
       {this.id,
+      this.user,
       this.content,
       this.rating,
-      this.typeId,
+      @JsonKey(name: 'type_id') this.typeId,
       this.type,
       this.regdate,
-      this.other,
-      this.user});
+      this.other});
 
   factory _$_ReviewModel.fromJson(Map<String, dynamic> json) =>
       _$$_ReviewModelFromJson(json);
@@ -227,10 +228,13 @@ class _$_ReviewModel implements _ReviewModel {
   @override
   int? id;
   @override
+  MemberModel? user;
+  @override
   String? content;
   @override
   int? rating;
   @override
+  @JsonKey(name: 'type_id')
   int? typeId;
   @override
   String? type;
@@ -238,13 +242,10 @@ class _$_ReviewModel implements _ReviewModel {
   String? regdate;
   @override
   String? other;
-// extended field
-  @override
-  MemberModel? user;
 
   @override
   String toString() {
-    return 'ReviewModel(id: $id, content: $content, rating: $rating, typeId: $typeId, type: $type, regdate: $regdate, other: $other, user: $user)';
+    return 'ReviewModel(id: $id, user: $user, content: $content, rating: $rating, typeId: $typeId, type: $type, regdate: $regdate, other: $other)';
   }
 
   @JsonKey(ignore: true)
@@ -261,13 +262,13 @@ class _$_ReviewModel implements _ReviewModel {
 abstract class _ReviewModel implements ReviewModel {
   factory _ReviewModel(
       {int? id,
+      MemberModel? user,
       String? content,
       int? rating,
-      int? typeId,
+      @JsonKey(name: 'type_id') int? typeId,
       String? type,
       String? regdate,
-      String? other,
-      MemberModel? user}) = _$_ReviewModel;
+      String? other}) = _$_ReviewModel;
 
   factory _ReviewModel.fromJson(Map<String, dynamic> json) =
       _$_ReviewModel.fromJson;
@@ -275,10 +276,13 @@ abstract class _ReviewModel implements ReviewModel {
   @override
   int? get id => throw _privateConstructorUsedError;
   @override
+  MemberModel? get user => throw _privateConstructorUsedError;
+  @override
   String? get content => throw _privateConstructorUsedError;
   @override
   int? get rating => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'type_id')
   int? get typeId => throw _privateConstructorUsedError;
   @override
   String? get type => throw _privateConstructorUsedError;
@@ -286,8 +290,6 @@ abstract class _ReviewModel implements ReviewModel {
   String? get regdate => throw _privateConstructorUsedError;
   @override
   String? get other => throw _privateConstructorUsedError;
-  @override // extended field
-  MemberModel? get user => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_ReviewModelCopyWith<_$_ReviewModel> get copyWith =>

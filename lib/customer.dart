@@ -7,6 +7,7 @@ import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/base/base.dart';
 import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/screen/splash_screen.dart';
 import 'package:mefood/service/service.dart';
