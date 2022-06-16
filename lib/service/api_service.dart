@@ -92,6 +92,12 @@ class APIService {
         try {
           var json = jsonDecode(response.body);
           logger.d(json.toString());
+          try {
+            var token = json['result']['token'];
+            await PrefService.of().saveToken(token);
+          } catch (e) {
+            logger.w('Not existed token on callback');
+          }
           return json;
         } catch (e) {
           logger.e(e);

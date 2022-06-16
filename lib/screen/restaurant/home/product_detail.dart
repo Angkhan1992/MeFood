@@ -191,6 +191,50 @@ class _ProductDetailState extends State<ProductDetail> {
           const SizedBox(
             height: 24.0,
           ),
+          FutureBuilder<List<CategoryModel>>(
+            future: ECategory.getCategories(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting ||
+                  snapshot.hasError) {
+                return Container(
+                  height: 48.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(offsetXSm),
+                    border: Border.all(
+                      width: 1.0,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                );
+              }
+              var categories = snapshot.data!;
+              return CustomTextField(
+                controller:
+                    TextEditingController(text: _product.category!.name),
+                prefix: Icon(Icons.category_sharp),
+                suffix: Icon(Icons.arrow_drop_down),
+                hintText: S.current.category,
+                readOnly: true,
+                onTap: () async {
+                  var result =
+                      await DialogService.of(context).showDesktopChooserDialog(
+                    title: S.current.choose_category,
+                    values: categories.map((e) => e.name!).toList(),
+                    isExpand: true,
+                  );
+                  if (result != null) {
+                    setState(() {
+                      _product.category = categories[
+                          categories.indexWhere((e) => e.name == result)];
+                    });
+                  }
+                },
+              );
+            },
+          ),
+          const SizedBox(
+            height: 24.0,
+          ),
           CustomTextField(
             prefix: Icon(Icons.grid_goldenratio_outlined),
             controller: TextEditingController(

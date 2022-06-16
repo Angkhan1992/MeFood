@@ -28,7 +28,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         context,
         title: widget.category.name!.toUpperCase(),
         icon: SvgPicture.network(
-          widget.category.icon!,
+          widget.category.icon,
           width: sizeAppbarIcon,
           height: sizeAppbarIcon,
           color: Theme.of(context).iconTheme.color,

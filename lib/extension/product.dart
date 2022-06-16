@@ -679,6 +679,7 @@ extension EProduct on ProductModel {
   ) async {
     var param = toJson();
     param['rst_id'] = restId;
+    param['cat_id'] = category!.id!;
 
     var resp = await APIService.of(context).post(
       '${APIService.kUrlRestaurantProduct}/add',
@@ -702,10 +703,12 @@ extension EProduct on ProductModel {
     if (validate != null) {
       return validate;
     }
+    var param = toJson();
+    param['cat_id'] = category!.id!;
     var resp = await APIService.of(context).post(
       '${APIService.kUrlRestaurantProduct}/update',
       {
-        'product': jsonEncode(toJson()),
+        'product': jsonEncode(param),
       },
     );
     if (resp != null) {

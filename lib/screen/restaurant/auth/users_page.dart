@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/restaurant/restaurant.dart';
@@ -34,7 +37,15 @@ class _UsersPageState extends State<UsersPage> {
   String userPass = '', userRepass = '';
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var provider = context.read<AuthProvider>();
+    admin = provider.members.isNotEmpty ? provider.members[0] : MemberModel();
+    user = provider.members.isNotEmpty ? provider.members[1] : MemberModel();
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 16.0,
