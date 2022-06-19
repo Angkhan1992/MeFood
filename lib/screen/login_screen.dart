@@ -150,7 +150,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (!F.isDelivery)
                           CustomOutlineButton(
                             title: S.current.login_by_tour.toUpperCase(),
-                            onTap: () {},
+                            onTap: () async {
+                              var isLanding =
+                                  await PrefService.of().isLanding();
+                              if (isLanding) {
+                                NavigatorService.of(context).push(
+                                  screen: const cs_log.MainScreen(),
+                                  replace: true,
+                                );
+                              } else {
+                                NavigatorService.of(context)
+                                    .push(screen: const LandingScreen());
+                              }
+                            },
                           ),
                         const Spacer(),
                         Row(

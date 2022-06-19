@@ -87,6 +87,7 @@ class MyApp extends StatelessWidget {
       fontFamily: kFontFamily,
       brightness: Brightness.light,
       primaryColor: kPrimaryColor,
+      shadowColor: kSecondaryColor,
       secondaryHeaderColor: kSecondaryColor,
       scaffoldBackgroundColor: kScaffoldColor,
       backgroundColor: kScaffoldColor,
@@ -132,6 +133,7 @@ class MyApp extends StatelessWidget {
       secondaryHeaderColor: kSecondaryDarkColor,
       scaffoldBackgroundColor: kScaffoldDarkColor,
       backgroundColor: kScaffoldDarkColor,
+      shadowColor: kSecondaryDarkColor,
       hintColor: kHintDarkColor,
       focusColor: kAccentDarkColor,
       textTheme: TextTheme(

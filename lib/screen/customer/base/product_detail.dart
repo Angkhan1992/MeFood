@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/provider/base/base.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/provider/base/base.dart';
 import 'package:mefood/screen/customer/base/restaurant_detail.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -123,9 +123,11 @@ class _ProductDetailState extends State<ProductDetail> {
                             iconData: Icons.dinner_dining,
                             text: sale!.product!.restaurant!.name!,
                             onTap: () => NavigatorService.of(context).push(
-                                screen: RestaurantDetail(
-                              restaurant: sale!.product!.restaurant!,
-                            )),
+                              screen: RestaurantDetail(
+                                restaurant: sale!.product!.restaurant!,
+                                showProducts: false,
+                              ),
+                            ),
                           ),
                         const SizedBox(height: 24.0),
                         reviewWidget(),
@@ -232,8 +234,19 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
               Expanded(
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
                     var provider = context.read<OrderProvider>();
+                    var res = await provider.addCart(sale!);
+                    if (res) {
+                      DialogService.of(context).showSnackBar(
+                        'Successfully added!',
+                      );
+                    } else {
+                      DialogService.of(context).showSnackBar(
+                        'This product was already added',
+                        type: SnackBarType.info,
+                      );
+                    }
                   },
                   child: Container(
                     color: Theme.of(context).colorScheme.secondary,

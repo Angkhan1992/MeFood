@@ -19,7 +19,7 @@ class ExtendSubTitle extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'New Products',
+          subtitle,
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.w700,
@@ -29,7 +29,7 @@ class ExtendSubTitle extends StatelessWidget {
         if (extendTitle != null)
           InkWell(
             onTap: onTap,
-            child: 'View all'.wText(
+            child: extendTitle!.wText(
               TextStyle(
                 fontSize: fontSm,
                 color: Theme.of(context).colorScheme.secondary,

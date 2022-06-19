@@ -779,9 +779,9 @@ extension EProduct on ProductModel {
     return [];
   }
 
-  static Future<List<ProductModel>> getNewProductsByRest(int restId) async {
+  static Future<List<ProductModel>> getProductsByRest(int restId) async {
     var resp = await APIService.of(null).post(
-      '${APIService.kUrlProduct}/top',
+      '${APIService.kUrlProduct}/res',
       {'id': restId},
       checkToken: false,
     );

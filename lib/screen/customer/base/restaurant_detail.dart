@@ -10,9 +10,11 @@ import 'package:mefood/widget/customer/list_item.dart';
 
 class RestaurantDetail extends StatefulWidget {
   final RestaurantModel restaurant;
+  final bool showProducts;
   RestaurantDetail({
     Key? key,
     required this.restaurant,
+    this.showProducts = true,
   }) : super(key: key);
 
   @override
@@ -118,13 +120,19 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                     onTap: () {},
                   ),
                   const SizedBox(height: 24.0),
-                  ExtendSubTitle(
-                    subtitle: 'New Products',
-                    extendTitle: 'View all',
-                    onTap: () {},
-                  ),
-                  productWidget(),
-                  const SizedBox(height: 24.0),
+                  if (widget.showProducts)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ExtendSubTitle(
+                          subtitle: 'Restaurant Products',
+                          extendTitle: 'View all',
+                          onTap: () {},
+                        ),
+                        productWidget(),
+                        const SizedBox(height: 24.0),
+                      ],
+                    ),
                   reviewWidget(),
                 ],
               ),
@@ -164,7 +172,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
       ),
       child: (newProducts == null || newProducts!.isEmpty)
           ? FutureBuilder<List<ProductModel>>(
-              future: EProduct.getNewProductsByRest(widget.restaurant.id!),
+              future: EProduct.getProductsByRest(widget.restaurant.id!),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return snapLoadingWidget();

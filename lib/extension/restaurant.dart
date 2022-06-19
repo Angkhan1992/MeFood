@@ -39,7 +39,7 @@ extension ERestaurantModel on RestaurantModel {
   Widget customerHomeList(BuildContext context) {
     var height = 96.0;
     return Card(
-      elevation: 1,
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
