@@ -18,7 +18,7 @@ _$_OrderModel _$$_OrderModelFromJson(Map<String, dynamic> json) =>
           ? null
           : MemberModel.fromJson(json['delivery'] as Map<String, dynamic>),
       models: (json['models'] as List<dynamic>?)
-          ?.map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => SaleModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

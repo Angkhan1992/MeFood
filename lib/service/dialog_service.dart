@@ -808,35 +808,37 @@ class DialogService {
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(24.0),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  title.wText(TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.w700,
-                  )),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  const Divider(),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  for (var value in values!) ...{
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                      ),
-                      child: InkWell(
-                        onTap: () => Navigator.of(context).pop(value),
-                        child: value.wText(TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w400,
-                        )),
-                      ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    title.wText(TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w700,
+                    )),
+                    const SizedBox(
+                      height: 8.0,
                     ),
-                  },
-                ],
+                    const Divider(),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    for (var value in values!) ...{
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                        ),
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).pop(value),
+                          child: value.wText(TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w400,
+                          )),
+                        ),
+                      ),
+                    },
+                  ],
+                ),
               ),
             ),
           ),

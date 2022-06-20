@@ -11,6 +11,7 @@ class RestaurantModel with _$RestaurantModel {
     int? id,
     AddressModel? address,
     String? name,
+    String? description,
     String? email,
     String? phone,
     String? category,

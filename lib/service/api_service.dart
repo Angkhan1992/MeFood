@@ -18,6 +18,7 @@ const kUrlPlate = '/assets/plate/';
 const kUrlCar = '/assets/car/';
 const kUrlLogo = '/assets/logo/';
 const kUrlGallery = '/assets/gallery/';
+const kUrlCategory = '/assets/category/';
 
 class APIService {
   final BuildContext? context;
@@ -26,11 +27,16 @@ class APIService {
   static final kUrlHistory = '$kDomain/api/v1/history';
   static final kUrlUpload = '$kDomain/api/v1/upload';
   static final kUrlUser = '$kDomain/api/v1/user';
-
   static final kUrlCategory = '$kDomain/api/v1/category';
+  static final kUrlProduct = '$kDomain/api/v1/product';
+  static final kUrlOrder = '$kDomain/api/v1/order';
 
   static final kUrlDelivery = '$kDomain/api/v1/delivery';
   static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';
+
+  static final kUrlCustomer = '$kDomain/api/v1/customer';
+  static final kUrlCustomerAuth = '$kDomain/api/v1/customer/auth';
+  static final kUrlCustomerHome = '$kDomain/api/v1/customer/home';
 
   static final kUrlRestaurant = '$kDomain/api/v1/restaurant';
   static final kUrlRestaurantAuth = '$kDomain/api/v1/restaurant/auth';
@@ -60,9 +66,9 @@ class APIService {
       }
 
       var token = await PrefService.of().token();
-      if (kDebugMode) {
-        token = '6b47427cead1999fc7115984192c539b';
-      }
+      // if (kDebugMode) {
+      //   token = '6b47427cead1999fc7115984192c539b';
+      // }
       if (checkToken && token == null) {
         return {
           'msg': 'Expired Token!',
@@ -87,6 +93,12 @@ class APIService {
         try {
           var json = jsonDecode(response.body);
           logger.d(json.toString());
+          try {
+            var token = json['result']['token'];
+            await PrefService.of().saveToken(token);
+          } catch (e) {
+            logger.w('Not existed token on callback');
+          }
           return json;
         } catch (e) {
           logger.e(e);

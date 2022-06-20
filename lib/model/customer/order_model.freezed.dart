@@ -31,8 +31,8 @@ mixin _$OrderModel {
   set owner(MemberModel? value) => throw _privateConstructorUsedError;
   MemberModel? get delivery => throw _privateConstructorUsedError;
   set delivery(MemberModel? value) => throw _privateConstructorUsedError;
-  List<ProductModel>? get models => throw _privateConstructorUsedError;
-  set models(List<ProductModel>? value) => throw _privateConstructorUsedError;
+  List<SaleModel>? get models => throw _privateConstructorUsedError;
+  set models(List<SaleModel>? value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +51,7 @@ abstract class $OrderModelCopyWith<$Res> {
       String? other,
       MemberModel? owner,
       MemberModel? delivery,
-      List<ProductModel>? models});
+      List<SaleModel>? models});
 
   $MemberModelCopyWith<$Res>? get owner;
   $MemberModelCopyWith<$Res>? get delivery;
@@ -98,7 +98,7 @@ class _$OrderModelCopyWithImpl<$Res> implements $OrderModelCopyWith<$Res> {
       models: models == freezed
           ? _value.models
           : models // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>?,
+              as List<SaleModel>?,
     ));
   }
 
@@ -138,7 +138,7 @@ abstract class _$$_OrderModelCopyWith<$Res>
       String? other,
       MemberModel? owner,
       MemberModel? delivery,
-      List<ProductModel>? models});
+      List<SaleModel>? models});
 
   @override
   $MemberModelCopyWith<$Res>? get owner;
@@ -189,7 +189,7 @@ class __$$_OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
       models: models == freezed
           ? _value.models
           : models // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>?,
+              as List<SaleModel>?,
     ));
   }
 }
@@ -221,7 +221,7 @@ class _$_OrderModel implements _OrderModel {
   @override
   MemberModel? delivery;
   @override
-  List<ProductModel>? models;
+  List<SaleModel>? models;
 
   @override
   String toString() {
@@ -246,7 +246,7 @@ abstract class _OrderModel implements OrderModel {
       String? other,
       MemberModel? owner,
       MemberModel? delivery,
-      List<ProductModel>? models}) = _$_OrderModel;
+      List<SaleModel>? models}) = _$_OrderModel;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
       _$_OrderModel.fromJson;
@@ -262,7 +262,7 @@ abstract class _OrderModel implements OrderModel {
   @override
   MemberModel? get delivery => throw _privateConstructorUsedError;
   @override
-  List<ProductModel>? get models => throw _privateConstructorUsedError;
+  List<SaleModel>? get models => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_OrderModelCopyWith<_$_OrderModel> get copyWith =>

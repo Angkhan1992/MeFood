@@ -58,7 +58,7 @@ class _AccountScreenState extends State<AccountScreen> {
               height: 90.0,
               child: Stack(
                 children: [
-                  AvatarImageWidget(
+                  CircleAvatarNetwork(
                     avatar: user!.linkAvatar,
                     borderColor: Theme.of(context).colorScheme.secondary,
                     size: 90.0,

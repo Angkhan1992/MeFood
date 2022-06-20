@@ -3,8 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/model/base/base.dart';
+import 'package:mefood/provider/customer/customer.dart';
+import 'package:mefood/screen/customer/base/search_product.dart';
+import 'package:mefood/screen/customer/home/all_category_screen.dart';
+import 'package:mefood/screen/customer/home/all_restaurant.dart';
+import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/widget/base/base.dart';
 
@@ -18,6 +26,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _scrollController = ScrollController();
 
+  List<CategoryModel> categories = [];
+
   @override
   void initState() {
     super.initState();
@@ -25,11 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Timer.run(() => _initProvider());
   }
 
-  void _initProvider() async {
-    // _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
-    // var categories = await JsonService.readCategoryFromJson();
-    // _categoryProvider!.instanceOfCategories(categories);
-  }
+  void _initProvider() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           CustomHeaderView(
             title: S.current.home,
+            actions: [
+              InkWell(
+                onTap: () => NavigatorService.of(context).push(
+                  screen: SearchProduct(),
+                ),
+                child: Icon(LineIcons.search),
+              ),
+            ],
           ),
           Expanded(
             child: ClipRRect(
@@ -58,50 +72,53 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: [
                         CategoryWidget(
-                            prefix: SvgPicture.asset(
-                              'assets/icons/ic_category.svg',
-                              width: sizeIcon,
-                              height: sizeIcon,
-                              color: Theme.of(context).secondaryHeaderColor,
-                            ),
-                            title: S.current.category,
-                            extend: 'View All',
-                            onExtend: () {}
-                            // => NavigatorService.of(context).push(
-                            //   screen: AllCategoryScreen(
-                            //     categories: _categoryProvider!.categories,
-                            //   ),
-                            // ),
-                            ),
+                          prefix: Icon(
+                            LineIcons.shoppingBag,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          title: S.current.category,
+                          extend: 'View All',
+                          onExtend: () => NavigatorService.of(context).push(
+                            screen: AllCategoryScreen(categories: categories),
+                          ),
+                        ),
                         categoryWidget(),
+                        const SizedBox(height: offsetSm),
                         CategoryWidget(
                           prefix: Icon(
-                            Icons.favorite_outline,
-                            color: Theme.of(context).secondaryHeaderColor,
-                          ),
-                          title: S.current.hot_products,
-                          extend: S.current.view_all,
-                          onExtend: () {},
-                        ),
-                        productWidget(),
-                        CategoryWidget(
-                          prefix: Icon(
-                            LineIcons.objectGroup,
-                            color: Theme.of(context).secondaryHeaderColor,
-                          ),
-                          title: S.current.restaurants,
-                          extend: S.current.view_all,
-                          onExtend: () {},
-                        ),
-                        restaurantWidget(),
-                        CategoryWidget(
-                          prefix: Icon(
-                            LineIcons.jediOrder,
-                            color: Theme.of(context).secondaryHeaderColor,
+                            LineIcons.shoppingBasket,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           title: S.current.new_products,
                         ),
                         orderWidget(),
+                        const SizedBox(height: offsetSm),
+                        CategoryWidget(
+                          prefix: Icon(
+                            LineIcons.shirtsInBulk,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          title: S.current.hot_products,
+                        ),
+                        productWidget(),
+                        const SizedBox(height: offsetSm),
+                        CategoryWidget(
+                          prefix: Icon(
+                            LineIcons.coffee,
+                            size: sizeIcon,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          title: S.current.restaurants,
+                          extend: S.current.view_all,
+                          onExtend: () => NavigatorService.of(context).push(
+                            screen: AllRestaurant(),
+                          ),
+                        ),
+                        restaurantWidget(),
+                        const SizedBox(height: offsetBase),
                       ],
                     ),
                   ),
@@ -117,32 +134,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget categoryWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: offsetXMd,
+        vertical: offsetBase,
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        // child: Consumer<CategoryProvider>(
-        //   builder: (context, value, child) {
-        //     return Row(
-        //       children: [
-        //         for (var model in value.categories) ...{
-        //           homeCell(
-        //             context,
-        //             model: model,
-        //             onTap: () => NavigatorService.of(context).push(
-        //               screen: CategoryScreen(
-        //                 category: model,
-        //               ),
-        //             ),
-        //           ),
-        //           const SizedBox(
-        //             width: offsetBase,
-        //           ),
-        //         },
-        //       ],
-        //     );
-        //   },
-        // ),
+        child: Consumer<CategoryProvider>(
+          builder: (context, provider, view) {
+            if (provider.categories!.isEmpty) {
+              return snapErrorWidget();
+            }
+            categories = provider.categories!;
+            return Row(
+              children: [
+                for (var model in categories) ...{
+                  model.homeCell(context),
+                  const SizedBox(
+                    width: offsetBase,
+                  ),
+                },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -150,57 +163,109 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget productWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: offsetXMd,
+        vertical: offsetBase,
       ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            for (var i = 0; i < 10; i++) ...{
-              // fakeHotModel(context, model: ProductModel()),
-              const SizedBox(
-                width: offsetBase,
+      child: Consumer<HotProductProvider>(
+        builder: (context, provider, view) {
+          if (provider.products == null || provider.products!.isEmpty) {
+            return snapErrorWidget();
+          }
+          var hotProducts = provider.products!;
+          return Container(
+            height: 200.0,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: hotProducts
+                    .map((e) => e.productSquare(context, type: 'hot'))
+                    .toList(),
               ),
-            },
-          ],
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget restaurantWidget() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: offsetXMd,
-      ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            for (var i = 0; i < 10; i++) ...{
-              // fakeRestaurantModel(context),
-              const SizedBox(
-                width: offsetBase,
-              ),
-            },
-          ],
-        ),
-      ),
+    return Consumer<RestaurantProvider>(
+      builder: (context, provider, view) {
+        if (provider.restaurants == null || provider.restaurants!.isEmpty) {
+          return snapErrorWidget();
+        }
+        var restaurants = provider.restaurants!;
+        return ListView.separated(
+          shrinkWrap: true,
+          itemCount: restaurants.length,
+          itemBuilder: (context, i) => restaurants[i].customerHomeList(context),
+          separatorBuilder: (context, i) => const SizedBox(
+            height: offsetXSm,
+          ),
+        );
+      },
     );
   }
 
   Widget orderWidget() {
-    return ListView.separated(
-      controller: _scrollController,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return Container();
-        // return fakeOrderModel(context, model: ProductModel());
-      },
-      separatorBuilder: (context, index) => const SizedBox(
-        height: offsetSm,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: offsetBase,
       ),
-      itemCount: 10,
+      child: Consumer<NewProductProvider>(
+        builder: (context, provider, view) {
+          if (provider.products == null || provider.products!.isEmpty) {
+            return snapErrorWidget();
+          }
+          var newProducts = provider.products!;
+          return Container(
+            height: 200.0,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: newProducts
+                    .map((e) => e.productSquare(context, type: 'new'))
+                    .toList(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget snapErrorWidget() {
+    return Container(
+      height: 200.0,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            'assets/icons/ic_empty.svg',
+            color: Theme.of(context).hintColor,
+            width: 40.0,
+            height: 40.0,
+          ),
+          const SizedBox(height: offsetBase),
+          Text(
+            'Empty List',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w200,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget snapLoadingWidget() {
+    return Container(
+      height: 200.0,
+      alignment: Alignment.center,
+      child: ProgressWidget(
+        color: Theme.of(context).colorScheme.secondary,
+      ),
     );
   }
 }

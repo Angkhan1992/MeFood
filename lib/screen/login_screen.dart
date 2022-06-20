@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/provider/delivery/auth_provider.dart';
+import 'package:mefood/screen/customer/auth/register_screen.dart' as cs_reg;
+import 'package:mefood/screen/customer/main/main_screen.dart' as cs_log;
+import 'package:mefood/screen/delivery/auth/register_screen.dart' as dl_reg;
+import 'package:mefood/screen/landing_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/logger.dart';
 import 'package:mefood/widget/base/base.dart';
-import 'package:provider/provider.dart';
-
-import 'customer/auth/register_screen.dart' as cs_reg;
-import 'delivery/auth/register_screen.dart' as dl_reg;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -81,8 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         CustomTextField(
                           prefix: const Icon(LineIcons.user),
-                          controller: TextEditingController(
-                              text: 'bgold1118@gmail.com'),
                           hintText: S.current.email_user_id,
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (email) {
@@ -95,8 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextField(
                           prefix: const Icon(LineIcons.key),
                           hintText: S.current.password,
-                          controller:
-                              TextEditingController(text: 'Black123456@'),
                           obscureText: _passVisible,
                           textInputAction: TextInputAction.done,
                           suffix: InkWell(
@@ -151,7 +150,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (!F.isDelivery)
                           CustomOutlineButton(
                             title: S.current.login_by_tour.toUpperCase(),
-                            onTap: () {},
+                            onTap: () async {
+                              var isLanding =
+                                  await PrefService.of().isLanding();
+                              if (isLanding) {
+                                NavigatorService.of(context).push(
+                                  screen: const cs_log.MainScreen(),
+                                  replace: true,
+                                );
+                              } else {
+                                NavigatorService.of(context)
+                                    .push(screen: const LandingScreen());
+                              }
+                            },
                           ),
                         const Spacer(),
                         Row(
@@ -218,6 +229,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login() async {
+    // Add Categories
+    // var categories = await JsonService.readCategoryFromJson();
+    // for (var category in categories) {
+    //   await category.add(context);
+    // }
+    // return;
+
     logger.d(kDomain);
     if (_event!.value != LoginEvent.none) {
       DialogService.of(context).kShowProcessingDialog();
@@ -282,7 +300,28 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } else {
-      // [Future] customer login
+      var provider = context.read<CustomerProvider>();
+      var err = await provider.login(
+        context,
+        email: _email!,
+        pass: _password!,
+      );
+      if (err != null) {
+        DialogService.of(context).showSnackBar(
+          err,
+          type: SnackBarType.error,
+        );
+        return;
+      }
+      var isLanding = await PrefService.of().isLanding();
+      if (isLanding) {
+        NavigatorService.of(context).push(
+          screen: const cs_log.MainScreen(),
+          replace: true,
+        );
+      } else {
+        NavigatorService.of(context).push(screen: const LandingScreen());
+      }
     }
   }
 
@@ -295,6 +334,13 @@ class _LoginScreenState extends State<LoginScreen> {
       screen: F.isDelivery
           ? const dl_reg.RegisterScreen()
           : const cs_reg.RegisterScreen(),
+      pop: (val) {
+        if (val != null && val) {
+          if (mounted) {
+            DialogService.of(context).showSnackBar('Success user registered!');
+          }
+        }
+      },
     );
   }
 }

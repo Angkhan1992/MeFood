@@ -13,7 +13,7 @@ _$_CategoryModel _$$_CategoryModelFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       regdate: json['regdate'] as String?,
       updated: json['updated'] as String?,
-      linkIcon: json['link_icon'] as String?,
+      other: json['other'] as String?,
     );
 
 Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$_CategoryModelToJson(_$_CategoryModel instance) =>
       'description': instance.description,
       'regdate': instance.regdate,
       'updated': instance.updated,
-      'link_icon': instance.linkIcon,
+      'other': instance.other,
     };

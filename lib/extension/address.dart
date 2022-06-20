@@ -5,7 +5,6 @@ import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
-import 'package:mefood/service/service.dart';
 
 extension EAddressModel on AddressModel {
   String? get hasFullData {
@@ -26,6 +25,10 @@ extension EAddressModel on AddressModel {
     }
 
     return null;
+  }
+
+  String get fullAddress {
+    return address1! + ' ' + city! + ' ' + province! + ' $postal';
   }
 
   void fromPlacemark(Placemark place) {
@@ -64,13 +67,14 @@ extension EAddressModel on AddressModel {
     // } else {
     //   return 'Server Error!';
     // }
+    return null;
   }
 
-  Future<String?> addToRestaurant(BuildContext? context) async {
-    if (hasFullData != null) {
-      return hasFullData;
-    }
-  }
+  // Future<String?> addToRestaurant(BuildContext? context) async {
+  //   if (hasFullData != null) {
+  //     return hasFullData;
+  //   }
+  // }
 
   double? distanceWith(LatLng latlng) {
     try {

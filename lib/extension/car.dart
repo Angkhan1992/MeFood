@@ -50,7 +50,7 @@ extension ECarModel on CarModel {
     if (hasFullData != null) {
       return hasFullData!;
     }
-
+    return null;
     // var resp = await APIService.of(context).post(
     //   '${APIService.kUrlAuth}/updateCar',
     //   toJson(),

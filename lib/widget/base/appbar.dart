@@ -9,11 +9,13 @@ import 'package:provider/provider.dart';
 class CustomHeaderView extends StatelessWidget {
   final String title;
   final Widget? prefix;
+  final List<Widget>? actions;
 
   const CustomHeaderView({
     Key? key,
     required this.title,
     this.prefix,
+    this.actions,
   }) : super(key: key);
 
   @override
@@ -23,6 +25,7 @@ class CustomHeaderView extends StatelessWidget {
         top: kToolbarHeight,
         bottom: offsetXMd,
         left: offsetSm,
+        right: offsetXMd,
       ),
       alignment: Alignment.centerLeft,
       child: Row(
@@ -37,6 +40,11 @@ class CustomHeaderView extends StatelessWidget {
             width: offsetBase,
           ),
           title.colorTitle(Theme.of(context).colorScheme.onSecondary),
+          const Spacer(),
+          for (var action in actions!) ...{
+            const SizedBox(width: offsetSm),
+            action,
+          },
         ],
       ),
     );
@@ -47,11 +55,13 @@ class CustomBottomNavigationItem {
   final Widget icon;
   final Widget label;
   final Color? color;
+  final int badge;
 
   CustomBottomNavigationItem({
     required this.icon,
     required this.label,
     this.color,
+    this.badge = 0,
   });
 }
 
@@ -81,6 +91,7 @@ class CustomBottomBar extends StatelessWidget {
         children: children!.map((item) {
           Widget icon = item.icon;
           Widget label = item.label;
+          int badge = item.badge;
           int index = children!.indexOf(item);
           return GestureDetector(
             onTap: () => onChange!(index),
@@ -97,7 +108,14 @@ class CustomBottomBar extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  icon,
+                  badge == 0
+                      ? icon
+                      : Badge(
+                          child: icon,
+                          toAnimate: false,
+                          shape: BadgeShape.circle,
+                          badgeColor: Colors.red,
+                        ),
                   const SizedBox(
                     height: offsetXSm,
                   ),

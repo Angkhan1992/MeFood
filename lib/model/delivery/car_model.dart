@@ -9,9 +9,9 @@ class CarModel with _$CarModel {
   factory CarModel({
     int? id,
     String? name,
-    String? number,
-    String? color,
-    int? since,
+    @JsonKey(name: 'car_number') String? number,
+    @JsonKey(name: 'car_color') String? color,
+    @JsonKey(name: 'car_since') int? since,
     String? type,
     int? distance,
     int? speed,

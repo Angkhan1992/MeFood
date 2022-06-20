@@ -91,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    AvatarImageWidget(
+                                    CircleAvatarNetwork(
                                       avatar: provider.user!.linkAvatar,
                                     ),
                                     const SizedBox(

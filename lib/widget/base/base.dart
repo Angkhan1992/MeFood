@@ -4,5 +4,6 @@ export 'image.dart';
 export 'mark.dart';
 export 'tag.dart';
 export 'textfield.dart';
+export 'title.dart';
 export 'widget_home.dart';
 export 'widget_landing.dart';

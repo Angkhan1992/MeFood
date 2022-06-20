@@ -1,11 +1,11 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mefood/model/model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/restaurant/restaurant.dart';
 import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -24,7 +24,7 @@ class _AddProductState extends State<AddProduct> {
   ProductModel product = ProductModel();
   final _characterEvent = ValueNotifier(0);
   List<String> galleries = ['', '', '', ''];
-  var value = '', price = '', prepare = '';
+  var value = '', price = '', prepare = '', type = '';
 
   @override
   Widget build(BuildContext context) {
@@ -159,42 +159,106 @@ class _AddProductState extends State<AddProduct> {
                                       width: 24.0,
                                     ),
                                     Expanded(
-                                      child: ValueListenableBuilder<int>(
-                                        valueListenable: _characterEvent,
-                                        builder: (context, value, child) =>
-                                            Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            CustomTextMemo(
-                                              hintText:
-                                                  'You can write product description in here less 300 characters.',
-                                              lines: 13,
-                                              onChanged: (value) {
-                                                _characterEvent.value =
-                                                    value.length;
-                                                product.desc = value;
-                                              },
+                                      child: Column(
+                                        children: [
+                                          FutureBuilder<List<CategoryModel>>(
+                                            future: ECategory.getCategories(),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.connectionState ==
+                                                      ConnectionState.waiting ||
+                                                  snapshot.hasError) {
+                                                return Container(
+                                                  height: 48.0,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            offsetXSm),
+                                                    border: Border.all(
+                                                      width: 1.0,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .secondary,
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              var categories = snapshot.data!;
+                                              return CustomTextField(
+                                                controller:
+                                                    TextEditingController(
+                                                        text: type),
+                                                prefix:
+                                                    Icon(Icons.category_sharp),
+                                                suffix:
+                                                    Icon(Icons.arrow_drop_down),
+                                                hintText: S.current.category,
+                                                readOnly: true,
+                                                onTap: () async {
+                                                  var result = await DialogService
+                                                          .of(context)
+                                                      .showDesktopChooserDialog(
+                                                    title: S.current
+                                                        .choose_category,
+                                                    values: categories
+                                                        .map((e) => e.name!)
+                                                        .toList(),
+                                                    isExpand: true,
+                                                  );
+                                                  if (result != null) {
+                                                    product.category =
+                                                        categories[categories
+                                                            .indexWhere((e) =>
+                                                                e.name ==
+                                                                result)];
+                                                    setState(() {
+                                                      type = result;
+                                                    });
+                                                  }
+                                                },
+                                              );
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 24.0,
+                                          ),
+                                          ValueListenableBuilder<int>(
+                                            valueListenable: _characterEvent,
+                                            builder: (context, value, child) =>
+                                                Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                CustomTextMemo(
+                                                  hintText:
+                                                      'You can write product description in here less 300 characters.',
+                                                  lines: 10,
+                                                  onChanged: (value) {
+                                                    _characterEvent.value =
+                                                        value.length;
+                                                    product.desc = value;
+                                                  },
+                                                ),
+                                                const SizedBox(
+                                                  height: 4.0,
+                                                ),
+                                                Text(
+                                                  '$value / 300',
+                                                  style: TextStyle(
+                                                    color: value == 0
+                                                        ? Theme.of(context)
+                                                            .hintColor
+                                                        : value > 300
+                                                            ? Colors.redAccent
+                                                            : Theme.of(context)
+                                                                .textTheme
+                                                                .bodyText1!
+                                                                .color,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            const SizedBox(
-                                              height: 4.0,
-                                            ),
-                                            Text(
-                                              '$value / 300',
-                                              style: TextStyle(
-                                                color: value == 0
-                                                    ? Theme.of(context)
-                                                        .hintColor
-                                                    : value > 300
-                                                        ? Colors.redAccent
-                                                        : Theme.of(context)
-                                                            .textTheme
-                                                            .bodyText1!
-                                                            .color,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],

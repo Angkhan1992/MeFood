@@ -66,7 +66,7 @@ extension EString on String {
       this,
       style: TextStyle(
         fontFamily: 'Horizon',
-        fontSize: 48,
+        fontSize: 36,
         color: color,
       ),
     );

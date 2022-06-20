@@ -26,6 +26,8 @@ mixin _$RestaurantModel {
   set address(AddressModel? value) => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   set name(String? value) => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  set description(String? value) => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   set email(String? value) => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -55,6 +57,7 @@ abstract class $RestaurantModelCopyWith<$Res> {
       {int? id,
       AddressModel? address,
       String? name,
+      String? description,
       String? email,
       String? phone,
       String? category,
@@ -79,6 +82,7 @@ class _$RestaurantModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? address = freezed,
     Object? name = freezed,
+    Object? description = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? category = freezed,
@@ -98,6 +102,10 @@ class _$RestaurantModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -149,6 +157,7 @@ abstract class _$$_RestaurantModelCopyWith<$Res>
       {int? id,
       AddressModel? address,
       String? name,
+      String? description,
       String? email,
       String? phone,
       String? category,
@@ -176,6 +185,7 @@ class __$$_RestaurantModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? address = freezed,
     Object? name = freezed,
+    Object? description = freezed,
     Object? email = freezed,
     Object? phone = freezed,
     Object? category = freezed,
@@ -195,6 +205,10 @@ class __$$_RestaurantModelCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String?,
       email: email == freezed
           ? _value.email
@@ -231,6 +245,7 @@ class _$_RestaurantModel implements _RestaurantModel {
       {this.id,
       this.address,
       this.name,
+      this.description,
       this.email,
       this.phone,
       this.category,
@@ -248,6 +263,8 @@ class _$_RestaurantModel implements _RestaurantModel {
   @override
   String? name;
   @override
+  String? description;
+  @override
   String? email;
   @override
   String? phone;
@@ -263,7 +280,7 @@ class _$_RestaurantModel implements _RestaurantModel {
 
   @override
   String toString() {
-    return 'RestaurantModel(id: $id, address: $address, name: $name, email: $email, phone: $phone, category: $category, regdate: $regdate, logo: $logo, galleries: $galleries)';
+    return 'RestaurantModel(id: $id, address: $address, name: $name, description: $description, email: $email, phone: $phone, category: $category, regdate: $regdate, logo: $logo, galleries: $galleries)';
   }
 
   @JsonKey(ignore: true)
@@ -282,6 +299,7 @@ abstract class _RestaurantModel implements RestaurantModel {
       {int? id,
       AddressModel? address,
       String? name,
+      String? description,
       String? email,
       String? phone,
       String? category,
@@ -298,6 +316,8 @@ abstract class _RestaurantModel implements RestaurantModel {
   AddressModel? get address => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
+  @override
+  String? get description => throw _privateConstructorUsedError;
   @override
   String? get email => throw _privateConstructorUsedError;
   @override

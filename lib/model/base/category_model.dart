@@ -12,8 +12,7 @@ class CategoryModel with _$CategoryModel {
     String? description,
     String? regdate,
     String? updated,
-    // extend field
-    String? linkIcon,
+    String? other,
   }) = _CategoryModel;
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>

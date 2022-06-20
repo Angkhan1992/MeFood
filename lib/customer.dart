@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:mefood/provider/customer/auth_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/base/base.dart';
+import 'package:mefood/provider/customer/customer.dart';
+import 'package:mefood/screen/splash_screen.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
-import 'package:mefood/util/constants.dart';
-
-import 'generated/l10n.dart';
-import 'screen/splash_screen.dart';
+import 'package:mefood/util/util.dart';
 
 Injector? injector;
 
@@ -39,12 +39,22 @@ void main() async {
 
   F.appFlavor = Flavor.customer;
 
-  var authProvider = AuthProvider();
+  var customerProvider = CustomerProvider();
+  var categoryProvider = CategoryProvider();
+  var newProductProvider = NewProductProvider();
+  var hotProductProvider = HotProductProvider();
+  var restaurantProvider = RestaurantProvider();
+  var orderProvider = OrderProvider();
 
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => authProvider),
+        ChangeNotifierProvider(create: (context) => customerProvider),
+        ChangeNotifierProvider(create: (context) => categoryProvider),
+        ChangeNotifierProvider(create: (context) => orderProvider),
+        ChangeNotifierProvider(create: (context) => newProductProvider),
+        ChangeNotifierProvider(create: (context) => hotProductProvider),
+        ChangeNotifierProvider(create: (context) => restaurantProvider),
       ],
       child: const MyApp(),
     ),
@@ -77,6 +87,7 @@ class MyApp extends StatelessWidget {
       fontFamily: kFontFamily,
       brightness: Brightness.light,
       primaryColor: kPrimaryColor,
+      shadowColor: kSecondaryColor,
       secondaryHeaderColor: kSecondaryColor,
       scaffoldBackgroundColor: kScaffoldColor,
       backgroundColor: kScaffoldColor,
@@ -122,6 +133,7 @@ class MyApp extends StatelessWidget {
       secondaryHeaderColor: kSecondaryDarkColor,
       scaffoldBackgroundColor: kScaffoldDarkColor,
       backgroundColor: kScaffoldDarkColor,
+      shadowColor: kSecondaryDarkColor,
       hintColor: kHintDarkColor,
       focusColor: kAccentDarkColor,
       textTheme: TextTheme(

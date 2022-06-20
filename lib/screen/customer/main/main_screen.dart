@@ -1,15 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/screen/customer/main/home_screen.dart';
-import 'package:mefood/screen/customer/main/offer_screen.dart';
-import 'package:mefood/screen/customer/main/order_screen.dart';
-import 'package:mefood/screen/customer/main/setting_screen.dart';
-import 'package:mefood/themes/dimens.dart';
-import 'package:mefood/themes/textstyle.dart';
+import 'package:mefood/provider/base/base.dart';
+import 'package:mefood/screen/customer/main/main.dart';
+import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/base.dart';
 
 class MainScreen extends StatefulWidget {
@@ -27,7 +25,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     var screens = [
       const HomeScreen(),
       const OrderScreen(),
-      const OfferScreen(),
+      const MyCartScreen(),
       const SettingScreen(),
     ];
     return WillPopScope(
@@ -48,41 +46,50 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     var bottomBarTitles = [
       S.current.home,
       S.current.orders,
-      S.current.offers,
-      S.current.profile,
+      'My Cart',
+      S.current.settings,
     ];
     var bottomItemImages = [
       LineIcons.home,
-      LineIcons.jediOrder,
-      LineIcons.gift,
-      LineIcons.user,
+      LineIcons.firstOrder,
+      LineIcons.shoppingCart,
+      Icons.settings_outlined,
     ];
-    return CustomBottomBar(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      currentIndex: _event.value,
-      onChange: (index) {
-        _event.value = index;
-      },
-      children: [
-        for (var i = 0; i < bottomItemImages.length; i++)
-          CustomBottomNavigationItem(
-            icon: Icon(
-              bottomItemImages[i],
-              color: _event.value == i
-                  ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).colorScheme.onSecondary,
-              size: offsetXMd,
-            ),
-            label: bottomBarTitles[i].wText(
-              CustomText.semiBold(
-                fontSize: fontXSm,
-                color: _event.value == i
-                    ? Theme.of(context).colorScheme.secondary
-                    : Theme.of(context).colorScheme.onSecondary,
+    return Consumer<OrderProvider>(
+      builder: (context, value, child) {
+        return CustomBottomBar(
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          currentIndex: _event.value,
+          onChange: (index) {
+            _event.value = index;
+          },
+          children: [
+            for (var i = 0; i < bottomItemImages.length; i++)
+              CustomBottomNavigationItem(
+                icon: Icon(
+                  bottomItemImages[i],
+                  color: _event.value == i
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.onSecondary,
+                  size: offsetXMd,
+                ),
+                label: bottomBarTitles[i].wText(
+                  CustomText.semiBold(
+                    fontSize: fontXSm,
+                    color: _event.value == i
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.onSecondary,
+                  ),
+                ),
+                badge: i == 1
+                    ? value.orders!.length
+                    : i == 2
+                        ? value.products!.length
+                        : 0,
               ),
-            ),
-          ),
-      ],
+          ],
+        );
+      },
     );
   }
 
