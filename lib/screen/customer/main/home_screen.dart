@@ -11,6 +11,7 @@ import 'package:mefood/model/base/base.dart';
 import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/screen/customer/base/search_product.dart';
 import 'package:mefood/screen/customer/home/all_category_screen.dart';
+import 'package:mefood/screen/customer/home/all_restaurant.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/widget/base/base.dart';
@@ -112,7 +113,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           title: S.current.restaurants,
                           extend: S.current.view_all,
-                          onExtend: () {},
+                          onExtend: () => NavigatorService.of(context).push(
+                            screen: AllRestaurant(),
+                          ),
                         ),
                         restaurantWidget(),
                         const SizedBox(height: offsetBase),

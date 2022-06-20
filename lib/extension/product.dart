@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:mefood/screen/customer/base/product_detail.dart';
-import 'package:mefood/themes/dimens.dart';
-import 'package:mefood/widget/base/button.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/model/restaurant/restaurant.dart';
-import 'package:mefood/provider/restaurant/restaurant_provider.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/provider/base/base.dart';
+import 'package:mefood/provider/restaurant/restaurant.dart';
+import 'package:mefood/screen/customer/base/product_detail.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/widget/base/button.dart';
 
 final formatCurrency = NumberFormat('###,###,###');
 
@@ -673,6 +674,138 @@ extension EProduct on ProductModel {
     );
   }
 
+  Widget gridItem(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(12.0),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5.0,
+            spreadRadius: 1.0,
+            color: Theme.of(context).shadowColor.withOpacity(0.15),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Stack(
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: CachedNetworkImage(
+                imageUrl: '$kDomain${galleries![0]}',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned.fill(
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).scaffoldBackgroundColor,
+                            Theme.of(context)
+                                .scaffoldBackgroundColor
+                                .withOpacity(0),
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      title!,
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      maxLines: 1,
+                                    ),
+                                    const SizedBox(width: offsetXSm),
+                                    Text(
+                                      currency,
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  var sale =
+                                      SaleModel(product: this, amount: 1);
+                                  var orderProvider =
+                                      context.read<OrderProvider>();
+                                  var resp = await orderProvider.addCart(sale);
+                                  if (resp) {
+                                    DialogService.of(context).showSnackBar(
+                                      'Successfully added to cart',
+                                    );
+                                  } else {
+                                    DialogService.of(context).showSnackBar(
+                                      'This product was already added to cart.',
+                                      type: SnackBarType.info,
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  width: 28.0,
+                                  height: 28.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color:
+                                        Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  child: Icon(
+                                    LineIcons.shoppingBasket,
+                                    size: 18.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            desc!,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w200,
+                            ),
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<String?> addProduct(
     BuildContext context,
     int restId,
@@ -779,9 +912,29 @@ extension EProduct on ProductModel {
     return [];
   }
 
-  static Future<List<ProductModel>> getProductsByRest(int restId) async {
-    var resp = await APIService.of(null).post(
+  static Future<List<ProductModel>> getProductsByRest(
+    BuildContext context,
+    int restId, {
+    int page = 0,
+  }) async {
+    var resp = await APIService.of(context).post(
       '${APIService.kUrlProduct}/res',
+      {'id': restId, 'page': page},
+      checkToken: false,
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return (resp['result'] as List)
+            .map((e) => ProductModel.fromJson(e))
+            .toList();
+      }
+    }
+    return [];
+  }
+
+  static Future<List<ProductModel>> getNewProductsByRest(int restId) async {
+    var resp = await APIService.of(null).post(
+      '${APIService.kUrlProduct}/newRest',
       {'id': restId},
       checkToken: false,
     );

@@ -38,146 +38,253 @@ extension ERestaurantModel on RestaurantModel {
 
   Widget customerHomeList(BuildContext context) {
     var height = 96.0;
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
+    return Container(
+      height: height,
+      margin: const EdgeInsets.only(bottom: offsetSm),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(12.0),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5.0,
+            spreadRadius: 1.0,
+            color: Theme.of(context).shadowColor.withOpacity(0.15),
+          ),
+        ],
       ),
-      child: Container(
-        height: height,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: InkWell(
+          onTap: () => NavigatorService.of(context).push(
+            screen: RestaurantDetail(restaurant: this),
+          ),
+          child: Row(
+            children: [
+              AspectRatio(
+                aspectRatio: 1,
+                child: CachedNetworkImage(
+                  imageUrl: '$kDomain${galleries![0]}',
+                  placeholder: (context, url) => Center(
+                    child: SizedBox(
+                      width: height / 2,
+                      height: height / 2,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.0,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Center(
+                    child: SvgPicture.asset(
+                      'assets/images/logo.svg',
+                      width: height / 3 * 2,
+                      height: height / 3 * 2,
+                      color: Theme.of(context).hintColor,
+                    ),
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: offsetBase,
+                    vertical: offsetSm,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name!,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const Spacer(),
+                          Row(
+                            children: [
+                              ActionButton(
+                                iconData: Icons.ios_share_rounded,
+                              ),
+                              const SizedBox(width: 16.0),
+                              ActionButton(
+                                iconData: Icons.favorite_outline,
+                                color: Colors.red,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            LineIcons.user,
+                            size: 14.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            email!,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w200,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            LineIcons.phone,
+                            size: 14.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            phone!,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w200,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            LineIcons.locationArrow,
+                            size: 14.0,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            'View on Google Map',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w200,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget gridCell(BuildContext context) {
+    var logoSize = 36.0;
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(12.0),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5.0,
+            spreadRadius: 1.0,
+            color: Theme.of(context).shadowColor.withOpacity(0.15),
+          ),
+        ],
+      ),
+      child: InkWell(
+        onTap: () => NavigatorService.of(context).push(
+          screen: RestaurantDetail(restaurant: this),
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12.0),
-          child: InkWell(
-            onTap: () => NavigatorService.of(context).push(
-              screen: RestaurantDetail(restaurant: this),
-            ),
-            child: Row(
-              children: [
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: CachedNetworkImage(
-                    imageUrl: '$kDomain${galleries![0]}',
-                    placeholder: (context, url) => Center(
-                      child: SizedBox(
-                        width: height / 2,
-                        height: height / 2,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2.0,
-                          color: Theme.of(context).colorScheme.secondary,
+          child: Stack(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: CachedNetworkImage(
+                  imageUrl: '$kDomain${galleries![0]}',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned.fill(
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).scaffoldBackgroundColor,
+                              Theme.of(context)
+                                  .scaffoldBackgroundColor
+                                  .withOpacity(0),
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                        ),
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: logoSize,
+                              height: logoSize,
+                              padding: const EdgeInsets.all(1.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  logoSize / 2.0,
+                                ),
+                                border: Border.all(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(logoSize / 2.0),
+                                child: CachedNetworkImage(
+                                  imageUrl: '$kDomain$logo',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: offsetSm,
+                            ),
+                            Expanded(
+                              child: Text(
+                                name!,
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                maxLines: 2,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    errorWidget: (context, url, error) => Center(
-                      child: SvgPicture.asset(
-                        'assets/images/logo.svg',
-                        width: height / 3 * 2,
-                        height: height / 3 * 2,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+                  ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: offsetBase,
-                      vertical: offsetSm,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              name!,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            const Spacer(),
-                            Row(
-                              children: [
-                                ActionButton(
-                                  iconData: Icons.ios_share_rounded,
-                                ),
-                                const SizedBox(width: 16.0),
-                                ActionButton(
-                                  iconData: Icons.favorite_outline,
-                                  color: Colors.red,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              LineIcons.user,
-                              size: 14.0,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              email!,
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w200,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              LineIcons.phone,
-                              size: 14.0,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              phone!,
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w200,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              LineIcons.locationArrow,
-                              size: 14.0,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              'View on Google Map',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w200,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -188,6 +295,25 @@ extension ERestaurantModel on RestaurantModel {
     var resp = await APIService.of(null).post(
       '${APIService.kUrlCustomerHome}/recents',
       {},
+      checkToken: false,
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return (resp['result'] as List)
+            .map((e) => RestaurantModel.fromJson(e))
+            .toList();
+      }
+    }
+    return [];
+  }
+
+  static Future<List<RestaurantModel>> getRestaurants(
+    BuildContext context, {
+    int page = 0,
+  }) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlCustomerHome}/restaurants',
+      {'page': page},
       checkToken: false,
     );
     if (resp != null) {

@@ -3,7 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/model/restaurant/restaurant.dart';
+import 'package:mefood/screen/customer/home/restaurant_product.dart';
 import 'package:mefood/service/api_service.dart';
+import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/base.dart';
 import 'package:mefood/widget/customer/list_item.dart';
@@ -127,7 +129,11 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
                         ExtendSubTitle(
                           subtitle: 'Restaurant Products',
                           extendTitle: 'View all',
-                          onTap: () {},
+                          onTap: () => NavigatorService.of(context).push(
+                            screen: RestaurantProduct(
+                              restaurant: widget.restaurant,
+                            ),
+                          ),
                         ),
                         productWidget(),
                         const SizedBox(height: 24.0),
@@ -172,7 +178,7 @@ class _RestaurantDetailState extends State<RestaurantDetail> {
       ),
       child: (newProducts == null || newProducts!.isEmpty)
           ? FutureBuilder<List<ProductModel>>(
-              future: EProduct.getProductsByRest(widget.restaurant.id!),
+              future: EProduct.getNewProductsByRest(widget.restaurant.id!),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return snapLoadingWidget();
