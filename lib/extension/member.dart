@@ -48,4 +48,25 @@ extension EMemberModel on MemberModel {
       return S.current.sever_error;
     }
   }
+
+  Future<String?> updatePassword(
+    BuildContext? context, {
+    required String password,
+  }) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlUser}/updatePass',
+      {
+        'pass': password.generateMD5,
+      },
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return S.current.sever_error;
+    }
+  }
 }

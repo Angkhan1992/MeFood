@@ -5,6 +5,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/service/api_service.dart';
 
 extension EAddressModel on AddressModel {
   String? get hasFullData {
@@ -22,6 +23,12 @@ extension EAddressModel on AddressModel {
     }
     if (country == null || country!.isEmpty) {
       return '${S.current.empty} ${S.current.country}';
+    }
+    if (lat == null || lat!.isEmpty) {
+      return '${S.current.empty} Location Data!';
+    }
+    if (lon == null || lon!.isEmpty) {
+      return '${S.current.empty} Location Data!';
     }
 
     return null;
@@ -49,27 +56,6 @@ extension EAddressModel on AddressModel {
     return jsonEncode(result);
   }
 
-  Future<String?> update(BuildContext? context) async {
-    if (hasFullData != null) {
-      return hasFullData;
-    }
-    // var resp = await APIService.of(context).post(
-    //   '${APIService.kUrlAuth}/updateAddress',
-    //   toJson(),
-    // );
-
-    // if (resp != null) {
-    //   if (resp['ret'] == 10000) {
-    //     return null;
-    //   } else {
-    //     return resp['msg'];
-    //   }
-    // } else {
-    //   return 'Server Error!';
-    // }
-    return null;
-  }
-
   // Future<String?> addToRestaurant(BuildContext? context) async {
   //   if (hasFullData != null) {
   //     return hasFullData;
@@ -85,5 +71,36 @@ extension EAddressModel on AddressModel {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<String?> add(BuildContext? context) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlAddress}/add',
+      {
+        'address': jsonEncode(toJson()),
+      },
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        id = resp['result'];
+        return null;
+      }
+    }
+    return S.current.sever_error;
+  }
+
+  Future<String?> update(BuildContext? context) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlAddress}/update',
+      {
+        'address': jsonEncode(toJson()),
+      },
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return null;
+      }
+    }
+    return S.current.sever_error;
   }
 }

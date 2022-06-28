@@ -156,7 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (isLanding) {
                                 NavigatorService.of(context).push(
                                   screen: const cs_log.MainScreen(),
-                                  replace: true,
                                 );
                               } else {
                                 NavigatorService.of(context)
@@ -317,7 +316,6 @@ class _LoginScreenState extends State<LoginScreen> {
       if (isLanding) {
         NavigatorService.of(context).push(
           screen: const cs_log.MainScreen(),
-          replace: true,
         );
       } else {
         NavigatorService.of(context).push(screen: const LandingScreen());

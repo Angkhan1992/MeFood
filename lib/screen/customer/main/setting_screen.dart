@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/screen/customer/setting/about_screen.dart';
 import 'package:mefood/screen/customer/setting/account_screen.dart';
 import 'package:mefood/screen/customer/setting/contact_screen.dart';
@@ -11,6 +12,7 @@ import 'package:mefood/screen/customer/setting/inbox_screen.dart';
 import 'package:mefood/screen/customer/setting/order_history.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);

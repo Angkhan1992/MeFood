@@ -30,6 +30,7 @@ class APIService {
   static final kUrlCategory = '$kDomain/api/v1/category';
   static final kUrlProduct = '$kDomain/api/v1/product';
   static final kUrlOrder = '$kDomain/api/v1/order';
+  static final kUrlAddress = '$kDomain/api/v1/address';
 
   static final kUrlDelivery = '$kDomain/api/v1/delivery';
   static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';
@@ -106,6 +107,9 @@ class APIService {
         }
       } else {
         logger.e(response.statusCode);
+        if (context != null) {
+          Navigator.popUntil(context!, (route) => route.isFirst);
+        }
         return {
           'msg': 'Network Error! - Status Code ${response.statusCode}',
           'ret': 9998,
@@ -114,7 +118,7 @@ class APIService {
       }
     } catch (e) {
       if (context != null) {
-        Navigator.of(context!).pop();
+        Navigator.popUntil(context!, (route) => route.isFirst);
       }
       logger.e(e);
       return {

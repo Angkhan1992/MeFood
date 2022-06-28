@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/customer/customer.dart';
+import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 
 class CustomerProvider extends ChangeNotifier {
@@ -51,6 +52,30 @@ class CustomerProvider extends ChangeNotifier {
       if (resp['ret'] == 10000) {
         customer = CustomerModel.fromJson(resp['result']['customer']);
         await PrefService.of().saveToken(resp['result']['token']);
+        notifyListeners();
+        return null;
+      } else {
+        return resp['msg'];
+      }
+    } else {
+      return S.current.sever_error;
+    }
+  }
+
+  Future<String?> addAddress(
+    BuildContext context, {
+    required AddressModel address,
+  }) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlCustomerAuth}/address',
+      {
+        'addressId': address.id,
+        'customerId': customer!.id,
+      },
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        customer!.address = address;
         notifyListeners();
         return null;
       } else {
