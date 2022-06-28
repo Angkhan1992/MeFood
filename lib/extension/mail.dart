@@ -17,7 +17,7 @@ class ExtMail {
 
   Future<String?> updateMail(String status) async {
     var resp = await APIService.of(null).post(
-      '${APIService.kUrlHistory}/updateMail',
+      '${APIService.kUrlMail}/update',
       {
         'id': model.id!,
         'status': status,

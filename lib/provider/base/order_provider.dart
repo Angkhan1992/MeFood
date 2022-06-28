@@ -86,4 +86,18 @@ class OrderProvider with ChangeNotifier {
       return S.current.sever_error;
     }
   }
+
+  List<SaleModel> getCartProductsByRest(int id) {
+    if (products == null || products!.isEmpty) return [];
+    return products!.where((e) => e.product!.restaurant!.id == id).toList();
+  }
+
+  String getCartPriceByRest(int id) {
+    var sales = getCartProductsByRest(id);
+    var amount = 0;
+    for (var sale in sales) {
+      amount += sale.product!.price! * sale.amount!;
+    }
+    return '₭ ${formatCurrency.format(amount)}';
+  }
 }

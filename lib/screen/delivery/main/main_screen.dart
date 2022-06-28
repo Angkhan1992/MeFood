@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/delivery/delivery.dart';
+import 'package:mefood/screen/base/mail_screen.dart';
 import 'package:mefood/screen/delivery/account/account_screen.dart';
-import 'package:mefood/screen/delivery/account/mail_screen.dart';
 import 'package:mefood/screen/delivery/account/membership_screen.dart';
 import 'package:mefood/screen/delivery/main/chat_page.dart';
 import 'package:mefood/screen/delivery/main/history_page.dart';
@@ -114,7 +114,9 @@ class _MainScreenState extends State<MainScreen> {
                                 onTap: () {
                                   Navigator.of(context).pop();
                                   NavigatorService.of(context).push(
-                                    screen: MailScreen(),
+                                    screen: MailScreen(
+                                      user: provider.user!,
+                                    ),
                                   );
                                 },
                               ),

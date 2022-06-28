@@ -2,19 +2,26 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:mefood/model/base/base.dart';
 import 'package:mefood/provider/base/base.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/screen/delivery/account/mail_detail.dart';
 import 'package:mefood/service/dialog_service.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/widget/base/base.dart';
 
+import 'mail_detail.dart';
+
 class MailScreen extends StatefulWidget {
-  const MailScreen({Key? key}) : super(key: key);
+  final MemberModel user;
+
+  const MailScreen({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
   @override
   State<MailScreen> createState() => _MailScreenState();
@@ -22,7 +29,6 @@ class MailScreen extends StatefulWidget {
 
 class _MailScreenState extends State<MailScreen> {
   final _controller = ScrollController();
-  // MailProvider? _provider;
 
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -35,25 +41,20 @@ class _MailScreenState extends State<MailScreen> {
   }
 
   void _onRefresh() async {
-    // logger.d('OnRefresh');
-    // var deliveryProvider =
-    //     Provider.of<DeliveryProvider>(context, listen: false);
-    // await _provider!.fetchMails(deliveryProvider.user!.id!);
-    // _refreshController.refreshCompleted();
+    var provider = context.read<MailProvider>();
+    await provider.fetchMails(widget.user.id!);
+    _refreshController.refreshCompleted();
   }
 
   void fetchDate() async {
-    // var deliveryProvider =
-    //     Provider.of<DeliveryProvider>(context, listen: false);
-    // _provider = Provider.of<MailProvider>(context, listen: false);
-
-    // var resp = await _provider!.fetchMails(deliveryProvider.user!.id!);
-    // if (resp != null) {
-    //   DialogService.of(context).showSnackBar(
-    //     resp,
-    //     type: SnackBarType.error,
-    //   );
-    // }
+    var provider = context.read<MailProvider>();
+    var resp = await provider.fetchMails(widget.user.id!);
+    if (resp != null) {
+      DialogService.of(context).showSnackBar(
+        resp,
+        type: SnackBarType.error,
+      );
+    }
   }
 
   @override
@@ -61,13 +62,12 @@ class _MailScreenState extends State<MailScreen> {
     return Consumer<MailProvider>(
       builder: (context, provider, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              provider.checkAmount() == 0
-                  ? S.current.inbox.toUpperCase()
-                  : '${provider.checkAmount()} ${S.current.selected}',
-            ),
-            leading: provider.isEditing
+          appBar: CustomAppbar(
+            context,
+            title: provider.checkAmount() == 0
+                ? S.current.inbox.toUpperCase()
+                : '${provider.checkAmount()} ${S.current.selected}',
+            icon: provider.isEditing
                 ? InkWell(
                     child: Icon(
                       provider.isCheckAll()

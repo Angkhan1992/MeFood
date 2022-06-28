@@ -194,7 +194,7 @@ class TextActionButton extends StatelessWidget {
             TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.onSecondary,
             ),
           ),
         ),

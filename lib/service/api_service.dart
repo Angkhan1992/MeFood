@@ -25,6 +25,7 @@ class APIService {
 
   static final kUrlSupport = '$kDomain/api/v1/support';
   static final kUrlHistory = '$kDomain/api/v1/history';
+  static final kUrlMail = '$kDomain/api/v1/mail';
   static final kUrlUpload = '$kDomain/api/v1/upload';
   static final kUrlUser = '$kDomain/api/v1/user';
   static final kUrlCategory = '$kDomain/api/v1/category';
@@ -136,15 +137,16 @@ class APIService {
     var getUrl = link;
 
     if (param != null) {
-      link = link + '?';
+      getUrl = getUrl + '?';
       for (var key in param.keys) {
         var value = param[key].toString();
-        link = link + '$key=$value&';
+        getUrl = getUrl + '$key=$value&';
       }
-      link = link.substring(0, link.length - 1);
+      getUrl = getUrl.substring(0, getUrl.length - 1);
     }
 
     var url = Uri.parse(getUrl);
+    logger.d(getUrl);
     final response = await http.get(
       url,
     );
