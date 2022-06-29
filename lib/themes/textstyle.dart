@@ -69,3 +69,11 @@ class CustomText {
     );
   }
 }
+
+BoxDecoration containerBorder(BuildContext context) => BoxDecoration(
+      border: Border.all(
+        width: 0.5,
+        color: Theme.of(context).colorScheme.secondary,
+      ),
+      borderRadius: BorderRadius.circular(12.0),
+    );

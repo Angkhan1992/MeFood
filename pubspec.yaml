@@ -47,6 +47,7 @@ dependencies:
   fluttertoast: any
 
   google_maps_flutter: any
+  # google_map_polyline: any
   google_maps_flutter_web: any
   location: any
   connectivity_plus: any

@@ -6,8 +6,9 @@ part 'location_model.g.dart';
 @unfreezed
 class LocationModel with _$LocationModel {
   factory LocationModel({
-    List<GeocodedWayPoint>? geocodedWaypoints,
-    List<Route>? routes,
+    @JsonKey(name: 'geocoded_waypoints')
+        List<GeocodedWayPoint>? geocodedWaypoints,
+    List<MeRoute>? routes,
     String? status,
   }) = _LocationModel;
 
@@ -18,8 +19,8 @@ class LocationModel with _$LocationModel {
 @unfreezed
 class GeocodedWayPoint with _$GeocodedWayPoint {
   factory GeocodedWayPoint({
-    String? geocoderStatus,
-    String? placeId,
+    @JsonKey(name: 'geocoder_status') String? geocoderStatus,
+    @JsonKey(name: 'place_id') String? placeId,
     List<String>? types,
   }) = _GeocodedWayPoint;
 
@@ -28,99 +29,75 @@ class GeocodedWayPoint with _$GeocodedWayPoint {
 }
 
 @unfreezed
-class Route with _$Route {
-  factory Route({
-    Bounds? bounds,
+class MeRoute with _$MeRoute {
+  factory MeRoute({
+    MeBounds? bounds,
     String? copyrights,
     List<Leg>? legs,
     String? summary,
-    List<dynamic>? warnings,
-    List<int>? waypointOrder,
-  }) = _Route;
+  }) = _MeRoute;
 
-  factory Route.fromJson(Map<String, dynamic> json) => _$RouteFromJson(json);
+  factory MeRoute.fromJson(Map<String, dynamic> json) =>
+      _$MeRouteFromJson(json);
 }
 
 @unfreezed
-class Bounds with _$Bounds {
-  factory Bounds({
-    Latlan? northeast,
-    Latlan? southwest,
-  }) = _Bounds;
+class MeBounds with _$MeBounds {
+  factory MeBounds({
+    MeLatlan? northeast,
+    MeLatlan? southwest,
+  }) = _MeBounds;
 
-  factory Bounds.fromJson(Map<String, dynamic> json) => _$BoundsFromJson(json);
+  factory MeBounds.fromJson(Map<String, dynamic> json) =>
+      _$MeBoundsFromJson(json);
 }
 
 @unfreezed
-class Latlan with _$Latlan {
-  factory Latlan({
+class MeLatlan with _$MeLatlan {
+  factory MeLatlan({
     required double lat,
     required double lng,
-  }) = _Latlan;
+  }) = _MeLatlan;
 
-  factory Latlan.fromJson(Map<String, dynamic> json) => _$LatlanFromJson(json);
+  factory MeLatlan.fromJson(Map<String, dynamic> json) =>
+      _$MeLatlanFromJson(json);
 }
 
 @unfreezed
 class Leg with _$Leg {
   factory Leg({
-    Distance? distance,
-    Distance? duration,
-    String? endAddress,
-    Latlan? endLocation,
-    String? startAddress,
-    Latlan? startLocation,
+    MeDistance? distance,
+    MeDistance? duration,
+    @JsonKey(name: 'end_address') String? endAddress,
+    @JsonKey(name: 'end_location') MeLatlan? endLocation,
+    @JsonKey(name: 'start_address') String? startAddress,
+    @JsonKey(name: 'start_location') MeLatlan? startLocation,
     List<Step>? steps,
-    List<dynamic>? trafficSpeedEntry,
-    List<dynamic>? viaWaypoint,
   }) = _Leg;
 
   factory Leg.fromJson(Map<String, dynamic> json) => _$LegFromJson(json);
 }
 
 @unfreezed
-class Distance with _$Distance {
-  factory Distance({
+class MeDistance with _$MeDistance {
+  factory MeDistance({
     String? text,
     int? value,
-  }) = _Distance;
+  }) = _MeDistance;
 
-  factory Distance.fromJson(Map<String, dynamic> json) =>
-      _$DistanceFromJson(json);
+  factory MeDistance.fromJson(Map<String, dynamic> json) =>
+      _$MeDistanceFromJson(json);
 }
 
 @unfreezed
 class Step with _$Step {
   factory Step({
-    Distance? distance,
-    Distance? duration,
-    Latlan? endLocation,
-    String? htmlInstructions,
-    Latlan? startLocation,
-    TravelMode? travelMode,
-    Maneuver? maneuver,
+    MeDistance? distance,
+    MeDistance? duration,
+    @JsonKey(name: 'end_location') MeLatlan? endLocation,
+    @JsonKey(name: 'html_instructions') String? htmlInstructions,
+    @JsonKey(name: 'start_location') MeLatlan? startLocation,
   }) = _Step;
 
   factory Step.fromJson(Map<String, dynamic> json) => _$StepFromJson(json);
-}
-
-enum Maneuver { TURN_RIGHT, TURN_LEFT }
-
-final maneuverValues = EnumValues(
-    {"turn-left": Maneuver.TURN_LEFT, "turn-right": Maneuver.TURN_RIGHT});
-
-enum TravelMode { DRIVING }
-
-final travelModeValues = EnumValues({"DRIVING": TravelMode.DRIVING});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String>? reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String>? get reverse {
-    reverseMap ??= map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

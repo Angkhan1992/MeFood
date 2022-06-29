@@ -6,6 +6,14 @@ const kFontFamily = 'Nunito';
 const defaultLatitude = 17.923548;
 const defaultLongitude = 102.649344;
 
+const priceDeliveryPerKm = 5000;
+
+const kGoogleMapKey = 'AIzaSyD3EAClVhsCCe0brJ5tkUjle_z08-ClA4g';
+
+const kEmptyPrice = '₭ -----';
+const kEmptyDistance = '--- Km';
+const kEmptyDuration = '--- mins';
+
 final pendingList = [
   {
     'leading': LineIcons.user,

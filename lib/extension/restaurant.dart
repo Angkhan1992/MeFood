@@ -307,13 +307,7 @@ extension ERestaurantModel on RestaurantModel {
     return Container(
       margin: const EdgeInsets.only(bottom: offsetSm),
       padding: const EdgeInsets.all(offsetSm),
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 0.5,
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+      decoration: containerBorder(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

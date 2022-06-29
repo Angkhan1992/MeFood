@@ -6,6 +6,7 @@ export 'color.dart';
 export 'customer.dart';
 export 'date.dart';
 export 'int.dart';
+export 'location.dart';
 export 'mail.dart';
 export 'member.dart';
 export 'product.dart';

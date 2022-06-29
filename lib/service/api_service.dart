@@ -146,14 +146,12 @@ class APIService {
     }
 
     var url = Uri.parse(getUrl);
-    logger.d(getUrl);
     final response = await http.get(
       url,
     );
     if (response.statusCode == 201 || response.statusCode == 200) {
       try {
         var json = jsonDecode(response.body);
-        logger.d(json.toString());
         return json;
       } catch (e) {
         logger.e(e);

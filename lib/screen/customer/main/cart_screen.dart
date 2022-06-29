@@ -87,8 +87,15 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 return;
                               }
                               NavigatorService.of(context).push(
-                                screen: ConfirmOrder(),
-                              );
+                                  screen: ConfirmOrder(),
+                                  pop: (err) {
+                                    if (err != null) {
+                                      DialogService.of(context).showSnackBar(
+                                        err,
+                                        type: SnackBarType.info,
+                                      );
+                                    }
+                                  });
                             },
                           ),
                         ),

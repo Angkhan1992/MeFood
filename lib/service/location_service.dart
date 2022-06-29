@@ -1,8 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:mefood/model/base/address_model.dart';
-import 'package:mefood/model/restaurant/restaurant.dart';
-import 'package:mefood/service/service.dart';
+
 import 'package:mefood/util/util.dart';
 
 class LocationService {
@@ -48,37 +51,55 @@ class LocationService {
   LocationData? getCurrentLcoation() {
     return _currentLocation;
   }
+}
 
-  Future<dynamic> getOrderRouter(
-    BuildContext context,
-    AddressModel address, {
-    required List<RestaurantModel> restaurants,
-  }) async {
-    var url = "https://maps.googleapis.com/maps/api/directions/json";
-    var json = await APIService.of(context).get(
-      url,
-      _getRouterParam(address, restaurants: restaurants),
-    );
-    return json;
+class MeMarker extends StatelessWidget {
+  final Uint8List bytes;
+  final double iconSize;
+  final Color borderColor;
+
+  const MeMarker({
+    Key? key,
+    required this.bytes,
+    this.iconSize = 48.0,
+    this.borderColor = Colors.red,
+  }) : super(key: key);
+
+  Future<BitmapDescriptor?> getMarkerIcon() async {
+    try {
+      RenderRepaintBoundary boundary = (key! as GlobalKey)
+          .currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage();
+      var byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      var pngBytes = byteData!.buffer.asUint8List();
+      return BitmapDescriptor.fromBytes(pngBytes);
+    } catch (e) {
+      logger.e(e);
+      return null;
+    }
   }
 
-  Map<String, String>? _getRouterParam(
-    AddressModel address, {
-    required List<RestaurantModel> restaurants,
-  }) {
-    var origin = '${address.lat} ${address.lon}';
-    var waypoints = 'optimize:true';
-    for (var rest in restaurants) {
-      waypoints += '|${rest.address!.lat} ${rest.address!.lon}';
-    }
-    return {
-      "origin": origin,
-      "destination": origin,
-      "sensor": "false",
-      "mode": "driving",
-      "waypoints": waypoints,
-      "provideRouteAlternatives": "true",
-      "key": "AIzaSyD3EAClVhsCCe0brJ5tkUjle_z08-ClA4g",
-    };
+  @override
+  Widget build(BuildContext context) {
+    return RepaintBoundary(
+      key: key,
+      child: Container(
+        padding: const EdgeInsets.all(1.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: borderColor),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(iconSize / 2.0 - 1),
+          child: Image.memory(
+            bytes,
+            width: iconSize - 2,
+            height: iconSize - 2,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
   }
 }

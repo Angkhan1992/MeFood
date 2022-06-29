@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong.dart' as gm;
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/api_service.dart';
@@ -56,17 +56,11 @@ extension EAddressModel on AddressModel {
     return jsonEncode(result);
   }
 
-  // Future<String?> addToRestaurant(BuildContext? context) async {
-  //   if (hasFullData != null) {
-  //     return hasFullData;
-  //   }
-  // }
-
-  double? distanceWith(LatLng latlng) {
+  double? distanceWith(gm.LatLng latlng) {
     try {
-      var latlng1 = LatLng(double.parse(lat!), double.parse(lon!));
+      var latlng1 = gm.LatLng(double.parse(lat!), double.parse(lon!));
 
-      final Distance distance = Distance();
+      final gm.Distance distance = gm.Distance();
       return distance(latlng1, latlng) / 1000.0;
     } catch (e) {
       return null;
