@@ -8,7 +8,7 @@ const defaultLongitude = 102.649344;
 
 const priceDeliveryPerKm = 5000;
 
-const kGoogleMapKey = 'AIzaSyD3EAClVhsCCe0brJ5tkUjle_z08-ClA4g';
+const kGoogleMapKey = 'Your_google_map_-key';
 
 const kEmptyPrice = '₭ -----';
 const kEmptyDistance = '--- Km';
