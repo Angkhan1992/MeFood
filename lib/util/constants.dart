@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/generated/l10n.dart';
 
@@ -11,6 +12,9 @@ const priceDeliveryPerKm = 5000;
 const kEmptyPrice = '₭ -----';
 const kEmptyDistance = '--- Km';
 const kEmptyDuration = '--- mins';
+
+final formatOrderNumber = NumberFormat('000000000');
+final formatCurrency = NumberFormat('###,###,###');
 
 final pendingList = [
   {

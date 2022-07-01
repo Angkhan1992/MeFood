@@ -46,8 +46,8 @@ class SocketService {
     }
   }
 
-  void createOrder(OrderModel order) {
-    _socket!.emit('order_create', {'id': order.id});
+  void createOrder(int orderId) {
+    _socket!.emit('order_create', {'id': orderId});
   }
 
   factory SocketService.of({

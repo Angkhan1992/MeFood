@@ -39,15 +39,16 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           injector = Injector();
           await AppInitializer().initialise(injector!);
           socketService = SocketService.of(owner: user);
+
+          socketService!.onCustomerReceiver(
+            onCreateOrder: onCreateOrder,
+          );
         } else {
           logger.e('Running with tour mode');
         }
       } catch (e) {
         logger.e(e);
       }
-      socketService!.onCustomerReceiver(
-        onCreateOrder: onCreateOrder,
-      );
     });
   }
 

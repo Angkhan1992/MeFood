@@ -841,10 +841,10 @@ Leg _$LegFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Leg {
-  MeDistance? get distance => throw _privateConstructorUsedError;
-  set distance(MeDistance? value) => throw _privateConstructorUsedError;
-  MeDistance? get duration => throw _privateConstructorUsedError;
-  set duration(MeDistance? value) => throw _privateConstructorUsedError;
+  MeValue? get distance => throw _privateConstructorUsedError;
+  set distance(MeValue? value) => throw _privateConstructorUsedError;
+  MeValue? get duration => throw _privateConstructorUsedError;
+  set duration(MeValue? value) => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_address')
   String? get endAddress => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_address')
@@ -874,16 +874,16 @@ abstract class $LegCopyWith<$Res> {
   factory $LegCopyWith(Leg value, $Res Function(Leg) then) =
       _$LegCopyWithImpl<$Res>;
   $Res call(
-      {MeDistance? distance,
-      MeDistance? duration,
+      {MeValue? distance,
+      MeValue? duration,
       @JsonKey(name: 'end_address') String? endAddress,
       @JsonKey(name: 'end_location') MeLatlan? endLocation,
       @JsonKey(name: 'start_address') String? startAddress,
       @JsonKey(name: 'start_location') MeLatlan? startLocation,
       List<Step>? steps});
 
-  $MeDistanceCopyWith<$Res>? get distance;
-  $MeDistanceCopyWith<$Res>? get duration;
+  $MeValueCopyWith<$Res>? get distance;
+  $MeValueCopyWith<$Res>? get duration;
   $MeLatlanCopyWith<$Res>? get endLocation;
   $MeLatlanCopyWith<$Res>? get startLocation;
 }
@@ -910,11 +910,11 @@ class _$LegCopyWithImpl<$Res> implements $LegCopyWith<$Res> {
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       endAddress: endAddress == freezed
           ? _value.endAddress
           : endAddress // ignore: cast_nullable_to_non_nullable
@@ -939,23 +939,23 @@ class _$LegCopyWithImpl<$Res> implements $LegCopyWith<$Res> {
   }
 
   @override
-  $MeDistanceCopyWith<$Res>? get distance {
+  $MeValueCopyWith<$Res>? get distance {
     if (_value.distance == null) {
       return null;
     }
 
-    return $MeDistanceCopyWith<$Res>(_value.distance!, (value) {
+    return $MeValueCopyWith<$Res>(_value.distance!, (value) {
       return _then(_value.copyWith(distance: value));
     });
   }
 
   @override
-  $MeDistanceCopyWith<$Res>? get duration {
+  $MeValueCopyWith<$Res>? get duration {
     if (_value.duration == null) {
       return null;
     }
 
-    return $MeDistanceCopyWith<$Res>(_value.duration!, (value) {
+    return $MeValueCopyWith<$Res>(_value.duration!, (value) {
       return _then(_value.copyWith(duration: value));
     });
   }
@@ -989,8 +989,8 @@ abstract class _$$_LegCopyWith<$Res> implements $LegCopyWith<$Res> {
       __$$_LegCopyWithImpl<$Res>;
   @override
   $Res call(
-      {MeDistance? distance,
-      MeDistance? duration,
+      {MeValue? distance,
+      MeValue? duration,
       @JsonKey(name: 'end_address') String? endAddress,
       @JsonKey(name: 'end_location') MeLatlan? endLocation,
       @JsonKey(name: 'start_address') String? startAddress,
@@ -998,9 +998,9 @@ abstract class _$$_LegCopyWith<$Res> implements $LegCopyWith<$Res> {
       List<Step>? steps});
 
   @override
-  $MeDistanceCopyWith<$Res>? get distance;
+  $MeValueCopyWith<$Res>? get distance;
   @override
-  $MeDistanceCopyWith<$Res>? get duration;
+  $MeValueCopyWith<$Res>? get duration;
   @override
   $MeLatlanCopyWith<$Res>? get endLocation;
   @override
@@ -1030,11 +1030,11 @@ class __$$_LegCopyWithImpl<$Res> extends _$LegCopyWithImpl<$Res>
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       endAddress: endAddress == freezed
           ? _value.endAddress
           : endAddress // ignore: cast_nullable_to_non_nullable
@@ -1074,9 +1074,9 @@ class _$_Leg implements _Leg {
   factory _$_Leg.fromJson(Map<String, dynamic> json) => _$$_LegFromJson(json);
 
   @override
-  MeDistance? distance;
+  MeValue? distance;
   @override
-  MeDistance? duration;
+  MeValue? duration;
   @override
   @JsonKey(name: 'end_address')
   String? endAddress;
@@ -1110,8 +1110,8 @@ class _$_Leg implements _Leg {
 
 abstract class _Leg implements Leg {
   factory _Leg(
-      {MeDistance? distance,
-      MeDistance? duration,
+      {MeValue? distance,
+      MeValue? duration,
       @JsonKey(name: 'end_address') String? endAddress,
       @JsonKey(name: 'end_location') MeLatlan? endLocation,
       @JsonKey(name: 'start_address') String? startAddress,
@@ -1121,9 +1121,9 @@ abstract class _Leg implements Leg {
   factory _Leg.fromJson(Map<String, dynamic> json) = _$_Leg.fromJson;
 
   @override
-  MeDistance? get distance => throw _privateConstructorUsedError;
+  MeValue? get distance => throw _privateConstructorUsedError;
   @override
-  MeDistance? get duration => throw _privateConstructorUsedError;
+  MeValue? get duration => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'end_address')
   String? get endAddress => throw _privateConstructorUsedError;
@@ -1143,12 +1143,12 @@ abstract class _Leg implements Leg {
   _$$_LegCopyWith<_$_Leg> get copyWith => throw _privateConstructorUsedError;
 }
 
-MeDistance _$MeDistanceFromJson(Map<String, dynamic> json) {
-  return _MeDistance.fromJson(json);
+MeValue _$MeValueFromJson(Map<String, dynamic> json) {
+  return _MeValue.fromJson(json);
 }
 
 /// @nodoc
-mixin _$MeDistance {
+mixin _$MeValue {
   String? get text => throw _privateConstructorUsedError;
   set text(String? value) => throw _privateConstructorUsedError;
   int? get value => throw _privateConstructorUsedError;
@@ -1156,25 +1156,23 @@ mixin _$MeDistance {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MeDistanceCopyWith<MeDistance> get copyWith =>
-      throw _privateConstructorUsedError;
+  $MeValueCopyWith<MeValue> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MeDistanceCopyWith<$Res> {
-  factory $MeDistanceCopyWith(
-          MeDistance value, $Res Function(MeDistance) then) =
-      _$MeDistanceCopyWithImpl<$Res>;
+abstract class $MeValueCopyWith<$Res> {
+  factory $MeValueCopyWith(MeValue value, $Res Function(MeValue) then) =
+      _$MeValueCopyWithImpl<$Res>;
   $Res call({String? text, int? value});
 }
 
 /// @nodoc
-class _$MeDistanceCopyWithImpl<$Res> implements $MeDistanceCopyWith<$Res> {
-  _$MeDistanceCopyWithImpl(this._value, this._then);
+class _$MeValueCopyWithImpl<$Res> implements $MeValueCopyWith<$Res> {
+  _$MeValueCopyWithImpl(this._value, this._then);
 
-  final MeDistance _value;
+  final MeValue _value;
   // ignore: unused_field
-  final $Res Function(MeDistance) _then;
+  final $Res Function(MeValue) _then;
 
   @override
   $Res call({
@@ -1195,31 +1193,29 @@ class _$MeDistanceCopyWithImpl<$Res> implements $MeDistanceCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_MeDistanceCopyWith<$Res>
-    implements $MeDistanceCopyWith<$Res> {
-  factory _$$_MeDistanceCopyWith(
-          _$_MeDistance value, $Res Function(_$_MeDistance) then) =
-      __$$_MeDistanceCopyWithImpl<$Res>;
+abstract class _$$_MeValueCopyWith<$Res> implements $MeValueCopyWith<$Res> {
+  factory _$$_MeValueCopyWith(
+          _$_MeValue value, $Res Function(_$_MeValue) then) =
+      __$$_MeValueCopyWithImpl<$Res>;
   @override
   $Res call({String? text, int? value});
 }
 
 /// @nodoc
-class __$$_MeDistanceCopyWithImpl<$Res> extends _$MeDistanceCopyWithImpl<$Res>
-    implements _$$_MeDistanceCopyWith<$Res> {
-  __$$_MeDistanceCopyWithImpl(
-      _$_MeDistance _value, $Res Function(_$_MeDistance) _then)
-      : super(_value, (v) => _then(v as _$_MeDistance));
+class __$$_MeValueCopyWithImpl<$Res> extends _$MeValueCopyWithImpl<$Res>
+    implements _$$_MeValueCopyWith<$Res> {
+  __$$_MeValueCopyWithImpl(_$_MeValue _value, $Res Function(_$_MeValue) _then)
+      : super(_value, (v) => _then(v as _$_MeValue));
 
   @override
-  _$_MeDistance get _value => super._value as _$_MeDistance;
+  _$_MeValue get _value => super._value as _$_MeValue;
 
   @override
   $Res call({
     Object? text = freezed,
     Object? value = freezed,
   }) {
-    return _then(_$_MeDistance(
+    return _then(_$_MeValue(
       text: text == freezed
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -1234,11 +1230,11 @@ class __$$_MeDistanceCopyWithImpl<$Res> extends _$MeDistanceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MeDistance implements _MeDistance {
-  _$_MeDistance({this.text, this.value});
+class _$_MeValue implements _MeValue {
+  _$_MeValue({this.text, this.value});
 
-  factory _$_MeDistance.fromJson(Map<String, dynamic> json) =>
-      _$$_MeDistanceFromJson(json);
+  factory _$_MeValue.fromJson(Map<String, dynamic> json) =>
+      _$$_MeValueFromJson(json);
 
   @override
   String? text;
@@ -1247,25 +1243,24 @@ class _$_MeDistance implements _MeDistance {
 
   @override
   String toString() {
-    return 'MeDistance(text: $text, value: $value)';
+    return 'MeValue(text: $text, value: $value)';
   }
 
   @JsonKey(ignore: true)
   @override
-  _$$_MeDistanceCopyWith<_$_MeDistance> get copyWith =>
-      __$$_MeDistanceCopyWithImpl<_$_MeDistance>(this, _$identity);
+  _$$_MeValueCopyWith<_$_MeValue> get copyWith =>
+      __$$_MeValueCopyWithImpl<_$_MeValue>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MeDistanceToJson(this);
+    return _$$_MeValueToJson(this);
   }
 }
 
-abstract class _MeDistance implements MeDistance {
-  factory _MeDistance({String? text, int? value}) = _$_MeDistance;
+abstract class _MeValue implements MeValue {
+  factory _MeValue({String? text, int? value}) = _$_MeValue;
 
-  factory _MeDistance.fromJson(Map<String, dynamic> json) =
-      _$_MeDistance.fromJson;
+  factory _MeValue.fromJson(Map<String, dynamic> json) = _$_MeValue.fromJson;
 
   @override
   String? get text => throw _privateConstructorUsedError;
@@ -1273,7 +1268,7 @@ abstract class _MeDistance implements MeDistance {
   int? get value => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_MeDistanceCopyWith<_$_MeDistance> get copyWith =>
+  _$$_MeValueCopyWith<_$_MeValue> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1283,10 +1278,10 @@ Step _$StepFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Step {
-  MeDistance? get distance => throw _privateConstructorUsedError;
-  set distance(MeDistance? value) => throw _privateConstructorUsedError;
-  MeDistance? get duration => throw _privateConstructorUsedError;
-  set duration(MeDistance? value) => throw _privateConstructorUsedError;
+  MeValue? get distance => throw _privateConstructorUsedError;
+  set distance(MeValue? value) => throw _privateConstructorUsedError;
+  MeValue? get duration => throw _privateConstructorUsedError;
+  set duration(MeValue? value) => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_location')
   MeLatlan? get endLocation => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_location')
@@ -1310,14 +1305,14 @@ abstract class $StepCopyWith<$Res> {
   factory $StepCopyWith(Step value, $Res Function(Step) then) =
       _$StepCopyWithImpl<$Res>;
   $Res call(
-      {MeDistance? distance,
-      MeDistance? duration,
+      {MeValue? distance,
+      MeValue? duration,
       @JsonKey(name: 'end_location') MeLatlan? endLocation,
       @JsonKey(name: 'html_instructions') String? htmlInstructions,
       @JsonKey(name: 'start_location') MeLatlan? startLocation});
 
-  $MeDistanceCopyWith<$Res>? get distance;
-  $MeDistanceCopyWith<$Res>? get duration;
+  $MeValueCopyWith<$Res>? get distance;
+  $MeValueCopyWith<$Res>? get duration;
   $MeLatlanCopyWith<$Res>? get endLocation;
   $MeLatlanCopyWith<$Res>? get startLocation;
 }
@@ -1342,11 +1337,11 @@ class _$StepCopyWithImpl<$Res> implements $StepCopyWith<$Res> {
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       endLocation: endLocation == freezed
           ? _value.endLocation
           : endLocation // ignore: cast_nullable_to_non_nullable
@@ -1363,23 +1358,23 @@ class _$StepCopyWithImpl<$Res> implements $StepCopyWith<$Res> {
   }
 
   @override
-  $MeDistanceCopyWith<$Res>? get distance {
+  $MeValueCopyWith<$Res>? get distance {
     if (_value.distance == null) {
       return null;
     }
 
-    return $MeDistanceCopyWith<$Res>(_value.distance!, (value) {
+    return $MeValueCopyWith<$Res>(_value.distance!, (value) {
       return _then(_value.copyWith(distance: value));
     });
   }
 
   @override
-  $MeDistanceCopyWith<$Res>? get duration {
+  $MeValueCopyWith<$Res>? get duration {
     if (_value.duration == null) {
       return null;
     }
 
-    return $MeDistanceCopyWith<$Res>(_value.duration!, (value) {
+    return $MeValueCopyWith<$Res>(_value.duration!, (value) {
       return _then(_value.copyWith(duration: value));
     });
   }
@@ -1413,16 +1408,16 @@ abstract class _$$_StepCopyWith<$Res> implements $StepCopyWith<$Res> {
       __$$_StepCopyWithImpl<$Res>;
   @override
   $Res call(
-      {MeDistance? distance,
-      MeDistance? duration,
+      {MeValue? distance,
+      MeValue? duration,
       @JsonKey(name: 'end_location') MeLatlan? endLocation,
       @JsonKey(name: 'html_instructions') String? htmlInstructions,
       @JsonKey(name: 'start_location') MeLatlan? startLocation});
 
   @override
-  $MeDistanceCopyWith<$Res>? get distance;
+  $MeValueCopyWith<$Res>? get distance;
   @override
-  $MeDistanceCopyWith<$Res>? get duration;
+  $MeValueCopyWith<$Res>? get duration;
   @override
   $MeLatlanCopyWith<$Res>? get endLocation;
   @override
@@ -1450,11 +1445,11 @@ class __$$_StepCopyWithImpl<$Res> extends _$StepCopyWithImpl<$Res>
       distance: distance == freezed
           ? _value.distance
           : distance // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as MeDistance?,
+              as MeValue?,
       endLocation: endLocation == freezed
           ? _value.endLocation
           : endLocation // ignore: cast_nullable_to_non_nullable
@@ -1484,9 +1479,9 @@ class _$_Step implements _Step {
   factory _$_Step.fromJson(Map<String, dynamic> json) => _$$_StepFromJson(json);
 
   @override
-  MeDistance? distance;
+  MeValue? distance;
   @override
-  MeDistance? duration;
+  MeValue? duration;
   @override
   @JsonKey(name: 'end_location')
   MeLatlan? endLocation;
@@ -1515,8 +1510,8 @@ class _$_Step implements _Step {
 
 abstract class _Step implements Step {
   factory _Step(
-      {MeDistance? distance,
-      MeDistance? duration,
+      {MeValue? distance,
+      MeValue? duration,
       @JsonKey(name: 'end_location') MeLatlan? endLocation,
       @JsonKey(name: 'html_instructions') String? htmlInstructions,
       @JsonKey(name: 'start_location') MeLatlan? startLocation}) = _$_Step;
@@ -1524,9 +1519,9 @@ abstract class _Step implements Step {
   factory _Step.fromJson(Map<String, dynamic> json) = _$_Step.fromJson;
 
   @override
-  MeDistance? get distance => throw _privateConstructorUsedError;
+  MeValue? get distance => throw _privateConstructorUsedError;
   @override
-  MeDistance? get duration => throw _privateConstructorUsedError;
+  MeValue? get duration => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'end_location')
   MeLatlan? get endLocation => throw _privateConstructorUsedError;

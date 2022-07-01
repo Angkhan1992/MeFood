@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mefood/widget/base/base.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
@@ -236,6 +237,62 @@ extension Sale on SaleModel {
           ),
         ),
       ],
+    );
+  }
+
+  Widget orderItem(BuildContext context) {
+    var cellHeight = 36.0;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: cellHeight,
+                height: cellHeight,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).textTheme.bodyText1!.color!,
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(cellHeight / 2.0),
+                  child: CachedNetworkImage(
+                    imageUrl: '$kDomain${product!.galleries![0]}',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product!.title!,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
+                    Text(
+                      '${product!.currency} × $amount',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              OutLineTag(title: status ?? 'PENDING', color: Colors.blueAccent),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

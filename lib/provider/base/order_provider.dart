@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
-import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/util/util.dart';
 
 class OrderProvider with ChangeNotifier {
   List<OrderModel>? orders;
   List<SaleModel>? products;
+  int selected = -1;
 
   OrderProvider() {
     orders = [];
@@ -32,12 +33,22 @@ class OrderProvider with ChangeNotifier {
     if (resp != null) {
       if (resp['ret'] == 10000) {
         orders!.clear();
-        orders!.addAll(resp['result']['orders']
+        orders!.addAll((resp['result']['orders'] as List)
             .map((e) => OrderModel.fromJson(e))
             .toList());
         await updateLocal();
       }
     }
+  }
+
+  void updateSelected(int value) {
+    if (selected == value) {
+      selected = -1;
+    } else {
+      selected = value;
+    }
+
+    notifyListeners();
   }
 
   Future<void> updateLocal() async {
@@ -98,19 +109,8 @@ class OrderProvider with ChangeNotifier {
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {
-        var order = OrderModel(
-          id: resp['result']['id'],
-          models: [],
-        );
-        order.models!.addAll(products!);
-        order.owner = await PrefService.of().getMember();
-
-        orders!.add(order);
-        products!.clear();
-        await updateLocal();
-
-        socketService!.createOrder(order);
-
+        socketService!.createOrder(resp['result']['id']);
+        await fetchData();
         return null;
       } else {
         return resp['msg'];

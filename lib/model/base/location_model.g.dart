@@ -87,10 +87,10 @@ Map<String, dynamic> _$$_MeLatlanToJson(_$_MeLatlan instance) =>
 _$_Leg _$$_LegFromJson(Map<String, dynamic> json) => _$_Leg(
       distance: json['distance'] == null
           ? null
-          : MeDistance.fromJson(json['distance'] as Map<String, dynamic>),
+          : MeValue.fromJson(json['distance'] as Map<String, dynamic>),
       duration: json['duration'] == null
           ? null
-          : MeDistance.fromJson(json['duration'] as Map<String, dynamic>),
+          : MeValue.fromJson(json['duration'] as Map<String, dynamic>),
       endAddress: json['end_address'] as String?,
       endLocation: json['end_location'] == null
           ? null
@@ -114,13 +114,12 @@ Map<String, dynamic> _$$_LegToJson(_$_Leg instance) => <String, dynamic>{
       'steps': instance.steps,
     };
 
-_$_MeDistance _$$_MeDistanceFromJson(Map<String, dynamic> json) =>
-    _$_MeDistance(
+_$_MeValue _$$_MeValueFromJson(Map<String, dynamic> json) => _$_MeValue(
       text: json['text'] as String?,
       value: json['value'] as int?,
     );
 
-Map<String, dynamic> _$$_MeDistanceToJson(_$_MeDistance instance) =>
+Map<String, dynamic> _$$_MeValueToJson(_$_MeValue instance) =>
     <String, dynamic>{
       'text': instance.text,
       'value': instance.value,
@@ -129,10 +128,10 @@ Map<String, dynamic> _$$_MeDistanceToJson(_$_MeDistance instance) =>
 _$_Step _$$_StepFromJson(Map<String, dynamic> json) => _$_Step(
       distance: json['distance'] == null
           ? null
-          : MeDistance.fromJson(json['distance'] as Map<String, dynamic>),
+          : MeValue.fromJson(json['distance'] as Map<String, dynamic>),
       duration: json['duration'] == null
           ? null
-          : MeDistance.fromJson(json['duration'] as Map<String, dynamic>),
+          : MeValue.fromJson(json['duration'] as Map<String, dynamic>),
       endLocation: json['end_location'] == null
           ? null
           : MeLatlan.fromJson(json['end_location'] as Map<String, dynamic>),

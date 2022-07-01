@@ -4,8 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/util/util.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/generated/l10n.dart';
@@ -16,8 +16,6 @@ import 'package:mefood/screen/customer/base/product_detail.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/widget/base/button.dart';
-
-final formatCurrency = NumberFormat('###,###,###');
 
 extension EProduct on ProductModel {
   String? get validate {
@@ -941,7 +939,7 @@ extension EProduct on ProductModel {
     if (resp != null) {
       if (resp['ret'] == 10000) {
         return (resp['result'] as List)
-            .map((e) => ProductModel.fromJson(e))
+            .map((json) => ProductModel.fromJson(json))
             .toList();
       }
     }

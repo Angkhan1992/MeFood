@@ -6,7 +6,7 @@ import 'package:mefood/service/service.dart';
 import 'package:mefood/util/util.dart';
 
 extension ELocation on LocationModel {
-  MeDistance get totalDistance {
+  MeValue get totalDistance {
     var total = 0;
     var legs = routes![0].legs!;
     for (var leg in legs) {
@@ -16,10 +16,10 @@ extension ELocation on LocationModel {
     }
     var value = total / 1000;
     var text = '$value Km';
-    return MeDistance(value: value.round(), text: text);
+    return MeValue(value: value.round(), text: text);
   }
 
-  MeDistance get deliveryDuration {
+  MeValue get deliveryDuration {
     var deliveryTime = 0;
     var legs = routes![0].legs!;
     for (var leg in legs) {
@@ -29,14 +29,14 @@ extension ELocation on LocationModel {
     }
     var value = (deliveryTime / 60).round();
     var text = '$value mins';
-    return MeDistance(value: value.round(), text: text);
+    return MeValue(value: value.round(), text: text);
   }
 
-  MeDistance get deliveryPrice {
+  MeValue get deliveryPrice {
     var value =
         ((totalDistance.value! * priceDeliveryPerKm) / 1000).round() * 1000;
     var text = '₭ ${formatCurrency.format(value)}';
-    return MeDistance(value: value.round(), text: text);
+    return MeValue(value: value.round(), text: text);
   }
 
   LatLngBounds get bounds {
@@ -96,6 +96,7 @@ extension ELocation on LocationModel {
     };
 
     var json = await APIService.of(context).get(url, param);
+    logger.d(json);
     return LocationModel.fromJson(json!);
   }
 }

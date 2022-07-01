@@ -66,8 +66,8 @@ class MeLatlan with _$MeLatlan {
 @unfreezed
 class Leg with _$Leg {
   factory Leg({
-    MeDistance? distance,
-    MeDistance? duration,
+    MeValue? distance,
+    MeValue? duration,
     @JsonKey(name: 'end_address') String? endAddress,
     @JsonKey(name: 'end_location') MeLatlan? endLocation,
     @JsonKey(name: 'start_address') String? startAddress,
@@ -79,21 +79,21 @@ class Leg with _$Leg {
 }
 
 @unfreezed
-class MeDistance with _$MeDistance {
-  factory MeDistance({
+class MeValue with _$MeValue {
+  factory MeValue({
     String? text,
     int? value,
-  }) = _MeDistance;
+  }) = _MeValue;
 
-  factory MeDistance.fromJson(Map<String, dynamic> json) =>
-      _$MeDistanceFromJson(json);
+  factory MeValue.fromJson(Map<String, dynamic> json) =>
+      _$MeValueFromJson(json);
 }
 
 @unfreezed
 class Step with _$Step {
   factory Step({
-    MeDistance? distance,
-    MeDistance? duration,
+    MeValue? distance,
+    MeValue? duration,
     @JsonKey(name: 'end_location') MeLatlan? endLocation,
     @JsonKey(name: 'html_instructions') String? htmlInstructions,
     @JsonKey(name: 'start_location') MeLatlan? startLocation,

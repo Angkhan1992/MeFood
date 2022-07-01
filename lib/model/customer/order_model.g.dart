@@ -21,7 +21,7 @@ _$_OrderModel _$$_OrderModelFromJson(Map<String, dynamic> json) =>
       delivery: json['delivery'] == null
           ? null
           : MemberModel.fromJson(json['delivery'] as Map<String, dynamic>),
-      models: (json['models'] as List<dynamic>?)
+      sales: (json['sales'] as List<dynamic>?)
           ?.map((e) => SaleModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -37,5 +37,5 @@ Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
       'status': instance.status,
       'owner': instance.owner,
       'delivery': instance.delivery,
-      'models': instance.models,
+      'sales': instance.sales,
     };
