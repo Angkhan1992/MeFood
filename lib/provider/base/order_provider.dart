@@ -110,6 +110,7 @@ class OrderProvider with ChangeNotifier {
     if (resp != null) {
       if (resp['ret'] == 10000) {
         socketService!.createOrder(resp['result']['id']);
+        products!.clear();
         await fetchData();
         return null;
       } else {

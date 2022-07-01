@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +16,39 @@ extension EOrder on OrderModel {
     // return id.toString().padLeft(8, '0');
   }
 
-  MeValue get currency {
+  List<HistoryModel> get histories {
+    if (other == null || other!.isEmpty) {
+      return [];
+    }
+    try {
+      var json = jsonDecode(other!);
+      return (json as List).map((item) => HistoryModel.fromJson(item)).toList();
+    } catch (e) {
+      logger.e(e);
+      return [];
+    }
+  }
+
+  MeValue get productCurrency {
     var price = 0;
     for (var sale in sales!) {
       price += sale.amount! * sale.product!.price!;
     }
+    return MeValue(
+      text: '₭ ${formatCurrency.format(price)}',
+      value: price,
+    );
+  }
+
+  MeValue get deliveryCurrency {
+    return MeValue(
+      text: '₭ ${formatCurrency.format(fee ?? 0)}',
+      value: fee ?? 0,
+    );
+  }
+
+  MeValue get totalCurrency {
+    var price = (productCurrency.value ?? 0) + (deliveryCurrency.value ?? 0);
     return MeValue(
       text: '₭ ${formatCurrency.format(price)}',
       value: price,
@@ -72,17 +102,17 @@ extension EOrder on OrderModel {
                     Row(
                       children: [
                         Text(
-                          orderNumber,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        Text(
-                          ' (PENDING)',
+                          'PENDING',
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.blueAccent,
                             fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          ' ($orderNumber)',
+                          style: TextStyle(
+                            fontSize: 16.0,
                           ),
                         ),
                       ],
@@ -125,24 +155,26 @@ extension EOrder on OrderModel {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${sales!.length} Products (${currency.text})',
+                      '${sales!.length} Products (${productCurrency.text})',
                       style: TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w200,
                       ),
                     ),
                     Text(
-                      'Delivery Fee (₭ ${formatCurrency.format(50000)})',
+                      'Delivery Fee (${deliveryCurrency.text})',
                       style: TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w200,
                       ),
                     ),
                   ],
                 ),
               ),
               Text(
-                currency.text!,
+                totalCurrency.text!,
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: 18.0,
                   color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.w700,
                 ),

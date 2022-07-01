@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mefood/widget/base/base.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
@@ -10,6 +9,7 @@ import 'package:mefood/provider/base/base.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/util.dart';
+import 'package:mefood/widget/base/base.dart';
 
 extension Sale on SaleModel {
   String get currency {
@@ -248,6 +248,13 @@ extension Sale on SaleModel {
         children: [
           Row(
             children: [
+              if (status == null || status! == 'PENDING') ...{
+                Icon(
+                  Icons.remove_circle,
+                  color: Colors.redAccent,
+                ),
+                const SizedBox(width: offsetSm),
+              },
               Container(
                 width: cellHeight,
                 height: cellHeight,
@@ -288,11 +295,41 @@ extension Sale on SaleModel {
                   ],
                 ),
               ),
-              OutLineTag(title: status ?? 'PENDING', color: Colors.blueAccent),
+              tagWidget(context),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget tagWidget(BuildContext context) {
+    if (status == null) {
+      return OutLineTag(
+        title: 'PENDING',
+        color: Colors.blueAccent,
+      );
+    }
+    switch (status) {
+      case 'PENDING':
+        return OutLineTag(
+          title: 'PENDING',
+          color: Colors.blueAccent,
+        );
+      case 'ACCEPT':
+        return OutLineTag(
+          title: 'COOKING',
+          color: Colors.redAccent,
+        );
+      case 'SENT':
+        return OutLineTag(
+          title: 'DELIVERY',
+          color: Colors.greenAccent,
+        );
+    }
+    return OutLineTag(
+      title: status ?? 'PENDING',
+      color: Colors.blueAccent,
     );
   }
 }
