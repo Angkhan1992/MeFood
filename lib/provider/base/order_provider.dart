@@ -24,7 +24,21 @@ class OrderProvider with ChangeNotifier {
     await fetchData();
   }
 
-  Future<void> fetchData() async {}
+  Future<void> fetchData() async {
+    var resp = await APIService.of(null).post(
+      '${APIService.kUrlOrder}/orders',
+      {},
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        orders!.clear();
+        orders!.addAll(resp['result']['orders']
+            .map((e) => OrderModel.fromJson(e))
+            .toList());
+        await updateLocal();
+      }
+    }
+  }
 
   Future<void> updateLocal() async {
     await PrefService.of().setSales(products!);
@@ -64,8 +78,12 @@ class OrderProvider with ChangeNotifier {
     return '₭ ${formatCurrency.format(amount)}';
   }
 
-  Future<String?> createOrder(BuildContext context) async {
-    var order = OrderModel();
+  Future<String?> createOrder(
+    BuildContext context, {
+    required String lat,
+    required String lon,
+    required int delivery,
+  }) async {
     var param = {};
     param['sales'] = jsonEncode(products!.map((e) => e.toJson()).toList());
 
@@ -73,11 +91,26 @@ class OrderProvider with ChangeNotifier {
       '${APIService.kUrlOrder}/add',
       {
         'order': jsonEncode(param),
+        'lat': lat,
+        'lon': lon,
+        'delivery': delivery,
       },
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {
-        order.id = resp['result'];
+        var order = OrderModel(
+          id: resp['result']['id'],
+          models: [],
+        );
+        order.models!.addAll(products!);
+        order.owner = await PrefService.of().getMember();
+
+        orders!.add(order);
+        products!.clear();
+        await updateLocal();
+
+        socketService!.createOrder(order);
+
         return null;
       } else {
         return resp['msg'];
@@ -85,5 +118,19 @@ class OrderProvider with ChangeNotifier {
     } else {
       return S.current.sever_error;
     }
+  }
+
+  List<SaleModel> getCartProductsByRest(int id) {
+    if (products == null || products!.isEmpty) return [];
+    return products!.where((e) => e.product!.restaurant!.id == id).toList();
+  }
+
+  String getCartPriceByRest(int id) {
+    var sales = getCartProductsByRest(id);
+    var amount = 0;
+    for (var sale in sales) {
+      amount += sale.product!.price! * sale.amount!;
+    }
+    return '₭ ${formatCurrency.format(amount)}';
   }
 }

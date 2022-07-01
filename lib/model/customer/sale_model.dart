@@ -11,6 +11,7 @@ abstract class SaleModel with _$SaleModel {
     int? amount,
     String? regdate,
     String? other,
+    String? status,
     ProductModel? product,
   }) = _SaleModel;
 

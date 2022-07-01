@@ -2,13 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:mefood/screen/base/mail_screen.dart';
+import 'package:provider/provider.dart';
+
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
+import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/screen/customer/setting/about_screen.dart';
 import 'package:mefood/screen/customer/setting/account_screen.dart';
 import 'package:mefood/screen/customer/setting/contact_screen.dart';
-import 'package:mefood/screen/customer/setting/inbox_screen.dart';
 import 'package:mefood/screen/customer/setting/order_history.dart';
+import 'package:mefood/service/dialog_service.dart';
 import 'package:mefood/service/navigator_service.dart';
 import 'package:mefood/themes/theme.dart';
 
@@ -31,6 +35,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<CustomerProvider>().customer!.user;
     var items = [
       {
         'icon': LineIcons.user,
@@ -44,33 +49,69 @@ class _SettingScreenState extends State<SettingScreen> {
         'icon': LineIcons.history,
         'title': 'Order History',
         'desc': 'You can check your order histories',
-        'action': () => NavigatorService.of(context).push(
-              screen: OrderHistory(),
-            ),
+        'action': () {
+          if (user == null) {
+            DialogService.of(context).showSnackBar(
+              'You should use the auth user for this feature',
+              type: SnackBarType.info,
+            );
+            return;
+          }
+          NavigatorService.of(context).push(
+            screen: OrderHistory(),
+          );
+        },
       },
       {
         'icon': Icons.email_outlined,
         'title': 'Inbox',
         'desc': 'You can check inbox mails of MeFood',
-        'action': () => NavigatorService.of(context).push(
-              screen: InboxScreen(),
-            ),
+        'action': () {
+          if (user == null) {
+            DialogService.of(context).showSnackBar(
+              'You should use the auth user for this feature',
+              type: SnackBarType.info,
+            );
+            return;
+          }
+          NavigatorService.of(context).push(
+            screen: MailScreen(user: user),
+          );
+        },
       },
       {
         'icon': LineIcons.bug,
         'title': 'Contact Us',
         'desc': 'You can report your issues in here',
-        'action': () => NavigatorService.of(context).push(
-              screen: ContactScreen(),
-            ),
+        'action': () {
+          if (user == null) {
+            DialogService.of(context).showSnackBar(
+              'You should use the auth user for this feature',
+              type: SnackBarType.info,
+            );
+            return;
+          }
+          NavigatorService.of(context).push(
+            screen: ContactScreen(),
+          );
+        },
       },
       {
         'icon': LineIcons.delicious,
         'title': 'About MeFood',
         'desc': 'You can check how to use MeFood',
-        'action': () => NavigatorService.of(context).push(
-              screen: AboutScreen(),
-            ),
+        'action': () {
+          if (user == null) {
+            DialogService.of(context).showSnackBar(
+              'You should use the auth user for this feature',
+              type: SnackBarType.info,
+            );
+            return;
+          }
+          NavigatorService.of(context).push(
+            screen: AboutScreen(),
+          );
+        },
       },
     ];
     return Scaffold(

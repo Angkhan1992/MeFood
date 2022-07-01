@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
@@ -170,6 +169,73 @@ extension Sale on SaleModel {
           ],
         ),
       ),
+    );
+  }
+
+  Widget orderCell(
+    BuildContext context, {
+    required int amount,
+  }) {
+    var cellHeight = 28.0;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: cellHeight,
+          height: cellHeight,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Theme.of(context).textTheme.bodyText1!.color!,
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(cellHeight / 2.0),
+            child: CachedNetworkImage(
+              imageUrl: '$kDomain${product!.galleries![0]}',
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(width: 12.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${product!.title}',
+              style: TextStyle(
+                fontSize: 12.0,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            Text(
+              '${product!.prepareTime} mins',
+              style: TextStyle(
+                fontSize: 12.0,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(width: 8.0),
+        Text(
+          ' × $amount',
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const Spacer(),
+        Text(
+          currency,
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
+      ],
     );
   }
 }

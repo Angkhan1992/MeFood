@@ -28,6 +28,8 @@ mixin _$SaleModel {
   set regdate(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
   set other(String? value) => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  set status(String? value) => throw _privateConstructorUsedError;
   ProductModel? get product => throw _privateConstructorUsedError;
   set product(ProductModel? value) => throw _privateConstructorUsedError;
 
@@ -46,6 +48,7 @@ abstract class $SaleModelCopyWith<$Res> {
       int? amount,
       String? regdate,
       String? other,
+      String? status,
       ProductModel? product});
 
   $ProductModelCopyWith<$Res>? get product;
@@ -65,6 +68,7 @@ class _$SaleModelCopyWithImpl<$Res> implements $SaleModelCopyWith<$Res> {
     Object? amount = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
+    Object? status = freezed,
     Object? product = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +87,10 @@ class _$SaleModelCopyWithImpl<$Res> implements $SaleModelCopyWith<$Res> {
       other: other == freezed
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
               as String?,
       product: product == freezed
           ? _value.product
@@ -114,6 +122,7 @@ abstract class _$$_SaleModelCopyWith<$Res> implements $SaleModelCopyWith<$Res> {
       int? amount,
       String? regdate,
       String? other,
+      String? status,
       ProductModel? product});
 
   @override
@@ -136,6 +145,7 @@ class __$$_SaleModelCopyWithImpl<$Res> extends _$SaleModelCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
+    Object? status = freezed,
     Object? product = freezed,
   }) {
     return _then(_$_SaleModel(
@@ -155,6 +165,10 @@ class __$$_SaleModelCopyWithImpl<$Res> extends _$SaleModelCopyWithImpl<$Res>
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
               as String?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
       product: product == freezed
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
@@ -166,7 +180,13 @@ class __$$_SaleModelCopyWithImpl<$Res> extends _$SaleModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_SaleModel implements _SaleModel {
-  _$_SaleModel({this.id, this.amount, this.regdate, this.other, this.product});
+  _$_SaleModel(
+      {this.id,
+      this.amount,
+      this.regdate,
+      this.other,
+      this.status,
+      this.product});
 
   factory _$_SaleModel.fromJson(Map<String, dynamic> json) =>
       _$$_SaleModelFromJson(json);
@@ -180,11 +200,13 @@ class _$_SaleModel implements _SaleModel {
   @override
   String? other;
   @override
+  String? status;
+  @override
   ProductModel? product;
 
   @override
   String toString() {
-    return 'SaleModel(id: $id, amount: $amount, regdate: $regdate, other: $other, product: $product)';
+    return 'SaleModel(id: $id, amount: $amount, regdate: $regdate, other: $other, status: $status, product: $product)';
   }
 
   @JsonKey(ignore: true)
@@ -204,6 +226,7 @@ abstract class _SaleModel implements SaleModel {
       int? amount,
       String? regdate,
       String? other,
+      String? status,
       ProductModel? product}) = _$_SaleModel;
 
   factory _SaleModel.fromJson(Map<String, dynamic> json) =
@@ -217,6 +240,8 @@ abstract class _SaleModel implements SaleModel {
   String? get regdate => throw _privateConstructorUsedError;
   @override
   String? get other => throw _privateConstructorUsedError;
+  @override
+  String? get status => throw _privateConstructorUsedError;
   @override
   ProductModel? get product => throw _privateConstructorUsedError;
   @override

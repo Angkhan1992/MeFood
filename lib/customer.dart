@@ -33,10 +33,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  InjectService().initialise(Injector());
-  injector = Injector();
-  await AppInitializer().initialise(injector!);
-
   F.appFlavor = Flavor.customer;
 
   var customerProvider = CustomerProvider();
@@ -45,6 +41,7 @@ void main() async {
   var hotProductProvider = HotProductProvider();
   var restaurantProvider = RestaurantProvider();
   var orderProvider = OrderProvider();
+  var mailProvider = MailProvider();
 
   runApp(
     MultiProvider(
@@ -55,6 +52,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => newProductProvider),
         ChangeNotifierProvider(create: (context) => hotProductProvider),
         ChangeNotifierProvider(create: (context) => restaurantProvider),
+        ChangeNotifierProvider(create: (context) => mailProvider),
       ],
       child: const MyApp(),
     ),

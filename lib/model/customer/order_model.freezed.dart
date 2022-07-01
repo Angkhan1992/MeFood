@@ -20,12 +20,20 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderModel {
-  String? get id => throw _privateConstructorUsedError;
-  set id(String? value) => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  set id(int? value) => throw _privateConstructorUsedError;
   String? get regdate => throw _privateConstructorUsedError;
   set regdate(String? value) => throw _privateConstructorUsedError;
   String? get other => throw _privateConstructorUsedError;
-  set other(String? value) =>
+  set other(String? value) => throw _privateConstructorUsedError;
+  String? get lat => throw _privateConstructorUsedError;
+  set lat(String? value) => throw _privateConstructorUsedError;
+  String? get lon => throw _privateConstructorUsedError;
+  set lon(String? value) => throw _privateConstructorUsedError;
+  int? get fee => throw _privateConstructorUsedError;
+  set fee(int? value) => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  set status(String? value) =>
       throw _privateConstructorUsedError; // extend fields
   MemberModel? get owner => throw _privateConstructorUsedError; // extend fields
   set owner(MemberModel? value) => throw _privateConstructorUsedError;
@@ -46,9 +54,13 @@ abstract class $OrderModelCopyWith<$Res> {
           OrderModel value, $Res Function(OrderModel) then) =
       _$OrderModelCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {int? id,
       String? regdate,
       String? other,
+      String? lat,
+      String? lon,
+      int? fee,
+      String? status,
       MemberModel? owner,
       MemberModel? delivery,
       List<SaleModel>? models});
@@ -70,6 +82,10 @@ class _$OrderModelCopyWithImpl<$Res> implements $OrderModelCopyWith<$Res> {
     Object? id = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
+    Object? lat = freezed,
+    Object? lon = freezed,
+    Object? fee = freezed,
+    Object? status = freezed,
     Object? owner = freezed,
     Object? delivery = freezed,
     Object? models = freezed,
@@ -78,7 +94,7 @@ class _$OrderModelCopyWithImpl<$Res> implements $OrderModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       regdate: regdate == freezed
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
@@ -86,6 +102,22 @@ class _$OrderModelCopyWithImpl<$Res> implements $OrderModelCopyWith<$Res> {
       other: other == freezed
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lat: lat == freezed
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lon: lon == freezed
+          ? _value.lon
+          : lon // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fee: fee == freezed
+          ? _value.fee
+          : fee // ignore: cast_nullable_to_non_nullable
+              as int?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
               as String?,
       owner: owner == freezed
           ? _value.owner
@@ -133,9 +165,13 @@ abstract class _$$_OrderModelCopyWith<$Res>
       __$$_OrderModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {int? id,
       String? regdate,
       String? other,
+      String? lat,
+      String? lon,
+      int? fee,
+      String? status,
       MemberModel? owner,
       MemberModel? delivery,
       List<SaleModel>? models});
@@ -161,6 +197,10 @@ class __$$_OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? regdate = freezed,
     Object? other = freezed,
+    Object? lat = freezed,
+    Object? lon = freezed,
+    Object? fee = freezed,
+    Object? status = freezed,
     Object? owner = freezed,
     Object? delivery = freezed,
     Object? models = freezed,
@@ -169,7 +209,7 @@ class __$$_OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       regdate: regdate == freezed
           ? _value.regdate
           : regdate // ignore: cast_nullable_to_non_nullable
@@ -177,6 +217,22 @@ class __$$_OrderModelCopyWithImpl<$Res> extends _$OrderModelCopyWithImpl<$Res>
       other: other == freezed
           ? _value.other
           : other // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lat: lat == freezed
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lon: lon == freezed
+          ? _value.lon
+          : lon // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fee: fee == freezed
+          ? _value.fee
+          : fee // ignore: cast_nullable_to_non_nullable
+              as int?,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
               as String?,
       owner: owner == freezed
           ? _value.owner
@@ -202,6 +258,10 @@ class _$_OrderModel implements _OrderModel {
       {this.id,
       this.regdate,
       this.other,
+      this.lat,
+      this.lon,
+      this.fee,
+      this.status,
       this.owner,
       this.delivery,
       this.models});
@@ -210,11 +270,19 @@ class _$_OrderModel implements _OrderModel {
       _$$_OrderModelFromJson(json);
 
   @override
-  String? id;
+  int? id;
   @override
   String? regdate;
   @override
   String? other;
+  @override
+  String? lat;
+  @override
+  String? lon;
+  @override
+  int? fee;
+  @override
+  String? status;
 // extend fields
   @override
   MemberModel? owner;
@@ -225,7 +293,7 @@ class _$_OrderModel implements _OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, regdate: $regdate, other: $other, owner: $owner, delivery: $delivery, models: $models)';
+    return 'OrderModel(id: $id, regdate: $regdate, other: $other, lat: $lat, lon: $lon, fee: $fee, status: $status, owner: $owner, delivery: $delivery, models: $models)';
   }
 
   @JsonKey(ignore: true)
@@ -241,9 +309,13 @@ class _$_OrderModel implements _OrderModel {
 
 abstract class _OrderModel implements OrderModel {
   factory _OrderModel(
-      {String? id,
+      {int? id,
       String? regdate,
       String? other,
+      String? lat,
+      String? lon,
+      int? fee,
+      String? status,
       MemberModel? owner,
       MemberModel? delivery,
       List<SaleModel>? models}) = _$_OrderModel;
@@ -252,11 +324,19 @@ abstract class _OrderModel implements OrderModel {
       _$_OrderModel.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @override
   String? get regdate => throw _privateConstructorUsedError;
   @override
   String? get other => throw _privateConstructorUsedError;
+  @override
+  String? get lat => throw _privateConstructorUsedError;
+  @override
+  String? get lon => throw _privateConstructorUsedError;
+  @override
+  int? get fee => throw _privateConstructorUsedError;
+  @override
+  String? get status => throw _privateConstructorUsedError;
   @override // extend fields
   MemberModel? get owner => throw _privateConstructorUsedError;
   @override

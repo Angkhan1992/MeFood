@@ -193,4 +193,21 @@ class PrefService {
     var prodPref = jsonEncode(products.map((e) => e.toJson()).toList());
     await prefs.setString('order', prodPref);
   }
+
+  Future<List<AddressModel>> getDeliveryAddresses() async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = prefs.getString('delivery_addresses');
+    if (prodPref == null) {
+      return [];
+    }
+    return (jsonDecode(prodPref) as List)
+        .map((e) => AddressModel.fromJson(e))
+        .toList();
+  }
+
+  Future<void> setDeliveryAddresses(List<AddressModel> addresses) async {
+    final prefs = await SharedPreferences.getInstance();
+    var prodPref = jsonEncode(addresses.map((e) => e.toJson()).toList());
+    await prefs.setString('delivery_addresses', prodPref);
+  }
 }

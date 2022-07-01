@@ -25,11 +25,13 @@ class APIService {
 
   static final kUrlSupport = '$kDomain/api/v1/support';
   static final kUrlHistory = '$kDomain/api/v1/history';
+  static final kUrlMail = '$kDomain/api/v1/mail';
   static final kUrlUpload = '$kDomain/api/v1/upload';
   static final kUrlUser = '$kDomain/api/v1/user';
   static final kUrlCategory = '$kDomain/api/v1/category';
   static final kUrlProduct = '$kDomain/api/v1/product';
   static final kUrlOrder = '$kDomain/api/v1/order';
+  static final kUrlAddress = '$kDomain/api/v1/address';
 
   static final kUrlDelivery = '$kDomain/api/v1/delivery';
   static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';
@@ -106,6 +108,9 @@ class APIService {
         }
       } else {
         logger.e(response.statusCode);
+        if (context != null) {
+          Navigator.popUntil(context!, (route) => route.isFirst);
+        }
         return {
           'msg': 'Network Error! - Status Code ${response.statusCode}',
           'ret': 9998,
@@ -114,7 +119,7 @@ class APIService {
       }
     } catch (e) {
       if (context != null) {
-        Navigator.of(context!).pop();
+        Navigator.popUntil(context!, (route) => route.isFirst);
       }
       logger.e(e);
       return {
@@ -132,12 +137,12 @@ class APIService {
     var getUrl = link;
 
     if (param != null) {
-      link = link + '?';
+      getUrl = getUrl + '?';
       for (var key in param.keys) {
         var value = param[key].toString();
-        link = link + '$key=$value&';
+        getUrl = getUrl + '$key=$value&';
       }
-      link = link.substring(0, link.length - 1);
+      getUrl = getUrl.substring(0, getUrl.length - 1);
     }
 
     var url = Uri.parse(getUrl);
@@ -147,7 +152,6 @@ class APIService {
     if (response.statusCode == 201 || response.statusCode == 200) {
       try {
         var json = jsonDecode(response.body);
-        logger.d(json.toString());
         return json;
       } catch (e) {
         logger.e(e);

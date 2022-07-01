@@ -1,13 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
+import 'package:mefood/customer.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/base/base.dart';
+import 'package:mefood/provider/customer/customer.dart';
 import 'package:mefood/screen/customer/main/main.dart';
+import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
+import 'package:mefood/util/util.dart';
 import 'package:mefood/widget/base/base.dart';
 
 class MainScreen extends StatefulWidget {
@@ -21,11 +28,43 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   final _event = ValueNotifier(0);
 
   @override
+  void initState() {
+    super.initState();
+
+    Timer.run(() async {
+      try {
+        var user = context.read<CustomerProvider>().customer!.user;
+        if (user != null) {
+          InjectService().initialise(Injector(), user);
+          injector = Injector();
+          await AppInitializer().initialise(injector!);
+          socketService = SocketService.of(owner: user);
+        } else {
+          logger.e('Running with tour mode');
+        }
+      } catch (e) {
+        logger.e(e);
+      }
+      socketService!.onCustomerReceiver(
+        onCreateOrder: onCreateOrder,
+      );
+    });
+  }
+
+  void onCreateOrder(data) async {
+    if (mounted) {
+      DialogService.of(context).showSnackBar('Success create order');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     var screens = [
       const HomeScreen(),
       const OrderScreen(),
-      const MyCartScreen(),
+      MyCartScreen(
+        onCreateOrder: () => _event.value = 1,
+      ),
       const SettingScreen(),
     ];
     return WillPopScope(

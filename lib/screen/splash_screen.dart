@@ -89,11 +89,15 @@ class _SplashScreenState extends State<SplashScreen> {
                   var provider = context.read<cust.CustomerProvider>();
                   var err = await provider.loginToken();
                   if (err == null) {
-                    NavigatorService.of(context)
-                        .push(screen: cs_log.MainScreen());
+                    NavigatorService.of(context).push(
+                      screen: cs_log.MainScreen(),
+                      replace: true,
+                    );
                   } else {
-                    NavigatorService.of(context)
-                        .push(screen: const LoginScreen());
+                    NavigatorService.of(context).push(
+                      screen: const LoginScreen(),
+                      replace: true,
+                    );
                   }
                   return;
                 }

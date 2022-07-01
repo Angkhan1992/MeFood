@@ -11,7 +11,7 @@ import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
 import 'package:mefood/util/constants.dart';
 
-Injector? injector;
+// Injector? injector;
 
 class AppInitializer {
   initialise(Injector? injector) async {}
@@ -31,9 +31,9 @@ void main() async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  InjectService().initialise(Injector());
-  injector = Injector();
-  await AppInitializer().initialise(injector!);
+  // InjectService().initialise(Injector());
+  // injector = Injector();
+  // await AppInitializer().initialise(injector!);
 
   F.appFlavor = Flavor.restaurant;
 

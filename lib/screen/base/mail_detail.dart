@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/base/base.dart';
+import 'package:mefood/themes/theme.dart';
 import 'package:mefood/widget/base/base.dart';
 import 'package:provider/provider.dart';
 
@@ -120,9 +121,13 @@ class _MailDetailState extends State<MailDetail> {
               color: Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.circular(16.0),
             ),
-            child: (count > 99 ? '99+' : '$count').wText(
+            child: (widget.mail.model.title! +
+                    ' (' +
+                    (count > 99 ? '99+' : '$count') +
+                    ')')
+                .wText(
               TextStyle(
-                fontSize: 12.0,
+                fontSize: fontXMd,
               ),
             ),
           );

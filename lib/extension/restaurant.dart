@@ -5,6 +5,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
+import 'package:mefood/provider/base/base.dart';
 import 'package:mefood/screen/customer/base/restaurant_detail.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/theme.dart';
@@ -287,6 +288,93 @@ extension ERestaurantModel on RestaurantModel {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget orderCell(
+    BuildContext context, {
+    required OrderProvider provider,
+  }) {
+    var products = provider.getCartProductsByRest(id!);
+    var price = provider.getCartPriceByRest(id!);
+    var maxTime = 0;
+    for (var product in products) {
+      if (product.product!.prepareTime! > maxTime) {
+        maxTime = product.product!.prepareTime!;
+      }
+    }
+    return Container(
+      margin: const EdgeInsets.only(bottom: offsetSm),
+      padding: const EdgeInsets.all(offsetSm),
+      decoration: containerBorder(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 44.0,
+                height: 44.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24.0),
+                  child: CachedNetworkImage(
+                    imageUrl: '$kDomain$logo',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      price,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
+                    Text(
+                      name!,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                  ],
+                ),
+              ),
+              Text(
+                '$maxTime mins',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+          const SizedBox(height: 4.0),
+          Padding(
+            padding: const EdgeInsets.only(left: offsetMd),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var product in products) ...{
+                  product.orderCell(
+                    context,
+                    amount: product.amount!,
+                  ),
+                  const SizedBox(height: offsetSm),
+                },
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

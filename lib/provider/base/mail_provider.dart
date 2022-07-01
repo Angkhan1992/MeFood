@@ -8,6 +8,10 @@ class MailProvider extends ChangeNotifier {
   List<ExtMail>? mails;
   bool isEditing = false;
 
+  MailProvider() {
+    initMails();
+  }
+
   Future<void> initMails() async {
     mails = (await PrefService.of().getMailHistory())
         .map((e) => ExtMail.instanceOf(e))
@@ -17,14 +21,14 @@ class MailProvider extends ChangeNotifier {
 
   Future<String?> fetchMails(int usr_id) async {
     var resp = await APIService.of(null).post(
-      '${APIService.kUrlHistory}/getMails',
+      '${APIService.kUrlMail}/fetch',
       {
         'id': usr_id,
       },
     );
     if (resp!['ret'] == 10000) {
       mails!.clear();
-      mails = (resp['result'] as List)
+      mails = (resp['result']['mails'] as List)
           .map((e) => ExtMail.instanceOf(MailModel.fromJson(e)))
           .toList();
       await PrefService.of()

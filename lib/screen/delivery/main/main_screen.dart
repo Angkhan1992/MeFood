@@ -2,15 +2,14 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/provider/delivery/delivery.dart';
+import 'package:mefood/screen/base/mail_screen.dart';
 import 'package:mefood/screen/delivery/account/account_screen.dart';
-import 'package:mefood/screen/delivery/account/mail_screen.dart';
 import 'package:mefood/screen/delivery/account/membership_screen.dart';
 import 'package:mefood/screen/delivery/main/chat_page.dart';
 import 'package:mefood/screen/delivery/main/history_page.dart';
@@ -43,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
 
     if (defaultTargetPlatform == TargetPlatform.android) {
-      AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+      // AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
   }
 
@@ -114,7 +113,9 @@ class _MainScreenState extends State<MainScreen> {
                                 onTap: () {
                                   Navigator.of(context).pop();
                                   NavigatorService.of(context).push(
-                                    screen: MailScreen(),
+                                    screen: MailScreen(
+                                      user: provider.user!,
+                                    ),
                                   );
                                 },
                               ),

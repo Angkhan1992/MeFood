@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
-import 'package:mefood/util/config.dart';
 
 extension EString on String {
   static const String emailRegx =
@@ -21,11 +20,11 @@ extension EString on String {
   List<bool> get validatePasswords {
     if (isEmpty) return [false, false, false, false, false];
     return [
-      RegExp(passUpperPattern).hasMatch(trim()),
-      RegExp(passLowerPattern).hasMatch(trim()),
-      RegExp(passNumberPattern).hasMatch(trim()),
-      RegExp(passSpecialPattern).hasMatch(trim()),
-      RegExp(passLengthPattern).hasMatch(trim()),
+      trim().contains(RegExp(r"[A-Z]")),
+      trim().contains(RegExp(r"[a-z]")),
+      trim().contains(RegExp(r"[0-9]")),
+      trim().contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]')),
+      trim().length > 7,
     ];
   }
 

@@ -9,7 +9,12 @@ import 'package:mefood/themes/dimens.dart';
 import 'package:mefood/widget/base/base.dart';
 
 class MyCartScreen extends StatefulWidget {
-  const MyCartScreen({Key? key}) : super(key: key);
+  final Function()? onCreateOrder;
+
+  const MyCartScreen({
+    Key? key,
+    this.onCreateOrder,
+  }) : super(key: key);
 
   @override
   State<MyCartScreen> createState() => _MyCartScreenState();
@@ -87,8 +92,19 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 return;
                               }
                               NavigatorService.of(context).push(
-                                screen: ConfirmOrder(),
-                              );
+                                  screen: ConfirmOrder(),
+                                  pop: (value) {
+                                    if (value != null) {
+                                      if (value == 'create_order') {
+                                        widget.onCreateOrder!();
+                                        return;
+                                      }
+                                      DialogService.of(context).showSnackBar(
+                                        value,
+                                        type: SnackBarType.info,
+                                      );
+                                    }
+                                  });
                             },
                           ),
                         ),
