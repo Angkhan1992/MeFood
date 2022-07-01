@@ -8,9 +8,13 @@ part of 'order_model.dart';
 
 _$_OrderModel _$$_OrderModelFromJson(Map<String, dynamic> json) =>
     _$_OrderModel(
-      id: json['id'] as String?,
+      id: json['id'] as int?,
       regdate: json['regdate'] as String?,
       other: json['other'] as String?,
+      lat: json['lat'] as String?,
+      lon: json['lon'] as String?,
+      fee: json['fee'] as int?,
+      status: json['status'] as String?,
       owner: json['owner'] == null
           ? null
           : MemberModel.fromJson(json['owner'] as Map<String, dynamic>),
@@ -27,6 +31,10 @@ Map<String, dynamic> _$$_OrderModelToJson(_$_OrderModel instance) =>
       'id': instance.id,
       'regdate': instance.regdate,
       'other': instance.other,
+      'lat': instance.lat,
+      'lon': instance.lon,
+      'fee': instance.fee,
+      'status': instance.status,
       'owner': instance.owner,
       'delivery': instance.delivery,
       'models': instance.models,

@@ -1,89 +1,76 @@
+import 'package:flutter/foundation.dart';
+import 'package:mefood/model/model.dart';
+import 'package:mefood/util/util.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
+const kSocketUrl =
+    kDebugMode ? 'ws://192.168.0.253:52526' : 'ws://51.68.185.254:41515';
 SocketService? socketService;
 
 class SocketService {
   io.Socket? _socket;
-  // UserModel? _owner;
+  MemberModel owner;
 
-  // SocketProvider();
+  SocketService({
+    required this.owner,
+  }) {
+    if (_socket == null) {
+      _socket = io.io(
+        kSocketUrl,
+        io.OptionBuilder()
+            .setTransports(["websocket"])
+            .disableAutoConnect()
+            .build(),
+      );
+      _socket!.connect();
 
-  // void init(UserModel user) {
-  //   if (_socket == null) {
-  //     _owner = user;
-  //     _socket = io.io(
-  //       kSocketUrl,
-  //       io.OptionBuilder()
-  //           .setTransports(["websocket"])
-  //           .disableAutoConnect()
-  //           .build(),
-  //     );
-  //     _socket!.connect();
+      _socket!.onConnect((_) {
+        logger.d('[SOCKET] connected');
+        _socket!.emit(
+          'self',
+          {'id': owner.id},
+        );
+      });
 
-  //     _socket!.onConnect((_) {
-  //       if (kDebugMode) {
-  //         print('[SOCKET] connected');
-  //       }
-  //       _socket!.emit(
-  //         'self',
-  //         {
-  //           'user_id': 'user${_owner!.id}',
-  //           'name': _owner!.usrName,
-  //         },
-  //       );
-  //     });
+      _socket!.onDisconnect((_) {
+        logger.d('[SOCKET] disconnect');
+      });
 
-  //     _socket!.onDisconnect((_) {
-  //       if (kDebugMode) {
-  //         print('[SOCKET] disconnect');
-  //       }
-  //     });
+      _socket!.onConnectError((data) {
+        logger.d('[SOCKET] onConnectError : $data');
+      });
 
-  //     _socket!.onConnectError((data) {
-  //       if (kDebugMode) {
-  //         print('[SOCKET] onConnectError : $data');
-  //       }
-  //     });
+      _socket!.onError((data) {
+        logger.d('[SOCKET] onError : $data');
+      });
+    }
+  }
 
-  //     _socket!.onError((data) {
-  //       if (kDebugMode) {
-  //         print('[SOCKET] onError : $data');
-  //       }
-  //     });
+  void createOrder(OrderModel order) {
+    _socket!.emit('order_create', {'id': order.id});
+  }
 
-  //     _socket!.on("notification", (value) {
-  //       if (kDebugMode) {
-  //         print("[SOCKET] receive notification ===> ${value.toString()}");
-  //         String title = 'Invited Friend';
-  //         String name = value['title'];
-  //         String description = '$name just sent a friend request.';
-  //         switch (value['id']) {
-  //           case 'invite_user':
-  //             title = 'Invited';
-  //             description = '$name just sent a friend request.';
-  //             break;
-  //           case 'accept_user':
-  //             title = 'Accepted';
-  //             description = '$name just accepted your friend request.';
-  //             break;
-  //           case 'decline_user':
-  //             title = 'Declined';
-  //             description = '$name just decline your friend request.';
-  //             break;
-  //           case 'create_room':
-  //             title = 'Create Room';
-  //             description = '$name was just created from your friend.';
-  //             break;
-  //         }
-  //         NotificationProvider.showNotification(
-  //           title: title,
-  //           description: description,
-  //           type: NotificationProvider.keyMessageChannel,
-  //         );
-  //       }
-  //     });
-  //   }
-  // }
+  factory SocketService.of({
+    required MemberModel owner,
+  }) {
+    return SocketService(owner: owner);
+  }
+
+  void onCustomerReceiver({
+    Function(dynamic)? onCreateOrder,
+  }) {
+    _socket!.on('create_order', (value) async {
+      logger.d('[Socket] create order: $value');
+    });
+  }
+
+  void onRestaurantReceiver({
+    Function(dynamic)? onCreateOrder,
+  }) {
+    _socket!.on('create_order', (value) async {
+      logger.d('[Socket] create order: $value');
+    });
+  }
 
   // void updateRoomList({
   //   Function(dynamic)? update,
@@ -105,16 +92,6 @@ class SocketService {
   //     }
   //     update!(value);
   //   });
-  // }
-
-  // void inviteFriend(String senderID, String receiverID) {
-  //   _socket!.emit(
-  //     'invite_friend',
-  //     {
-  //       'senderid': 'user$senderID',
-  //       'receiverid': 'user$receiverID',
-  //     },
-  //   );
   // }
 
   // void acceptFriend(String senderID, String receiverID) {

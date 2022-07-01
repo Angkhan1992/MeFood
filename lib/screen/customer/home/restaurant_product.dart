@@ -36,7 +36,7 @@ class _RestaurantProductState extends State<RestaurantProduct> {
   Future<void> fetch() async {
     var prods = await EProduct.getProductsByRest(
       context,
-      widget.restaurant.id!,
+      widget.restaurant,
       page: page,
     );
     if (prods.isNotEmpty) {

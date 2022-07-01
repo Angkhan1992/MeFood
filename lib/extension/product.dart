@@ -914,18 +914,18 @@ extension EProduct on ProductModel {
 
   static Future<List<ProductModel>> getProductsByRest(
     BuildContext context,
-    int restId, {
+    RestaurantModel restaurant, {
     int page = 0,
   }) async {
     var resp = await APIService.of(context).post(
       '${APIService.kUrlProduct}/res',
-      {'id': restId, 'page': page},
+      {'id': restaurant.id, 'page': page},
       checkToken: false,
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {
         return (resp['result'] as List)
-            .map((e) => ProductModel.fromJson(e))
+            .map((e) => ProductModel.fromJson(e)..restaurant = restaurant)
             .toList();
       }
     }

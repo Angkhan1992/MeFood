@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
@@ -55,7 +57,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     }
     provider = context.read<OrderProvider>();
 
-    restMarkers.clear();
     for (var product in provider!.products!) {
       var isContained = false;
       for (var restaurant in restaurants) {
@@ -66,15 +67,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       }
       if (!isContained) {
         restaurants.add(product.product!.restaurant!);
-
-        var url = '$kDomain${product.product!.restaurant!.logo}';
-        var markerKey = GlobalKey(debugLabel: url);
-        var bytes = (await NetworkAssetBundle(Uri.parse(url)).load(url))
-            .buffer
-            .asUint8List();
-
-        var restMarker = MeMarker(key: markerKey, bytes: bytes);
-        restMarkers.add(restMarker);
       }
     }
     setState(() {});
@@ -87,6 +79,20 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       await PrefService.of().setDeliveryAddresses(addresses);
     } else {
       address = addresses.first;
+    }
+
+    restMarkers.clear();
+    for (var restaurant in restaurants) {
+      var url = '$kDomain${restaurant.logo}';
+      var markerKey = GlobalKey(
+        debugLabel: '${url}_${Random().nextInt(10000)}',
+      );
+      var bytes = (await NetworkAssetBundle(Uri.parse(url)).load(url))
+          .buffer
+          .asUint8List();
+
+      var restMarker = MeMarker(key: markerKey, bytes: bytes);
+      restMarkers.add(restMarker);
     }
 
     initRouter();
@@ -410,12 +416,32 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   ),
                 ),
                 const SizedBox(height: offsetXMd),
-                CustomFillButton(title: 'Confirm'),
+                CustomFillButton(
+                  title: 'Confirm',
+                  onTap: () => confirm(provider),
+                ),
               ],
             );
           },
         ),
       ),
     );
+  }
+
+  void confirm(OrderProvider provider) async {
+    var err = await provider.createOrder(
+      context,
+      lat: address!.lat!,
+      lon: address!.lon!,
+      delivery: locationModel!.deliveryPrice.value!,
+    );
+    if (err == null) {
+      Navigator.of(context).pop('create_order');
+    } else {
+      DialogService.of(context).showSnackBar(
+        err,
+        type: SnackBarType.error,
+      );
+    }
   }
 }

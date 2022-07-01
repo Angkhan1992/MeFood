@@ -33,10 +33,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
 
-  InjectService().initialise(Injector());
-  injector = Injector();
-  await AppInitializer().initialise(injector!);
-
   F.appFlavor = Flavor.customer;
 
   var customerProvider = CustomerProvider();

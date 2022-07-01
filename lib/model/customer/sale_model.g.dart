@@ -11,6 +11,7 @@ _$_SaleModel _$$_SaleModelFromJson(Map<String, dynamic> json) => _$_SaleModel(
       amount: json['amount'] as int?,
       regdate: json['regdate'] as String?,
       other: json['other'] as String?,
+      status: json['status'] as String?,
       product: json['product'] == null
           ? null
           : ProductModel.fromJson(json['product'] as Map<String, dynamic>),
@@ -22,5 +23,6 @@ Map<String, dynamic> _$$_SaleModelToJson(_$_SaleModel instance) =>
       'amount': instance.amount,
       'regdate': instance.regdate,
       'other': instance.other,
+      'status': instance.status,
       'product': instance.product,
     };

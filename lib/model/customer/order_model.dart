@@ -8,9 +8,13 @@ part 'order_model.g.dart';
 class OrderModel with _$OrderModel {
   @JsonSerializable(fieldRename: FieldRename.snake)
   factory OrderModel({
-    String? id,
+    int? id,
     String? regdate,
     String? other,
+    String? lat,
+    String? lon,
+    int? fee,
+    String? status,
     // extend fields
     MemberModel? owner,
     MemberModel? delivery,

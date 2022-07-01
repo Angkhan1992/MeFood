@@ -78,29 +78,24 @@ extension ELocation on LocationModel {
     required AddressModel address,
     required List<RestaurantModel> restaurants,
   }) async {
-    try {
-      var url = "https://maps.googleapis.com/maps/api/directions/json";
+    var url = "https://maps.googleapis.com/maps/api/directions/json";
 
-      var origin = '${address.lat} ${address.lon}';
-      var waypoints = 'optimize:true';
-      for (var rest in restaurants) {
-        waypoints += '|${rest.address!.lat} ${rest.address!.lon}';
-      }
-      var param = {
-        "origin": origin,
-        "destination": origin,
-        "sensor": "false",
-        "mode": "driving",
-        "waypoints": waypoints,
-        "provideRouteAlternatives": "true",
-        "key": kGoogleMapKey,
-      };
-
-      var json = await APIService.of(context).get(url, param);
-      return LocationModel.fromJson(json!);
-    } catch (e) {
-      logger.e(e);
-      return null;
+    var origin = '${address.lat} ${address.lon}';
+    var waypoints = 'optimize:true';
+    for (var rest in restaurants) {
+      waypoints += '|${rest.address!.lat} ${rest.address!.lon}';
     }
+    var param = {
+      "origin": origin,
+      "destination": origin,
+      "sensor": "false",
+      "mode": "driving",
+      "waypoints": waypoints,
+      "provideRouteAlternatives": "true",
+      "key": kGoogleMapKey,
+    };
+
+    var json = await APIService.of(context).get(url, param);
+    return LocationModel.fromJson(json!);
   }
 }
