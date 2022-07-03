@@ -9,9 +9,9 @@ const defaultLongitude = 102.649344;
 
 const priceDeliveryPerKm = 5000;
 
-const kEmptyPrice = '₭ -----';
-const kEmptyDistance = '--- Km';
-const kEmptyDuration = '--- mins';
+var kEmptyPrice = '${S.current.currency_lao} -----';
+var kEmptyDistance = '--- ${S.current.unit_km}';
+var kEmptyDuration = '--- ${S.current.unit_min}';
 
 final formatOrderNumber = NumberFormat('000000000');
 final formatCurrency = NumberFormat('###,###,###');

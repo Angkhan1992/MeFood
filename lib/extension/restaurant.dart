@@ -171,7 +171,7 @@ extension ERestaurantModel on RestaurantModel {
                             width: 8.0,
                           ),
                           Text(
-                            'View on Google Map',
+                            S.current.goto_google_map,
                             style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w200,
@@ -348,7 +348,7 @@ extension ERestaurantModel on RestaurantModel {
                 ),
               ),
               Text(
-                '$maxTime mins',
+                '$maxTime ${S.current.unit_min}',
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.w500,

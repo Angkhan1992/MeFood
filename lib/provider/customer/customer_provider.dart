@@ -17,7 +17,7 @@ class CustomerProvider extends ChangeNotifier {
     required String pass,
   }) async {
     if (email.isEmpty || pass.isEmpty) {
-      return 'Please fill email and password.';
+      return S.current.err_fill_email_pass;
     }
     var resp = await APIService.of(context).post(
       '${APIService.kUrlCustomerAuth}/login',

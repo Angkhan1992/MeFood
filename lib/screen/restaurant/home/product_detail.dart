@@ -291,7 +291,7 @@ class _ProductDetailState extends State<ProductDetail> {
               text: _product.price.toString(),
             ),
             suffix: Text(
-              '₭',
+              S.current.currency_lao,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.w700,
