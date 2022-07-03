@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
@@ -12,8 +13,6 @@ import 'package:mefood/util/util.dart';
 extension EOrder on OrderModel {
   String get orderNumber {
     return '${owner!.id.toString().padLeft(8, '0')}-${id.toString().padLeft(8, '0')}';
-    // return formatOrderNumber.format(id);
-    // return id.toString().padLeft(8, '0');
   }
 
   List<HistoryModel> get histories {
@@ -35,14 +34,14 @@ extension EOrder on OrderModel {
       price += sale.amount! * sale.product!.price!;
     }
     return MeValue(
-      text: '₭ ${formatCurrency.format(price)}',
+      text: '${S.current.currency_lao} ${formatCurrency.format(price)}',
       value: price,
     );
   }
 
   MeValue get deliveryCurrency {
     return MeValue(
-      text: '₭ ${formatCurrency.format(fee ?? 0)}',
+      text: '${S.current.currency_lao} ${formatCurrency.format(fee ?? 0)}',
       value: fee ?? 0,
     );
   }
@@ -50,7 +49,7 @@ extension EOrder on OrderModel {
   MeValue get totalCurrency {
     var price = (productCurrency.value ?? 0) + (deliveryCurrency.value ?? 0);
     return MeValue(
-      text: '₭ ${formatCurrency.format(price)}',
+      text: '${S.current.currency_lao} ${formatCurrency.format(price)}',
       value: price,
     );
   }
@@ -102,7 +101,7 @@ extension EOrder on OrderModel {
                     Row(
                       children: [
                         Text(
-                          'PENDING',
+                          S.current.pending,
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.blueAccent,
@@ -118,7 +117,7 @@ extension EOrder on OrderModel {
                       ],
                     ),
                     Text(
-                      'Waiting for each product accepted by restaurant',
+                      S.current.desc_order_pending,
                       style: TextStyle(
                         fontSize: 13.0,
                         fontWeight: FontWeight.w200,
@@ -155,14 +154,14 @@ extension EOrder on OrderModel {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${sales!.length} Products (${productCurrency.text})',
+                      '${sales!.length} ${S.current.products} (${productCurrency.text})',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w200,
                       ),
                     ),
                     Text(
-                      'Delivery Fee (${deliveryCurrency.text})',
+                      '${S.current.delivery_fee} (${deliveryCurrency.text})',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w200,

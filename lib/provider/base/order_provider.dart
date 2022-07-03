@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
+import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
@@ -86,7 +87,7 @@ class OrderProvider with ChangeNotifier {
     for (var product in products!) {
       amount = amount + product.product!.price! * product.amount!;
     }
-    return '₭ ${formatCurrency.format(amount)}';
+    return '${S.current.currency_lao} ${formatCurrency.format(amount)}';
   }
 
   Future<String?> createOrder(
@@ -132,6 +133,26 @@ class OrderProvider with ChangeNotifier {
     for (var sale in sales) {
       amount += sale.product!.price! * sale.amount!;
     }
-    return '₭ ${formatCurrency.format(amount)}';
+    return '${S.current.currency_lao} ${formatCurrency.format(amount)}';
+  }
+
+  Future<String?> removePendingSale(
+    BuildContext context, {
+    required int saleId,
+  }) async {
+    for (var order in orders!) {
+      for (var sale in order.sales!) {
+        if (sale.id == saleId) {
+          var err = await sale.removeFromServer(context);
+          if (err == null) {
+            order.sales!.remove(sale);
+            await updateLocal();
+            return null;
+          }
+          return err;
+        }
+      }
+    }
+    return S.current.no_existed_sale;
   }
 }

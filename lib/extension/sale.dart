@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mefood/extension/extension.dart';
@@ -13,7 +14,7 @@ import 'package:mefood/widget/base/base.dart';
 
 extension Sale on SaleModel {
   String get currency {
-    return '₭ ${formatCurrency.format(product!.price! * amount!)}';
+    return '${S.current.currency_lao} ${formatCurrency.format(product!.price! * amount!)}';
   }
 
   Widget cartItem(BuildContext context) {
@@ -210,7 +211,7 @@ extension Sale on SaleModel {
               ),
             ),
             Text(
-              '${product!.prepareTime} mins',
+              '${product!.prepareTime} ${S.current.unit_min}',
               style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w500,
@@ -242,6 +243,7 @@ extension Sale on SaleModel {
 
   Widget orderItem(BuildContext context) {
     var cellHeight = 36.0;
+    var orderProvider = context.read<OrderProvider>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -249,9 +251,23 @@ extension Sale on SaleModel {
           Row(
             children: [
               if (status == null || status! == 'PENDING') ...{
-                Icon(
-                  Icons.remove_circle,
-                  color: Colors.redAccent,
+                InkWell(
+                  onTap: () async {
+                    var err = await orderProvider.removePendingSale(
+                      context,
+                      saleId: id!,
+                    );
+                    if (err != null) {
+                      DialogService.of(context).showSnackBar(
+                        err,
+                        type: SnackBarType.error,
+                      );
+                    }
+                  },
+                  child: Icon(
+                    Icons.remove_circle,
+                    color: Colors.redAccent,
+                  ),
                 ),
                 const SizedBox(width: offsetSm),
               },
@@ -331,5 +347,19 @@ extension Sale on SaleModel {
       title: status ?? 'PENDING',
       color: Colors.blueAccent,
     );
+  }
+
+  Future<String?> removeFromServer(BuildContext? context) async {
+    var resp = await APIService.of(context).post(
+      '${APIService.kUrlSale}/remove',
+      {'id': id!},
+    );
+    if (resp != null) {
+      if (resp['ret'] == 10000) {
+        return null;
+      }
+      return resp['msg'];
+    }
+    return S.current.sever_error;
   }
 }

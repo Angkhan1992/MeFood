@@ -32,6 +32,7 @@ class APIService {
   static final kUrlProduct = '$kDomain/api/v1/product';
   static final kUrlOrder = '$kDomain/api/v1/order';
   static final kUrlAddress = '$kDomain/api/v1/address';
+  static final kUrlSale = '$kDomain/api/v1/sale';
 
   static final kUrlDelivery = '$kDomain/api/v1/delivery';
   static final kUrlDeliveryAuth = '$kDomain/api/v1/delivery/auth';

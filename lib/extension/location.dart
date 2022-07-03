@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mefood/extension/extension.dart';
+import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/util/util.dart';
@@ -15,7 +15,7 @@ extension ELocation on LocationModel {
       }
     }
     var value = total / 1000;
-    var text = '$value Km';
+    var text = '$value ${S.current.unit_km}';
     return MeValue(value: value.round(), text: text);
   }
 
@@ -28,14 +28,14 @@ extension ELocation on LocationModel {
       }
     }
     var value = (deliveryTime / 60).round();
-    var text = '$value mins';
+    var text = '$value ${S.current.unit_min}';
     return MeValue(value: value.round(), text: text);
   }
 
   MeValue get deliveryPrice {
     var value =
         ((totalDistance.value! * priceDeliveryPerKm) / 1000).round() * 1000;
-    var text = '₭ ${formatCurrency.format(value)}';
+    var text = '${S.current.currency_lao} ${formatCurrency.format(value)}';
     return MeValue(value: value.round(), text: text);
   }
 

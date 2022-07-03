@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add_cart": MessageLookupByLibrary.simpleMessage("Add Cart"),
         "add_users": MessageLookupByLibrary.simpleMessage("Add Users"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "address1": MessageLookupByLibrary.simpleMessage("Address1"),
@@ -30,6 +31,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "admin": MessageLookupByLibrary.simpleMessage("Admin"),
         "admin_info": MessageLookupByLibrary.simpleMessage("Admin Information"),
         "almost_done": MessageLookupByLibrary.simpleMessage("Almost Done"),
+        "already_add_cart": MessageLookupByLibrary.simpleMessage(
+            "This product was already added to cart."),
+        "already_changed_item": MessageLookupByLibrary.simpleMessage(
+            "Already changed item information"),
         "analysis": MessageLookupByLibrary.simpleMessage("Analysis"),
         "as_read": MessageLookupByLibrary.simpleMessage("As Read"),
         "avatar": MessageLookupByLibrary.simpleMessage("Avatar"),
@@ -90,12 +95,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "contact_us": MessageLookupByLibrary.simpleMessage("Contact Us"),
         "country": MessageLookupByLibrary.simpleMessage("Country"),
+        "currency_lao": MessageLookupByLibrary.simpleMessage("₭"),
         "date_of_birth": MessageLookupByLibrary.simpleMessage("Date of Birth"),
         "day": MessageLookupByLibrary.simpleMessage("Day"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "delivery": MessageLookupByLibrary.simpleMessage("Delivery"),
+        "delivery_fee": MessageLookupByLibrary.simpleMessage("Delivery Fee"),
         "delivery_man": MessageLookupByLibrary.simpleMessage("DELIVERY MAN"),
         "delivery_type": MessageLookupByLibrary.simpleMessage("Delivery Type"),
+        "desc_order_pending": MessageLookupByLibrary.simpleMessage(
+            "Waiting for each product accepted by restaurant"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "driver_identify":
             MessageLookupByLibrary.simpleMessage("Driver Identify"),
@@ -125,6 +134,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email_user_id":
             MessageLookupByLibrary.simpleMessage("Email or User ID"),
         "empty": MessageLookupByLibrary.simpleMessage("Empty"),
+        "err_fill_email_pass": MessageLookupByLibrary.simpleMessage(
+            "Please input email and password"),
         "err_location": MessageLookupByLibrary.simpleMessage(
             "The location permission was not granted. Please set that on mobile setting and try again."),
         "err_location_desc": MessageLookupByLibrary.simpleMessage(
@@ -145,6 +156,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "galleries": MessageLookupByLibrary.simpleMessage("Galleries"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "go_to_login": MessageLookupByLibrary.simpleMessage("Go To Login"),
+        "goto_google_map":
+            MessageLookupByLibrary.simpleMessage("Go to Google Map"),
         "hint_car_color":
             MessageLookupByLibrary.simpleMessage("Car Color (ex: 0xff0000)"),
         "hint_car_name":
@@ -184,6 +197,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "laos": MessageLookupByLibrary.simpleMessage("Laos"),
         "last_name": MessageLookupByLibrary.simpleMessage("Last Name"),
         "latitude": MessageLookupByLibrary.simpleMessage("Latitude"),
+        "location_data": MessageLookupByLibrary.simpleMessage("Location Data!"),
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
         "login_by_tour": MessageLookupByLibrary.simpleMessage("Login By Tour"),
         "login_to_others":
@@ -204,6 +218,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Name & Category"),
         "new_products": MessageLookupByLibrary.simpleMessage("New Products"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "no_existed_sale":
+            MessageLookupByLibrary.simpleMessage("Not existed sale"),
         "no_have_account_yet": MessageLookupByLibrary.simpleMessage(
             "If you have not account yet?"),
         "no_match_email":
@@ -215,6 +231,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "owner": MessageLookupByLibrary.simpleMessage("Owner"),
         "owner_info": MessageLookupByLibrary.simpleMessage("Owner Information"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "pending": MessageLookupByLibrary.simpleMessage("PENDING"),
         "pending_48_desc": MessageLookupByLibrary.simpleMessage(
             "Your account is pending yet. We will reply in 48 hrs. Thanks for your understanding."),
         "pending_account":
@@ -228,10 +245,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Privacy & Policy"),
         "processing_now":
             MessageLookupByLibrary.simpleMessage("Processing now ..."),
+        "products": MessageLookupByLibrary.simpleMessage("Products"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "province": MessageLookupByLibrary.simpleMessage("Province"),
         "read": MessageLookupByLibrary.simpleMessage("Read"),
         "ready_ride": MessageLookupByLibrary.simpleMessage("Ready for Ride"),
+        "recent_review": MessageLookupByLibrary.simpleMessage("Recent Reviews"),
         "reg_adr_detail": MessageLookupByLibrary.simpleMessage(
             "You can add your home address information on the current page."),
         "reg_car_detail": MessageLookupByLibrary.simpleMessage(
@@ -258,6 +277,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "status_map": MessageLookupByLibrary.simpleMessage("Status Map"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "success": MessageLookupByLibrary.simpleMessage("Success"),
+        "success_add_cart":
+            MessageLookupByLibrary.simpleMessage("Successfully added to cart"),
         "success_data_updated":
             MessageLookupByLibrary.simpleMessage("Successfully data updated"),
         "success_user_updated":
@@ -272,6 +293,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "type_support":
             MessageLookupByLibrary.simpleMessage("Contact to Support"),
         "type_walker": MessageLookupByLibrary.simpleMessage("Walker"),
+        "unit_km": MessageLookupByLibrary.simpleMessage("Km"),
+        "unit_min": MessageLookupByLibrary.simpleMessage("mins"),
         "unread": MessageLookupByLibrary.simpleMessage("Unread"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "update_address":
@@ -286,6 +309,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "user": MessageLookupByLibrary.simpleMessage("User"),
         "user_info": MessageLookupByLibrary.simpleMessage("User Information"),
         "usr_address": MessageLookupByLibrary.simpleMessage("User Address"),
+        "valid_product_desc": MessageLookupByLibrary.simpleMessage(
+            "Invalid product description."),
+        "valid_product_gallery":
+            MessageLookupByLibrary.simpleMessage("Empty product galleries."),
+        "valid_product_gallery_some": MessageLookupByLibrary.simpleMessage(
+            "Empty some product galleries."),
+        "valid_product_prepare_time": MessageLookupByLibrary.simpleMessage(
+            "Invalid product preparing time."),
+        "valid_product_price":
+            MessageLookupByLibrary.simpleMessage("Invalid product price."),
+        "valid_product_title":
+            MessageLookupByLibrary.simpleMessage("Invalid product title."),
+        "valid_product_unit":
+            MessageLookupByLibrary.simpleMessage("Invalid product unit."),
+        "valid_product_unit_value":
+            MessageLookupByLibrary.simpleMessage("Invalid product unit value."),
         "verification": MessageLookupByLibrary.simpleMessage("Verification"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verify_code": MessageLookupByLibrary.simpleMessage("Verify Code"),
