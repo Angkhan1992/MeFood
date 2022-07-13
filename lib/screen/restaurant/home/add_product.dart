@@ -141,7 +141,7 @@ class _AddProductState extends State<AddProduct> {
                                               Icons.price_check,
                                             ),
                                             suffix: Text(
-                                              '₭',
+                                              S.current.currency_lao,
                                               style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryColor,

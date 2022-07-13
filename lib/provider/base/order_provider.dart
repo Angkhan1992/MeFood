@@ -5,10 +5,12 @@ import 'package:mefood/extension/extension.dart';
 import 'package:mefood/generated/l10n.dart';
 import 'package:mefood/model/model.dart';
 import 'package:mefood/service/service.dart';
+import 'package:mefood/util/util.dart';
 
 class OrderProvider with ChangeNotifier {
   List<OrderModel>? orders;
   List<SaleModel>? products;
+  int selected = -1;
 
   OrderProvider() {
     orders = [];
@@ -32,12 +34,22 @@ class OrderProvider with ChangeNotifier {
     if (resp != null) {
       if (resp['ret'] == 10000) {
         orders!.clear();
-        orders!.addAll(resp['result']['orders']
+        orders!.addAll((resp['result']['orders'] as List)
             .map((e) => OrderModel.fromJson(e))
             .toList());
         await updateLocal();
       }
     }
+  }
+
+  void updateSelected(int value) {
+    if (selected == value) {
+      selected = -1;
+    } else {
+      selected = value;
+    }
+
+    notifyListeners();
   }
 
   Future<void> updateLocal() async {
@@ -75,7 +87,7 @@ class OrderProvider with ChangeNotifier {
     for (var product in products!) {
       amount = amount + product.product!.price! * product.amount!;
     }
-    return '₭ ${formatCurrency.format(amount)}';
+    return '${S.current.currency_lao} ${formatCurrency.format(amount)}';
   }
 
   Future<String?> createOrder(
@@ -98,19 +110,9 @@ class OrderProvider with ChangeNotifier {
     );
     if (resp != null) {
       if (resp['ret'] == 10000) {
-        var order = OrderModel(
-          id: resp['result']['id'],
-          models: [],
-        );
-        order.models!.addAll(products!);
-        order.owner = await PrefService.of().getMember();
-
-        orders!.add(order);
+        socketService!.createOrder(resp['result']['id']);
         products!.clear();
-        await updateLocal();
-
-        socketService!.createOrder(order);
-
+        await fetchData();
         return null;
       } else {
         return resp['msg'];
@@ -131,6 +133,26 @@ class OrderProvider with ChangeNotifier {
     for (var sale in sales) {
       amount += sale.product!.price! * sale.amount!;
     }
-    return '₭ ${formatCurrency.format(amount)}';
+    return '${S.current.currency_lao} ${formatCurrency.format(amount)}';
+  }
+
+  Future<String?> removePendingSale(
+    BuildContext context, {
+    required int saleId,
+  }) async {
+    for (var order in orders!) {
+      for (var sale in order.sales!) {
+        if (sale.id == saleId) {
+          var err = await sale.removeFromServer(context);
+          if (err == null) {
+            order.sales!.remove(sale);
+            await updateLocal();
+            return null;
+          }
+          return err;
+        }
+      }
+    }
+    return S.current.no_existed_sale;
   }
 }

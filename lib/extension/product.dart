@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -15,43 +14,42 @@ import 'package:mefood/provider/restaurant/restaurant.dart';
 import 'package:mefood/screen/customer/base/product_detail.dart';
 import 'package:mefood/service/service.dart';
 import 'package:mefood/themes/dimens.dart';
+import 'package:mefood/util/util.dart';
 import 'package:mefood/widget/base/button.dart';
-
-final formatCurrency = NumberFormat('###,###,###');
 
 extension EProduct on ProductModel {
   String? get validate {
     if (title == null || title!.isEmpty || title!.length > 40) {
-      return 'Invalid product title.';
+      return S.current.valid_product_title;
     }
     if (prepareTime == null || prepareTime! < 0) {
-      return 'Invalid product preparing time.';
+      return S.current.valid_product_prepare_time;
     }
     if (desc == null || desc!.isEmpty || desc!.length > 300) {
-      return 'Invalid product description.';
+      return S.current.valid_product_desc;
     }
     if (value == null || value! < 1) {
-      return 'Invalid product unit value.';
+      return S.current.valid_product_unit_value;
     }
     if (unit == null || unit!.isEmpty) {
-      return 'Invalid product unit.';
+      return S.current.valid_product_unit;
     }
     if (price == null || price! < 1) {
-      return 'Invalid product price.';
+      return S.current.valid_product_price;
     }
     if (galleries == null || galleries!.isEmpty) {
-      return 'Empty product galleries.';
+      return S.current.valid_product_gallery;
     }
     for (var gallery in galleries!) {
       if (gallery.isEmpty) {
-        return 'Empty some product galleries.';
+        return S.current.valid_product_gallery_some;
       }
     }
     return null;
   }
 
   String get currency {
-    return '₭ ${formatCurrency.format(price)}';
+    return '${S.current.currency_lao} ${formatCurrency.format(price)}';
   }
 
   Widget customerListItem(BuildContext context) {
@@ -152,7 +150,7 @@ extension EProduct on ProductModel {
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                   child: Text(
-                                    'Add Cart',
+                                    S.current.add_cart,
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                     ),
@@ -400,7 +398,7 @@ extension EProduct on ProductModel {
                             width: 8.0,
                           ),
                           Text(
-                            '$prepareTime Minutes',
+                            '$prepareTime ${S.current.unit_min}',
                             style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w400,
@@ -446,7 +444,7 @@ extension EProduct on ProductModel {
                             width: 8.0,
                           ),
                           Text(
-                            'Go to Google Map',
+                            S.current.goto_google_map,
                             style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w400,
@@ -482,7 +480,7 @@ extension EProduct on ProductModel {
                       ),
                       const SizedBox(height: 16.0),
                       Text(
-                        'Recent Reviews',
+                        S.current.recent_review,
                         style: TextStyle(
                           fontSize: 12.0,
                           fontWeight: FontWeight.w700,
@@ -544,7 +542,7 @@ extension EProduct on ProductModel {
                   color: Theme.of(context).colorScheme.secondary,
                   child: Center(
                     child: Text(
-                      '$currency\nADD CART',
+                      '$currency\n${S.current.add_cart.toUpperCase()}',
                       style: TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w700,
@@ -760,11 +758,10 @@ extension EProduct on ProductModel {
                                   var resp = await orderProvider.addCart(sale);
                                   if (resp) {
                                     DialogService.of(context).showSnackBar(
-                                      'Successfully added to cart',
-                                    );
+                                        S.current.success_add_cart);
                                   } else {
                                     DialogService.of(context).showSnackBar(
-                                      'This product was already added to cart.',
+                                      S.current.already_add_cart,
                                       type: SnackBarType.info,
                                     );
                                   }
@@ -859,7 +856,7 @@ extension EProduct on ProductModel {
 
   Future<String?> removeProduct(BuildContext context) async {
     if (validate != null) {
-      return 'Already chaanged item information';
+      return S.current.already_changed_item;
     }
     var resp = await APIService.of(context).post(
       '${APIService.kUrlRestaurantProduct}/remove',
@@ -941,7 +938,7 @@ extension EProduct on ProductModel {
     if (resp != null) {
       if (resp['ret'] == 10000) {
         return (resp['result'] as List)
-            .map((e) => ProductModel.fromJson(e))
+            .map((json) => ProductModel.fromJson(json))
             .toList();
       }
     }

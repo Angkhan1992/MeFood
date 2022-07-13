@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mefood/generated/l10n.dart';
 
@@ -8,11 +9,12 @@ const defaultLongitude = 102.649344;
 
 const priceDeliveryPerKm = 5000;
 
-const kGoogleMapKey = 'Your_google_map_-key';
+var kEmptyPrice = '${S.current.currency_lao} -----';
+var kEmptyDistance = '--- ${S.current.unit_km}';
+var kEmptyDuration = '--- ${S.current.unit_min}';
 
-const kEmptyPrice = '₭ -----';
-const kEmptyDistance = '--- Km';
-const kEmptyDuration = '--- mins';
+final formatOrderNumber = NumberFormat('000000000');
+final formatCurrency = NumberFormat('###,###,###');
 
 final pendingList = [
   {

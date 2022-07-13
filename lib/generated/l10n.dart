@@ -1350,11 +1350,241 @@ class S {
     );
   }
 
+  /// `Location Data!`
+  String get location_data {
+    return Intl.message(
+      'Location Data!',
+      name: 'location_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `₭`
+  String get currency_lao {
+    return Intl.message(
+      '₭',
+      name: 'currency_lao',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Km`
+  String get unit_km {
+    return Intl.message(
+      'Km',
+      name: 'unit_km',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `mins`
+  String get unit_min {
+    return Intl.message(
+      'mins',
+      name: 'unit_min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PENDING`
+  String get pending {
+    return Intl.message(
+      'PENDING',
+      name: 'pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting for each product accepted by restaurant`
+  String get desc_order_pending {
+    return Intl.message(
+      'Waiting for each product accepted by restaurant',
+      name: 'desc_order_pending',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Blocked Account`
   String get blocked_account {
     return Intl.message(
       'Blocked Account',
       name: 'blocked_account',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products`
+  String get products {
+    return Intl.message(
+      'Products',
+      name: 'products',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery Fee`
+  String get delivery_fee {
+    return Intl.message(
+      'Delivery Fee',
+      name: 'delivery_fee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Cart`
+  String get add_cart {
+    return Intl.message(
+      'Add Cart',
+      name: 'add_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go to Google Map`
+  String get goto_google_map {
+    return Intl.message(
+      'Go to Google Map',
+      name: 'goto_google_map',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent Reviews`
+  String get recent_review {
+    return Intl.message(
+      'Recent Reviews',
+      name: 'recent_review',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully added to cart`
+  String get success_add_cart {
+    return Intl.message(
+      'Successfully added to cart',
+      name: 'success_add_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This product was already added to cart.`
+  String get already_add_cart {
+    return Intl.message(
+      'This product was already added to cart.',
+      name: 'already_add_cart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already changed item information`
+  String get already_changed_item {
+    return Intl.message(
+      'Already changed item information',
+      name: 'already_changed_item',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not existed sale`
+  String get no_existed_sale {
+    return Intl.message(
+      'Not existed sale',
+      name: 'no_existed_sale',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid product title.`
+  String get valid_product_title {
+    return Intl.message(
+      'Invalid product title.',
+      name: 'valid_product_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid product preparing time.`
+  String get valid_product_prepare_time {
+    return Intl.message(
+      'Invalid product preparing time.',
+      name: 'valid_product_prepare_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid product description.`
+  String get valid_product_desc {
+    return Intl.message(
+      'Invalid product description.',
+      name: 'valid_product_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid product unit value.`
+  String get valid_product_unit_value {
+    return Intl.message(
+      'Invalid product unit value.',
+      name: 'valid_product_unit_value',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid product unit.`
+  String get valid_product_unit {
+    return Intl.message(
+      'Invalid product unit.',
+      name: 'valid_product_unit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid product price.`
+  String get valid_product_price {
+    return Intl.message(
+      'Invalid product price.',
+      name: 'valid_product_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty product galleries.`
+  String get valid_product_gallery {
+    return Intl.message(
+      'Empty product galleries.',
+      name: 'valid_product_gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Empty some product galleries.`
+  String get valid_product_gallery_some {
+    return Intl.message(
+      'Empty some product galleries.',
+      name: 'valid_product_gallery_some',
       desc: '',
       args: [],
     );
@@ -1725,6 +1955,16 @@ class S {
     return Intl.message(
       'You can\'t use MeFood on your devicce, The location service was not supported on your device. Sorry, Please try that again on other devices(Google Map Supported).',
       name: 'err_location_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please input email and password`
+  String get err_fill_email_pass {
+    return Intl.message(
+      'Please input email and password',
+      name: 'err_fill_email_pass',
       desc: '',
       args: [],
     );

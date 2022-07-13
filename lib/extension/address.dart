@@ -25,10 +25,10 @@ extension EAddressModel on AddressModel {
       return '${S.current.empty} ${S.current.country}';
     }
     if (lat == null || lat!.isEmpty) {
-      return '${S.current.empty} Location Data!';
+      return '${S.current.empty} ${S.current.location_data}';
     }
     if (lon == null || lon!.isEmpty) {
-      return '${S.current.empty} Location Data!';
+      return '${S.current.empty} ${S.current.location_data}';
     }
 
     return null;

@@ -388,3 +388,56 @@ extension GalleryType on GALLERYTYPE {
     return this == auth;
   }
 }
+
+enum ORDERSTATUS {
+  PENDING,
+  APPLE,
+  DELIVERY,
+  COMEBACK,
+  DONE,
+  PROGRESS,
+}
+
+extension OrderStatus on ORDERSTATUS {
+  String get valueString {
+    switch (this) {
+      case ORDERSTATUS.PENDING:
+        return 'PENDING';
+      case ORDERSTATUS.APPLE:
+        return 'APPLE';
+      case ORDERSTATUS.DELIVERY:
+        return 'DELIVERY';
+      case ORDERSTATUS.COMEBACK:
+        return 'COMEBACK';
+      case ORDERSTATUS.DONE:
+        return 'DONE';
+      case ORDERSTATUS.PROGRESS:
+        return 'PROGRESS';
+    }
+  }
+
+  static ORDERSTATUS? value(String? valueString) {
+    if (valueString == null) {
+      return null;
+    }
+    for (var item in ORDERSTATUS.values) {
+      if (valueString == item.valueString) {
+        return item;
+      }
+    }
+    return ORDERSTATUS.values.first;
+  }
+
+  bool equal(ORDERSTATUS? type, String? typeString) {
+    if (type == null && typeString == null) {
+      return false;
+    }
+    var auth = ORDERSTATUS.values.first;
+    if (type == null) {
+      auth = value(typeString)!;
+    } else {
+      auth = type;
+    }
+    return this == auth;
+  }
+}

@@ -9,6 +9,7 @@ export 'int.dart';
 export 'location.dart';
 export 'mail.dart';
 export 'member.dart';
+export 'order.dart';
 export 'product.dart';
 export 'restaurant.dart';
 export 'review.dart';
